@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if [ -d /usr/local/crossfire ]; then
+
+	# stop crossfire
+	/bin/launchctl unload /Library/LaunchDaemons/net.emiva.crossfire.plist
+
+	# remove existing tmp storage
+	/bin/rm -rf /tmp/crossfireInstallBackup
+
+	# create tmp storage location and assorted pieces
+	/bin/mkdir -p /tmp/crossfireInstallBackup
+
+	# preserve these files, they should never be upgraded
+	if [ -f /usr/local/crossfire/conf/crossfire.xml ]; then
+		/bin/cp /usr/local/crossfire/conf/crossfire.xml /tmp/crossfireInstallBackup/crossfire.xml
+	fi
+	if [ -f /usr/local/crossfire/resources/security/keystore ]; then
+		/bin/cp /usr/local/crossfire/resources/security/keystore /tmp/crossfireInstallBackup/keystore
+	fi
+	if [ -f /usr/local/crossfire/resources/security/truststore ]; then
+		/bin/cp /usr/local/crossfire/resources/security/truststore /tmp/crossfireInstallBackup/truststore
+	fi
+	if [ -f /usr/local/crossfire/resources/security/client.truststore ]; then
+		/bin/cp /usr/local/crossfire/resources/security/client.truststore /tmp/crossfireInstallBackup/client.truststore
+	fi
+
+fi

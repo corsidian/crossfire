@@ -1,0 +1,211 @@
+<%--
+  -	$RCSfile$
+  -	$Revision: 1217 $
+  -	$Date: 2005-04-11 14:11:06 -0700 (Mon, 11 Apr 2005) $
+--%>
+
+<%@ page import="java.lang.reflect.Method,
+                 java.io.File,
+                 net.emiva.util.LocaleUtils" %>
+<%@ page import="net.emiva.util.ClassUtils"%>
+
+<%  // Check the user's environment for minimum requirements.
+
+    boolean jdk13Installed = false;
+    boolean servlet22Installed = false;
+    boolean jsp11Installed = false;
+    boolean emivaJarsInstalled = false;
+    boolean crossfireHomeExists = false;
+    File crossfireHome = null;
+
+    // Check for JDK 1.5
+    try {
+        ClassUtils.forName("java.util.concurrent.ConcurrentHashMap");
+        jdk13Installed = true;
+    }
+    catch (ClassNotFoundException cnfe) {}
+    // Check for Servlet 2.3:
+    try {
+        Class c = ClassUtils.forName("javax.servlet.http.HttpSession");
+        Method m = c.getMethod("getAttribute",new Class[]{String.class});
+        servlet22Installed = true;
+    }
+    catch (ClassNotFoundException cnfe) {}
+    // Check for JSP 1.1:
+    try {
+        ClassUtils.forName("javax.servlet.jsp.tagext.Tag");
+        jsp11Installed = true;
+    }
+    catch (ClassNotFoundException cnfe) {}
+    // Check that the crossfire jar are installed:
+    try {
+        ClassUtils.forName("net.emiva.crossfire.XMPPServer");
+        emivaJarsInstalled = true;
+    }
+    catch (ClassNotFoundException cnfe) {}
+
+    // Try to determine what the emivaHome directory is:
+    try {
+        Class EMIVAGlobalsClass = ClassUtils.forName("net.emiva.util.EMIVAGlobals");
+        Method getcrossfireHomeMethod = EMIVAGlobalsClass.getMethod("getHomeDirectory", (Class[])null);
+        String crossfireHomeProp = (String)getcrossfireHomeMethod.invoke(EMIVAGlobalsClass, (Object[])null);
+        if (crossfireHomeProp != null) {
+            crossfireHome = new File(crossfireHomeProp);
+            if (crossfireHome.exists()) {
+                crossfireHomeExists = true;
+            }
+        }
+    }
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    // If there were no errors, redirect to the main setup page
+    if (!jdk13Installed || !servlet22Installed || !jsp11Installed || !emivaJarsInstalled
+            || !crossfireHomeExists)
+    {
+%>
+        <html>
+        <head>
+            <title><fmt:message key="title" /> <fmt:message key="setup.title" /></title>
+            <link rel="stylesheet" type="text/css" href="style.css">
+        </head>
+        <body>
+
+        <p class="emiva-setup-page-header">
+        <fmt:message key="title" /> <fmt:message key="setup.title" />
+        </p>
+
+        <p class="emiva-setup-error-text">
+        <fmt:message key="setup.env.check.error" /> <fmt:message key="title" /> <fmt:message key="setup.title" />.
+        </p>
+
+        <p>
+        <fmt:message key="setup.env.check.error_info">
+            <fmt:param value="<%= LocaleUtils.getLocalizedString("title") %>" />
+        </fmt:message>
+        </p>
+
+        <ul>
+        <table cellpadding="3" cellspacing="2" border="0">
+        <%  if (jdk13Installed) { %>
+
+            <tr>
+                <td><img src="../images/check.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <fmt:message key="setup.env.check.jdk" />
+                </td>
+            </tr>
+
+        <%  } else { %>
+
+            <tr>
+                <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <span class="emiva-setup-error-text">
+                    <fmt:message key="setup.env.check.jdk" />
+                    </span>
+                </td>
+            </tr>
+
+        <%  }
+            if (servlet22Installed) {
+        %>
+            <tr>
+                <td><img src="../images/check.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <fmt:message key="setup.env.check.servlet" />
+                </td>
+            </tr>
+
+        <%  } else { %>
+
+            <tr>
+                <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <span class="emiva-setup-error-text">
+                    <fmt:message key="setup.env.check.servlet" />
+                    </span>
+                </td>
+            </tr>
+
+        <%  }
+            if (jsp11Installed) {
+        %>
+            <tr>
+                <td><img src="../images/check.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <fmt:message key="setup.env.check.jsp" />
+                </td>
+            </tr>
+
+        <%  } else { %>
+
+            <tr>
+                <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <span class="emiva-setup-error-text">
+                    <fmt:message key="setup.env.check.jsp" />
+                    </span>
+                </td>
+            </tr>
+
+        <%  }
+            if (emivaJarsInstalled) {
+        %>
+            <tr>
+                <td><img src="../images/check.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <fmt:message key="title" /> <fmt:message key="setup.env.check.class" />
+                </td>
+            </tr>
+
+        <%  } else { %>
+
+            <tr>
+                <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <span class="emiva-setup-error-text">
+                    <fmt:message key="title" /> <fmt:message key="setup.env.check.class" />
+                    </span>
+                </td>
+            </tr>
+
+        <%  }
+            if (crossfireHomeExists) {
+        %>
+            <tr>
+                <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <span class="emiva-setup-error-text">
+                    <fmt:message key="setup.env.check.emiva" /> (<%= crossfireHome.toString() %>)
+                    </span>
+                </td>
+            </tr>
+
+        <%  } else { %>
+
+            <tr>
+                <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
+                <td>
+                    <span class="emiva-setup-error-text">
+                    <fmt:message key="setup.env.check.not_home" />
+                    </span>
+                </td>
+            </tr>
+
+        <%  } %>
+        </table>
+        </ul>
+
+        <p>
+        <fmt:message key="setup.env.check.doc" />
+        </p>
+
+        </body>
+        </html>
+
+<%      // return so we stop showing the page:
+        return;
+    }
+%>

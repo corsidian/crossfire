@@ -1,0 +1,96 @@
+#!/bin/sh
+
+# crossfired	stops and starts the crossfire XMPP service
+#
+# chkconfig: 2345 99 1
+# description: Used to start and stop the crossfire XMPP server
+# 
+# Script used to start crossfire as daemon
+# The script has currently been tested on Redhat Fedora Core 3,
+# but should theoretically work on most UNIX like systems
+#
+# before running this script make sure $crossfire_HOME/bin/crossfire is
+# executable by the user you want to run crossfire as
+# (chmod +x $crossfire_HOME/bin/crossfire)
+#
+# This script should be copied into /etc/init.d and linked into
+# your default runlevel directory.
+# You can find your default runlevel directory by typing: 
+# grep default /etc/inittab
+#
+# Link to the directory like follows
+# cd /etc/rc<num>.d
+# ln -s ../init.d/crossfired $90crossfired
+#
+
+# Set this to tell this script where crossfire lives
+# If this is not set the script will look for /opt/crossfire, then /usr/local/crossfire
+#export crossfire_HOME=
+
+# If there is a different user you would like to run this script as,
+# change the following line
+export crossfire_USER=emiva
+
+# -----------------------------------------------------------------
+
+# If a crossfire home variable has not been specified, try to determine it
+if [ ! $crossfire_HOME ]; then
+	if [ -d "/opt/crossfire" ]; then
+		crossfire_HOME="/opt/crossfire"
+	elif [ -d "/usr/local/crossfire" ]; then
+		crossfire_HOME="/usr/local/crossfire"
+	else
+		echo "Could not find crossfire installation under /opt or /usr/local"
+		echo "Please specify the crossfire installation location in environment variable crossfire_HOME"
+		exit 1
+	fi
+fi
+
+
+execCommand() {
+	OLD_PWD=`pwd`
+	cd $crossfire_HOME/bin
+	CMD="./crossfire.sh $1"
+	su -c "$CMD" $crossfire_USER &
+	sleep 1 # allows prompt to return
+	cd $OLD_PWD
+}
+
+
+start() {
+	execCommand "start"
+}
+
+stop() {
+	execCommand "stop"
+}
+
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		sleep 10 # since stop is backgrounded
+		start
+		;;
+	status) 
+		retval=$(pgrep -u $crossfire_USER -f $crossfire_HOME/bin/crossfire > /dev/null ; echo $?)
+		if [ "$retval" = "0" ] ; then 
+			echo "crossfire is running"
+			exit 0
+		else 
+			echo "crossfire is not running"
+			exit 0
+		fi
+		;;
+	*)
+		echo "Usage $0 {start|stop|restart|status}"
+		exit 1
+esac
+
+exit 0

@@ -1,0 +1,53 @@
+#!/bin/bash
+#determine safe uid/gid
+
+NIUTIL_PRESENT=`which niutil`
+
+if [ -z $NIUTIL_PRESENT] ; then
+	echo "No niutil"
+	crossfire_USER=`dscl . -search /Users name crossfire | awk '{print $1}'`
+
+	crossfire_GID=`dscl . -readall /Users PrimaryGroupID | awk '/PrimaryGroupID/{print $2}' | sort -n | egrep -v "\b[5-9][0-9]{2,5}\b" | tail -n 1`
+	let "crossfire_GID=$crossfire_GID+1"
+	echo $crossfire_GID > /private/tmp/crossfiregid
+
+	if [ -z $crossfire_USER ] ; then
+		crossfire_UID=`dscl . -readall /Users UniqueID | awk '/UniqueID/{print $2}' | sort -n | egrep -v "\b[5-9][0-9]{2,5}\b" | tail -n 1`
+		let "crossfire_UID=$crossfire_UID+1"
+		echo $crossfire_UID
+
+		#create user
+		dscl . -create /Users/crossfire
+
+		#set properties
+		dscl . -create /Users/crossfire PrimaryGroupID $crossfire_GID
+		dscl . -create /Users/crossfire UniqueID $crossfire_UID
+		dscl . -create /Users/crossfire UserShell /usr/bin/false
+		dscl . -create /Users/crossfire NFSHomeDirectory /usr/local/crossfire/
+		dscl . -create /Users/crossfire RealName "emiva crossfire"
+		dscl . -passwd /Users/crossfire '*'
+	fi
+else
+	crossfire_USER=`nireport / /users name | grep "crossfire"`
+
+	crossfire_GID=`nireport / /users gid | sort -n | egrep -v "\b[5-9][0-9]{2,5}\b" | tail -n 1`
+	let "crossfire_GID=$crossfire_GID+1"
+	echo $crossfire_GID > /private/tmp/crossfiregid
+
+	if [ -z $crossfire_USER] ; then
+		crossfire_UID=`nireport / /users uid | sort -n | egrep -v "\b[5-9][0-9]{2,5}\b" | tail -n 1`
+		let "crossfire_UID=$crossfire_UID+1"
+		echo $crossfire_UID
+
+		#create user
+		niutil -create . /users/crossfire
+
+		#set properties
+		niutil -createprop . /users/crossfire gid $crossfire_GID
+		niutil -createprop . /users/crossfire uid $crossfire_UID
+		niutil -createprop . /users/crossfire shell /usr/bin/false
+		niutil -createprop . /users/crossfire home /usr/local/crossfire/
+		niutil -createprop . /users/crossfire realname "emiva crossfire"
+		niutil -createprop . /users/crossfire passwd '*'
+	fi
+fi

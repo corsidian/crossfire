@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+
+if [ -d "/opt/crossfire" ]; then
+	/bin/rm -rf /tmp/crossfireInstallBackup
+	/bin/mkdir -p /tmp/crossfireInstallBackup
+
+	if [ -f /opt/crossfire/conf/crossfire.xml ]; then
+		/bin/cp -f /opt/crossfire/conf/crossfire.xml /tmp/crossfireInstallBackup/crossfire.xml
+	fi
+	if [ -f /opt/crossfire/resources/security/keystore ]; then
+		/bin/cp -f /opt/crossfire/resources/security/keystore /tmp/crossfireInstallBackup/keystore
+	fi
+	if [ -f /opt/crossfire/resources/security/truststore ]; then
+		/bin/cp -f /opt/crossfire/resources/security/truststore /tmp/crossfireInstallBackup/truststore
+	fi
+	if [ -f /opt/crossfire/resources/security/client.truststore ]; then
+		/bin/cp -f /opt/crossfire/resources/security/client.truststore /tmp/crossfireInstallBackup/client.truststore
+	fi
+
+	if [ -x "/usr/sbin/svcadm" ]; then
+		/usr/sbin/svcadm disable crossfire
+	fi
+
+	if [ -x "/usr/sbin/svccfg" ]; then
+		/usr/sbin/svccfg delete -f crossfire
+	fi
+fi

@@ -1,0 +1,14 @@
+
+Crossfire
+---------
+
+Crossfire is a fork of Openfire aimed at being secure, reliable, and easily configurable.
+
+Release 0.5
+
+- Replace mina with netty to improve performance
+- Finish rebranding as Crossfire
+- Strip out all non-core functionality (will be reintroduced as plugins after its been reviewed)
+- Refactor the core to be easier to understand and maintain
+- Add additional unit tests 
+

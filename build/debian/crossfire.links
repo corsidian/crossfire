@@ -1,0 +1,6 @@
+/etc/crossfire /usr/share/crossfire/conf
+/etc/crossfire/log4j.xml /usr/share/crossfire/lib/log4j.xml
+/etc/crossfire/security /usr/share/crossfire/resources/security
+/var/lib/crossfire/embedded-db /usr/share/crossfire/embedded-db
+/var/lib/crossfire/plugins /usr/share/crossfire/plugins
+/var/log/crossfire /usr/share/crossfire/logs

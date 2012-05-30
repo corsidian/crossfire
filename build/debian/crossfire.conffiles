@@ -1,0 +1,4 @@
+/etc/crossfire/crossfire.xml
+/etc/crossfire/security/keystore
+/etc/crossfire/security/truststore
+/etc/crossfire/security/client.truststore

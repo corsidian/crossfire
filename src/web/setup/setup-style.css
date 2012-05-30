@@ -1,0 +1,110 @@
+
+BODY {
+    font-size : 100%;
+}
+BODY, TH, TD {
+    font-family : tahoma, arial, helvetica, sans-serif;
+    font-size : 0.8em;
+}
+PRE, TT {
+    font-size : 100%;
+    font-family : courier new, monospaced;
+}
+A {}
+A:link {
+    color : #039;
+}
+A:visited {
+    color : #039;
+}
+A:hover {
+    color : #f00;
+    text-decoration : none;
+}
+A:active {
+    color : #9cf;
+}
+
+.emiva-setup-header TABLE {
+    border : 1px #333 solid;
+}
+.emiva-setup-header TD {
+    font-family : arial, helvetica, sans-serif;
+    font-size : 1.3em;
+    color : #ffffff;
+    background-color : #369;
+    background: url(../images/setup-header.png)
+}
+.emiva-setup-footer {
+    text-align : center;
+}
+.emiva-setup-page-header {
+    font-size : 1.2em;
+    font-weight : bold;
+}
+.emiva-setup-page-subheader {
+    font-weight : bold;
+}
+.emiva-setup-error-text {
+    color : #f00;
+}
+.emiva-setup-sidebar-top {
+    color : #fff;
+    text-align : center;
+    padding : 6px;
+    background-color : #336699;
+    background-image: url(../images/setup-sidebar-top.gif);
+    background-position : top center;
+    background-repeat : no-repeat;
+}
+.emiva-setup-sidebar-bottom {
+    color : #000;
+    padding : 6px;
+    background-color : #D3E9FF;
+    background-image: url(../images/setup-sidebar-bottom.gif);
+    background-position : bottom center;
+    background-repeat : no-repeat;
+}
+.emiva-setup-sidebar-bottom A:visited {
+    color : #000;
+}
+.emiva-setup-header .emiva-info {
+    color : #333;
+    font-size : 0.8em;
+    font-family : arial, helvetica, sans-serif;
+    font-weight : bold;
+}
+.emiva-setup-category-header {
+    font-weight : bold;
+    background-color : #eee;
+    border-bottom : 1px #ccc solid;
+    border-right : 1px #ccc solid;
+}
+.emiva-setup-category .emiva-info {
+    font-size : 0.8em;
+}
+.emiva-setup-category {
+    padding-left : 20px;
+}
+.emiva-setup-checklist-box {
+    border-width: 0px 1px 1px 0px;
+    border-color: #ccc;
+    border-style : solid;
+    padding-left : 1em;
+    padding-right : 1em;
+}
+.emiva-error-text {
+	color: #f00;
+	}
+.emiva-label {
+	padding-right: 10px;
+	padding-top: 6px;
+}
+.emiva-description {
+	font-family: verdana;
+	font-size: 0.8em;
+	}
+.emiva-custom-datasource .emiva-label {
+	font-size: 0.8em;
+	font-family: verdana;
+	}

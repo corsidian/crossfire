@@ -1,0 +1,5 @@
+/etc/crossfire
+/usr/share/crossfire/lib
+/usr/share/crossfire/resources
+/var/log/crossfire
+/var/lib/crossfire/embedded-db

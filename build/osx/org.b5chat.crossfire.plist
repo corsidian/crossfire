@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>crossfire_HOME</key>
+		<string>/usr/local/crossfire</string>
+	</dict>
+	<key>Label</key>
+	<string>net.emiva.crossfire</string>
+	<key>OnDemand</key>
+	<false/>
+	<key>Program</key>
+	<string>/usr/local/crossfire/bin/extra/crossfire-launchd-wrapper.sh</string>
+	<key>RunAtLoad</key>
+	<false/>
+	<key>ServiceDescription</key>
+	<string>crossfire</string>
+	<key>StandardErrorPath</key>
+	<string>/usr/local/crossfire/logs/launchd.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/usr/local/crossfire/logs/launchd.stdout</string>
+	<key>UserName</key>
+	<string>crossfire</string>
+	<key>WorkingDirectory</key>
+	<string>/usr/local/crossfire/lib</string>
+</dict>
+</plist>

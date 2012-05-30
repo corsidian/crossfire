@@ -1,0 +1,22 @@
+Source: crossfire
+Section: net
+Priority: optional
+Maintainer: EMIVA Community <admin@emiva.net>
+Build-Depends: debhelper (>= 5), cdbs, patchutils, sun-java5-jdk, ant
+Standards-Version: 3.7.2
+Homepage: http://www.emiva.net
+
+Package: crossfire
+Section: net
+Priority: optional
+Pre-Depends: sun-java5-jre | sun-java6-jre | default-jre-headless
+Architecture: all
+Description: A high performance XMPP (Jabber) server.
+ crossfire is an instant messaging server that implements the XMPP
+ (Jabber) protocol. It features high performance, a robust
+ administration console, and a full plugin system. The server
+ is 100% Java.
+ .
+ crossfire is a professional Open Source project, led by the EMIVA Community.
+Homepage: http://www.emiva.net
+ 

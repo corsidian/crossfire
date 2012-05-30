@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if [ -f /tmp/crossfireInstallBackup/crossfire.xml ]; then 
+	/bin/mv /tmp/crossfireInstallBackup/crossfire.xml /usr/local/crossfire/conf/crossfire.xml
+fi
+
+if [ -f /tmp/crossfireInstallBackup/keystore ]; then
+	/bin/mv /tmp/crossfireInstallBackup/keystore /usr/local/crossfire/resources/security/keystore
+fi
+
+if [ -f /tmp/crossfireInstallBackup/truststore ]; then
+	/bin/mv /tmp/crossfireInstallBackup/truststore /usr/local/crossfire/resources/security/truststore
+fi
+
+if [ -f /tmp/crossfireInstallBackup/client.truststore ]; then
+	/bin/mv /tmp/crossfireInstallBackup/client.truststore /usr/local/crossfire/resources/security/client.truststore
+fi
+
+crossfire_HOME=/usr/local/crossfire/
+crossfire_GID=`cat /private/tmp/crossfiregid`
+rm /private/tmp/crossfiregid
+
+sudo chown -R crossfire $crossfire_HOME
+sudo chgrp -R $crossfire_GID $crossfire_HOME
+sudo chmod o-rwx $crossfire_HOME
+sudo chown root:wheel /Library/LaunchDaemons/net.emiva.crossfire.plist
+
+/bin/launchctl load /Library/LaunchDaemons/net.emiva.crossfire.plist

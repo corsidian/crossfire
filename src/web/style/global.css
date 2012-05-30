@@ -1,0 +1,953 @@
+/* --------------------------------------------- */
+/*  Global                                       */
+/* --------------------------------------------- */
+
+body {
+	margin:0;
+	padding:0;
+}
+#emiva-main {
+	padding-bottom:20px;
+}
+body, div, p, td, th {
+	font-family:arial,helvetica,sans-serif;
+	font-size:9pt;
+}
+body {
+	background-color:#FFFFFF;
+	color:#333333;
+	margin:0;
+	padding:0;
+}
+a {
+	color:#D76C0D;
+}
+a:hover {
+	text-decoration:underline;
+}
+p {
+	margin-top:0;
+}
+fieldset div {
+	margin:10px;
+	padding:5px 3px 5px 0;
+	width:100%;
+}
+fieldset div .emiva-table {
+	margin:0;
+	padding:0;
+}
+fieldset {
+	-moz-border-radius-bottomleft:3px;
+	-moz-border-radius-bottomright:3px;
+	-moz-border-radius-topleft:3px;
+	-moz-border-radius-topright:3px;
+	border:2px solid #CCCCCC;
+	width:95%;
+}
+fieldset legend {
+	color:#000000;
+}
+h1 {
+	color:#555555;
+	font-size:14pt;
+	margin:12px 0 15px;
+	padding:0;
+}
+h1 select {
+	color:#666666;
+}
+h2 {
+	font-size:11pt;
+	margin:18px 0 5px;
+	padding:0;
+}
+h3 {
+	font-size:10pt;
+	margin:18px 0 5px;
+	padding:0;
+}
+h4 {
+	font-size:10pt;
+	margin:8px 0 3px;
+	padding:0 0 4px;
+}
+h5 {
+	font-size:10pt;
+	margin:18px 0 -8px;
+	padding:0;
+}
+p {
+    margin-top:0;
+}
+ul {
+    margin:0;
+    padding:0 0 12px 26px;
+}
+hr {
+    background-color:#DCDCDC;
+    border:medium none;
+    height:1px;
+    width:100%;
+}
+form {
+    margin:0;
+    padding:0;
+}
+select, input {
+    font-family:verdana,arial,sans-serif;
+    font-size:8pt;
+}
+iframe {
+    border:1px solid #999999;
+}
+
+/* --------------------------------------------- */
+/*  Header                                       */
+/* --------------------------------------------- */
+
+#emiva-header {
+    clear:both;
+    float:left;
+    margin:0;
+    overflow:hidden;
+    padding:0;
+    width:100%;
+}
+
+#emiva-logo-image {
+    color:#FFFFFF;
+    display:block;
+    left:0;
+    position:relative;
+    top:0;
+}
+#emiva-logo-image_new {
+    background:transparent url(../images/header-title_new.gif) no-repeat scroll 0;
+    color:#FFFFFF;
+    display:block;
+    height:50px;
+    left:0;
+    overflow:hidden;
+    position:absolute;
+    top:0;
+    width:350px;
+}
+#emiva-logo-image_new strong {
+    display:block;
+    margin:0 0 0 130px;
+    padding-top:23px;
+    position:relative;
+}
+#emiva-secondary {
+    background-color:#EEEEEE;
+    border-bottom:1px solid #BBBBBB;
+    border-top:1px solid #CCCCCC;
+    padding:6px 6px 6px 12px;
+}
+#emiva-header .info {
+    color:#FFFFFF;
+    display:block;
+    font-size:8pt;
+    padding:0;
+    position:absolute;
+    right:12px;
+    text-align:right;
+    top:10px;
+    width:220px;
+}
+#emiva-header .info img {
+    margin:0 0 4px;
+}
+#emiva-content {
+    padding:10px 20px 12px 32px;
+}
+
+/* name and logo image */
+#emiva-logo {
+    float:left;
+    height:76px;
+    overflow:hidden;
+}
+#emiva-logo h1 {
+    clear:none;
+    color:#555555;
+    float:left;
+    font-size:14pt;
+    padding:0;
+}
+#emiva-logo img {
+    border:medium none;
+    float:left;
+    padding-left:10px;
+    padding-top:7px;
+}
+
+/* version, login and site link */
+#emiva-userStatus {
+    color:#999999;
+    float:right;
+    font-size:8pt;
+    line-height:11pt;
+    margin:0;
+    padding:15px 15px 0 0;
+    text-align:right;
+    width:275px;
+}
+#emiva-userStatus a {
+    font-weight:bold;
+}
+
+/* --------------------------------------------- */
+/*  Main nav                                     */
+/* --------------------------------------------- */
+
+#emiva-header #emiva-nav {
+    background:#F7F7F7 url(../images/emiva-nav-bg.gif) repeat-x scroll 0;
+    clear:both;
+    height:27px;
+    margin:0;
+    padding:0;
+}
+#emiva-header #emiva-nav-left, #emiva-header #emiva-nav-right {
+    height:27px;
+    width:15px;
+}
+#emiva-header #emiva-nav-left {
+    background:transparent url(../images/emiva-nav-div.gif) no-repeat scroll right center;
+    float:left;
+}
+#emiva-header #emiva-nav-right {
+    float:right;
+}
+#emiva-header #emiva-nav ul {
+    list-style-type:none;
+    margin:0 0 0 5px;
+    padding:0;
+}
+#emiva-header #emiva-nav ul li {
+    background:transparent url(../images/emiva-nav-div.gif) no-repeat scroll right center;
+    color:#FFFFFF;
+    float:left;
+    font-size:11pt;
+    margin:0;
+    padding:4px 2px 5px 0;
+}
+#emiva-header #emiva-nav ul li a, #emiva-header #emiva-nav ul li a:visited {
+    color:#333333;
+    font-size:10pt;
+    font-weight:bold;
+    margin:0;
+    padding:4px 13px;
+    text-decoration:none;
+}
+#emiva-header #emiva-nav ul li a:hover, #emiva-header #emiva-nav ul li a:active {
+    background:transparent url(../images/emiva-nav-bg-over.gif) repeat-x scroll right center;
+    text-decoration:underline;
+}
+#emiva-header #emiva-nav ul li.currentlink a, #emiva-header #emiva-nav ul li.currentlink a:visited, #emiva-header #emiva-nav ul li.currentlink a:active, #emiva-header #emiva-nav ul li.currentlink a:hover {
+    background:transparent url(../images/emiva-nav-bg-on.gif) repeat-x scroll right center;
+    color:#FFFFFF;
+}
+
+/* Subnav */
+#emiva-subnav {
+    background:#F7F7F7 url(../images/emiva-subnav-bg.gif) repeat-x scroll 0;
+    clear:both;
+    height:28px;
+    margin:0;
+    padding:0;
+    width:100%;
+}
+#emiva-subnav .subnav-community {
+    background:#F7F7F7 url(../images/emiva-subnav-bg.gif) repeat-x scroll 100px 50%;
+}
+#emiva-subnav ul {
+    list-style-type:none;
+    margin:0 0 0 13px;
+    padding:0;
+}
+#emiva-subnav ul li {
+    background:transparent url(../images/emiva-subnav-div.gif) no-repeat scroll right center;
+    color:#FFFFFF;
+    float:left;
+    font-size:11pt;
+    margin:9px 0 0 0;
+    padding:0 1px 2px 0;
+}
+#emiva-subnav ul li a, #emiva-subnav ul li a:visited {
+    font-family:verdana,sans-serif;
+    font-size:8pt;
+    font-weight:bold;
+    margin:0;
+    padding:3px 15px;
+    text-decoration:none;
+}
+#emiva-subnav ul li a:hover, #emiva-subnav ul li a:active {
+    background-color:#E3E3E3;
+    text-decoration:underline;
+}
+#emiva-subnav ul li.current {
+}
+#emiva-subnav ul li.current a, #emiva-subnav ul li.current a:visited {
+    background-color:#F9F9F9;
+    border-color:#cecece;
+    border-style:solid;
+    margin:0;
+    padding:3px 15px 4px 15px;
+    border: 0;
+}
+#emiva-subnav ul li.current a:hover, #emiva-subnav ul li.current a:active {
+    background-color:#F9F9F9;
+    text-decoration:underline;
+    border: 0;
+}
+
+/* --------------------------------------------- */
+/*  Logviewer tabs                               */
+/* --------------------------------------------- */
+
+#logviewer td {
+    font-family:verdana,sans-serif;
+    font-size:8pt;
+}
+#logviewer .emiva-tab, .emiva-tab-active {
+    background-color:#DDDDDD;
+    border:1px solid #CCCCCC;
+    padding:4px 1em;
+    white-space:nowrap;
+}
+#logviewer .emiva-tab-active {
+    background-color:#FFFFFF;
+    border-bottom:1px solid #FFFFFF;
+}
+#logviewer .emiva-spacer, .emiva-stretch {
+    border-bottom:1px solid #CCCCCC;
+}
+#logviewer .emiva-tab a, #logviewer .emiva-tab-active a {
+    color:#000000;
+    font-weight:bold;
+    text-decoration:none;
+}
+#logviewer .emiva-tab a:hover, #logviewer .emiva-tab-active a:hover {
+    text-decoration:underline;
+}
+
+/* --------------------------------------------- */
+/*  Titles                                       */
+/* --------------------------------------------- */
+
+#emiva-main #emiva-title {
+    font-size:12pt;
+    font-weight:bold;
+    padding-bottom:1em;
+}
+
+/* --------------------------------------------- */
+/*  Breadcrumbs                                  */
+/* --------------------------------------------- */
+
+#emiva-main #emiva-breadcrumbs {
+    font-family:verdana,sans-serif;
+    font-size:8pt;
+    padding-top:2px;
+    white-space:nowrap;
+}
+#emiva-main #emiva-breadcrumbs a {
+    color:#000000;
+    text-decoration:none;
+}
+#emiva-main #emiva-breadcrumbs a:hover {
+    color:#000000;
+    text-decoration:underline;
+}
+
+/* --------------------------------------------- */
+/*  Sidebar                                      */
+/* --------------------------------------------- */
+
+#emiva-main {
+    background:#FFFFFF url(../images/emiva-body-bg.gif) repeat-x scroll center top;
+    clear:both;
+    display:block;
+    float:left;
+    margin:0;
+    padding:0;
+    position:relative;
+    width:100%;
+}
+#emiva-sidebar-container {
+    float:left;
+    font-size:9pt;
+    margin:0;
+    overflow:hidden;
+    padding:0;
+    width:200px;
+}
+#emiva-sidebar-box {
+    margin:0;
+    overflow:hidden;
+    padding:0;
+    width:200px;
+    background-color: #f9f9f9;
+}
+#emiva-sidebar {
+    background:transparent url(../images/emiva-tertnav-top.gif) no-repeat scroll right top;
+    margin-bottom:12px;
+    padding-top:0;
+}
+#emiva-sidebar ul {
+    -moz-border-radius-bottomleft:0;
+    -moz-border-radius-bottomright:5px;
+    -moz-border-radius-topleft:0;
+    -moz-border-radius-topright:0;
+    border-bottom:1px solid #E6E6E6;
+    border-right:1px solid #E6E6E6;
+    list-style-type:none;
+    margin:0 5px 0 0;
+    padding:8px 22px 15px;
+}
+#emiva-sidebar ul li {
+    border-bottom:1px solid #e6e6e6;
+    padding:0;
+    border-top:1px solid #f9f9f9;
+}
+#emiva-sidebar ul li a {
+    color:#777;
+    display:block;
+    padding:4px 0 4px 10px;
+    text-decoration:none;
+}
+#emiva-sidebar ul li a:link, #emiva-sidebar ul li a:visited {
+    color:#444444;
+    text-decoration:none;
+}
+#emiva-sidebar ul li a:hover {
+    text-decoration:underline;
+}
+#emiva-sidebar ul li.currentlink {
+    background:transparent url(../images/emiva-tertnav-arrow.gif) no-repeat scroll left center;
+    font-weight:bold;
+}
+#emiva-sidebar ul.subitems {
+    background-color:#f9f9f9;
+    border-top: 1.0px solid #f9f9f9;
+    border-bottom: 1.0px solid #f9f9f9;
+    border-right:0;
+    list-style-type:none;
+    padding:0 0 0 10px;
+    margin:1px 0 1px 0;
+}
+#emiva-sidebar ul.subitems li {
+    border-top:1px solid #e6e6e6;
+    border-bottom: 1.0px solid #f9f9f9;
+    padding:0;
+}
+#emiva-sidebar ul.subitems li.category {
+    border-top: 1.0px solid #f9f9f9;
+    color:#777;
+    font-weight:bold;
+    padding:4px 0;
+}
+#emiva-sidebar ul.subitems li a {
+    color:#777;
+    display:block;
+    padding:4px 0 4px 10px;
+    text-decoration:none;
+}
+#emiva-sidebar ul.subitems li a:hover {
+    text-decoration:underline;
+}
+#emiva-sidebar ul.subitems li.currentlink a, #emiva-sidebar ul.subitems li.currentlink a:visited, #emiva-sidebar ul.subitems li.currentlink a:hover {
+    background:transparent url(../images/emiva-tertnav-arrow.gif) no-repeat scroll left center;
+    color:#555555;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+/* --------------------------------------------- */
+/*  Tasks                                        */
+/* --------------------------------------------- */
+
+#emiva-runningtask {
+    margin-left:1em;
+}
+
+/* --------------------------------------------- */
+/*  Back link                                    */
+/* --------------------------------------------- */
+
+a.emiva-link-back {
+    font-size:9pt;
+}
+a.emiva-link-back span {
+    font-size:10pt;
+}
+
+/* --------------------------------------------- */
+/*  Edit & Delete links                          */
+/* --------------------------------------------- */
+
+a.emiva-link-edit, a.emiva-link-delete {
+    display:block;
+    font-size:8pt;
+    margin:3px 5px 6px 0;
+    padding-left:19px;
+}
+a.emiva-link-edit {
+    background:transparent url(../images/edit-16x16.gif) no-repeat scroll left center;
+}
+a.emiva-link-delete {
+    background:transparent url(../images/delete-16x16.gif) no-repeat scroll left center;
+}
+
+/* --------------------------------------------- */
+/*  Hoizontal Rule                               */
+/* --------------------------------------------- */
+
+.emiva-horizontalRule {
+    background-color:#DCDCDC;
+    height:1px;
+    margin:20px 0 10px;
+    overflow:hidden;
+    padding:0;
+}
+
+/* --------------------------------------------- */
+/*  Older styles                                 */
+/* --------------------------------------------- */
+
+pre, tt {
+    font-family:courier new,monospace;
+    font-size:10pt;
+}
+
+/* Messages - errors, success and info */
+.emiva-error table, .emiva-info table, .emiva-success table {
+    border:1px solid #CCCCCC;
+}
+.emiva-error td, .emiva-info td, .emiva-success td {
+    padding:3px;
+    vertical-align:top;
+}
+.emiva-error-text, .emiva-error .emiva-icon-label, .emiva-error-text a, .emiva-error .emiva-icon-label a {
+    color:#FF0000;
+}
+.emiva-success-text, .emiva-success .emiva-icon-label, .emiva-success-text a, .emiva-success .emiva-icon-label a {
+    color:#009900;
+}
+.emiva-info-text, .emiva-info .emiva-icon-label, .emiva-info-text a, .emiva-info .emiva-icon-label a {
+    color:#330066;
+}
+
+/* tables */
+.emiva-table {
+    border-color:#CCCCCC;
+    border-style:solid;
+    border-width:1px 1px 0;
+}
+.emiva-table .c1, fieldset .c1 {
+    width:30%;
+}
+.emiva-table th, .emiva-table td, .emiva-option-table th, .emiva-option-table td {
+    padding:6px;
+}
+.emiva-table th th, .emiva-table td td {
+    padding:0;
+}
+.emiva-table td.icon {
+    padding:0 5px 0 3px;
+}
+.emiva-table th {
+    background-color:#EEEEEE;
+    border-bottom:1px solid #CCCCCC;
+    font-family:verdana,arial,helvetica,sans-serif;
+    font-size:8pt;
+    font-weight:bold;
+    text-align:left;
+}
+.emiva-table th table th {
+    border-bottom:medium none;
+    border-right:medium none;
+}
+.emiva-table th table th a {
+    color:#000000;
+    text-decoration:none;
+}
+.emiva-table tr td {
+    border-bottom:1px solid #E3E3E3;
+}
+.emiva-table td {
+    font-family:arial,helvetica,sans-serif;
+    font-size:10pt;
+}
+.emiva-table .emiva-odd td {
+    background-color:#FFFFFF;
+}
+.emiva-table .emiva-even td {
+    background-color:#FBFBFB;
+}
+.emiva-table tfoot td {
+    background-color:#EEEEEE;
+    border-bottom:1px solid #CCCCCC;
+    font-family:verdana,arial,helvetica,sans-serif;
+    font-size:8pt;
+}
+.emiva-table td td {
+    border-width:0;
+}
+.emiva-table input, .emiva-table select, .emiva-option-table input, .emiva-option-table select {
+    font-family:verdana,arial,helvetica,sans-serif;
+    font-size:8pt;
+}
+.emiva-description, .emiva-description a, .emiva-table .emiva-date, .emiva-description input, .emiva-description select {
+    font-family:arial,helvetica,sans-serif;
+    font-size:8pt;
+}
+.emiva-label, .emiva-option-table label {
+    font-weight:bold;
+    padding-right:10px;
+    white-space:nowrap;
+}
+.emiva-label {
+    padding-right:20px;
+    vertical-align:top;
+}
+.emiva-buttons .emiva-icon {
+    padding:3px;
+}
+.emiva-buttons .emiva-icon-label {
+    font-family:verdana,arial,helvetica,sans-serif;
+    font-size:8pt;
+    padding:3px 1em 3px 3px;
+    white-space:nowrap;
+}
+
+/* --------------------------------------------- */
+/*  Calendar styles                              */
+/* --------------------------------------------- */
+
+table.calBgColor {
+    padding:0;
+}
+td.cal {
+    background-color:#FFFFFF;
+    color:#000000;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+    padding:0;
+}
+select.month {
+    background:transparent none repeat scroll 0;
+    color:#000000;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+    width:85px;
+}
+input.year {
+    background:transparent none repeat scroll 0;
+    color:#000000;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+    width:30px;
+}
+td.calDaysColor {
+    background-color:#000000;
+    color:#FFFFFF;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+}
+td.calWeekend {
+    background-color:#D3D3D3;
+    color:#FFFFFF;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+}
+td.calBgColor {
+    background-color:#FFFFCC;
+    color:#FFFFFF;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+}
+.calBorderColor {
+    background-color:#A9A9A9;
+    color:#FFFFFF;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+}
+td.calHighlightColor {
+    background-color:#FFFFCC;
+    color:#FFFFFF;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+}
+a.cal {
+    background:transparent none repeat scroll 0;
+    color:#000000;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+    text-decoration:none;
+}
+a.cal:hover {
+    background:transparent none repeat scroll 0;
+    color:#FF0000;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+    text-decoration:none;
+}
+.calDisabled {
+    background:transparent none repeat scroll 0;
+    color:#808080;
+    font-family:Arial,Helvetica,Sans-serif;
+    font-size:11px;
+    text-decoration:none;
+}
+
+/* --------------------------------------------- */
+/*  Quote original styles                        */
+/* --------------------------------------------- */
+
+.emiva-quoteheader {
+    font-weight:bold;
+    margin-left:15px;
+    width:90%;
+}
+.emiva-quote {
+    background-color:#FAFAFA;
+    border:1px solid #D1D7DC;
+    color:#444444;
+    margin-left:15px;
+    width:90%;
+}
+.success {
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+    background-color:#CDF6CD;
+    background-image:url(../images/success-16x16.gif);
+    background-position:5px;
+    background-repeat:no-repeat;
+    border:1px solid #029B00;
+    color:#006600;
+    font-weight:bold;
+    margin-bottom:20px;
+    margin-top:10px;
+    padding:5px 5px 5px 28px;
+}
+.error {
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+    background-color:#EDB9B1;
+    background-image:url(../images/error-16x16.gif);
+    background-position:5px;
+    background-repeat:no-repeat;
+    border:1px solid #BB8888;
+    color:#990000;
+    font-weight:bold;
+    margin-bottom:20px;
+    margin-top:10px;
+    padding:5px 5px 5px 28px;
+}
+.warning {
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+    background-color:#FFE9B2;
+    background-image:url(../images/icon_warning-small.gif);
+    background-position:5px;
+    background-repeat:no-repeat;
+    border:1px solid #D9B04C;
+    color:#915A15;
+    font-weight:bold;
+    margin-bottom:20px;
+    margin-top:10px;
+    padding:5px 5px 5px 28px;
+}
+
+/* --------------------------------------------- */
+/*  Content Box                                  */
+/* --------------------------------------------- */
+
+.emiva-contentBox {
+    -moz-border-radius-bottomleft:4px;
+    -moz-border-radius-bottomright:4px;
+    -moz-border-radius-topleft:0;
+    -moz-border-radius-topright:0;
+    background-color:#FFFFFF;
+    border:1px solid #CCCCCC;
+    display:block;
+    margin:0 0 20px;
+    padding:12px 10px;
+}
+.emiva-contentBoxHeader {
+    background-color:#EEEEEE;
+    border-color:#CCCCCC rgb(204, 204, 204);
+    border-style:solid solid none;
+    border-width:1px 1px medium;
+    display:block;
+    font-size:9pt;
+    font-weight:bold;
+    margin:8px 0 0;
+    padding:4px 4px 4px 6px;
+}
+.emiva-contentBoxGrey {
+    background-color:#F9F9F9;
+}
+.emiva-contentBox h3 {
+    color:#555555;
+    font-size:10pt;
+    margin:0;
+    padding:0 0 5px;
+}
+.emiva-contentBox h4 {
+    background-color:#FCFCFC;
+    border:1px solid #E9E9E9;
+    color:#555555;
+    font-size:10pt;
+    margin:0 0 4px;
+    padding:3px 0 3px 4px;
+}
+.emiva-contentBox form {
+    margin:0;
+    padding:0;
+}
+.emiva-contentBox table {
+    margin:0;
+    padding:0;
+}
+.emiva-contentBox table td {
+    padding:2px;
+}
+.emiva-contentBox table th {
+    background-color:#eeeeee;
+    padding:4px;
+}
+th.emiva-table-th-center {
+    text-align:center;
+}
+.emiva-contentBox table td.emiva-formLabel {
+    color:#555555;
+    font-weight:bold;
+    padding-right:5px;
+    text-align:right;
+    white-space:nowrap;
+}
+.emiva-contentBox-toolbox {
+    float:right;
+    margin-left:20px;
+}
+.emiva-contentBox-plain {
+    display:block;
+    margin:0 0 5px;
+    padding:12px 0;
+}
+.emiva-contentBox-plain h3 {
+    color:#555555;
+    font-size:14pt;
+    margin:2px 0;
+}
+.emiva-contentBox-plain p {
+    font-size:9pt;
+    margin:0 0 10px;
+}
+
+/* --------------------------------------------- */
+/*  Roster box (in Group Settings page)          */
+/* --------------------------------------------- */
+
+#emiva-roster {
+    -moz-border-radius-bottomleft:4px;
+    -moz-border-radius-bottomright:4px;
+    -moz-border-radius-topleft:4px;
+    -moz-border-radius-topright:4px;
+    background-color:#F9F9F9;
+    border:1px solid #DCDCDC;
+    display:block;
+    font-size:9pt;
+    margin:3px 0 4px;
+    padding:12px;
+    width:390px;
+}
+#emiva-roster b {
+    color:#555555;
+    display:block;
+    font-size:8pt;
+    padding:0 0 3px;
+}
+
+/* --------------------------------------------- */
+/*  Footer                                       */
+/* --------------------------------------------- */
+
+#emiva-footer {
+    border-top:1px solid #DCDCDC;
+    clear:both;
+    color:#666666;
+    font-size:8pt;
+    margin:10px 0 0;
+    padding:5px 0 40px;
+    width:100%;
+}
+.emiva-footer-nav {
+    float:left;
+    padding-left:5px;
+}
+.emiva-footer-nav a {
+    padding:0 5px;
+}
+.emiva-footer-copyright {
+    float:right;
+    padding-right:12px;
+}
+#footer {
+    background-image:url(../images/page-background_new.gif);
+    background-repeat:repeat-y;
+    height:30px;
+    margin-top:-30px;
+    position:relative;
+    width:100%;
+}
+#footer_padding {
+    padding-left:165px;
+    text-align:center;
+}
+#footer_content {
+    background-color:#F9F9F9;
+    border-color:#E6E6E6 rgb(179, 211, 244);
+    border-style:solid solid none;
+    border-width:1px 1px medium;
+    font-size:8pt;
+    height:29px;
+    margin:0 auto;
+    padding:0;
+    width:500px;
+}
+#footer_content span {
+    display:block;
+    padding:7px;
+}
+
+.emiva-current {
+    font-weight : bold;
+    text-decoration : none;
+}
+
+/* --------------------------------------------- */
+/*  Main content                                 */
+/* --------------------------------------------- */
+
+#emiva-main-content {
+	-moz-border-radius-bottomleft:4px;
+	-moz-border-radius-bottomright:4px;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;
+	background:#F5F5F5 url(../images/emiva-body-contentbox-bg.gif) repeat-x scroll center top;
+	border:1px solid #DCDCDC;
+	margin:15px 0 20px 0;
+	padding:18px 20px;
+    width: 95%;
+}
