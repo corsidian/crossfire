@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.StringUtils;
 
 import org.apache.jasper.JasperException;
@@ -322,7 +322,7 @@ public class PluginServlet extends HttpServlet {
             contextPath = pathInfo.substring(index + parts[1].length());
         }
 
-        File pluginDirectory = new File(EMIVAGlobals.getHomeDirectory(), "plugins");
+        File pluginDirectory = new File(Globals.getHomeDirectory(), "plugins");
         File file = new File(pluginDirectory, parts[1] + File.separator + "web" + contextPath);
 
         // When using dev environment, the images dir may be under something other that web.

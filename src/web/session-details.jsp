@@ -22,7 +22,7 @@
                  net.emiva.crossfire.session.ClientSession,
                  net.emiva.crossfire.user.User,
                  net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.util.ParamUtils,
                  java.text.NumberFormat,
                  java.util.Collection"
@@ -242,7 +242,7 @@
             <fmt:message key="session.details.session_created" />
         </td>
         <td>
-            <%= EMIVAGlobals.formatDateTime(currentSess.getCreationDate()) %>
+            <%= Globals.formatDateTime(currentSess.getCreationDate()) %>
         </td>
     </tr>
     <tr>
@@ -250,7 +250,7 @@
             <fmt:message key="session.details.last_active" />
         </td>
         <td>
-            <%= EMIVAGlobals.formatDateTime(currentSess.getLastActiveDate()) %>
+            <%= Globals.formatDateTime(currentSess.getLastActiveDate()) %>
         </td>
     </tr>
     <tr>

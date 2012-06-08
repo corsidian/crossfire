@@ -29,7 +29,7 @@ import java.sql.Types;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -172,7 +172,7 @@ public class DefaultAuthProvider implements AuthProvider {
 
     public void setPassword(String username, String password) throws UserNotFoundException {
         // Determine if the password should be stored as plain text or encrypted.
-        boolean usePlainPassword = EMIVAGlobals.getBooleanProperty("user.usePlainPassword");
+        boolean usePlainPassword = Globals.getBooleanProperty("user.usePlainPassword");
         String encryptedPassword = null;
         if (username.contains("@")) {
             // Check that the specified domain matches the server's domain

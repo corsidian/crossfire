@@ -1,11 +1,11 @@
-<%@ page import="java.util.Calendar,java.text.DateFormat,java.text.SimpleDateFormat,net.emiva.util.EMIVAGlobals"%>
+<%@ page import="java.util.Calendar,java.text.DateFormat,java.text.SimpleDateFormat,net.emiva.util.Globals"%>
 <%@ page import="net.emiva.util.LocaleUtils"%>
 <%
     response.setContentType("text/javascript; charset=" + "UTF-8");
-    DateFormat fullDay = new SimpleDateFormat("EEEE", EMIVAGlobals.getLocale());
-    DateFormat shortDay = new SimpleDateFormat("EEE", EMIVAGlobals.getLocale());
-    DateFormat fullMonth = new SimpleDateFormat("MMMM", EMIVAGlobals.getLocale());
-    DateFormat shortMonth = new SimpleDateFormat("MMM", EMIVAGlobals.getLocale());
+    DateFormat fullDay = new SimpleDateFormat("EEEE", Globals.getLocale());
+    DateFormat shortDay = new SimpleDateFormat("EEE", Globals.getLocale());
+    DateFormat fullMonth = new SimpleDateFormat("MMMM", Globals.getLocale());
+    DateFormat shortMonth = new SimpleDateFormat("MMM", Globals.getLocale());
     Calendar c = Calendar.getInstance();
 %>
 // full day names (yes we really do want Sunday twice)

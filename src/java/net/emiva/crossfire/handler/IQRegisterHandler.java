@@ -40,7 +40,7 @@ import net.emiva.crossfire.user.User;
 import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -159,9 +159,9 @@ public class IQRegisterHandler extends IQHandler implements ServerFeaturesProvid
             probeResult.add(registrationForm.getElement());
         }
         // See if in-band registration should be enabled (default is true).
-        registrationEnabled = EMIVAGlobals.getBooleanProperty("register.inband", true);
+        registrationEnabled = Globals.getBooleanProperty("register.inband", true);
         // See if users can change their passwords (default is true).
-        canChangePassword = EMIVAGlobals.getBooleanProperty("register.password", true);
+        canChangePassword = Globals.getBooleanProperty("register.password", true);
     }
 
     @Override
@@ -452,7 +452,7 @@ public class IQRegisterHandler extends IQHandler implements ServerFeaturesProvid
 
     public void setInbandRegEnabled(boolean allowed) {
         registrationEnabled = allowed;
-        EMIVAGlobals.setProperty("register.inband", registrationEnabled ? "true" : "false");
+        Globals.setProperty("register.inband", registrationEnabled ? "true" : "false");
     }
 
     public boolean canChangePassword() {
@@ -461,7 +461,7 @@ public class IQRegisterHandler extends IQHandler implements ServerFeaturesProvid
 
     public void setCanChangePassword(boolean allowed) {
         canChangePassword = allowed;
-        EMIVAGlobals.setProperty("register.password", canChangePassword ? "true" : "false");
+        Globals.setProperty("register.password", canChangePassword ? "true" : "false");
     }
 
     @Override

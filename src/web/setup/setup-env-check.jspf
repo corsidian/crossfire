@@ -46,9 +46,9 @@
 
     // Try to determine what the emivaHome directory is:
     try {
-        Class EMIVAGlobalsClass = ClassUtils.forName("net.emiva.util.EMIVAGlobals");
-        Method getcrossfireHomeMethod = EMIVAGlobalsClass.getMethod("getHomeDirectory", (Class[])null);
-        String crossfireHomeProp = (String)getcrossfireHomeMethod.invoke(EMIVAGlobalsClass, (Object[])null);
+        Class GlobalsClass = ClassUtils.forName("net.emiva.util.Globals");
+        Method getcrossfireHomeMethod = GlobalsClass.getMethod("getHomeDirectory", (Class[])null);
+        String crossfireHomeProp = (String)getcrossfireHomeMethod.invoke(GlobalsClass, (Object[])null);
         if (crossfireHomeProp != null) {
             crossfireHome = new File(crossfireHomeProp);
             if (crossfireHome.exists()) {

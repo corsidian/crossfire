@@ -20,7 +20,7 @@
 <%@ page import="net.emiva.crossfire.SessionManager,
                  net.emiva.crossfire.session.IncomingServerSession,
                  net.emiva.crossfire.session.OutgoingServerSession,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.util.ParamUtils,
                 java.text.NumberFormat"
     errorPage="error.jsp"
@@ -151,8 +151,8 @@
             boolean sameActiveDay = nowCal.get(Calendar.DAY_OF_YEAR) == lastActiveCal.get(Calendar.DAY_OF_YEAR) && nowCal.get(Calendar.YEAR) == lastActiveCal.get(Calendar.YEAR);
         %>
         <td><%= inSession.getStreamID()%></td>
-        <td align="center"><%= sameCreationDay ? EMIVAGlobals.formatTime(creationDate) : EMIVAGlobals.formatDateTime(creationDate) %></td>
-        <td align="center"><%= sameActiveDay ? EMIVAGlobals.formatTime(lastActiveDate) : EMIVAGlobals.formatDateTime(lastActiveDate) %></td>
+        <td align="center"><%= sameCreationDay ? Globals.formatTime(creationDate) : Globals.formatDateTime(creationDate) %></td>
+        <td align="center"><%= sameActiveDay ? Globals.formatTime(lastActiveDate) : Globals.formatDateTime(lastActiveDate) %></td>
         <td align="center"><%= numFormatter.format(inSession.getNumClientPackets()) %></td>
     </tr>
     </table>
@@ -197,8 +197,8 @@
             boolean sameActiveDay = nowCal.get(Calendar.DAY_OF_YEAR) == lastActiveCal.get(Calendar.DAY_OF_YEAR) && nowCal.get(Calendar.YEAR) == lastActiveCal.get(Calendar.YEAR);
         %>
         <td><%= outSession.getStreamID()%></td>
-        <td align="center"><%= sameCreationDay ? EMIVAGlobals.formatTime(creationDate) : EMIVAGlobals.formatDateTime(creationDate) %></td>
-        <td align="center"><%= sameActiveDay ? EMIVAGlobals.formatTime(lastActiveDate) : EMIVAGlobals.formatDateTime(lastActiveDate) %></td>
+        <td align="center"><%= sameCreationDay ? Globals.formatTime(creationDate) : Globals.formatDateTime(creationDate) %></td>
+        <td align="center"><%= sameActiveDay ? Globals.formatTime(lastActiveDate) : Globals.formatDateTime(lastActiveDate) %></td>
         <td align="center"><%= numFormatter.format(outSession.getNumServerPackets()) %></td>
     </tr>
     </table>

@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import net.emiva.crossfire.XMPPServer;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.PropertyEventDispatcher;
 import net.emiva.util.PropertyEventListener;
 import net.emiva.util.StringUtils;
@@ -91,7 +91,7 @@ public class DefaultAdminProvider implements AdminProvider {
         List<JID> adminList = new ArrayList<JID>();
 
         // Add bare JIDs of users that are admins (may include remote users), primarily used to override/add to list of admin users
-        String jids = EMIVAGlobals.getProperty("admin.authorizedJIDs");
+        String jids = Globals.getProperty("admin.authorizedJIDs");
         jids = (jids == null || jids.trim().length() == 0) ? "" : jids;
         StringTokenizer tokenizer = new StringTokenizer(jids, ",");
         while (tokenizer.hasMoreTokens()) {
@@ -122,7 +122,7 @@ public class DefaultAdminProvider implements AdminProvider {
         for (JID admin : admins) {
             adminList.add(admin.toBareJID());
         }
-        EMIVAGlobals.setProperty("admin.authorizedJIDs", StringUtils.collectionToString(adminList));
+        Globals.setProperty("admin.authorizedJIDs", StringUtils.collectionToString(adminList));
     }
 
     /**
@@ -137,9 +137,9 @@ public class DefaultAdminProvider implements AdminProvider {
      * Converts the old crossfire.xml style admin list to use the new provider mechanism.
      */
     private void convertXMLToProvider() {
-        if (EMIVAGlobals.getXMLProperty("admin.authorizedJIDs") == null &&
-                EMIVAGlobals.getXMLProperty("admin.authorizedUsernames") == null &&
-                EMIVAGlobals.getXMLProperty("adminConsole.authorizedUsernames") == null) {
+        if (Globals.getXMLProperty("admin.authorizedJIDs") == null &&
+                Globals.getXMLProperty("admin.authorizedUsernames") == null &&
+                Globals.getXMLProperty("adminConsole.authorizedUsernames") == null) {
             // No settings in crossfire.xml.
             return;
         }
@@ -147,7 +147,7 @@ public class DefaultAdminProvider implements AdminProvider {
         List<JID> adminList = new ArrayList<JID>();
 
         // Add bare JIDs of users that are admins (may include remote users), primarily used to override/add to list of admin users
-        String jids = EMIVAGlobals.getXMLProperty("admin.authorizedJIDs");
+        String jids = Globals.getXMLProperty("admin.authorizedJIDs");
         jids = (jids == null || jids.trim().length() == 0) ? "" : jids;
         StringTokenizer tokenizer = new StringTokenizer(jids, ",");
         while (tokenizer.hasMoreTokens()) {
@@ -161,10 +161,10 @@ public class DefaultAdminProvider implements AdminProvider {
         }
 
         // Add the JIDs of the local users that are admins, primarily used to override/add to list of admin users
-        String usernames = EMIVAGlobals.getXMLProperty("admin.authorizedUsernames");
+        String usernames = Globals.getXMLProperty("admin.authorizedUsernames");
         if (usernames == null) {
             // Fall back to old method for defining admins (i.e. using adminConsole prefix
-            usernames = EMIVAGlobals.getXMLProperty("adminConsole.authorizedUsernames");
+            usernames = Globals.getXMLProperty("adminConsole.authorizedUsernames");
         }
         // Add default of admin user if no other users were listed as admins.
         usernames = (usernames == null || usernames.trim().length() == 0) ? (adminList.size() == 0 ? "admin" : "") : usernames;
@@ -183,9 +183,9 @@ public class DefaultAdminProvider implements AdminProvider {
         setAdmins(adminList);
 
         // Clear out old XML property settings
-        EMIVAGlobals.deleteXMLProperty("admin.authorizedJIDs");
-        EMIVAGlobals.deleteXMLProperty("admin.authorizedUsernames");
-        EMIVAGlobals.deleteXMLProperty("adminConsole.authorizedUsernames");
+        Globals.deleteXMLProperty("admin.authorizedJIDs");
+        Globals.deleteXMLProperty("admin.authorizedUsernames");
+        Globals.deleteXMLProperty("adminConsole.authorizedUsernames");
     }
 
 }

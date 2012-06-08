@@ -31,7 +31,7 @@ import net.emiva.crossfire.ServerPort;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.XMPPServerInfo;
 import net.emiva.crossfire.container.BasicModule;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.PropertyEventDispatcher;
 import net.emiva.util.PropertyEventListener;
 import net.emiva.util.TaskEngine;
@@ -98,7 +98,7 @@ public class MulticastDNSService extends BasicModule {
     @Override
 	public void start() throws IllegalStateException {
         // If the service isn't enabled, return.
-        if (!EMIVAGlobals.getBooleanProperty("multicastDNS.enabled", false) ) {
+        if (!Globals.getBooleanProperty("multicastDNS.enabled", false) ) {
             return;     
         }
         TimerTask startService = new TimerTask() {

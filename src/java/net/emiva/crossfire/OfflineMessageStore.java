@@ -42,7 +42,7 @@ import net.emiva.crossfire.user.User;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.database.SequenceManager;
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 import net.emiva.util.FastDateFormat;
 import net.emiva.util.LocaleUtils;
 import net.emiva.util.StringUtils;
@@ -116,9 +116,9 @@ public class OfflineMessageStore extends BasicModule implements UserEventListene
      */
     public OfflineMessageStore() {
         super("Offline Message Store");
-        dateFormat = FastDateFormat.getInstance(EMIVAConstants.XMPP_DATETIME_FORMAT,
+        dateFormat = FastDateFormat.getInstance(GlobalConstants.XMPP_DATETIME_FORMAT,
                 TimeZone.getTimeZone("UTC"));
-        dateFormatOld = FastDateFormat.getInstance(EMIVAConstants.XMPP_DELAY_DATETIME_FORMAT,
+        dateFormatOld = FastDateFormat.getInstance(GlobalConstants.XMPP_DELAY_DATETIME_FORMAT,
                 TimeZone.getTimeZone("UTC"));
         sizeCache = CacheFactory.createCache("Offline Message Size");
     }
@@ -149,7 +149,7 @@ public class OfflineMessageStore extends BasicModule implements UserEventListene
             return;
         }
 
-        long messageID = SequenceManager.nextID(EMIVAConstants.OFFLINE);
+        long messageID = SequenceManager.nextID(GlobalConstants.OFFLINE);
 
         // Get the message in XML format.
         String msgXML = message.getElement().asXML();

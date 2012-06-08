@@ -26,7 +26,7 @@ import net.emiva.crossfire.interceptor.PacketRejectedException;
 import net.emiva.crossfire.session.ClientSession;
 import net.emiva.crossfire.session.Session;
 import net.emiva.crossfire.user.UserManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.xmpp.packet.JID;
 import org.xmpp.packet.Message;
@@ -145,7 +145,7 @@ public class MessageRouter extends BasicModule {
      * @param packet the message to forward.
      */
     private void sendMessageToAdmins(Message packet) {
-        String jids = EMIVAGlobals.getProperty("xmpp.forward.admins");
+        String jids = Globals.getProperty("xmpp.forward.admins");
         if (jids != null && jids.trim().length() > 0) {
             // Forward the message to the users specified in the "xmpp.forward.admins" property
             StringTokenizer tokenizer = new StringTokenizer(jids, ", ");

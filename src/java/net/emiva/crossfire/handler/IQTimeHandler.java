@@ -22,7 +22,7 @@ package net.emiva.crossfire.handler;
 
 import net.emiva.crossfire.IQHandlerInfo;
 import net.emiva.crossfire.disco.ServerFeaturesProvider;
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 import net.emiva.util.FastDateFormat;
 
 import org.dom4j.DocumentHelper;
@@ -62,7 +62,7 @@ public class IQTimeHandler extends IQHandler implements ServerFeaturesProvider {
     private static final DateFormat TIME_FORMAT = DateFormat.getTimeInstance(DateFormat.LONG);
     // UTC and not JEP-0082 time format is used as per the JEP-0090 specification.
     private static final FastDateFormat UTC_FORMAT =
-            FastDateFormat.getInstance(EMIVAConstants.XMPP_DELAY_DATETIME_FORMAT,
+            FastDateFormat.getInstance(GlobalConstants.XMPP_DELAY_DATETIME_FORMAT,
             TimeZone.getTimeZone("UTC"));
 
     private Element responseElement;

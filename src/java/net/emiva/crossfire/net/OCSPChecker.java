@@ -40,7 +40,7 @@ import java.util.Set;
 
 import javax.security.auth.x500.X500Principal;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.bouncycastle.ocsp.BasicOCSPResp;
 import org.bouncycastle.ocsp.CertificateID;
@@ -64,8 +64,8 @@ public class OCSPChecker extends PKIXCertPathChecker {
 
 	private static final Logger Log = LoggerFactory.getLogger(OCSPChecker.class);
 
-    private static String ocspServerUrl = EMIVAGlobals.getProperty("ocsp.responderURL");
-    private static String ocspServerSubject = EMIVAGlobals.getProperty("ocsp.responderCertSubjectName");
+    private static String ocspServerUrl = Globals.getProperty("ocsp.responderURL");
+    private static String ocspServerSubject = Globals.getProperty("ocsp.responderCertSubjectName");
     private static final boolean dump = true;
     private int certIndex;
     private X509Certificate[] certs;

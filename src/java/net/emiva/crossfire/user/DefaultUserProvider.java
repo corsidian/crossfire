@@ -37,7 +37,7 @@ import java.util.Set;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.auth.AuthFactory;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
 import net.emiva.util.StringUtils;
 
@@ -130,7 +130,7 @@ public class DefaultUserProvider implements UserProvider {
             // The user doesn't already exist so we can create a new user
 
             // Determine if the password should be stored as plain text or encrypted.
-            boolean usePlainPassword = EMIVAGlobals.getBooleanProperty("user.usePlainPassword");
+            boolean usePlainPassword = Globals.getBooleanProperty("user.usePlainPassword");
             String encryptedPassword = null;
             if (!usePlainPassword) {
                 try {

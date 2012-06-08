@@ -27,8 +27,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import net.emiva.crossfire.XMPPServer;
-import net.emiva.util.EMIVAGlobals;
-import net.emiva.util.EMIVAProperties;
+import net.emiva.util.GlobalProperties;
+import net.emiva.util.Globals;
 import net.emiva.util.cache.CacheFactory;
 
 import org.slf4j.Logger;
@@ -310,14 +310,14 @@ public class ClusterManager {
                 return;
             }
         }
-        EMIVAGlobals.setXMLProperty(CLUSTER_PROPERTY_NAME, Boolean.toString(enabled));
+        Globals.setXMLProperty(CLUSTER_PROPERTY_NAME, Boolean.toString(enabled));
         if (!enabled) {
             shutdown();
         }
         else {
             // Reload emiva properties. This will ensure that this nodes copy of the
             // properties starts correct.
-           EMIVAProperties.getInstance().init();
+           GlobalProperties.getInstance().init();
            startup();
         }
     }
@@ -329,7 +329,7 @@ public class ClusterManager {
      * @return true if clustering support is enabled.
      */
     public static boolean isClusteringEnabled() {
-        return EMIVAGlobals.getXMLProperty(CLUSTER_PROPERTY_NAME, false);
+        return Globals.getXMLProperty(CLUSTER_PROPERTY_NAME, false);
     }
 
     /**

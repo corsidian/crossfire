@@ -47,7 +47,7 @@ import net.emiva.crossfire.session.IncomingServerSession;
 import net.emiva.crossfire.session.LocalIncomingServerSession;
 import net.emiva.crossfire.session.LocalOutgoingServerSession;
 import net.emiva.crossfire.spi.BasicStreamIDFactory;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.StringUtils;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
@@ -129,7 +129,7 @@ public class ServerDialback {
      * @return true if server dialback is enabled.
      */
     public static boolean isEnabled() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.server.dialback.enabled", true);
+        return Globals.getBooleanProperty("xmpp.server.dialback.enabled", true);
     }
 
     /**
@@ -144,7 +144,7 @@ public class ServerDialback {
      * certificate.
      */
     public static boolean isEnabledForSelfSigned() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false);
+        return Globals.getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false);
     }
 
     /**
@@ -159,7 +159,7 @@ public class ServerDialback {
      * certificate.
      */
     public static void setEnabledForSelfSigned(boolean enabled) {
-        EMIVAGlobals.setProperty("xmpp.server.certificate.accept-selfsigned", Boolean.toString(enabled));
+        Globals.setProperty("xmpp.server.certificate.accept-selfsigned", Boolean.toString(enabled));
     }
 
     /**

@@ -30,7 +30,7 @@ import java.util.List;
 import javax.net.ssl.X509TrustManager;
 
 import net.emiva.crossfire.Connection;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.CertificateManager;
 
 import org.slf4j.Logger;
@@ -101,13 +101,13 @@ public class ServerTrustManager implements X509TrustManager {
 
         // Flag that indicates if certificates of the remote server should be validated. Disabling
         // certificate validation is not recommended for production environments.
-        boolean verify = EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify", true);
+        boolean verify = Globals.getBooleanProperty("xmpp.server.certificate.verify", true);
         if (verify) {
             int nSize = x509Certificates.length;
 
             List<String> peerIdentities = CertificateManager.getPeerIdentities(x509Certificates[0]);
 
-            if (EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify.chain", true)) {
+            if (Globals.getBooleanProperty("xmpp.server.certificate.verify.chain", true)) {
                 // Working down the chain, for every certificate in the chain,
                 // verify that the subject of the certificate is the issuer of the
                 // next certificate in the chain.
@@ -137,7 +137,7 @@ public class ServerTrustManager implements X509TrustManager {
                 }
             }
 
-            if (EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify.root", true)) {
+            if (Globals.getBooleanProperty("xmpp.server.certificate.verify.root", true)) {
                 // Verify that the the last certificate in the chain was issued
                 // by a third-party that the client trusts.
                 boolean trusted = false;
@@ -145,7 +145,7 @@ public class ServerTrustManager implements X509TrustManager {
                     trusted = trustStore.getCertificateAlias(x509Certificates[nSize - 1]) != null;
                     // Keep track if the other peer presented a self-signed certificate
                     connection.setUsingSelfSignedCertificate(!trusted && nSize == 1);
-                    if (!trusted && nSize == 1 && EMIVAGlobals
+                    if (!trusted && nSize == 1 && Globals
                             .getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false))
                     {
                         Log.warn("Accepting self-signed certificate of remote server: " +
@@ -181,7 +181,7 @@ public class ServerTrustManager implements X509TrustManager {
                 throw new CertificateException("target verification failed of " + peerIdentities);
             }
             
-            if (EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify.validity", true)) {
+            if (Globals.getBooleanProperty("xmpp.server.certificate.verify.validity", true)) {
                 // For every certificate in the chain, verify that the certificate
                 // is valid at the current time.
                 Date date = new Date();
@@ -198,7 +198,7 @@ public class ServerTrustManager implements X509TrustManager {
     }
 
     public X509Certificate[] getAcceptedIssuers() {
-        if (EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false)) {
+        if (Globals.getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false)) {
             // Answer an empty list since we accept any issuer
             return new X509Certificate[0];
         }

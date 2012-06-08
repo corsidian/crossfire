@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,9 +71,9 @@ public class SequenceManager {
     private static Map<Integer, SequenceManager> managers = new ConcurrentHashMap<Integer, SequenceManager>();
 
     static {
-        new SequenceManager(EMIVAConstants.ROSTER, 5);
-        new SequenceManager(EMIVAConstants.OFFLINE, 1);
-        new SequenceManager(EMIVAConstants.MUC_ROOM, 1);
+        new SequenceManager(GlobalConstants.ROSTER, 5);
+        new SequenceManager(GlobalConstants.OFFLINE, 1);
+        new SequenceManager(GlobalConstants.MUC_ROOM, 1);
     }
 
     /**

@@ -38,7 +38,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
 
 import org.slf4j.Logger;
@@ -65,7 +65,7 @@ public class HybridUserProvider implements UserProvider {
 
     public HybridUserProvider() {
 // Load primary, secondary, and tertiary user providers.
-        String primaryClass = EMIVAGlobals.getXMLProperty("hybridUserProvider.primaryProvider.className");
+        String primaryClass = Globals.getXMLProperty("hybridUserProvider.primaryProvider.className");
         if (primaryClass == null) {
             Log.error("A primary UserProvider must be specified in the crossfire.xml.");
             return;
@@ -79,7 +79,7 @@ public class HybridUserProvider implements UserProvider {
                     ". Users in this provider will be disabled.", e);
             return;
         }
-        String secondaryClass = EMIVAGlobals.getXMLProperty("hybridUserProvider.secondaryProvider.className");
+        String secondaryClass = Globals.getXMLProperty("hybridUserProvider.secondaryProvider.className");
         if (secondaryClass != null) {
             try {
                 Class c = ClassUtils.forName(secondaryClass);
@@ -89,7 +89,7 @@ public class HybridUserProvider implements UserProvider {
                 Log.error("Unable to load secondary user provider: " + secondaryClass, e);
             }
         }
-        String tertiaryClass = EMIVAGlobals.getXMLProperty("hybridUserProvider.tertiaryProvider.className");
+        String tertiaryClass = Globals.getXMLProperty("hybridUserProvider.tertiaryProvider.className");
         if (secondaryClass != null) {
             try {
                 Class c = ClassUtils.forName(secondaryClass);
@@ -101,14 +101,14 @@ public class HybridUserProvider implements UserProvider {
         }
 
         // Now, load any overrides.
-        String overrideList = EMIVAGlobals.getXMLProperty(
+        String overrideList = Globals.getXMLProperty(
                 "hybridUserProvider.primaryProvider.overrideList", "");
         for (String user : overrideList.split(",")) {
             primaryOverrides.add(user.trim().toLowerCase());
         }
 
         if (secondaryProvider != null) {
-            overrideList = EMIVAGlobals.getXMLProperty(
+            overrideList = Globals.getXMLProperty(
                     "hybridUserProvider.secondaryProvider.overrideList", "");
             for (String user : overrideList.split(",")) {
                 secondaryOverrides.add(user.trim().toLowerCase());
@@ -116,7 +116,7 @@ public class HybridUserProvider implements UserProvider {
         }
 
         if (tertiaryProvider != null) {
-            overrideList = EMIVAGlobals.getXMLProperty(
+            overrideList = Globals.getXMLProperty(
                     "hybridUserProvider.tertiaryProvider.overrideList", "");
             for (String user : overrideList.split(",")) {
                 tertiaryOverrides.add(user.trim().toLowerCase());

@@ -29,7 +29,7 @@ import java.util.List;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.database.SequenceManager;
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 import net.emiva.util.StringUtils;
 
 import org.slf4j.Logger;
@@ -68,7 +68,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            long msgID = SequenceManager.nextID(EMIVAConstants.SECURITY_AUDIT);
+            long msgID = SequenceManager.nextID(GlobalConstants.SECURITY_AUDIT);
             con = DbConnectionManager.getConnection();
             pstmt = con.prepareStatement(LOG_ENTRY);
             pstmt.setLong(1, msgID);

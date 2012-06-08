@@ -217,7 +217,7 @@
 
 <br>
 <p>
-<fmt:message key="server.session.summary.last_update" />: <%= EMIVAGlobals.formatDateTime(new Date()) %>
+<fmt:message key="server.session.summary.last_update" />: <%= Globals.formatDateTime(new Date()) %>
 </p>
 
     </body>

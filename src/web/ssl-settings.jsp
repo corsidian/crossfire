@@ -22,7 +22,7 @@
                  net.emiva.crossfire.XMPPServer,
                  net.emiva.crossfire.server.ServerDialback,
                  net.emiva.crossfire.session.LocalClientSession,
-                 net.emiva.util.EMIVAGlobals"
+                 net.emiva.util.Globals"
     errorPage="error.jsp"
 %>
 <%@ page import="net.emiva.util.ParamUtils" %>
@@ -85,15 +85,15 @@
 
             // Enable TLS and disable server dialback
             XMPPServer.getInstance().getConnectionManager().enableServerListener(true);
-            EMIVAGlobals.setProperty("xmpp.server.tls.enabled", "true");
-            EMIVAGlobals.setProperty("xmpp.server.dialback.enabled", "false");
+            Globals.setProperty("xmpp.server.tls.enabled", "true");
+            Globals.setProperty("xmpp.server.dialback.enabled", "false");
         } else if ("notreq".equals(serverSecurityRequired)) {
             // User selected that security for s2s is NOT required
 
             // Enable TLS and enable server dialback
             XMPPServer.getInstance().getConnectionManager().enableServerListener(true);
-            EMIVAGlobals.setProperty("xmpp.server.tls.enabled", "true");
-            EMIVAGlobals.setProperty("xmpp.server.dialback.enabled", "true");
+            Globals.setProperty("xmpp.server.tls.enabled", "true");
+            Globals.setProperty("xmpp.server.dialback.enabled", "true");
         } else if ("custom".equals(serverSecurityRequired)) {
             // User selected custom server authentication
 
@@ -104,23 +104,23 @@
                 XMPPServer.getInstance().getConnectionManager().enableServerListener(true);
 
                 // Enable or disable server dialback
-                EMIVAGlobals.setProperty("xmpp.server.dialback.enabled", dialbackEnabled ? "true" : "false");
+                Globals.setProperty("xmpp.server.dialback.enabled", dialbackEnabled ? "true" : "false");
 
                 // Enable or disable TLS for s2s connections
-                EMIVAGlobals.setProperty("xmpp.server.tls.enabled", tlsEnabled ? "true" : "false");
+                Globals.setProperty("xmpp.server.tls.enabled", tlsEnabled ? "true" : "false");
             } else {
                 XMPPServer.getInstance().getConnectionManager().enableServerListener(false);
                 // Disable server dialback
-                EMIVAGlobals.setProperty("xmpp.server.dialback.enabled", "false");
+                Globals.setProperty("xmpp.server.dialback.enabled", "false");
 
                 // Disable TLS for s2s connections
-                EMIVAGlobals.setProperty("xmpp.server.tls.enabled", "false");
+                Globals.setProperty("xmpp.server.tls.enabled", "false");
             }
         }
         ServerDialback.setEnabledForSelfSigned(selfSigned);
         success = true;
         // Log the event
-        webManager.logEvent("updated SSL configuration", "xmpp.server.dialback.enabled = "+EMIVAGlobals.getProperty("xmpp.server.dialback.enabled")+"\nxmpp.server.tls.enabled = "+EMIVAGlobals.getProperty("xmpp.server.tls.enabled"));
+        webManager.logEvent("updated SSL configuration", "xmpp.server.dialback.enabled = "+Globals.getProperty("xmpp.server.dialback.enabled")+"\nxmpp.server.tls.enabled = "+Globals.getProperty("xmpp.server.tls.enabled"));
     }
 
     // Set page vars
@@ -146,8 +146,8 @@
                 LocalClientSession.getTLSPolicy().toString();
     }
 
-    boolean tlsEnabled = EMIVAGlobals.getBooleanProperty("xmpp.server.tls.enabled", true);
-    boolean dialbackEnabled = EMIVAGlobals.getBooleanProperty("xmpp.server.dialback.enabled", true);
+    boolean tlsEnabled = Globals.getBooleanProperty("xmpp.server.tls.enabled", true);
+    boolean dialbackEnabled = Globals.getBooleanProperty("xmpp.server.dialback.enabled", true);
     if (tlsEnabled) {
         if (dialbackEnabled) {
             serverSecurityRequired = "notreq";

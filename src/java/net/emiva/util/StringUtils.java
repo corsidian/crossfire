@@ -723,7 +723,7 @@ public class StringUtils {
 
         // default locale
         if (locale == null) {
-            locale = EMIVAGlobals.getLocale();
+            locale = Globals.getLocale();
         }
 
         StringBuilder buf = new StringBuilder(input);
@@ -932,20 +932,20 @@ public class StringUtils {
      * @return textual representation for the time that has elapsed.
      */
     public static String getElapsedTime(long delta) {
-        if (delta < EMIVAConstants.MINUTE) {
+        if (delta < GlobalConstants.MINUTE) {
             return LocaleUtils.getLocalizedString("global.less-minute");
         }
-        else if (delta < EMIVAConstants.HOUR) {
-            long mins = delta / EMIVAConstants.MINUTE;
+        else if (delta < GlobalConstants.HOUR) {
+            long mins = delta / GlobalConstants.MINUTE;
             StringBuilder sb = new StringBuilder();
             sb.append(mins).append(" ");
             sb.append((mins==1) ? LocaleUtils.getLocalizedString("global.minute") : LocaleUtils.getLocalizedString("global.minutes"));
             return sb.toString();
         }
-        else if (delta < EMIVAConstants.DAY) {
-            long hours = delta / EMIVAConstants.HOUR;
-            delta -= hours * EMIVAConstants.HOUR;
-            long mins = delta / EMIVAConstants.MINUTE;
+        else if (delta < GlobalConstants.DAY) {
+            long hours = delta / GlobalConstants.HOUR;
+            delta -= hours * GlobalConstants.HOUR;
+            long mins = delta / GlobalConstants.MINUTE;
             StringBuilder sb = new StringBuilder();
             sb.append(hours).append(" ");
             sb.append((hours == 1) ? LocaleUtils.getLocalizedString("global.hour") : LocaleUtils.getLocalizedString("global.hours"));
@@ -954,11 +954,11 @@ public class StringUtils {
             sb.append((mins == 1) ? LocaleUtils.getLocalizedString("global.minute") : LocaleUtils.getLocalizedString("global.minutes"));
             return sb.toString();
         } else {
-            long days = delta / EMIVAConstants.DAY;
-            delta -= days * EMIVAConstants.DAY;
-            long hours = delta / EMIVAConstants.HOUR;
-            delta -= hours * EMIVAConstants.HOUR;
-            long mins = delta / EMIVAConstants.MINUTE;
+            long days = delta / GlobalConstants.DAY;
+            delta -= days * GlobalConstants.DAY;
+            long hours = delta / GlobalConstants.HOUR;
+            delta -= hours * GlobalConstants.HOUR;
+            long mins = delta / GlobalConstants.MINUTE;
             StringBuilder sb = new StringBuilder();
             sb.append(days).append(" ");
             sb.append((days == 1) ? LocaleUtils.getLocalizedString("global.day") : LocaleUtils.getLocalizedString("global.days"));

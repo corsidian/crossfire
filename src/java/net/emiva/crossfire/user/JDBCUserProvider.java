@@ -35,7 +35,7 @@ import java.util.Set;
 
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,21 +102,21 @@ public class JDBCUserProvider implements UserProvider {
      */
     public JDBCUserProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("jdbcProvider.driver");
-        EMIVAGlobals.migrateProperty("jdbcProvider.connectionString");
-        EMIVAGlobals.migrateProperty("jdbcUserProvider.loadUserSQL");
-        EMIVAGlobals.migrateProperty("jdbcUserProvider.userCountSQL");
-        EMIVAGlobals.migrateProperty("jdbcUserProvider.allUsersSQL");
-        EMIVAGlobals.migrateProperty("jdbcUserProvider.searchSQL");
-        EMIVAGlobals.migrateProperty("jdbcUserProvider.usernameField");
-        EMIVAGlobals.migrateProperty("jdbcUserProvider.nameField");
-        EMIVAGlobals.migrateProperty("jdbcUserProvider.emailField");
+        Globals.migrateProperty("jdbcProvider.driver");
+        Globals.migrateProperty("jdbcProvider.connectionString");
+        Globals.migrateProperty("jdbcUserProvider.loadUserSQL");
+        Globals.migrateProperty("jdbcUserProvider.userCountSQL");
+        Globals.migrateProperty("jdbcUserProvider.allUsersSQL");
+        Globals.migrateProperty("jdbcUserProvider.searchSQL");
+        Globals.migrateProperty("jdbcUserProvider.usernameField");
+        Globals.migrateProperty("jdbcUserProvider.nameField");
+        Globals.migrateProperty("jdbcUserProvider.emailField");
 
-        useConnectionProvider = EMIVAGlobals.getBooleanProperty("jdbcUserProvider.useConnectionProvider");
+        useConnectionProvider = Globals.getBooleanProperty("jdbcUserProvider.useConnectionProvider");
 
             // Load the JDBC driver and connection string.
 		if (!useConnectionProvider) {
-			String jdbcDriver = EMIVAGlobals.getProperty("jdbcProvider.driver");
+			String jdbcDriver = Globals.getProperty("jdbcProvider.driver");
 			try {
 				Class.forName(jdbcDriver).newInstance();
 			}
@@ -124,17 +124,17 @@ public class JDBCUserProvider implements UserProvider {
 				Log.error("Unable to load JDBC driver: " + jdbcDriver, e);
 				return;
 			}
-			connectionString = EMIVAGlobals.getProperty("jdbcProvider.connectionString");
+			connectionString = Globals.getProperty("jdbcProvider.connectionString");
 		}
 
 		// Load database statements for user data.
-		loadUserSQL = EMIVAGlobals.getProperty("jdbcUserProvider.loadUserSQL");
-		userCountSQL = EMIVAGlobals.getProperty("jdbcUserProvider.userCountSQL");
-		allUsersSQL = EMIVAGlobals.getProperty("jdbcUserProvider.allUsersSQL");
-		searchSQL = EMIVAGlobals.getProperty("jdbcUserProvider.searchSQL");
-		usernameField = EMIVAGlobals.getProperty("jdbcUserProvider.usernameField");
-		nameField = EMIVAGlobals.getProperty("jdbcUserProvider.nameField");
-		emailField = EMIVAGlobals.getProperty("jdbcUserProvider.emailField");
+		loadUserSQL = Globals.getProperty("jdbcUserProvider.loadUserSQL");
+		userCountSQL = Globals.getProperty("jdbcUserProvider.userCountSQL");
+		allUsersSQL = Globals.getProperty("jdbcUserProvider.allUsersSQL");
+		searchSQL = Globals.getProperty("jdbcUserProvider.searchSQL");
+		usernameField = Globals.getProperty("jdbcUserProvider.usernameField");
+		nameField = Globals.getProperty("jdbcUserProvider.nameField");
+		emailField = Globals.getProperty("jdbcUserProvider.emailField");
 	}
 
 	public User loadUser(String username) throws UserNotFoundException {

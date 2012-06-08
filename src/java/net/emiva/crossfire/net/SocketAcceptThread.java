@@ -22,7 +22,7 @@ package net.emiva.crossfire.net;
 
 import net.emiva.crossfire.ConnectionManager;
 import net.emiva.crossfire.ServerPort;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class SocketAcceptThread extends Thread {
             throws IOException {
         super("Socket Listener at port " + serverPort.getPort());
         // Listen on a specific network interface if it has been set.
-        String interfaceName = EMIVAGlobals.getXMLProperty("network.interface");
+        String interfaceName = Globals.getXMLProperty("network.interface");
         InetAddress bindInterface = null;
         if (interfaceName != null) {
             if (interfaceName.trim().length() > 0) {

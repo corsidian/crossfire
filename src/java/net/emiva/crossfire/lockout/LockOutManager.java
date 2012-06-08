@@ -21,7 +21,7 @@ package net.emiva.crossfire.lockout;
 import java.util.Date;
 import java.util.Map;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
 import net.emiva.util.PropertyEventDispatcher;
 import net.emiva.util.PropertyEventListener;
@@ -117,9 +117,9 @@ public class LockOutManager {
      */
     private void initProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("provider.lockout.className");
+        Globals.migrateProperty("provider.lockout.className");
 
-        String className = EMIVAGlobals.getProperty("provider.lockout.className",
+        String className = Globals.getProperty("provider.lockout.className",
                 "net.emiva.crossfire.lockout.DefaultLockOutProvider");
         // Check if we need to reset the provider class
         if (provider == null || !className.equals(provider.getClass().getName())) {

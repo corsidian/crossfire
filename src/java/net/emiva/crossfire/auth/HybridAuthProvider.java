@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
 
 import org.slf4j.Logger;
@@ -90,16 +90,16 @@ public class HybridAuthProvider implements AuthProvider {
 
     public HybridAuthProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("hybridAuthProvider.primaryProvider.className");
-        EMIVAGlobals.migrateProperty("hybridAuthProvider.primaryProvider.className");
-        EMIVAGlobals.migrateProperty("hybridAuthProvider.secondaryProvider.className");
-        EMIVAGlobals.migrateProperty("hybridAuthProvider.tertiaryProvider.className");
-        EMIVAGlobals.migrateProperty("hybridAuthProvider.primaryProvider.overrideList");
-        EMIVAGlobals.migrateProperty("hybridAuthProvider.secondaryProvider.overrideList");
-        EMIVAGlobals.migrateProperty("hybridAuthProvider.tertiaryProvider.overrideList");
+        Globals.migrateProperty("hybridAuthProvider.primaryProvider.className");
+        Globals.migrateProperty("hybridAuthProvider.primaryProvider.className");
+        Globals.migrateProperty("hybridAuthProvider.secondaryProvider.className");
+        Globals.migrateProperty("hybridAuthProvider.tertiaryProvider.className");
+        Globals.migrateProperty("hybridAuthProvider.primaryProvider.overrideList");
+        Globals.migrateProperty("hybridAuthProvider.secondaryProvider.overrideList");
+        Globals.migrateProperty("hybridAuthProvider.tertiaryProvider.overrideList");
 
         // Load primary, secondary, and tertiary auth providers.
-        String primaryClass = EMIVAGlobals.getProperty(
+        String primaryClass = Globals.getProperty(
                 "hybridAuthProvider.primaryProvider.className");
         if (primaryClass == null) {
             Log.error("A primary AuthProvider must be specified. Authentication will be disabled.");
@@ -123,7 +123,7 @@ public class HybridAuthProvider implements AuthProvider {
             return;
         }
 
-        String secondaryClass = EMIVAGlobals.getProperty(
+        String secondaryClass = Globals.getProperty(
                 "hybridAuthProvider.secondaryProvider.className");
         if (secondaryClass != null) {
             try {
@@ -144,7 +144,7 @@ public class HybridAuthProvider implements AuthProvider {
             }
         }
 
-        String tertiaryClass = EMIVAGlobals.getProperty(
+        String tertiaryClass = Globals.getProperty(
                 "hybridAuthProvider.tertiaryProvider.className");
         if (tertiaryClass != null) {
             try {
@@ -167,14 +167,14 @@ public class HybridAuthProvider implements AuthProvider {
         }
 
         // Now, load any overrides.
-        String overrideList = EMIVAGlobals.getProperty(
+        String overrideList = Globals.getProperty(
                 "hybridAuthProvider.primaryProvider.overrideList", "");
         for (String user: overrideList.split(",")) {
             primaryOverrides.add(user.trim().toLowerCase());
         }
 
         if (secondaryProvider != null) {
-            overrideList = EMIVAGlobals.getProperty(
+            overrideList = Globals.getProperty(
                     "hybridAuthProvider.secondaryProvider.overrideList", "");
             for (String user: overrideList.split(",")) {
                 secondaryOverrides.add(user.trim().toLowerCase());
@@ -182,7 +182,7 @@ public class HybridAuthProvider implements AuthProvider {
         }
 
         if (tertiaryProvider != null) {
-            overrideList = EMIVAGlobals.getProperty(
+            overrideList = Globals.getProperty(
                     "hybridAuthProvider.tertiaryProvider.overrideList", "");
             for (String user: overrideList.split(",")) {
                 tertiaryOverrides.add(user.trim().toLowerCase());

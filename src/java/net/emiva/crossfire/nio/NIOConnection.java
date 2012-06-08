@@ -44,7 +44,7 @@ import net.emiva.crossfire.net.SSLConfig;
 import net.emiva.crossfire.net.ServerTrustManager;
 import net.emiva.crossfire.session.LocalSession;
 import net.emiva.crossfire.session.Session;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.XMLWriter;
 
 import org.apache.mina.common.ByteBuffer;
@@ -304,7 +304,7 @@ public class NIOConnection implements Connection {
                 else {
                     // Send stanza and wait for ACK (using a 2 seconds default timeout)
                     boolean ok =
-                            ioSession.write(buffer).join(EMIVAGlobals.getIntProperty("connection.ack.timeout", 2000));
+                            ioSession.write(buffer).join(Globals.getIntProperty("connection.ack.timeout", 2000));
                     if (!ok) {
                         Log.warn("No ACK was received when sending stanza to: " + this.toString());
                     }

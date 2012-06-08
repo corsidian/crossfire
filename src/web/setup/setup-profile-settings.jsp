@@ -5,7 +5,7 @@
 --%>
 
 <%@ page import="net.emiva.crossfire.XMPPServer"%>
-<%@ page import="net.emiva.util.EMIVAGlobals"%>
+<%@ page import="net.emiva.util.Globals"%>
 <%@ page import="java.util.Map" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>

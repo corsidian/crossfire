@@ -23,7 +23,7 @@ import net.emiva.crossfire.Connection;
 import net.emiva.crossfire.PacketRouter;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.session.LocalIncomingServerSession;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.dom4j.Element;
 import org.slf4j.Logger;
@@ -109,9 +109,9 @@ public class ServerStanzaHandler extends StanzaHandler {
 	void startTLS() throws Exception {
         // TODO Finish implementation. We need to get the name of the remote server if we want to validate certificates of the remote server that requested TLS
 
-        boolean needed = EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify", true) &&
-                EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify.chain", true) &&
-                !EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false);
+        boolean needed = Globals.getBooleanProperty("xmpp.server.certificate.verify", true) &&
+                Globals.getBooleanProperty("xmpp.server.certificate.verify.chain", true) &&
+                !Globals.getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false);
         connection.startTLS(false, "IMPLEMENT_ME", needed ? Connection.ClientAuth.needed : Connection.ClientAuth.wanted);
     }
     @Override

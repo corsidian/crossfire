@@ -43,7 +43,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import net.emiva.crossfire.audit.AuditManager;
 import net.emiva.crossfire.audit.Auditor;
 import net.emiva.crossfire.session.Session;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.FastDateFormat;
 import net.emiva.util.LocaleUtils;
 import net.emiva.util.StringUtils;
@@ -122,7 +122,7 @@ public class AuditorImpl implements Auditor {
     public AuditorImpl(AuditManager manager) {
         auditManager = manager;
         dateFormat = FastDateFormat.getInstance("yyyyMMdd", TimeZone.getTimeZone("UTC"));
-        auditFormat = FastDateFormat.getInstance("MMM dd, yyyy hh:mm:ss:SSS a", EMIVAGlobals.getLocale());
+        auditFormat = FastDateFormat.getInstance("MMM dd, yyyy hh:mm:ss:SSS a", Globals.getLocale());
     }
 
     protected void setMaxValues(int totalSize, int fileSize, int days) {

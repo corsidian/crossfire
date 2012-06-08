@@ -25,7 +25,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.logicalcobwebs.proxool.ConnectionPoolDefinitionIF;
 import org.logicalcobwebs.proxool.ProxoolException;
@@ -330,19 +330,19 @@ public class DefaultConnectionProvider implements ConnectionProvider {
      */
     private void loadProperties() {
 
-        driver = EMIVAGlobals.getXMLProperty("database.defaultProvider.driver");
-        serverURL = EMIVAGlobals.getXMLProperty("database.defaultProvider.serverURL");
-        username = EMIVAGlobals.getXMLProperty("database.defaultProvider.username");
-        password = EMIVAGlobals.getXMLProperty("database.defaultProvider.password");
-        String minCons = EMIVAGlobals.getXMLProperty("database.defaultProvider.minConnections");
-        String maxCons = EMIVAGlobals.getXMLProperty("database.defaultProvider.maxConnections");
-        String conTimeout = EMIVAGlobals.getXMLProperty("database.defaultProvider.connectionTimeout");
-        testSQL = EMIVAGlobals.getXMLProperty("database.defaultProvider.testSQL", DbConnectionManager.getTestSQL(driver));
-        testBeforeUse = EMIVAGlobals.getXMLProperty("database.defaultProvider.testBeforeUse", true);
-        testAfterUse = EMIVAGlobals.getXMLProperty("database.defaultProvider.testAfterUse", true);
+        driver = Globals.getXMLProperty("database.defaultProvider.driver");
+        serverURL = Globals.getXMLProperty("database.defaultProvider.serverURL");
+        username = Globals.getXMLProperty("database.defaultProvider.username");
+        password = Globals.getXMLProperty("database.defaultProvider.password");
+        String minCons = Globals.getXMLProperty("database.defaultProvider.minConnections");
+        String maxCons = Globals.getXMLProperty("database.defaultProvider.maxConnections");
+        String conTimeout = Globals.getXMLProperty("database.defaultProvider.connectionTimeout");
+        testSQL = Globals.getXMLProperty("database.defaultProvider.testSQL", DbConnectionManager.getTestSQL(driver));
+        testBeforeUse = Globals.getXMLProperty("database.defaultProvider.testBeforeUse", true);
+        testAfterUse = Globals.getXMLProperty("database.defaultProvider.testAfterUse", true);
 
         // See if we should use Unicode under MySQL
-        mysqlUseUnicode = Boolean.valueOf(EMIVAGlobals.getXMLProperty("database.mysql.useUnicode"));
+        mysqlUseUnicode = Boolean.valueOf(Globals.getXMLProperty("database.mysql.useUnicode"));
         try {
             if (minCons != null) {
                 minConnections = Integer.parseInt(minCons);
@@ -365,19 +365,19 @@ public class DefaultConnectionProvider implements ConnectionProvider {
      */
     private void saveProperties() {
 
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.driver", driver);
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.serverURL", serverURL);
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.username", username);
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.password", password);
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.testSQL", testSQL);
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.testBeforeUse", testBeforeUse.toString());
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.testAfterUse", testAfterUse.toString());
+        Globals.setXMLProperty("database.defaultProvider.driver", driver);
+        Globals.setXMLProperty("database.defaultProvider.serverURL", serverURL);
+        Globals.setXMLProperty("database.defaultProvider.username", username);
+        Globals.setXMLProperty("database.defaultProvider.password", password);
+        Globals.setXMLProperty("database.defaultProvider.testSQL", testSQL);
+        Globals.setXMLProperty("database.defaultProvider.testBeforeUse", testBeforeUse.toString());
+        Globals.setXMLProperty("database.defaultProvider.testAfterUse", testAfterUse.toString());
 
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.minConnections",
+        Globals.setXMLProperty("database.defaultProvider.minConnections",
                 Integer.toString(minConnections));
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.maxConnections",
+        Globals.setXMLProperty("database.defaultProvider.maxConnections",
                 Integer.toString(maxConnections));
-        EMIVAGlobals.setXMLProperty("database.defaultProvider.connectionTimeout",
+        Globals.setXMLProperty("database.defaultProvider.connectionTimeout",
                 Double.toString(connectionTimeout));
     }
 

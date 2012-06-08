@@ -27,7 +27,7 @@ import net.emiva.crossfire.container.BasicModule;
 import net.emiva.crossfire.privacy.PrivacyList;
 import net.emiva.crossfire.privacy.PrivacyListManager;
 import net.emiva.crossfire.user.UserManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +63,7 @@ public class OfflineMessageStrategy extends BasicModule {
 
     public void setQuota(int quota) {
         OfflineMessageStrategy.quota = quota;
-        EMIVAGlobals.setProperty("xmpp.offline.quota", Integer.toString(quota));
+        Globals.setProperty("xmpp.offline.quota", Integer.toString(quota));
     }
 
     public OfflineMessageStrategy.Type getType() {
@@ -75,7 +75,7 @@ public class OfflineMessageStrategy extends BasicModule {
             throw new IllegalArgumentException();
         }
         OfflineMessageStrategy.type = type;
-        EMIVAGlobals.setProperty("xmpp.offline.type", type.toString());
+        Globals.setProperty("xmpp.offline.type", type.toString());
     }
 
     public void storeOffline(Message message) {
@@ -190,11 +190,11 @@ public class OfflineMessageStrategy extends BasicModule {
         router = server.getPacketRouter();
         serverAddress = new JID(server.getServerInfo().getXMPPDomain());
 
-        String quota = EMIVAGlobals.getProperty("xmpp.offline.quota");
+        String quota = Globals.getProperty("xmpp.offline.quota");
         if (quota != null && quota.length() > 0) {
             OfflineMessageStrategy.quota = Integer.parseInt(quota);
         }
-        String type = EMIVAGlobals.getProperty("xmpp.offline.type");
+        String type = Globals.getProperty("xmpp.offline.type");
         if (type != null && type.length() > 0) {
             OfflineMessageStrategy.type = Type.valueOf(type);
         }

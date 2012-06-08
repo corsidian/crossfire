@@ -21,7 +21,7 @@
 package net.emiva.crossfire.net;
 
 import net.emiva.crossfire.Connection;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 
 import javax.net.ssl.SSLEngine;
@@ -140,9 +140,9 @@ public class TLSStreamHandler {
         }
         else if (needClientAuth) {
             // Only REQUIRE client authentication if we are fully verifying certificates
-            if (EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify", true) &&
-                    EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify.chain", true) &&
-                    !EMIVAGlobals
+            if (Globals.getBooleanProperty("xmpp.server.certificate.verify", true) &&
+                    Globals.getBooleanProperty("xmpp.server.certificate.verify.chain", true) &&
+                    !Globals
                             .getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false))
             {
                 tlsEngine.setNeedClientAuth(true);

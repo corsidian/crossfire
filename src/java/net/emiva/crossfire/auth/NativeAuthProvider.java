@@ -30,7 +30,7 @@ import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.crossfire.user.UserProvider;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.StringUtils;
 
 import org.slf4j.Logger;
@@ -79,9 +79,9 @@ public class NativeAuthProvider implements AuthProvider {
 
     public NativeAuthProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("nativeAuth.domain");
+        Globals.migrateProperty("nativeAuth.domain");
 
-        this.domain = EMIVAGlobals.getProperty("nativeAuth.domain");
+        this.domain = Globals.getProperty("nativeAuth.domain");
 
         // Configure the library path so that we can load the shaj native library
         // from the crossfire lib directory.

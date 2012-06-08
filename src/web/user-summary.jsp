@@ -22,7 +22,7 @@
                  net.emiva.crossfire.admin.AdminManager,
                  net.emiva.crossfire.user.User,
                  net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.util.LocaleUtils,
                  net.emiva.util.ParamUtils"
 %><%@ page import="net.emiva.util.StringUtils"%>
@@ -239,7 +239,7 @@
             <%= user.getName() %> &nbsp;
         </td>
         <td width="15%">
-            <%= EMIVAGlobals.formatDate(user.getCreationDate()) %>
+            <%= Globals.formatDate(user.getCreationDate()) %>
         </td>
         <td width="25%">
             <% long logoutTime = presenceManager.getLastActivity(user);

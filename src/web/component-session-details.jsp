@@ -20,7 +20,7 @@
 
 <%@ page import="net.emiva.crossfire.SessionManager,
                  net.emiva.crossfire.session.ComponentSession,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.util.ParamUtils"
     errorPage="error.jsp"
 %>
@@ -125,7 +125,7 @@
             <fmt:message key="component.session.label.creation" />
         </td>
         <td>
-            <%= EMIVAGlobals.formatDateTime(componentSession.getCreationDate()) %>
+            <%= Globals.formatDateTime(componentSession.getCreationDate()) %>
         </td>
     </tr>
     <tr>
@@ -133,7 +133,7 @@
             <fmt:message key="component.session.label.last_active" />
         </td>
         <td>
-            <%= EMIVAGlobals.formatDateTime(componentSession.getLastActiveDate()) %>
+            <%= Globals.formatDateTime(componentSession.getLastActiveDate()) %>
         </td>
     </tr>
     <tr>

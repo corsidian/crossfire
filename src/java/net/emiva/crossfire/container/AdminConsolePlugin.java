@@ -26,7 +26,7 @@ import java.util.List;
 
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.net.SSLConfig;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.CertificateEventListener;
 import net.emiva.util.CertificateManager;
 import net.emiva.util.LocaleUtils;
@@ -93,8 +93,8 @@ public class AdminConsolePlugin implements Plugin {
         certificateListener = new CertificateListener();
         CertificateManager.addListener(certificateListener);
 
-        adminPort = EMIVAGlobals.getXMLProperty("adminConsole.port", 9090);
-        adminSecurePort = EMIVAGlobals.getXMLProperty("adminConsole.securePort", 9091);
+        adminPort = Globals.getXMLProperty("adminConsole.port", 9090);
+        adminSecurePort = Globals.getXMLProperty("adminConsole.securePort", 9091);
         adminServer = new Server();
         final QueuedThreadPool tp = new QueuedThreadPool(254);
         tp.setName("Jetty-QTP-AdminConsole");
@@ -219,8 +219,8 @@ public class AdminConsolePlugin implements Plugin {
      * will be available in all interfaces.
      */
     public String getBindInterface() {
-        String adminInterfaceName = EMIVAGlobals.getXMLProperty("adminConsole.interface");
-        String globalInterfaceName = EMIVAGlobals.getXMLProperty("network.interface");
+        String adminInterfaceName = Globals.getXMLProperty("adminConsole.interface");
+        String globalInterfaceName = Globals.getXMLProperty("network.interface");
         String bindInterface = null;
         if (adminInterfaceName != null && adminInterfaceName.trim().length() > 0) {
             bindInterface = adminInterfaceName;

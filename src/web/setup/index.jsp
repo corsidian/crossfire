@@ -7,7 +7,7 @@
   -	$Date: 2005-09-23 10:54:57 -0700 (Fri, 23 Sep 2005) $
 --%>
 
-<%@ page import="net.emiva.util.EMIVAGlobals,
+<%@ page import="net.emiva.util.Globals,
                  net.emiva.util.ParamUtils,
                  net.emiva.crossfire.XMPPServer" %>
 <%@ page import="java.util.HashMap"%>
@@ -49,7 +49,7 @@
                 errors.put("localeCode","");
             }
             else {
-                EMIVAGlobals.setLocale(newLocale);
+                Globals.setLocale(newLocale);
                 // redirect
                 response.sendRedirect("setup-host-settings.jsp");
                 return;
@@ -57,7 +57,7 @@
         }
     }
 
-    Locale locale = EMIVAGlobals.getLocale();
+    Locale locale = Globals.getLocale();
 %>
 
 <html>

@@ -35,8 +35,8 @@ import net.emiva.crossfire.cluster.ClusterNodeInfo;
 import net.emiva.crossfire.container.Plugin;
 import net.emiva.crossfire.container.PluginClassLoader;
 import net.emiva.crossfire.container.PluginManager;
-import net.emiva.util.EMIVAConstants;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.GlobalConstants;
+import net.emiva.util.Globals;
 import net.emiva.util.InitializationException;
 
 import org.slf4j.Logger;
@@ -72,7 +72,7 @@ public class CacheFactory {
     private static Thread statsThread;
 
     public static final int DEFAULT_MAX_CACHE_SIZE = 1024 * 256;
-    public static final long DEFAULT_MAX_CACHE_LIFETIME = 6 * EMIVAConstants.HOUR;
+    public static final long DEFAULT_MAX_CACHE_LIFETIME = 6 * GlobalConstants.HOUR;
 
     /**
      * This map contains property names which were used to store cache configuration data
@@ -86,9 +86,9 @@ public class CacheFactory {
     private static final Map<String, Long> cacheProps = new HashMap<String, Long>();
 
     static {
-        localCacheFactoryClass = EMIVAGlobals.getProperty(LOCAL_CACHE_PROPERTY_NAME,
+        localCacheFactoryClass = Globals.getProperty(LOCAL_CACHE_PROPERTY_NAME,
                 "net.emiva.util.cache.DefaultLocalCacheStrategy");
-        clusteredCacheFactoryClass = EMIVAGlobals.getProperty(CLUSTERED_CACHE_PROPERTY_NAME,
+        clusteredCacheFactoryClass = Globals.getProperty(CLUSTERED_CACHE_PROPERTY_NAME,
                 "com.emiva.util.cache.CoherenceClusteredCacheFactory");
 
         cacheNames.put("Favicon Hits", "faviconHits");
@@ -133,30 +133,30 @@ public class CacheFactory {
         cacheProps.put("cache.fileTransfer.size", 128 * 1024l);
         cacheProps.put("cache.fileTransfer.maxLifetime", 1000 * 60 * 10l);
         cacheProps.put("cache.multicast.size", 128 * 1024l);
-        cacheProps.put("cache.multicast.maxLifetime", EMIVAConstants.DAY);
+        cacheProps.put("cache.multicast.maxLifetime", GlobalConstants.DAY);
         cacheProps.put("cache.offlinemessage.size", 100 * 1024l);
-        cacheProps.put("cache.offlinemessage.maxLifetime", EMIVAConstants.HOUR * 12);
+        cacheProps.put("cache.offlinemessage.maxLifetime", GlobalConstants.HOUR * 12);
         cacheProps.put("cache.pop3.size", 512 * 1024l);
-        cacheProps.put("cache.pop3.maxLifetime", EMIVAConstants.HOUR);
+        cacheProps.put("cache.pop3.maxLifetime", GlobalConstants.HOUR);
         cacheProps.put("cache.transferProxy.size", -1l);
         cacheProps.put("cache.transferProxy.maxLifetime", 1000 * 60 * 10l);
         cacheProps.put("cache.group.size", 1024 * 1024l);
-        cacheProps.put("cache.group.maxLifetime", EMIVAConstants.MINUTE * 15);
+        cacheProps.put("cache.group.maxLifetime", GlobalConstants.MINUTE * 15);
         cacheProps.put("cache.lockOutCache.size", 1024 * 1024l);
-        cacheProps.put("cache.lockOutCache.maxLifetime", EMIVAConstants.MINUTE * 15);
+        cacheProps.put("cache.lockOutCache.maxLifetime", GlobalConstants.MINUTE * 15);
         cacheProps.put("cache.groupMeta.size", 512 * 1024l);
-        cacheProps.put("cache.groupMeta.maxLifetime", EMIVAConstants.MINUTE * 15);
+        cacheProps.put("cache.groupMeta.maxLifetime", GlobalConstants.MINUTE * 15);
         cacheProps.put("cache.javascript.size", 128 * 1024l);
         cacheProps.put("cache.javascript.maxLifetime", 3600 * 24 * 10l);
         cacheProps.put("cache.ldap.size", 512 * 1024l);
-        cacheProps.put("cache.ldap.maxLifetime", EMIVAConstants.HOUR * 2);
+        cacheProps.put("cache.ldap.maxLifetime", GlobalConstants.HOUR * 2);
         cacheProps.put("cache.listsCache.size", 512 * 1024l);
         cacheProps.put("cache.offlinePresence.size", 512 * 1024l);
         cacheProps.put("cache.lastActivity.size", 128 * 1024l);
         cacheProps.put("cache.userCache.size", 512 * 1024l);
-        cacheProps.put("cache.userCache.maxLifetime", EMIVAConstants.MINUTE * 30);
+        cacheProps.put("cache.userCache.maxLifetime", GlobalConstants.MINUTE * 30);
         cacheProps.put("cache.remoteUsersCache.size", 512 * 1024l);
-        cacheProps.put("cache.remoteUsersCache.maxLifetime", EMIVAConstants.MINUTE * 30);
+        cacheProps.put("cache.remoteUsersCache.maxLifetime", GlobalConstants.MINUTE * 30);
         cacheProps.put("cache.vcardCache.size", 512 * 1024l);
         cacheProps.put("cache.faviconHits.size", 128 * 1024l);
         cacheProps.put("cache.faviconMisses.size", 128 * 1024l);
@@ -189,17 +189,17 @@ public class CacheFactory {
         cacheProps.put("cache.serverItems.size", -1l);
         cacheProps.put("cache.serverItems.maxLifetime", -1l);
         cacheProps.put("cache.serversConfigurations.size", 128 * 1024l);
-        cacheProps.put("cache.serversConfigurations.maxLifetime", EMIVAConstants.MINUTE * 30);
+        cacheProps.put("cache.serversConfigurations.maxLifetime", GlobalConstants.MINUTE * 30);
         cacheProps.put("cache.entityCapabilities.size", -1l);
-        cacheProps.put("cache.entityCapabilities.maxLifetime", EMIVAConstants.DAY * 2);
+        cacheProps.put("cache.entityCapabilities.maxLifetime", GlobalConstants.DAY * 2);
         cacheProps.put("cache.entityCapabilitiesUsers.size", -1l);
-        cacheProps.put("cache.entityCapabilitiesUsers.maxLifetime", EMIVAConstants.DAY * 2);
+        cacheProps.put("cache.entityCapabilitiesUsers.maxLifetime", GlobalConstants.DAY * 2);
         cacheProps.put("cache.pluginCacheInfo.size", -1l);
         cacheProps.put("cache.pluginCacheInfo.maxLifetime", -1l);
         cacheProps.put("cache.clearspaceSSONonce.size", -1l);
-        cacheProps.put("cache.clearspaceSSONonce.maxLifetime", EMIVAConstants.MINUTE * 2);
+        cacheProps.put("cache.clearspaceSSONonce.maxLifetime", GlobalConstants.MINUTE * 2);
         cacheProps.put("cache.pepServiceManager.size", 1024l * 1024 * 10);
-        cacheProps.put("cache.pepServiceManager.maxLifetime", EMIVAConstants.MINUTE * 30);
+        cacheProps.put("cache.pepServiceManager.maxLifetime", GlobalConstants.MINUTE * 30);
     }
 
     private CacheFactory() {
@@ -224,7 +224,7 @@ public class CacheFactory {
      */
     public static void setMaxSizeProperty(String cacheName, long size) {
         cacheName = cacheName.replaceAll(" ", "");
-        EMIVAGlobals.setProperty("cache." + cacheName + ".size", Long.toString(size));
+        Globals.setProperty("cache." + cacheName + ".size", Long.toString(size));
     }
 
     public static boolean hasMaxSizeFromProperty(String cacheName) {
@@ -250,7 +250,7 @@ public class CacheFactory {
      */
     public static void setMaxLifetimeProperty(String cacheName, long lifetime) {
         cacheName = cacheName.replaceAll(" ", "");
-        EMIVAGlobals.setProperty(("cache." + cacheName + ".maxLifetime"), Long.toString(lifetime));
+        Globals.setProperty(("cache." + cacheName + ".maxLifetime"), Long.toString(lifetime));
     }
 
     public static boolean hasMaxLifetimeFromProperty(String cacheName) {
@@ -259,17 +259,17 @@ public class CacheFactory {
 
     public static void setCacheTypeProperty(String cacheName, String type) {
         cacheName = cacheName.replaceAll(" ", "");
-        EMIVAGlobals.setProperty("cache." + cacheName + ".type", type);
+        Globals.setProperty("cache." + cacheName + ".type", type);
     }
 
     public static String getCacheTypeProperty(String cacheName) {
         cacheName = cacheName.replaceAll(" ", "");
-        return EMIVAGlobals.getProperty("cache." + cacheName + ".type");
+        return Globals.getProperty("cache." + cacheName + ".type");
     }
 
     public static void setMinCacheSize(String cacheName, long size) {
         cacheName = cacheName.replaceAll(" ", "");
-        EMIVAGlobals.setProperty("cache." + cacheName + ".min", Long.toString(size));
+        Globals.setProperty("cache." + cacheName + ".min", Long.toString(size));
     }
 
     public static long getMinCacheSize(String cacheName) {
@@ -279,11 +279,11 @@ public class CacheFactory {
     private static long getCacheProperty(String cacheName, String suffix, long defaultValue) {
         // First check if user is overwriting default value using a system property for the cache name
         String propName = "cache." + cacheName.replaceAll(" ", "") + suffix;
-        String sizeProp = EMIVAGlobals.getProperty(propName);
+        String sizeProp = Globals.getProperty(propName);
         if (sizeProp == null && cacheNames.containsKey(cacheName)) {
             // No system property was found for the cache name so try now with short name
             propName = "cache." + cacheNames.get(cacheName) + suffix;
-            sizeProp = EMIVAGlobals.getProperty(propName);
+            sizeProp = Globals.getProperty(propName);
         }
         if (sizeProp != null) {
             try {
@@ -301,11 +301,11 @@ public class CacheFactory {
     private static boolean hasCacheProperty(String cacheName, String suffix) {
         // First check if user is overwriting default value using a system property for the cache name
         String propName = "cache." + cacheName.replaceAll(" ", "") + suffix;
-        String sizeProp = EMIVAGlobals.getProperty(propName);
+        String sizeProp = Globals.getProperty(propName);
         if (sizeProp == null && cacheNames.containsKey(cacheName)) {
             // No system property was found for the cache name so try now with short name
             propName = "cache." + cacheNames.get(cacheName) + suffix;
-            sizeProp = EMIVAGlobals.getProperty(propName);
+            sizeProp = Globals.getProperty(propName);
         }
         if (sizeProp != null) {
             try {

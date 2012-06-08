@@ -27,7 +27,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +77,7 @@ public class JNDIDataSourceProvider implements ConnectionProvider {
      * Constructs a new JNDI pool.
      */
     public JNDIDataSourceProvider() {
-        dataSourceName = EMIVAGlobals.getXMLProperty("database.JNDIProvider.name");
+        dataSourceName = Globals.getXMLProperty("database.JNDIProvider.name");
     }
 
     public boolean isPooled() {
@@ -92,7 +92,7 @@ public class JNDIDataSourceProvider implements ConnectionProvider {
         try {
             Properties contextProperties = new Properties();
             for (String key: jndiPropertyKeys) {
-                String value = EMIVAGlobals.getXMLProperty(key);
+                String value = Globals.getXMLProperty(key);
                 if (value != null) {
                     contextProperties.setProperty(key, value);
                 }

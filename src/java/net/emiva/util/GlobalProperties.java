@@ -43,17 +43,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matt Tucker
  */
-public class EMIVAProperties implements Map<String, String> {
+public class GlobalProperties implements Map<String, String> {
 
-	private static final Logger Log = LoggerFactory.getLogger(EMIVAProperties.class);
+	private static final Logger Log = LoggerFactory.getLogger(GlobalProperties.class);
 
     private static final String LOAD_PROPERTIES = "SELECT name, propValue FROM ofProperty";
     private static final String INSERT_PROPERTY = "INSERT INTO ofProperty(name, propValue) VALUES(?,?)";
     private static final String UPDATE_PROPERTY = "UPDATE ofProperty SET propValue=? WHERE name=?";
     private static final String DELETE_PROPERTY = "DELETE FROM ofProperty WHERE name LIKE ?";
 
-    private static class EMIVAPropertyHolder {
-        private static final EMIVAProperties instance = new EMIVAProperties();
+    private static class GlobalPropertyHolder {
+        private static final GlobalProperties instance = new GlobalProperties();
         static {
             instance.init();
         }
@@ -66,11 +66,11 @@ public class EMIVAProperties implements Map<String, String> {
      *
      * @return an instance of EMIVAProperties.
      */
-    public static EMIVAProperties getInstance() {
-        return EMIVAPropertyHolder.instance;
+    public static GlobalProperties getInstance() {
+        return GlobalPropertyHolder.instance;
     }
 
-    private EMIVAProperties() {
+    private GlobalProperties() {
     }
 
     /**

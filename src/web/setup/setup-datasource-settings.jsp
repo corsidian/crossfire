@@ -7,7 +7,7 @@
 --%>
 
 <%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.database.EmbeddedConnectionProvider,
                  net.emiva.database.DbConnectionManager,
                  net.emiva.database.ConnectionProvider,
@@ -99,7 +99,7 @@
         }
         else if (EMBEDDED.equals(mode)) {
             // Set the classname of the provider in the config file:
-            EMIVAGlobals.setXMLProperty("connectionProvider.className",
+            Globals.setXMLProperty("connectionProvider.className",
                     "net.emiva.database.EmbeddedConnectionProvider");
             ConnectionProvider conProvider = new EmbeddedConnectionProvider();
             DbConnectionManager.setConnectionProvider(conProvider);
@@ -114,7 +114,7 @@
     // Defaults
     if (mode == null) {
         // If the "embedded-database" directory exists, select to the embedded db as the default.
-        if (new File(EMIVAGlobals.getHomeDirectory(), "embedded-db").exists()) {
+        if (new File(Globals.getHomeDirectory(), "embedded-db").exists()) {
             mode = EMBEDDED;
         }
         // Otherwise default to standard.

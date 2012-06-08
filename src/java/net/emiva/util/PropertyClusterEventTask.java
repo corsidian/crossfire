@@ -59,10 +59,10 @@ public class PropertyClusterEventTask implements ClusterTask {
 
     public void run() {
         if (Type.put == event) {
-            EMIVAProperties.getInstance().localPut(key, value);
+            GlobalProperties.getInstance().localPut(key, value);
         }
         else if (Type.deleted == event) {
-            EMIVAProperties.getInstance().localRemove(key);
+            GlobalProperties.getInstance().localRemove(key);
         }
     }
 

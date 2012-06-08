@@ -8,7 +8,7 @@
 <%@ page import="net.emiva.database.DbConnectionManager,
                  net.emiva.database.DefaultConnectionProvider,
                  net.emiva.util.ClassUtils,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.util.Log,
                  net.emiva.util.ParamUtils,
                  net.emiva.crossfire.XMPPServer,
@@ -129,7 +129,7 @@
             // set properties, test connection, etc
 
             // Force the standard emiva connection provider to be used by deleting the current setting:
-            EMIVAGlobals.setXMLProperty("connectionProvider.className",
+            Globals.setXMLProperty("connectionProvider.className",
                     "net.emiva.database.DefaultConnectionProvider");
             DefaultConnectionProvider conProvider = new DefaultConnectionProvider();
             try {
@@ -142,17 +142,17 @@
                 conProvider.setPassword(password);
                 conProvider.setTestSQL(DbConnectionManager.getTestSQL(driver));
 
-                EMIVAGlobals.setXMLProperty("database.defaultProvider.driver", driver);
-                EMIVAGlobals.setXMLProperty("database.defaultProvider.serverURL", serverURL);
-                EMIVAGlobals.setXMLProperty("database.defaultProvider.username", username);
-                EMIVAGlobals.setXMLProperty("database.defaultProvider.password", password);
-                EMIVAGlobals.setXMLProperty("database.defaultProvider.testSQL", DbConnectionManager.getTestSQL(driver));
+                Globals.setXMLProperty("database.defaultProvider.driver", driver);
+                Globals.setXMLProperty("database.defaultProvider.serverURL", serverURL);
+                Globals.setXMLProperty("database.defaultProvider.username", username);
+                Globals.setXMLProperty("database.defaultProvider.password", password);
+                Globals.setXMLProperty("database.defaultProvider.testSQL", DbConnectionManager.getTestSQL(driver));
 
-                EMIVAGlobals.setXMLProperty("database.defaultProvider.minConnections",
+                Globals.setXMLProperty("database.defaultProvider.minConnections",
                         Integer.toString(minConnections));
-                EMIVAGlobals.setXMLProperty("database.defaultProvider.maxConnections",
+                Globals.setXMLProperty("database.defaultProvider.maxConnections",
                         Integer.toString(maxConnections));
-                EMIVAGlobals.setXMLProperty("database.defaultProvider.connectionTimeout",
+                Globals.setXMLProperty("database.defaultProvider.connectionTimeout",
                 Double.toString(connectionTimeout));
             }
             catch (Exception e) {
@@ -172,27 +172,27 @@
 
     if (!doContinue) {
         // reset values of jdbc driver from props file
-        driver = EMIVAGlobals.getXMLProperty("database.defaultProvider.driver");
-        serverURL = EMIVAGlobals.getXMLProperty("database.defaultProvider.serverURL");
-        username = EMIVAGlobals.getXMLProperty("database.defaultProvider.username");
-        password = EMIVAGlobals.getXMLProperty("database.defaultProvider.password");
+        driver = Globals.getXMLProperty("database.defaultProvider.driver");
+        serverURL = Globals.getXMLProperty("database.defaultProvider.serverURL");
+        username = Globals.getXMLProperty("database.defaultProvider.username");
+        password = Globals.getXMLProperty("database.defaultProvider.password");
         try {
             minConnections = Integer.parseInt(
-                    EMIVAGlobals.getXMLProperty("database.defaultProvider.minConnections"));
+                    Globals.getXMLProperty("database.defaultProvider.minConnections"));
         }
         catch (Exception e) {
             minConnections = 5;
         }
         try {
             maxConnections = Integer.parseInt(
-                    EMIVAGlobals.getXMLProperty("database.defaultProvider.maxConnections"));
+                    Globals.getXMLProperty("database.defaultProvider.maxConnections"));
         }
         catch (Exception e) {
             maxConnections = 25;
         }
         try {
             connectionTimeout = Double.parseDouble(
-                    EMIVAGlobals.getXMLProperty("database.defaultProvider.connectionTimeout"));
+                    Globals.getXMLProperty("database.defaultProvider.connectionTimeout"));
         }
         catch (Exception e) {
             connectionTimeout = 1.0;

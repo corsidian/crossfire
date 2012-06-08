@@ -35,7 +35,7 @@ import net.emiva.crossfire.component.ExternalComponentConfiguration.Permission;
 import net.emiva.crossfire.session.ComponentSession;
 import net.emiva.crossfire.session.Session;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ModificationNotAllowedException;
 
 import org.slf4j.Logger;
@@ -389,7 +389,7 @@ public class ExternalComponentManager {
      *         individual configuration.
      */
     public static String getDefaultSecret() {
-        return EMIVAGlobals.getProperty("xmpp.component.defaultSecret");
+        return Globals.getProperty("xmpp.component.defaultSecret");
     }
 
     /**
@@ -405,7 +405,7 @@ public class ExternalComponentManager {
         for (ExternalComponentManagerListener listener : listeners) {
             listener.defaultSecretChanged(defaultSecret);
         }
-        EMIVAGlobals.setProperty("xmpp.component.defaultSecret", defaultSecret);
+        Globals.setProperty("xmpp.component.defaultSecret", defaultSecret);
     }
 
     /**
@@ -445,7 +445,7 @@ public class ExternalComponentManager {
      */
     public static PermissionPolicy getPermissionPolicy() {
         try {
-            return PermissionPolicy.valueOf(EMIVAGlobals.getProperty("xmpp.component.permission",
+            return PermissionPolicy.valueOf(Globals.getProperty("xmpp.component.permission",
                     PermissionPolicy.blacklist.toString()));
         }
         catch (Exception e) {
@@ -469,7 +469,7 @@ public class ExternalComponentManager {
         for (ExternalComponentManagerListener listener : listeners) {
             listener.permissionPolicyChanged(policy);
         }
-        EMIVAGlobals.setProperty("xmpp.component.permission", policy.toString());
+        Globals.setProperty("xmpp.component.permission", policy.toString());
         // Check if connected components can remain connected to the server
         for (ComponentSession session : SessionManager.getInstance().getComponentSessions()) {
             for (String domain : session.getExternalComponent().getSubdomains()) {

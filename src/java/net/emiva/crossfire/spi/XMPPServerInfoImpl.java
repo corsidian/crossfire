@@ -23,7 +23,7 @@ package net.emiva.crossfire.spi;
 import net.emiva.crossfire.ConnectionManager;
 import net.emiva.crossfire.ServerPort;
 import net.emiva.crossfire.XMPPServerInfo;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.Version;
 
 
@@ -91,10 +91,10 @@ public class XMPPServerInfoImpl implements XMPPServerInfo {
 	{
         this.xmppDomain = domainName;
         if (domainName == null) { 
-            EMIVAGlobals.deleteProperty("xmpp.domain");
+            Globals.deleteProperty("xmpp.domain");
         }
         else {
-            EMIVAGlobals.setProperty("xmpp.domain", domainName);
+            Globals.setProperty("xmpp.domain", domainName);
         }
     }
 

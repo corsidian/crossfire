@@ -61,9 +61,8 @@ import net.emiva.crossfire.net.SocketSendingTracker;
 import net.emiva.crossfire.net.StalledSessionsFilter;
 import net.emiva.crossfire.nio.ClientConnectionHandler;
 import net.emiva.crossfire.nio.ComponentConnectionHandler;
-import net.emiva.crossfire.nio.MultiplexerConnectionHandler;
 import net.emiva.crossfire.nio.XMPPCodecFactory;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.CertificateEventListener;
 import net.emiva.util.CertificateManager;
 import net.emiva.util.LocaleUtils;
@@ -219,7 +218,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             multiplexerSocketAcceptor = buildSocketAcceptor();
             // Customize Executor that will be used by processors to process incoming stanzas
             ExecutorThreadModel threadModel = ExecutorThreadModel.getInstance("connectionManager");
-            int eventThreads = EMIVAGlobals.getIntProperty("xmpp.multiplex.processing.threads", 16);
+            int eventThreads = Globals.getIntProperty("xmpp.multiplex.processing.threads", 16);
             ThreadPoolExecutor eventExecutor = (ThreadPoolExecutor) threadModel.getExecutor();
             eventExecutor.setCorePoolSize(eventThreads + 1);
             eventExecutor.setMaximumPoolSize(eventThreads + 1);
@@ -238,15 +237,13 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
 
             try {
                 // Listen on a specific network interface if it has been set.
-                String interfaceName = EMIVAGlobals.getXMLProperty("network.interface");
+                String interfaceName = Globals.getXMLProperty("network.interface");
                 InetAddress bindInterface = null;
                 if (interfaceName != null) {
                     if (interfaceName.trim().length() > 0) {
                         bindInterface = InetAddress.getByName(interfaceName);
                     }
                 }
-                // Start accepting connections
-                multiplexerSocketAcceptor.bind(new InetSocketAddress(bindInterface, port), new MultiplexerConnectionHandler(serverName));
 
                 ports.add(new ServerPort(port, serverName, localIPAddress, false, null, ServerPort.Type.connectionManager));
 
@@ -282,7 +279,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             componentAcceptor = buildSocketAcceptor();
             // Customize Executor that will be used by processors to process incoming stanzas
             ExecutorThreadModel threadModel = ExecutorThreadModel.getInstance("component");
-            int eventThreads = EMIVAGlobals.getIntProperty("xmpp.component.processing.threads", 16);
+            int eventThreads = Globals.getIntProperty("xmpp.component.processing.threads", 16);
             ThreadPoolExecutor eventExecutor = (ThreadPoolExecutor)threadModel.getExecutor();
             eventExecutor.setCorePoolSize(eventThreads + 1);
             eventExecutor.setMaximumPoolSize(eventThreads + 1);
@@ -301,7 +298,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             int port = getComponentListenerPort();
             try {
                 // Listen on a specific network interface if it has been set.
-                String interfaceName = EMIVAGlobals.getXMLProperty("network.interface");
+                String interfaceName = Globals.getXMLProperty("network.interface");
                 InetAddress bindInterface = null;
                 if (interfaceName != null) {
                     if (interfaceName.trim().length() > 0) {
@@ -346,7 +343,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             socketAcceptor = buildSocketAcceptor();
             // Customize Executor that will be used by processors to process incoming stanzas
             ExecutorThreadModel threadModel = ExecutorThreadModel.getInstance("client");
-            int eventThreads = EMIVAGlobals.getIntProperty("xmpp.client.processing.threads", 16);
+            int eventThreads = Globals.getIntProperty("xmpp.client.processing.threads", 16);
             ThreadPoolExecutor eventExecutor = (ThreadPoolExecutor)threadModel.getExecutor();
             eventExecutor.setCorePoolSize(eventThreads + 1);
             eventExecutor.setMaximumPoolSize(eventThreads + 1);
@@ -366,7 +363,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             int port = getClientListenerPort();
             try {
                 // Listen on a specific network interface if it has been set.
-                String interfaceName = EMIVAGlobals.getXMLProperty("network.interface");
+                String interfaceName = Globals.getXMLProperty("network.interface");
                 InetAddress bindInterface = null;
                 if (interfaceName != null) {
                     if (interfaceName.trim().length() > 0) {
@@ -408,7 +405,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
         // Start clients SSL unless it's been disabled.
         if (isClientSSLListenerEnabled()) {
             int port = getClientSSLListenerPort();
-            String algorithm = EMIVAGlobals.getProperty("xmpp.socket.ssl.algorithm");
+            String algorithm = Globals.getProperty("xmpp.socket.ssl.algorithm");
             if ("".equals(algorithm) || algorithm == null) {
                 algorithm = "TLS";
             }
@@ -416,7 +413,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
                 // Create SocketAcceptor with correct number of processors
                 sslSocketAcceptor = buildSocketAcceptor();
                 // Customize Executor that will be used by processors to process incoming stanzas
-                int eventThreads = EMIVAGlobals.getIntProperty("xmpp.client_ssl.processing.threads", 16);
+                int eventThreads = Globals.getIntProperty("xmpp.client_ssl.processing.threads", 16);
                 ExecutorFilter executorFilter = new ExecutorFilter();
                 ThreadPoolExecutor eventExecutor = (ThreadPoolExecutor)executorFilter.getExecutor();
                 final ThreadFactory originalThreadFactory = eventExecutor.getThreadFactory();
@@ -456,10 +453,10 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
                         new java.security.SecureRandom());
 
                 SSLFilter sslFilter = new SSLFilter(sslContext);
-                if (EMIVAGlobals.getProperty("xmpp.client.cert.policy","disabled").equals("needed")) {
+                if (Globals.getProperty("xmpp.client.cert.policy","disabled").equals("needed")) {
                     sslFilter.setNeedClientAuth(true);
                 }
-                else if(EMIVAGlobals.getProperty("xmpp.client.cert.policy","disabled").equals("wanted")) {
+                else if(Globals.getProperty("xmpp.client.cert.policy","disabled").equals("wanted")) {
                     sslFilter.setWantClientAuth(true);
                 }
                 sslSocketAcceptor.getFilterChain().addFirst("tls", sslFilter);
@@ -479,7 +476,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             int port = getClientSSLListenerPort();
             try {
                 // Listen on a specific network interface if it has been set.
-                String interfaceName = EMIVAGlobals.getXMLProperty("network.interface");
+                String interfaceName = Globals.getXMLProperty("network.interface");
                 InetAddress bindInterface = null;
                 if (interfaceName != null) {
                     if (interfaceName.trim().length() > 0) {
@@ -560,7 +557,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
         sessionManager = server.getSessionManager();
         // Check if we need to configure MINA to use Direct or Heap Buffers
         // Note: It has been reported that heap buffers are 50% faster than direct buffers
-        if (EMIVAGlobals.getBooleanProperty("xmpp.socket.heapBuffer", true)) {
+        if (Globals.getBooleanProperty("xmpp.socket.heapBuffer", true)) {
             ByteBuffer.setUseDirectBuffers(false);
             ByteBuffer.setAllocator(new SimpleByteBufferAllocator());
         }
@@ -572,20 +569,20 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             return;
         }
         if (enabled) {
-            EMIVAGlobals.setProperty("xmpp.socket.plain.active", "true");
+            Globals.setProperty("xmpp.socket.plain.active", "true");
             // Start the port listener for clients
             createClientListeners();
             startClientListeners(localIPAddress);
         }
         else {
-            EMIVAGlobals.setProperty("xmpp.socket.plain.active", "false");
+            Globals.setProperty("xmpp.socket.plain.active", "false");
             // Stop the port listener for clients
             stopClientListeners();
         }
     }
 
     public boolean isClientListenerEnabled() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.socket.plain.active", true);
+        return Globals.getBooleanProperty("xmpp.socket.plain.active", true);
     }
 
     public void enableClientSSLListener(boolean enabled) {
@@ -594,13 +591,13 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             return;
         }
         if (enabled) {
-            EMIVAGlobals.setProperty("xmpp.socket.ssl.active", "true");
+            Globals.setProperty("xmpp.socket.ssl.active", "true");
             // Start the port listener for secured clients
             createClientSSLListeners();
             startClientSSLListeners(localIPAddress);
         }
         else {
-            EMIVAGlobals.setProperty("xmpp.socket.ssl.active", "false");
+            Globals.setProperty("xmpp.socket.ssl.active", "false");
             // Stop the port listener for secured clients
             stopClientSSLListeners();
         }
@@ -608,7 +605,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
 
     public boolean isClientSSLListenerEnabled() {
         try {
-            return EMIVAGlobals.getBooleanProperty("xmpp.socket.ssl.active", true) && SSLConfig.getKeyStore().size() > 0;
+            return Globals.getBooleanProperty("xmpp.socket.ssl.active", true) && SSLConfig.getKeyStore().size() > 0;
         } catch (KeyStoreException e) {
             return false;
         } catch (IOException e) {
@@ -622,20 +619,20 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             return;
         }
         if (enabled) {
-            EMIVAGlobals.setProperty("xmpp.component.socket.active", "true");
+            Globals.setProperty("xmpp.component.socket.active", "true");
             // Start the port listener for external components
             createComponentListener();
             startComponentListener();
         }
         else {
-            EMIVAGlobals.setProperty("xmpp.component.socket.active", "false");
+            Globals.setProperty("xmpp.component.socket.active", "false");
             // Stop the port listener for external components
             stopComponentListener();
         }
     }
 
     public boolean isComponentListenerEnabled() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.component.socket.active", false);
+        return Globals.getBooleanProperty("xmpp.component.socket.active", false);
     }
 
     public void enableServerListener(boolean enabled) {
@@ -644,20 +641,20 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             return;
         }
         if (enabled) {
-            EMIVAGlobals.setProperty("xmpp.server.socket.active", "true");
+            Globals.setProperty("xmpp.server.socket.active", "true");
             // Start the port listener for s2s communication
             createServerListener(localIPAddress);
             startServerListener();
         }
         else {
-            EMIVAGlobals.setProperty("xmpp.server.socket.active", "false");
+            Globals.setProperty("xmpp.server.socket.active", "false");
             // Stop the port listener for s2s communication
             stopServerListener();
         }
     }
 
     public boolean isServerListenerEnabled() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.server.socket.active", true);
+        return Globals.getBooleanProperty("xmpp.server.socket.active", true);
     }
 
     public void enableConnectionManagerListener(boolean enabled) {
@@ -666,20 +663,20 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             return;
         }
         if (enabled) {
-            EMIVAGlobals.setProperty("xmpp.multiplex.socket.active", "true");
+            Globals.setProperty("xmpp.multiplex.socket.active", "true");
             // Start the port listener for s2s communication
             createConnectionManagerListener();
             startConnectionManagerListener(localIPAddress);
         }
         else {
-            EMIVAGlobals.setProperty("xmpp.multiplex.socket.active", "false");
+            Globals.setProperty("xmpp.multiplex.socket.active", "false");
             // Stop the port listener for s2s communication
             stopConnectionManagerListener();
         }
     }
 
     public boolean isConnectionManagerListenerEnabled() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.multiplex.socket.active", false);
+        return Globals.getBooleanProperty("xmpp.multiplex.socket.active", false);
     }
 
     public void setClientListenerPort(int port) {
@@ -687,7 +684,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             // Ignore new setting
             return;
         }
-        EMIVAGlobals.setProperty("xmpp.socket.plain.port", String.valueOf(port));
+        Globals.setProperty("xmpp.socket.plain.port", String.valueOf(port));
         // Stop the port listener for clients
         stopClientListeners();
         if (isClientListenerEnabled()) {
@@ -702,7 +699,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
     }
 
     public int getClientListenerPort() {
-        return EMIVAGlobals.getIntProperty("xmpp.socket.plain.port", DEFAULT_PORT);
+        return Globals.getIntProperty("xmpp.socket.plain.port", DEFAULT_PORT);
     }
 
     public SocketAcceptor getSSLSocketAcceptor() {
@@ -714,7 +711,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             // Ignore new setting
             return;
         }
-        EMIVAGlobals.setProperty("xmpp.socket.ssl.port", String.valueOf(port));
+        Globals.setProperty("xmpp.socket.ssl.port", String.valueOf(port));
         // Stop the port listener for secured clients
         stopClientSSLListeners();
         if (isClientSSLListenerEnabled()) {
@@ -725,7 +722,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
     }
 
     public int getClientSSLListenerPort() {
-        return EMIVAGlobals.getIntProperty("xmpp.socket.ssl.port", DEFAULT_SSL_PORT);
+        return Globals.getIntProperty("xmpp.socket.ssl.port", DEFAULT_SSL_PORT);
     }
 
     public void setComponentListenerPort(int port) {
@@ -733,7 +730,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             // Ignore new setting
             return;
         }
-        EMIVAGlobals.setProperty("xmpp.component.socket.port", String.valueOf(port));
+        Globals.setProperty("xmpp.component.socket.port", String.valueOf(port));
         // Stop the port listener for external components
         stopComponentListener();
         if (isComponentListenerEnabled()) {
@@ -748,7 +745,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
     }
 
     public int getComponentListenerPort() {
-        return EMIVAGlobals.getIntProperty("xmpp.component.socket.port", DEFAULT_COMPONENT_PORT);
+        return Globals.getIntProperty("xmpp.component.socket.port", DEFAULT_COMPONENT_PORT);
     }
 
     public void setServerListenerPort(int port) {
@@ -756,7 +753,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             // Ignore new setting
             return;
         }
-        EMIVAGlobals.setProperty("xmpp.server.socket.port", String.valueOf(port));
+        Globals.setProperty("xmpp.server.socket.port", String.valueOf(port));
         // Stop the port listener for s2s communication
         stopServerListener();
         if (isServerListenerEnabled()) {
@@ -767,7 +764,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
     }
 
     public int getServerListenerPort() {
-        return EMIVAGlobals.getIntProperty("xmpp.server.socket.port", DEFAULT_SERVER_PORT);
+        return Globals.getIntProperty("xmpp.server.socket.port", DEFAULT_SERVER_PORT);
     }
 
     public SocketAcceptor getMultiplexerSocketAcceptor() {
@@ -779,7 +776,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
             // Ignore new setting
             return;
         }
-        EMIVAGlobals.setProperty("xmpp.multiplex.socket.port", String.valueOf(port));
+        Globals.setProperty("xmpp.multiplex.socket.port", String.valueOf(port));
         // Stop the port listener for connection managers
         stopConnectionManagerListener();
         if (isConnectionManagerListenerEnabled()) {
@@ -790,7 +787,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
     }
 
     public int getConnectionManagerListenerPort() {
-        return EMIVAGlobals.getIntProperty("xmpp.multiplex.socket.port", DEFAULT_MULTIPLEX_PORT);
+        return Globals.getIntProperty("xmpp.multiplex.socket.port", DEFAULT_MULTIPLEX_PORT);
     }
 
     // #####################################################################
@@ -812,7 +809,7 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
     private SocketAcceptor buildSocketAcceptor() {
         SocketAcceptor socketAcceptor;
         // Create SocketAcceptor with correct number of processors
-        int ioThreads = EMIVAGlobals.getIntProperty("xmpp.processor.count", Runtime.getRuntime().availableProcessors());
+        int ioThreads = Globals.getIntProperty("xmpp.processor.count", Runtime.getRuntime().availableProcessors());
         // Set the executor that processors will use. Note that processors will use another executor
         // for processing events (i.e. incoming traffic)
         Executor ioExecutor = new ThreadPoolExecutor(
@@ -822,25 +819,25 @@ public class ConnectionManagerImpl extends BasicModule implements ConnectionMana
         SocketAcceptorConfig socketAcceptorConfig = socketAcceptor.getDefaultConfig();
         socketAcceptorConfig.setReuseAddress(true);
         // Set the listen backlog (queue) length. Default is 50.
-        socketAcceptorConfig.setBacklog(EMIVAGlobals.getIntProperty("xmpp.socket.backlog", 50));
+        socketAcceptorConfig.setBacklog(Globals.getIntProperty("xmpp.socket.backlog", 50));
 
         // Set default (low level) settings for new socket connections
         SocketSessionConfig socketSessionConfig = socketAcceptorConfig.getSessionConfig();
         //socketSessionConfig.setKeepAlive();
-        int receiveBuffer = EMIVAGlobals.getIntProperty("xmpp.socket.buffer.receive", -1);
+        int receiveBuffer = Globals.getIntProperty("xmpp.socket.buffer.receive", -1);
         if (receiveBuffer > 0 ) {
             socketSessionConfig.setReceiveBufferSize(receiveBuffer);
         }
-        int sendBuffer = EMIVAGlobals.getIntProperty("xmpp.socket.buffer.send", -1);
+        int sendBuffer = Globals.getIntProperty("xmpp.socket.buffer.send", -1);
         if (sendBuffer > 0 ) {
             socketSessionConfig.setSendBufferSize(sendBuffer);
         }
-        int linger = EMIVAGlobals.getIntProperty("xmpp.socket.linger", -1);
+        int linger = Globals.getIntProperty("xmpp.socket.linger", -1);
         if (linger > 0 ) {
             socketSessionConfig.setSoLinger(linger);
         }
         socketSessionConfig.setTcpNoDelay(
-                EMIVAGlobals.getBooleanProperty("xmpp.socket.tcp-nodelay", socketSessionConfig.isTcpNoDelay()));
+                Globals.getBooleanProperty("xmpp.socket.tcp-nodelay", socketSessionConfig.isTcpNoDelay()));
         return socketAcceptor;
     }
 

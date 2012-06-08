@@ -31,7 +31,7 @@ import java.util.List;
 
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,20 +91,20 @@ public class JDBCGroupProvider implements GroupProvider {
      */
     public JDBCGroupProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("jdbcProvider.driver");
-        EMIVAGlobals.migrateProperty("jdbcProvider.connectionString");
-        EMIVAGlobals.migrateProperty("jdbcGroupProvider.groupCountSQL");
-        EMIVAGlobals.migrateProperty("jdbcGroupProvider.allGroupsSQL");
-        EMIVAGlobals.migrateProperty("jdbcGroupProvider.userGroupsSQL");
-        EMIVAGlobals.migrateProperty("jdbcGroupProvider.descriptionSQL");
-        EMIVAGlobals.migrateProperty("jdbcGroupProvider.loadMembersSQL");
-        EMIVAGlobals.migrateProperty("jdbcGroupProvider.loadAdminsSQL");
+        Globals.migrateProperty("jdbcProvider.driver");
+        Globals.migrateProperty("jdbcProvider.connectionString");
+        Globals.migrateProperty("jdbcGroupProvider.groupCountSQL");
+        Globals.migrateProperty("jdbcGroupProvider.allGroupsSQL");
+        Globals.migrateProperty("jdbcGroupProvider.userGroupsSQL");
+        Globals.migrateProperty("jdbcGroupProvider.descriptionSQL");
+        Globals.migrateProperty("jdbcGroupProvider.loadMembersSQL");
+        Globals.migrateProperty("jdbcGroupProvider.loadAdminsSQL");
 
-        useConnectionProvider = EMIVAGlobals.getBooleanProperty("jdbcGroupProvider.useConnectionProvider");
+        useConnectionProvider = Globals.getBooleanProperty("jdbcGroupProvider.useConnectionProvider");
 
         if (!useConnectionProvider) {
             // Load the JDBC driver and connection string.
-            String jdbcDriver = EMIVAGlobals.getProperty("jdbcProvider.driver");
+            String jdbcDriver = Globals.getProperty("jdbcProvider.driver");
             try {
                 Class.forName(jdbcDriver).newInstance();
             }
@@ -112,16 +112,16 @@ public class JDBCGroupProvider implements GroupProvider {
                 Log.error("Unable to load JDBC driver: " + jdbcDriver, e);
                 return;
             }
-            connectionString = EMIVAGlobals.getProperty("jdbcProvider.connectionString");
+            connectionString = Globals.getProperty("jdbcProvider.connectionString");
         }
 
         // Load SQL statements
-        groupCountSQL = EMIVAGlobals.getProperty("jdbcGroupProvider.groupCountSQL");
-        allGroupsSQL = EMIVAGlobals.getProperty("jdbcGroupProvider.allGroupsSQL");
-        userGroupsSQL = EMIVAGlobals.getProperty("jdbcGroupProvider.userGroupsSQL");
-        descriptionSQL = EMIVAGlobals.getProperty("jdbcGroupProvider.descriptionSQL");
-        loadMembersSQL = EMIVAGlobals.getProperty("jdbcGroupProvider.loadMembersSQL");
-        loadAdminsSQL = EMIVAGlobals.getProperty("jdbcGroupProvider.loadAdminsSQL");
+        groupCountSQL = Globals.getProperty("jdbcGroupProvider.groupCountSQL");
+        allGroupsSQL = Globals.getProperty("jdbcGroupProvider.allGroupsSQL");
+        userGroupsSQL = Globals.getProperty("jdbcGroupProvider.userGroupsSQL");
+        descriptionSQL = Globals.getProperty("jdbcGroupProvider.descriptionSQL");
+        loadMembersSQL = Globals.getProperty("jdbcGroupProvider.loadMembersSQL");
+        loadAdminsSQL = Globals.getProperty("jdbcGroupProvider.loadAdminsSQL");
     }
 
     /**

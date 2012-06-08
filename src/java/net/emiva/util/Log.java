@@ -48,15 +48,15 @@ public class Log {
 	private static final org.slf4j.Logger Logger = org.slf4j.LoggerFactory.getLogger(Log.class);
 
 // TODO deprecate these properties
-//	EMIVAGlobals.getXMLProperty("log.debug.format");
-//	EMIVAGlobals.getXMLProperty("log.info.format");
-//	EMIVAGlobals.getXMLProperty("log.warn.format");
-//	EMIVAGlobals.getXMLProperty("log.error.format");
-//	EMIVAGlobals.getXMLProperty("log.debug.size");
-//	EMIVAGlobals.getXMLProperty("log.info.size");
-//	EMIVAGlobals.getXMLProperty("log.warn.size");
-//	EMIVAGlobals.getXMLProperty("log.error.size"); 
-//	EMIVAGlobals.getXMLProperty("log.debug.enabled");
+//	Globals.getXMLProperty("log.debug.format");
+//	Globals.getXMLProperty("log.info.format");
+//	Globals.getXMLProperty("log.warn.format");
+//	Globals.getXMLProperty("log.error.format");
+//	Globals.getXMLProperty("log.debug.size");
+//	Globals.getXMLProperty("log.info.size");
+//	Globals.getXMLProperty("log.warn.size");
+//	Globals.getXMLProperty("log.error.size"); 
+//	Globals.getXMLProperty("log.debug.enabled");
 
 	/**
 	 * @deprecated replaced by {@link org.slf4j.Logger#isErrorEnabled()}.
@@ -300,7 +300,7 @@ public class Log {
     public static String getLogDirectory() {
         // SLF4J doesn't provide a hook into the logging implementation. We'll have to do this 'direct', bypassing slf4j.
     	final StringBuilder sb = new StringBuilder();
-    	sb.append(EMIVAGlobals.getHomeDirectory());
+    	sb.append(Globals.getHomeDirectory());
     	if (!sb.substring(sb.length()-1).startsWith(File.separator)) {
     		sb.append(File.separator);
     	}
@@ -312,7 +312,7 @@ public class Log {
     private static String getMarkMessage(String username) {
         final List<String> args = new ArrayList<String>();
         args.add(username);
-        args.add(EMIVAGlobals.formatDateTime(new java.util.Date()));
+        args.add(Globals.formatDateTime(new java.util.Date()));
         return LocaleUtils.getLocalizedString("log.marker_inserted_by", args);
     }
     

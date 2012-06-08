@@ -54,9 +54,9 @@ import org.slf4j.LoggerFactory;
  * XML property names must be in the form <code>prop.name</code> - parts of the name must
  * be seperated by ".". The value can be any valid String, including strings with line breaks.
  */
-public class EMIVAGlobals {
+public class Globals {
 
-	private static final Logger Log = LoggerFactory.getLogger(EMIVAGlobals.class);
+	private static final Logger Log = LoggerFactory.getLogger(Globals.class);
 
     private static String emiva_CONFIG_FILENAME = "conf" + File.separator + "crossfire.xml";
 
@@ -69,7 +69,7 @@ public class EMIVAGlobals {
     public static boolean failedLoading = false;
 
     private static XMLProperties xmlProperties = null;
-    private static EMIVAProperties properties = null;
+    private static GlobalProperties properties = null;
 
     private static Locale locale = null;
     private static TimeZone timeZone = null;
@@ -531,7 +531,7 @@ public class EMIVAGlobals {
             if (isSetupMode()) {
                 return null;
             }
-            properties = EMIVAProperties.getInstance();
+            properties = GlobalProperties.getInstance();
         }
         return properties.get(name);
     }
@@ -549,7 +549,7 @@ public class EMIVAGlobals {
             if (isSetupMode()) {
                 return defaultValue;
             }
-            properties = EMIVAProperties.getInstance();
+            properties = GlobalProperties.getInstance();
         }
         String value = properties.get(name);
         if (value != null) {
@@ -652,7 +652,7 @@ public class EMIVAGlobals {
             if (isSetupMode()) {
                 return new ArrayList<String>();
             }
-            properties = EMIVAProperties.getInstance();
+            properties = GlobalProperties.getInstance();
         }
         return new ArrayList<String>(properties.getChildrenNames(parent));
     }
@@ -672,7 +672,7 @@ public class EMIVAGlobals {
             if (isSetupMode()) {
                 return new ArrayList<String>();
             }
-            properties = EMIVAProperties.getInstance();
+            properties = GlobalProperties.getInstance();
         }
 
         Collection<String> propertyNames = properties.getChildrenNames(parent);
@@ -697,7 +697,7 @@ public class EMIVAGlobals {
             if (isSetupMode()) {
                 return new ArrayList<String>();
             }
-            properties = EMIVAProperties.getInstance();
+            properties = GlobalProperties.getInstance();
         }
         return new ArrayList<String>(properties.getPropertyNames());
     }
@@ -714,7 +714,7 @@ public class EMIVAGlobals {
             if (isSetupMode()) {
                 return;
             }
-            properties = EMIVAProperties.getInstance();
+            properties = GlobalProperties.getInstance();
         }
         properties.put(name, value);
     }
@@ -730,7 +730,7 @@ public class EMIVAGlobals {
             if (isSetupMode()) {
                 return;
             }
-            properties = EMIVAProperties.getInstance();
+            properties = GlobalProperties.getInstance();
         }
 
         properties.putAll(propertyMap);
@@ -747,7 +747,7 @@ public class EMIVAGlobals {
             if (isSetupMode()) {
                 return;
             }
-            properties = EMIVAProperties.getInstance();
+            properties = GlobalProperties.getInstance();
         }
         properties.remove(name);
     }
@@ -765,12 +765,12 @@ public class EMIVAGlobals {
         }
         if (getXMLProperty(name) != null) {
             if (getProperty(name) == null) {
-                Log.debug("EMIVAGlobals: Migrating XML property '"+name+"' into database.");
+                Log.debug("Globals: Migrating XML property '"+name+"' into database.");
                 setProperty(name, getXMLProperty(name));
                 deleteXMLProperty(name);
             }
             else if (getProperty(name).equals(getXMLProperty(name))) {
-                Log.debug("EMIVAGlobals: Deleting duplicate XML property '"+name+"' that is already in database.");
+                Log.debug("Globals: Deleting duplicate XML property '"+name+"' that is already in database.");
                 deleteXMLProperty(name);
             }
             else if (!getProperty(name).equals(getXMLProperty(name))) {
@@ -808,7 +808,7 @@ public class EMIVAGlobals {
      * @return true if in setup mode.
      */
     private static boolean isSetupMode() {
-        if (Boolean.valueOf(EMIVAGlobals.getXMLProperty("setup"))) {
+        if (Boolean.valueOf(Globals.getXMLProperty("setup"))) {
             return false;
         }
         // Check if the DB configuration is done

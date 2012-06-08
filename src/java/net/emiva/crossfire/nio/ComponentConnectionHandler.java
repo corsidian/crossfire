@@ -22,7 +22,7 @@ package net.emiva.crossfire.nio;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.net.ComponentStanzaHandler;
 import net.emiva.crossfire.net.StanzaHandler;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.apache.mina.common.IoSession;
 
@@ -49,6 +49,6 @@ public class ComponentConnectionHandler extends ConnectionHandler {
 
     @Override
 	int getMaxIdleTime() {
-        return EMIVAGlobals.getIntProperty("xmpp.component.idle", 6 * 60 * 1000) / 1000;
+        return Globals.getIntProperty("xmpp.component.idle", 6 * 60 * 1000) / 1000;
     }
 }

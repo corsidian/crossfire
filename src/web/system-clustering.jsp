@@ -28,7 +28,7 @@
 <%@ page import="net.emiva.crossfire.cluster.ClusterManager" %>
 <%@ page import="net.emiva.crossfire.cluster.ClusterNodeInfo" %>
 <%@ page import="net.emiva.crossfire.cluster.GetBasicStatistics" %>
-<%@ page import="net.emiva.util.EMIVAGlobals" %>
+<%@ page import="net.emiva.util.Globals" %>
 <%@ page import="net.emiva.util.Log" %>
 <%@ page import="net.emiva.util.ParamUtils" %>
 <%@ page import="net.emiva.util.cache.CacheFactory" %>
@@ -296,7 +296,7 @@
                       <%  } %></a>
                   </td>
                   <td class="emiva-description" nowrap width="1%" valign="middle">
-                      <%= EMIVAGlobals.formatDateTime(new Date(nodeInfo.getJoinedTime())) %>
+                      <%= Globals.formatDateTime(new Date(nodeInfo.getJoinedTime())) %>
                   </td>
                   <td class="emiva-description" nowrap width="1%" valign="middle">
                       <%= nodeStats != null ? nodeStats.get(GetBasicStatistics.CLIENT) : "N/A" %>

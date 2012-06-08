@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 import net.emiva.util.cache.CacheFactory;
 
 import org.slf4j.Logger;
@@ -133,13 +133,13 @@ public class PluginCacheRegistry {
             }
             long factor = 1;
             if (lifetimeProp.endsWith("m")) {
-                factor = EMIVAConstants.MINUTE;
+                factor = GlobalConstants.MINUTE;
             }
             else if (lifetimeProp.endsWith("h")) {
-                factor = EMIVAConstants.HOUR;
+                factor = GlobalConstants.HOUR;
             }
             else if (lifetimeProp.endsWith("d")) {
-                factor = EMIVAConstants.DAY;
+                factor = GlobalConstants.DAY;
             }
             try {
                 return Long.parseLong(lifetimeProp.substring(0, lifetimeProp.length()-1)) * factor;

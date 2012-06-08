@@ -43,7 +43,7 @@ import net.emiva.crossfire.disco.IQDiscoItemsHandler;
 import net.emiva.crossfire.disco.ServerFeaturesProvider;
 import net.emiva.crossfire.session.LocalClientSession;
 import net.emiva.crossfire.user.UserManager;
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -69,7 +69,7 @@ public class IQOfflineMessagesHandler extends IQHandler implements ServerFeature
     private static final String NAMESPACE = "http://jabber.org/protocol/offline";
 
     final private SimpleDateFormat dateFormat =
-            new SimpleDateFormat(EMIVAConstants.XMPP_DATETIME_FORMAT);
+            new SimpleDateFormat(GlobalConstants.XMPP_DATETIME_FORMAT);
     private IQHandlerInfo info;
     private IQDiscoInfoHandler infoHandler;
     private IQDiscoItemsHandler itemsHandler;

@@ -30,7 +30,7 @@ import net.emiva.crossfire.container.BasicModule;
 import net.emiva.crossfire.handler.PresenceUpdateHandler;
 import net.emiva.crossfire.server.OutgoingSessionPromise;
 import net.emiva.crossfire.session.*;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ConcurrentHashSet;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
@@ -501,7 +501,7 @@ public class RoutingTableImpl extends BasicModule implements RoutingTable, Clust
         }
         else {
             // Many sessions have the highest priority (be smart now) :)
-            if (!EMIVAGlobals.getBooleanProperty("route.all-resources", false)) {
+            if (!Globals.getBooleanProperty("route.all-resources", false)) {
                 // Sort sessions by show value (e.g. away, xa)
                 Collections.sort(sessions, new Comparator<ClientSession>() {
 

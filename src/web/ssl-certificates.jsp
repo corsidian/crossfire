@@ -1,5 +1,5 @@
 <%@ page import="net.emiva.util.CertificateManager,
-                net.emiva.util.EMIVAGlobals,
+                net.emiva.util.Globals,
                 net.emiva.util.ParamUtils,
                 net.emiva.util.StringUtils,
                 net.emiva.crossfire.XMPPServer,
@@ -363,7 +363,7 @@
                   if (expired) { %>
                   <font color="red">
               <% } %>
-              <%= EMIVAGlobals.formatDate(c.getNotAfter()) %>
+              <%= Globals.formatDate(c.getNotAfter()) %>
               <% if (expired) { %>
                   </font>
               <% } %>

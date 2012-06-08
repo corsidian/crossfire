@@ -47,7 +47,7 @@ import net.emiva.crossfire.server.RemoteServerConfiguration;
 import net.emiva.crossfire.server.RemoteServerManager;
 import net.emiva.crossfire.server.ServerDialback;
 import net.emiva.crossfire.spi.BasicStreamIDFactory;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.StringUtils;
 
 import org.dom4j.DocumentException;
@@ -254,7 +254,7 @@ public class LocalOutgoingServerSession extends LocalSession implements Outgoing
      */
     private static LocalOutgoingServerSession createOutgoingSession(String domain, String hostname,
             int port) {
-        boolean useTLS = EMIVAGlobals.getBooleanProperty("xmpp.server.tls.enabled", true);
+        boolean useTLS = Globals.getBooleanProperty("xmpp.server.tls.enabled", true);
         RemoteServerConfiguration configuration = RemoteServerManager.getConfiguration(hostname);
         if (configuration != null) {
             // TODO Use the specific TLS configuration for this remote server
@@ -416,9 +416,9 @@ public class LocalOutgoingServerSession extends LocalSession implements Outgoing
         Element proceed = reader.parseDocument().getRootElement();
         if (proceed != null && proceed.getName().equals("proceed")) {
             log.debug("Negotiating TLS...");
-            boolean needed = EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify", true) &&
-                    		 EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify.chain", true) &&
-                    		 !EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false);
+            boolean needed = Globals.getBooleanProperty("xmpp.server.certificate.verify", true) &&
+                    		 Globals.getBooleanProperty("xmpp.server.certificate.verify.chain", true) &&
+                    		 !Globals.getBooleanProperty("xmpp.server.certificate.accept-selfsigned", false);
             connection.startTLS(true, hostname, needed ? Connection.ClientAuth.needed : Connection.ClientAuth.wanted);
             log.debug("TLS negotiation was successful.");
 
@@ -437,7 +437,7 @@ public class LocalOutgoingServerSession extends LocalSession implements Outgoing
             features = reader.parseDocument().getRootElement();
             if (features != null && (features.element("mechanisms") != null || features.element("dialback") != null)) {
                 // Check if we can use stream compression
-                String policyName = EMIVAGlobals.getProperty("xmpp.server.compression.policy", Connection.CompressionPolicy.disabled.toString());
+                String policyName = Globals.getProperty("xmpp.server.compression.policy", Connection.CompressionPolicy.disabled.toString());
                 Connection.CompressionPolicy compressionPolicy = Connection.CompressionPolicy.valueOf(policyName);
                 if (Connection.CompressionPolicy.optional == compressionPolicy) {
                     // Verify if the remote server supports stream compression

@@ -23,7 +23,6 @@
 <%@ page import="net.emiva.crossfire.container.AdminConsolePlugin" %>
 <%@ page import="net.emiva.crossfire.net.SSLConfig" %>
 <%@ page import="net.emiva.crossfire.session.LocalClientSession" %>
-<%@ page import="net.emiva.crossfire.session.LocalConnectionMultiplexerSession" %>
 <%@ page import="net.emiva.crossfire.spi.ConnectionManagerImpl" %>
 <%@ page import="net.emiva.util.*" %>
 <%@ page import="java.net.InetSocketAddress" %>
@@ -53,12 +52,11 @@
 <% // Get parameters //
     boolean serverOn = (webManager.getXMPPServer() != null);
 
-    String interfaceName = EMIVAGlobals.getXMLProperty("network.interface");
+    String interfaceName = Globals.getXMLProperty("network.interface");
 
     ConnectionManagerImpl connectionManager = ((ConnectionManagerImpl) XMPPServer.getInstance().getConnectionManager());
     SocketAcceptor socketAcceptor = connectionManager.getSocketAcceptor();
     SocketAcceptor sslSocketAcceptor = connectionManager.getSSLSocketAcceptor();
-    SocketAcceptor multiplexerSocketAcceptor = connectionManager.getMultiplexerSocketAcceptor();
     ServerPort serverPort = null;
     ServerPort componentPort = null;
     AdminConsolePlugin adminConsolePlugin =
@@ -172,7 +170,7 @@
                             <%= uptimeDisplay %> -- started
                         <%  } %>
 
-                        <%= EMIVAGlobals.formatDateTime(webManager.getXMPPServer().getServerInfo().getLastStarted()) %>
+                        <%= Globals.formatDateTime(webManager.getXMPPServer().getServerInfo().getLastStarted()) %>
                     </td>
                 </tr>
 
@@ -188,7 +186,7 @@
             <tr>
                 <td class="c1"><fmt:message key="index.home" /></td>
                 <td class="c2">
-                    <%= EMIVAGlobals.getHomeDirectory() %>
+                    <%= Globals.getHomeDirectory() %>
                 </td>
             </tr>
             <tr>
@@ -252,8 +250,8 @@
             <tr>
                 <td class="c1"><fmt:message key="index.local" /></td>
                 <td class="c2">
-                    <%= EMIVAGlobals.getLocale() %> / <%= EMIVAGlobals.getTimeZone().getDisplayName(EMIVAGlobals.getLocale()) %>
-                    (<%= (EMIVAGlobals.getTimeZone().getRawOffset()/1000/60/60) %> GMT)
+                    <%= Globals.getLocale() %> / <%= Globals.getTimeZone().getDisplayName(Globals.getLocale()) %>
+                    (<%= (Globals.getTimeZone().getRawOffset()/1000/60/60) %> GMT)
                 </td>
             </tr>
             <tr>
@@ -380,7 +378,7 @@
     <tr>
         <td><%= interfaceName == null ? LocaleUtils.getLocalizedString("ports.all_ports") : serverPort.getIPAddress() %></td>
         <td><%= serverPort.getPort() %></td>
-        <% if (EMIVAGlobals.getBooleanProperty("xmpp.server.tls.enabled", true)) { %>
+        <% if (Globals.getBooleanProperty("xmpp.server.tls.enabled", true)) { %>
             <td><img src="images/lock.gif" width="16" height="16" border="0" alt=""/></td>
         <% } else { %>
             <td><img src="images/blank.gif" width="1" height="1" alt=""/></td>
@@ -395,26 +393,6 @@
 </td>
     </tr>
     <% } %>
-    <% if (multiplexerSocketAcceptor != null) {
-        for (SocketAddress socketAddress : multiplexerSocketAcceptor.getManagedServiceAddresses()) {
-            InetSocketAddress address = (InetSocketAddress) socketAddress;
-    %>
-    <tr>
-        <td><%= "0.0.0.0".equals(address.getHostName()) ? LocaleUtils.getLocalizedString("ports.all_ports") : address.getHostName() %></td>
-        <td><%= address.getPort() %></td>
-        <% if (LocalConnectionMultiplexerSession.getTLSPolicy() == net.emiva.crossfire.Connection.TLSPolicy.disabled) { %>
-            <td><img src="images/blank.gif" width="1" height="1" alt=""></td>
-        <% } else { %>
-            <td><img src="images/lock.gif" width="16" height="16" border="0" alt=""/></td>
-        <% } %>
-        <td><fmt:message key="ports.connection_manager" /></td>
-        <td><fmt:message key="ports.connection_manager.desc">
-            <fmt:param value="<a href='connection-managers-settings.jsp'>" />
-            <fmt:param value="</a>" />
-            </fmt:message>
-        </td>
-    </tr>
-    <% } } %>
     <%
         if (componentPort != null) {
     %>

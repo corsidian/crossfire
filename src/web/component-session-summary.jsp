@@ -21,7 +21,7 @@
 <%@ page import="net.emiva.crossfire.SessionManager,
                  net.emiva.crossfire.session.ComponentSession,
                  net.emiva.crossfire.session.Session,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.util.ParamUtils,
                  java.net.URLEncoder"
     errorPage="error.jsp"
@@ -235,10 +235,10 @@
             boolean sameActiveDay = nowCal.get(Calendar.DAY_OF_YEAR) == lastActiveCal.get(Calendar.DAY_OF_YEAR) && nowCal.get(Calendar.YEAR) == lastActiveCal.get(Calendar.YEAR);
         %>
         <td align="center" width="10%" nowrap>
-            <%= sameCreationDay ? EMIVAGlobals.formatTime(creationDate) : EMIVAGlobals.formatDateTime(creationDate) %>
+            <%= sameCreationDay ? Globals.formatTime(creationDate) : Globals.formatDateTime(creationDate) %>
         </td>
         <td align="center" width="10%" nowrap>
-            <%= sameActiveDay ? EMIVAGlobals.formatTime(lastActiveDate) : EMIVAGlobals.formatDateTime(lastActiveDate) %>
+            <%= sameActiveDay ? Globals.formatTime(lastActiveDate) : Globals.formatDateTime(lastActiveDate) %>
         </td>
 
         <td width="1%" nowrap align="center" style="border-right:1px #ccc solid;">
@@ -275,7 +275,7 @@
 
 <br>
 <p>
-<fmt:message key="component.session.summary.last_update" />: <%= EMIVAGlobals.formatDateTime(new Date()) %>
+<fmt:message key="component.session.summary.last_update" />: <%= Globals.formatDateTime(new Date()) %>
 </p>
 
     </body>

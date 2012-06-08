@@ -43,7 +43,7 @@ import net.emiva.crossfire.session.LocalClientSession;
 import net.emiva.crossfire.session.Session;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
 
 import org.dom4j.DocumentHelper;
@@ -105,7 +105,7 @@ public class IQAuthHandler extends IQHandler implements IQAuthInfo {
             probeResponse.addElement("digest");
         }
         probeResponse.addElement("resource");
-        anonymousAllowed = EMIVAGlobals.getBooleanProperty("xmpp.auth.anonymous");
+        anonymousAllowed = Globals.getBooleanProperty("xmpp.auth.anonymous");
     }
 
     @Override
@@ -126,7 +126,7 @@ public class IQAuthHandler extends IQHandler implements IQAuthInfo {
         }
         IQ response;
         boolean resourceBound = false;
-        if (EMIVAGlobals.getBooleanProperty("xmpp.auth.iqauth",true)) {
+        if (Globals.getBooleanProperty("xmpp.auth.iqauth",true)) {
             try {
                 Element iq = packet.getElement();
                 Element query = iq.element("query");
@@ -258,7 +258,7 @@ public class IQAuthHandler extends IQHandler implements IQAuthInfo {
             response.setError(PacketError.Condition.not_acceptable);
             return response;
         }
-        if (! EMIVAGlobals.getBooleanProperty("xmpp.auth.iqauth",true)) {
+        if (! Globals.getBooleanProperty("xmpp.auth.iqauth",true)) {
             throw new UnauthorizedException();
         }
         username = username.toLowerCase();
@@ -387,7 +387,7 @@ public class IQAuthHandler extends IQHandler implements IQAuthInfo {
 
     public void setAllowAnonymous(boolean isAnonymous) throws UnauthorizedException {
         anonymousAllowed = isAnonymous;
-        EMIVAGlobals.setProperty("xmpp.auth.anonymous", Boolean.toString(anonymousAllowed));
+        Globals.setProperty("xmpp.auth.anonymous", Boolean.toString(anonymousAllowed));
     }
 
     @Override

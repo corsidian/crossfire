@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.TaskEngine;
 
 import org.slf4j.Logger;
@@ -73,13 +73,13 @@ public class LoginLimitManager {
         attemptsPerUsername = new ConcurrentHashMap<String,Long>();
 
         // Max number of attempts per ip address that can be performed in given time frame (10 attempts default)
-        maxAttemptsPerIP = EMIVAGlobals.getLongProperty("adminConsole.maxAttemptsPerIP", 10);
+        maxAttemptsPerIP = Globals.getLongProperty("adminConsole.maxAttemptsPerIP", 10);
         // Time frame before attempts per ip addresses are reset (15 minutes default)
-        millisecondsBetweenPerIP = EMIVAGlobals.getLongProperty("adminConsole.perIPAttemptResetInterval", 900000);
+        millisecondsBetweenPerIP = Globals.getLongProperty("adminConsole.perIPAttemptResetInterval", 900000);
         // Max number of attempts per username that can be performed in a given time frame (10 attempts default)
-        maxAttemptsPerUsername = EMIVAGlobals.getLongProperty("adminConsole.maxAttemptsPerUsername", 10);
+        maxAttemptsPerUsername = Globals.getLongProperty("adminConsole.maxAttemptsPerUsername", 10);
         // Time frame before attempts per ip addresses are reset (15 minutes default)
-        millisecondsBetweenPerUsername = EMIVAGlobals.getLongProperty("adminConsole.perUsernameAttemptResetInterval", 900000);
+        millisecondsBetweenPerUsername = Globals.getLongProperty("adminConsole.perUsernameAttemptResetInterval", 900000);
         // Set up per username attempt reset task
         TaskEngine.getInstance().scheduleAtFixedRate(new PerUsernameTask(), 0, millisecondsBetweenPerUsername);
         // Set up per IP attempt reset task

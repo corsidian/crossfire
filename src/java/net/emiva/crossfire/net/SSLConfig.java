@@ -35,7 +35,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.CertificateEventListener;
 import net.emiva.util.CertificateManager;
 
@@ -75,32 +75,32 @@ public class SSLConfig {
     }
 
     static {
-        storeType = EMIVAGlobals.getProperty("xmpp.socket.ssl.storeType", "jks");
+        storeType = Globals.getProperty("xmpp.socket.ssl.storeType", "jks");
 
         // Get the keystore location. The default location is security/keystore
-        keyStoreLocation = EMIVAGlobals.getProperty("xmpp.socket.ssl.keystore",
+        keyStoreLocation = Globals.getProperty("xmpp.socket.ssl.keystore",
                 "resources" + File.separator + "security" + File.separator + "keystore");
-        keyStoreLocation = EMIVAGlobals.getHomeDirectory() + File.separator + keyStoreLocation;
+        keyStoreLocation = Globals.getHomeDirectory() + File.separator + keyStoreLocation;
 
         // Get the keystore password. The default password is "changeit".
-        keypass = EMIVAGlobals.getProperty("xmpp.socket.ssl.keypass", "changeit");
+        keypass = Globals.getProperty("xmpp.socket.ssl.keypass", "changeit");
         keypass = keypass.trim();
 
         // Get the truststore location for c2s connections
-        c2sTrustStoreLocation = EMIVAGlobals.getProperty("xmpp.socket.ssl.client.truststore",
+        c2sTrustStoreLocation = Globals.getProperty("xmpp.socket.ssl.client.truststore",
                 "resources" + File.separator + "security" + File.separator + "client.truststore");
-        c2sTrustStoreLocation = EMIVAGlobals.getHomeDirectory() + File.separator + c2sTrustStoreLocation;
+        c2sTrustStoreLocation = Globals.getHomeDirectory() + File.separator + c2sTrustStoreLocation;
 
-        c2sTrustpass = EMIVAGlobals.getProperty("xmpp.socket.ssl.client.trustpass", "changeit");
+        c2sTrustpass = Globals.getProperty("xmpp.socket.ssl.client.trustpass", "changeit");
         c2sTrustpass = c2sTrustpass.trim();
 
         // Get the truststore location for s2s connections
-        s2sTrustStoreLocation = EMIVAGlobals.getProperty("xmpp.socket.ssl.truststore",
+        s2sTrustStoreLocation = Globals.getProperty("xmpp.socket.ssl.truststore",
                 "resources" + File.separator + "security" + File.separator + "truststore");
-        s2sTrustStoreLocation = EMIVAGlobals.getHomeDirectory() + File.separator + s2sTrustStoreLocation;
+        s2sTrustStoreLocation = Globals.getHomeDirectory() + File.separator + s2sTrustStoreLocation;
 
         // Get the truststore password; default is "changeit".
-        s2sTrustpass = EMIVAGlobals.getProperty("xmpp.socket.ssl.trustpass", "changeit");
+        s2sTrustpass = Globals.getProperty("xmpp.socket.ssl.trustpass", "changeit");
         s2sTrustpass = s2sTrustpass.trim();
 
         // Load s2s keystore
@@ -175,7 +175,7 @@ public class SSLConfig {
 
     private static void resetFactory() {
         try {
-            String algorithm = EMIVAGlobals.getProperty("xmpp.socket.ssl.algorithm", "TLS");
+            String algorithm = Globals.getProperty("xmpp.socket.ssl.algorithm", "TLS");
 
             s2sContext = SSLContext.getInstance(algorithm);
             c2sContext = SSLContext.getInstance(algorithm);

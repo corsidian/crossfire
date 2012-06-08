@@ -31,7 +31,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.emiva.crossfire.session.LocalClientSession;
 import net.emiva.crossfire.session.LocalComponentSession;
-import net.emiva.crossfire.session.LocalConnectionMultiplexerSession;
 import net.emiva.crossfire.session.LocalIncomingServerSession;
 import net.emiva.crossfire.session.LocalSession;
 import net.emiva.util.LocaleUtils;
@@ -78,16 +77,6 @@ class LocalSessionManager {
     private List<LocalComponentSession> componentsSessions = new CopyOnWriteArrayList<LocalComponentSession>();
 
     /**
-     * Map of connection multiplexer sessions grouped by connection managers. Each connection
-     * manager may have many connections to the server (i.e. connection pool). All connections
-     * originated from the same connection manager are grouped as a single entry in the map.
-     * Once all connections have been closed users that were logged using the connection manager
-     * will become unavailable.
-     */
-    private Map<String, LocalConnectionMultiplexerSession> connnectionManagerSessions =
-            new ConcurrentHashMap<String, LocalConnectionMultiplexerSession>();
-
-    /**
      * The sessions contained in this Map are server sessions originated by a remote server. These
      * sessions can only receive packets from the remote server but are not capable of sending
      * packets to the remote server. Sessions will be added to this collecion only after they were
@@ -104,10 +93,6 @@ class LocalSessionManager {
 
     public List<LocalComponentSession> getComponentsSessions() {
         return componentsSessions;
-    }
-
-    public Map<String, LocalConnectionMultiplexerSession> getConnnectionManagerSessions() {
-        return connnectionManagerSessions;
     }
 
     public LocalIncomingServerSession getIncomingServerSession(String streamID) {
@@ -140,9 +125,6 @@ class LocalSessionManager {
             sessions.addAll(componentsSessions);
             for (LocalIncomingServerSession incomingSession : incomingServerSessions.values()) {
                 sessions.add(incomingSession);
-            }
-            for (LocalConnectionMultiplexerSession multiplexer : connnectionManagerSessions.values()) {
-                sessions.add(multiplexer);
             }
 
             for (LocalSession session : sessions) {

@@ -30,7 +30,7 @@ import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.StringUtils;
 
 import org.slf4j.Logger;
@@ -93,18 +93,18 @@ public class JDBCAuthProvider implements AuthProvider {
      */
     public JDBCAuthProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("jdbcProvider.driver");
-        EMIVAGlobals.migrateProperty("jdbcProvider.connectionString");
-        EMIVAGlobals.migrateProperty("jdbcAuthProvider.passwordSQL");
-        EMIVAGlobals.migrateProperty("jdbcAuthProvider.passwordType");
-        EMIVAGlobals.migrateProperty("jdbcAuthProvider.setPasswordSQL");
-        EMIVAGlobals.migrateProperty("jdbcAuthProvider.allowUpdate");
+        Globals.migrateProperty("jdbcProvider.driver");
+        Globals.migrateProperty("jdbcProvider.connectionString");
+        Globals.migrateProperty("jdbcAuthProvider.passwordSQL");
+        Globals.migrateProperty("jdbcAuthProvider.passwordType");
+        Globals.migrateProperty("jdbcAuthProvider.setPasswordSQL");
+        Globals.migrateProperty("jdbcAuthProvider.allowUpdate");
 
-        useConnectionProvider = EMIVAGlobals.getBooleanProperty("jdbcAuthProvider.useConnectionProvider");
+        useConnectionProvider = Globals.getBooleanProperty("jdbcAuthProvider.useConnectionProvider");
 
         if (!useConnectionProvider) {
             // Load the JDBC driver and connection string.
-            String jdbcDriver = EMIVAGlobals.getProperty("jdbcProvider.driver");
+            String jdbcDriver = Globals.getProperty("jdbcProvider.driver");
             try {
                Class.forName(jdbcDriver).newInstance();
             }
@@ -112,19 +112,19 @@ public class JDBCAuthProvider implements AuthProvider {
                 Log.error("Unable to load JDBC driver: " + jdbcDriver, e);
                 return;
             }
-            connectionString = EMIVAGlobals.getProperty("jdbcProvider.connectionString");
+            connectionString = Globals.getProperty("jdbcProvider.connectionString");
         }
 
         // Load SQL statements.
-        passwordSQL = EMIVAGlobals.getProperty("jdbcAuthProvider.passwordSQL");
-        setPasswordSQL = EMIVAGlobals.getProperty("jdbcAuthProvider.setPasswordSQL");
+        passwordSQL = Globals.getProperty("jdbcAuthProvider.passwordSQL");
+        setPasswordSQL = Globals.getProperty("jdbcAuthProvider.setPasswordSQL");
 
-        allowUpdate = EMIVAGlobals.getBooleanProperty("jdbcAuthProvider.allowUpdate",false);
+        allowUpdate = Globals.getBooleanProperty("jdbcAuthProvider.allowUpdate",false);
 
         passwordType = PasswordType.plain;
         try {
             passwordType = PasswordType.valueOf(
-                    EMIVAGlobals.getProperty("jdbcAuthProvider.passwordType", "plain"));
+                    Globals.getProperty("jdbcAuthProvider.passwordType", "plain"));
         }
         catch (IllegalArgumentException iae) {
             Log.error(iae.getMessage(), iae);

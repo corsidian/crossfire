@@ -20,7 +20,7 @@
 <%@ page import="java.util.*,
                  net.emiva.util.*,
                  net.emiva.util.ParamUtils,
-                 net.emiva.util.EMIVAGlobals"
+                 net.emiva.util.Globals"
     errorPage="error.jsp"
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
@@ -73,7 +73,7 @@
 
     if (delete) {
         if (propName != null) {
-            EMIVAGlobals.deleteProperty(propName);
+            Globals.deleteProperty(propName);
             // Log the event
             webManager.logEvent("deleted server property "+propName, null);
             response.sendRedirect("server-properties.jsp?deletesuccess=true");
@@ -93,7 +93,7 @@
             errors.put("propValueLength","");
         }
         if (errors.size() == 0) {
-            EMIVAGlobals.setProperty(propName, propValue);
+            Globals.setProperty(propName, propValue);
             // Log the event
             webManager.logEvent("set server property "+propName, propName+" = "+propValue);
             response.sendRedirect("server-properties.jsp?success=true");
@@ -101,7 +101,7 @@
         }
     }
 
-    List<String> properties = EMIVAGlobals.getPropertyNames();
+    List<String> properties = Globals.getPropertyNames();
     Collections.sort(properties, new Comparator<String>() {
         public int compare(String s1, String s2) {
             return s1.toLowerCase().compareTo(s2.toLowerCase());
@@ -109,7 +109,7 @@
     });
 
     if (edit) {
-        propValue = EMIVAGlobals.getProperty(propName);
+        propValue = Globals.getProperty(propName);
     }
 %>
 
@@ -255,7 +255,7 @@ function dodelete(propName) {
     <%  } %>
 
     <% for (String n : properties) {
-        String v = EMIVAGlobals.getProperty(n);
+        String v = Globals.getProperty(n);
         v = StringUtils.replace(StringUtils.escapeHTMLTags(v), "\n", "<br>");
     %>
     <tr class="<%= (n.equals(propName) ? "hilite" : "") %>">

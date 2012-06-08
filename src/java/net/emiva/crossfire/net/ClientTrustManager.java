@@ -52,7 +52,7 @@ import java.util.List;
 
 import javax.net.ssl.X509TrustManager;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.CertificateManager;
 
 import org.slf4j.Logger;
@@ -125,7 +125,7 @@ public class ClientTrustManager implements X509TrustManager {
     }
     
     private void loadCRL() {
-        File crlFile = new File(EMIVAGlobals.getProperty("xmpp.client.certificate.crl",
+        File crlFile = new File(Globals.getProperty("xmpp.client.certificate.crl",
                 "resources" + File.separator + "security" + File.separator + "crl.pem"));
         
         
@@ -186,13 +186,13 @@ public class ClientTrustManager implements X509TrustManager {
         }
 
 
-        boolean verify = EMIVAGlobals.getBooleanProperty("xmpp.client.certificate.verify", true);
+        boolean verify = Globals.getBooleanProperty("xmpp.client.certificate.verify", true);
         if (verify) {
             int nSize = x509Certificates.length;
 
             List<String> peerIdentities = CertificateManager.getPeerIdentities(x509Certificates[0]);
 
-            if (EMIVAGlobals.getBooleanProperty("xmpp.client.certificate.verify.chain", true)) {
+            if (Globals.getBooleanProperty("xmpp.client.certificate.verify.chain", true)) {
                 // Working down the chain, for every certificate in the chain,
                 // verify that the subject of the certificate is the issuer of the
                 // next certificate in the chain.
@@ -222,7 +222,7 @@ public class ClientTrustManager implements X509TrustManager {
                 }
             }
 
-            if (EMIVAGlobals.getBooleanProperty("xmpp.client.certificate.verify.root", true)) {
+            if (Globals.getBooleanProperty("xmpp.client.certificate.verify.root", true)) {
                 // Verify that the the last certificate in the chain was issued
                 // by a third-party that the client trusts, or is trusted itself
                 boolean trusted = false;
@@ -267,7 +267,7 @@ public class ClientTrustManager implements X509TrustManager {
                 }
             }
 
-            if (EMIVAGlobals.getBooleanProperty("xmpp.client.certificate.verify.validity", true)) {
+            if (Globals.getBooleanProperty("xmpp.client.certificate.verify.validity", true)) {
                 // For every certificate in the chain, verify that the certificate
                 // is valid at the current time.
                 Date date = new Date();
@@ -298,7 +298,7 @@ public class ClientTrustManager implements X509TrustManager {
 
                 CertPathBuilderResult cpbr = cpb.build(params);
                 CertPath cp = cpbr.getCertPath();
-                if(EMIVAGlobals.getBooleanProperty("ocsp.enable",false)) {
+                if(Globals.getBooleanProperty("ocsp.enable",false)) {
                     Log.debug("ClientTrustManager: OCSP requested");
                     OCSPChecker ocspChecker = new OCSPChecker(cp,params);
                     params.addCertPathChecker(ocspChecker);
@@ -355,7 +355,7 @@ public class ClientTrustManager implements X509TrustManager {
     }
 
     public X509Certificate[] getAcceptedIssuers() {
-        if (EMIVAGlobals.getBooleanProperty("xmpp.client.certificate.accept-selfsigned", false)) {
+        if (Globals.getBooleanProperty("xmpp.client.certificate.accept-selfsigned", false)) {
             // Answer an empty list since we accept any issuer
             return new X509Certificate[0];
         }

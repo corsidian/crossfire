@@ -85,7 +85,7 @@ import net.emiva.crossfire.spi.XMPPServerInfoImpl;
 import net.emiva.crossfire.transport.TransportHandler;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.CertificateManager;
 import net.emiva.util.InitializationException;
 import net.emiva.util.LocaleUtils;
@@ -331,7 +331,7 @@ public class XMPPServer {
     private void initialize() throws FileNotFoundException {
         locatecrossfire();
 
-        name = EMIVAGlobals.getProperty("xmpp.domain", "127.0.0.1").toLowerCase();
+        name = Globals.getProperty("xmpp.domain", "127.0.0.1").toLowerCase();
 
         try {
             host = InetAddress.getLocalHost().getHostName();
@@ -341,7 +341,7 @@ public class XMPPServer {
         }
 
         version = new Version(0, 5, 1, Version.ReleaseStatus.Alpha, -1);
-        if ("true".equals(EMIVAGlobals.getXMLProperty("setup"))) {
+        if ("true".equals(Globals.getXMLProperty("setup"))) {
             setupMode = false;
         }
 
@@ -371,9 +371,9 @@ public class XMPPServer {
             return;
         }
         // Make sure that setup finished correctly.
-        if ("true".equals(EMIVAGlobals.getXMLProperty("setup"))) {
+        if ("true".equals(Globals.getXMLProperty("setup"))) {
             // Set the new server domain assigned during the setup process
-            name = EMIVAGlobals.getProperty("xmpp.domain").toLowerCase();
+            name = Globals.getProperty("xmpp.domain").toLowerCase();
             xmppServerInfo.setXMPPDomain(name);
 
             // Update certificates (if required)
@@ -479,7 +479,7 @@ public class XMPPServer {
 
             // Log that the server has been started
             String startupBanner = LocaleUtils.getLocalizedString("short.title") + " " + version.getVersionString() +
-                    " [" + EMIVAGlobals.formatDateTime(new Date()) + "]";
+                    " [" + Globals.formatDateTime(new Date()) + "]";
             Log.info(startupBanner);
             System.out.println(startupBanner);
 
@@ -844,9 +844,9 @@ public class XMPPServer {
         }
         else {
             // Set the home directory for the config file
-            EMIVAGlobals.setHomeDirectory(crossfireHome.toString());
+            Globals.setHomeDirectory(crossfireHome.toString());
             // Set the name of the config file
-            EMIVAGlobals.setConfigName(emivaConfigName);
+            Globals.setConfigName(emivaConfigName);
         }
     }
 

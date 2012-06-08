@@ -37,7 +37,7 @@ import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.container.BasicModule;
 import net.emiva.crossfire.disco.IQDiscoItemsHandler;
 import net.emiva.crossfire.session.ComponentSession;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.cache.CacheFactory;
 
 import org.dom4j.Element;
@@ -341,7 +341,7 @@ public class InternalComponentManager extends BasicModule implements ComponentMa
     }
 
     public String getProperty(String name) {
-        return EMIVAGlobals.getProperty(name);
+        return Globals.getProperty(name);
     }
 
     public void setProperty(String name, String value) {
@@ -353,7 +353,7 @@ public class InternalComponentManager extends BasicModule implements ComponentMa
     }
 
     public String getHomeDirectory() {
-        return EMIVAGlobals.getHomeDirectory();
+        return Globals.getHomeDirectory();
     }
 
     public boolean isExternalMode() {

@@ -19,7 +19,6 @@
  */
 package net.emiva.crossfire;
 
-import net.emiva.crossfire.multiplex.UnknownStanzaException;
 import net.emiva.crossfire.net.SASLAuthentication;
 import net.emiva.crossfire.session.LocalClientSession;
 

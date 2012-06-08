@@ -21,7 +21,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.util.EMIVAGlobals,
+<%@ page import="net.emiva.util.Globals,
 				 net.emiva.crossfire.XMPPServer,
                  net.emiva.util.ParamUtils,
                  net.emiva.crossfire.ConnectionManager,
@@ -88,11 +88,11 @@
 			response.sendRedirect("client-connections-settings.jsp?success=true");
 			
 			if (!idleDisco) {
-            	EMIVAGlobals.setProperty("xmpp.client.idle", "-1");
+            	Globals.setProperty("xmpp.client.idle", "-1");
 			} else {
-            	EMIVAGlobals.setProperty("xmpp.client.idle", String.valueOf(clientIdle));
+            	Globals.setProperty("xmpp.client.idle", String.valueOf(clientIdle));
 			}
-            EMIVAGlobals.setProperty("xmpp.client.idle.ping", String.valueOf(pingIdleClients));
+            Globals.setProperty("xmpp.client.idle.ping", String.valueOf(pingIdleClients));
             // Log the events
             webManager.logEvent("set server property xmpp.client.idle", "xmpp.client.idle = "+clientIdle);
             webManager.logEvent("set server property xmpp.client.idle.ping", "xmpp.client.idle.ping = "+pingIdleClients);
@@ -103,8 +103,8 @@
         sslEnabled = connectionManager.isClientSSLListenerEnabled();
         port = connectionManager.getClientListenerPort();
         sslPort = connectionManager.getClientSSLListenerPort();
-        clientIdle = EMIVAGlobals.getIntProperty("xmpp.client.idle", 6*60*1000);
-        pingIdleClients = EMIVAGlobals.getBooleanProperty("xmpp.client.idle.ping", true);
+        clientIdle = Globals.getIntProperty("xmpp.client.idle", 6*60*1000);
+        pingIdleClients = Globals.getBooleanProperty("xmpp.client.idle.ping", true);
     }
 %>
 

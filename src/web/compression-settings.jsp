@@ -20,7 +20,7 @@
 
 <%@ page import="net.emiva.crossfire.Connection,
                  net.emiva.crossfire.session.LocalClientSession,
-                 net.emiva.util.EMIVAGlobals"
+                 net.emiva.util.Globals"
     errorPage="error.jsp"
 %>
 <%@ page import="net.emiva.util.ParamUtils" %>
@@ -47,7 +47,7 @@
         LocalClientSession.setCompressionPolicy(
                 clientEnabled ? Connection.CompressionPolicy.optional : Connection.CompressionPolicy.disabled);
         // Update s2s compression policy
-        EMIVAGlobals.setProperty("xmpp.server.compression.policy", serverEnabled ?
+        Globals.setProperty("xmpp.server.compression.policy", serverEnabled ?
                 Connection.CompressionPolicy.optional.toString() : Connection.CompressionPolicy.disabled.toString());
         // Log the event
         webManager.logEvent("set compression policy", "c2s compression = "+clientEnabled+"\ns2s compression = "+serverEnabled);
@@ -68,7 +68,7 @@
 
     // Set page vars
     clientEnabled = Connection.CompressionPolicy.optional == LocalClientSession.getCompressionPolicy();
-    serverEnabled = Connection.CompressionPolicy.optional.toString().equals(EMIVAGlobals.getProperty("xmpp.server.compression.policy", Connection.CompressionPolicy.disabled.toString()));
+    serverEnabled = Connection.CompressionPolicy.optional.toString().equals(Globals.getProperty("xmpp.server.compression.policy", Connection.CompressionPolicy.disabled.toString()));
 %>
 
 <p>

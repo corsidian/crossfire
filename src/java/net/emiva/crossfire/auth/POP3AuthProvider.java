@@ -30,7 +30,7 @@ import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.StringUtils;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
@@ -89,32 +89,32 @@ public class POP3AuthProvider implements AuthProvider {
      */
     public POP3AuthProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("pop3.authCache.enabled");
-        EMIVAGlobals.migrateProperty("pop3.ssl");
-        EMIVAGlobals.migrateProperty("pop3.authRequiresDomain");
-        EMIVAGlobals.migrateProperty("pop3.host");
-        EMIVAGlobals.migrateProperty("pop3.debug");
-        EMIVAGlobals.migrateProperty("pop3.domain");
-        EMIVAGlobals.migrateProperty("pop3.port");
+        Globals.migrateProperty("pop3.authCache.enabled");
+        Globals.migrateProperty("pop3.ssl");
+        Globals.migrateProperty("pop3.authRequiresDomain");
+        Globals.migrateProperty("pop3.host");
+        Globals.migrateProperty("pop3.debug");
+        Globals.migrateProperty("pop3.domain");
+        Globals.migrateProperty("pop3.port");
 
-        if (Boolean.valueOf(EMIVAGlobals.getProperty("pop3.authCache.enabled"))) {
+        if (Boolean.valueOf(Globals.getProperty("pop3.authCache.enabled"))) {
             String cacheName = "POP3 Authentication";
             authCache = CacheFactory.createCache(cacheName);
         }
 
-        useSSL = Boolean.valueOf(EMIVAGlobals.getProperty("pop3.ssl"));
-        authRequiresDomain = Boolean.valueOf(EMIVAGlobals.getProperty("pop3.authRequiresDomain"));
+        useSSL = Boolean.valueOf(Globals.getProperty("pop3.ssl"));
+        authRequiresDomain = Boolean.valueOf(Globals.getProperty("pop3.authRequiresDomain"));
 
-        host = EMIVAGlobals.getProperty("pop3.host");
+        host = Globals.getProperty("pop3.host");
         if (host == null || host.length() < 1) {
             throw new IllegalArgumentException("pop3.host is null or empty");
         }
 
-        debugEnabled = Boolean.valueOf(EMIVAGlobals.getProperty("pop3.debug"));
+        debugEnabled = Boolean.valueOf(Globals.getProperty("pop3.debug"));
 
-        domain = EMIVAGlobals.getProperty("pop3.domain");
+        domain = Globals.getProperty("pop3.domain");
 
-        port = EMIVAGlobals.getIntProperty("pop3.port", useSSL ? 995 : 110);
+        port = Globals.getIntProperty("pop3.port", useSSL ? 995 : 110);
 
         if (Log.isDebugEnabled()) {
             Log.debug("POP3AuthProvider: Created new POP3AuthProvider instance, fields:");

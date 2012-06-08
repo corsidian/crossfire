@@ -35,7 +35,7 @@ import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.component.ComponentEventListener;
 import net.emiva.crossfire.component.InternalComponentManager;
 import net.emiva.crossfire.session.Session;
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 import net.emiva.util.FastDateFormat;
 import net.emiva.util.LocaleUtils;
 
@@ -63,7 +63,7 @@ public class PacketCopier implements PacketInterceptor, ComponentEventListener {
 
     private final static PacketCopier instance = new PacketCopier();
     private final static FastDateFormat dateFormat = FastDateFormat
-            .getInstance(EMIVAConstants.XMPP_DELAY_DATETIME_FORMAT, TimeZone.getTimeZone("UTC"));
+            .getInstance(GlobalConstants.XMPP_DELAY_DATETIME_FORMAT, TimeZone.getTimeZone("UTC"));
 
     private Map<String, Subscription> subscribers = new ConcurrentHashMap<String, Subscription>();
     private String serverName;

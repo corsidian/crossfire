@@ -27,7 +27,7 @@ import net.emiva.crossfire.container.BasicModule;
 import net.emiva.crossfire.interceptor.InterceptorManager;
 import net.emiva.crossfire.interceptor.PacketInterceptor;
 import net.emiva.crossfire.session.Session;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.xmpp.packet.JID;
 import org.xmpp.packet.Packet;
@@ -81,7 +81,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-        EMIVAGlobals.setProperty("xmpp.audit.active", enabled ? "true" : "false");
+        Globals.setProperty("xmpp.audit.active", enabled ? "true" : "false");
         // Add or remove the auditor interceptor depending on the enabled status
         if (enabled) {
             InterceptorManager.getInstance().addInterceptor(interceptor);
@@ -105,7 +105,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
     public void setMaxTotalSize(int size) {
         maxTotalSize = size;
         auditor.setMaxValues(maxTotalSize, maxFileSize, maxDays);
-        EMIVAGlobals.setProperty("xmpp.audit.totalsize", Integer.toString(size));
+        Globals.setProperty("xmpp.audit.totalsize", Integer.toString(size));
     }
 
     public int getMaxFileSize() {
@@ -115,7 +115,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
     public void setMaxFileSize(int size) {
         maxFileSize = size;
         auditor.setMaxValues(maxTotalSize, maxFileSize, maxDays);
-        EMIVAGlobals.setProperty("xmpp.audit.filesize", Integer.toString(size));
+        Globals.setProperty("xmpp.audit.filesize", Integer.toString(size));
     }
 
     public int getMaxDays() {
@@ -131,7 +131,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
         }
         maxDays = count;
         auditor.setMaxValues(maxTotalSize, maxFileSize, maxDays);
-        EMIVAGlobals.setProperty("xmpp.audit.days", Integer.toString(count));
+        Globals.setProperty("xmpp.audit.days", Integer.toString(count));
     }
 
     public int getLogTimeout() {
@@ -141,7 +141,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
     public void setLogTimeout(int logTimeout) {
         this.logTimeout = logTimeout;
         auditor.setLogTimeout(logTimeout);
-        EMIVAGlobals.setProperty("xmpp.audit.logtimeout", Integer.toString(logTimeout));
+        Globals.setProperty("xmpp.audit.logtimeout", Integer.toString(logTimeout));
     }
 
     public String getLogDir() {
@@ -151,7 +151,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
     public void setLogDir(String logDir) {
         this.logDir = logDir;
         auditor.setLogDir(logDir);
-        EMIVAGlobals.setProperty("xmpp.audit.logdir", logDir);
+        Globals.setProperty("xmpp.audit.logdir", logDir);
     }
 
     public boolean isAuditMessage() {
@@ -160,7 +160,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
 
     public void setAuditMessage(boolean auditMessage) {
         this.auditMessage = auditMessage;
-        EMIVAGlobals.setProperty("xmpp.audit.message", auditMessage ? "true" : "false");
+        Globals.setProperty("xmpp.audit.message", auditMessage ? "true" : "false");
     }
 
     public boolean isAuditPresence() {
@@ -169,7 +169,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
 
     public void setAuditPresence(boolean auditPresence) {
         this.auditPresence = auditPresence;
-        EMIVAGlobals.setProperty("xmpp.audit.presence", auditPresence ? "true" : "false");
+        Globals.setProperty("xmpp.audit.presence", auditPresence ? "true" : "false");
     }
 
     public boolean isAuditIQ() {
@@ -178,7 +178,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
 
     public void setAuditIQ(boolean auditIQ) {
         this.auditIQ = auditIQ;
-        EMIVAGlobals.setProperty("xmpp.audit.iq", Boolean.toString(auditIQ));
+        Globals.setProperty("xmpp.audit.iq", Boolean.toString(auditIQ));
     }
 
     public boolean isAuditXPath() {
@@ -187,7 +187,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
 
     public void setAuditXPath(boolean auditXPath) {
         this.auditXPath = auditXPath;
-        EMIVAGlobals.setProperty("xmpp.audit.xpath", Boolean.toString(auditXPath));
+        Globals.setProperty("xmpp.audit.xpath", Boolean.toString(auditXPath));
     }
 
     public void addXPath(String xpathExpression) {
@@ -225,7 +225,7 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
                 ignoreString.append(",").append(username);
             }
         }
-        EMIVAGlobals.setProperty("xmpp.audit.ignore", ignoreString.toString());
+        Globals.setProperty("xmpp.audit.ignore", ignoreString.toString());
     }
 
     public Collection<String> getIgnoreList() {
@@ -239,23 +239,23 @@ public class AuditManagerImpl extends BasicModule implements AuditManager {
     @Override
 	public void initialize(XMPPServer server) {
         super.initialize(server);
-        enabled = EMIVAGlobals.getBooleanProperty("xmpp.audit.active");
-        auditMessage = EMIVAGlobals.getBooleanProperty("xmpp.audit.message");
-        auditPresence = EMIVAGlobals.getBooleanProperty("xmpp.audit.presence");
-        auditIQ = EMIVAGlobals.getBooleanProperty("xmpp.audit.iq");
-        auditXPath = EMIVAGlobals.getBooleanProperty("xmpp.audit.xpath");
+        enabled = Globals.getBooleanProperty("xmpp.audit.active");
+        auditMessage = Globals.getBooleanProperty("xmpp.audit.message");
+        auditPresence = Globals.getBooleanProperty("xmpp.audit.presence");
+        auditIQ = Globals.getBooleanProperty("xmpp.audit.iq");
+        auditXPath = Globals.getBooleanProperty("xmpp.audit.xpath");
         // TODO: load xpath values!
 //        String[] filters = context.getProperties("xmpp.audit.filter.xpath");
 //        for (int i = 0; i < filters.length; i++) {
 //            xpath.add(filters[i]);
 //        }
-        maxTotalSize = EMIVAGlobals.getIntProperty("xmpp.audit.totalsize", MAX_TOTAL_SIZE);
-        maxFileSize = EMIVAGlobals.getIntProperty("xmpp.audit.filesize", MAX_FILE_SIZE);
-        maxDays = EMIVAGlobals.getIntProperty("xmpp.audit.days", MAX_DAYS);
-        logTimeout = EMIVAGlobals.getIntProperty("xmpp.audit.logtimeout", DEFAULT_LOG_TIMEOUT);
-        logDir = EMIVAGlobals.getProperty("xmpp.audit.logdir", EMIVAGlobals.getHomeDirectory() +
+        maxTotalSize = Globals.getIntProperty("xmpp.audit.totalsize", MAX_TOTAL_SIZE);
+        maxFileSize = Globals.getIntProperty("xmpp.audit.filesize", MAX_FILE_SIZE);
+        maxDays = Globals.getIntProperty("xmpp.audit.days", MAX_DAYS);
+        logTimeout = Globals.getIntProperty("xmpp.audit.logtimeout", DEFAULT_LOG_TIMEOUT);
+        logDir = Globals.getProperty("xmpp.audit.logdir", Globals.getHomeDirectory() +
                 File.separator + "logs");
-        String ignoreString = EMIVAGlobals.getProperty("xmpp.audit.ignore", "");
+        String ignoreString = Globals.getProperty("xmpp.audit.ignore", "");
         // Decode the ignore list
         StringTokenizer tokenizer = new StringTokenizer(ignoreString, ", ");
         while (tokenizer.hasMoreTokens()) {

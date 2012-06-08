@@ -35,7 +35,7 @@ import java.util.Arrays;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.container.Plugin;
 import net.emiva.crossfire.container.PluginManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
 
 import org.slf4j.Logger;
@@ -93,7 +93,7 @@ public class SchemaManager {
                     new ResourceLoader() {
                         @Override
 						public InputStream loadResource(String resourceName) {
-                            File file = new File(EMIVAGlobals.getHomeDirectory() + File.separator +
+                            File file = new File(Globals.getHomeDirectory() + File.separator +
                                     "resources" + File.separator + "database", resourceName);
                             try {
                                 return new FileInputStream(file);
@@ -313,7 +313,7 @@ public class SchemaManager {
         InputStream resource = null;
         if ("crossfire".equals(schemaKey)) {
             // Resource will be like "/database/upgrade/6/crossfire_hsqldb.sql"
-            String path = EMIVAGlobals.getHomeDirectory() + File.separator + "resources" +
+            String path = Globals.getHomeDirectory() + File.separator + "resources" +
                     File.separator + "database" + File.separator + "upgrade" + File.separator +
                     upgradeVersion;
             String filename = schemaKey + "_" + DbConnectionManager.getDatabaseType() + ".sql";

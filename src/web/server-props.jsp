@@ -17,7 +17,7 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.EMIVAGlobals,
+<%@ page import="net.emiva.util.Globals,
                  net.emiva.util.ParamUtils,
                  net.emiva.crossfire.ConnectionManager,
                  net.emiva.crossfire.XMPPServer,
@@ -117,12 +117,12 @@
             connectionManager.setClientSSLListenerPort(sslPort);
             connectionManager.setComponentListenerPort(componentPort);
             connectionManager.setServerListenerPort(serverPort);
-            if (!String.valueOf(embeddedPort).equals(EMIVAGlobals.getXMLProperty("adminConsole.port"))) {
-                EMIVAGlobals.setXMLProperty("adminConsole.port", String.valueOf(embeddedPort));
+            if (!String.valueOf(embeddedPort).equals(Globals.getXMLProperty("adminConsole.port"))) {
+                Globals.setXMLProperty("adminConsole.port", String.valueOf(embeddedPort));
                 needRestart = true;
             }
-            if (!String.valueOf(embeddedSecurePort).equals(EMIVAGlobals.getXMLProperty("adminConsole.securePort"))) {
-                EMIVAGlobals.setXMLProperty("adminConsole.securePort", String.valueOf(embeddedSecurePort));
+            if (!String.valueOf(embeddedSecurePort).equals(Globals.getXMLProperty("adminConsole.securePort"))) {
+                Globals.setXMLProperty("adminConsole.securePort", String.valueOf(embeddedSecurePort));
                 needRestart = true;
             }
             // Log the event
@@ -142,11 +142,11 @@
         componentPort = connectionManager.getComponentListenerPort();
         serverPort = connectionManager.getServerListenerPort();
         try {
-            embeddedPort = Integer.parseInt(EMIVAGlobals.getXMLProperty("adminConsole.port"));
+            embeddedPort = Integer.parseInt(Globals.getXMLProperty("adminConsole.port"));
         } catch (Exception ignored) {
         }
         try {
-            embeddedSecurePort = Integer.parseInt(EMIVAGlobals.getXMLProperty("adminConsole.securePort"));
+            embeddedSecurePort = Integer.parseInt(Globals.getXMLProperty("adminConsole.securePort"));
         } catch (Exception ignored) {
         }
     }

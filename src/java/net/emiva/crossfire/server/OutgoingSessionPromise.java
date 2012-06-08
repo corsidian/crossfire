@@ -37,7 +37,7 @@ import net.emiva.crossfire.RoutingTable;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.session.LocalOutgoingServerSession;
 import net.emiva.crossfire.spi.RoutingTableImpl;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
 
@@ -101,8 +101,8 @@ public class OutgoingSessionPromise implements RoutableChannelHandler {
         serversCache = CacheFactory.createCache(RoutingTableImpl.S2S_CACHE_NAME);
         routingTable = XMPPServer.getInstance().getRoutingTable();
         // Create a pool of threads that will process queued packets.
-        int maxThreads = EMIVAGlobals.getIntProperty("xmpp.server.outgoing.max.threads", 20);
-        int queueSize = EMIVAGlobals.getIntProperty("xmpp.server.outgoing.queue", 50);
+        int maxThreads = Globals.getIntProperty("xmpp.server.outgoing.max.threads", 20);
+        int queueSize = Globals.getIntProperty("xmpp.server.outgoing.queue", 50);
         if (maxThreads < 10) {
             // Ensure that the max number of threads in the pool is at least 10
             maxThreads = 10;

@@ -32,7 +32,7 @@ import java.util.Set;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.event.UserEventDispatcher;
 import net.emiva.crossfire.event.UserEventListener;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
 import net.emiva.util.PropertyEventDispatcher;
 import net.emiva.util.PropertyEventListener;
@@ -464,9 +464,9 @@ public class UserManager implements IQResultListener {
 
     private void initProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("provider.user.className");
+        Globals.migrateProperty("provider.user.className");
 
-        String className = EMIVAGlobals.getProperty("provider.user.className",
+        String className = Globals.getProperty("provider.user.className",
                 "net.emiva.crossfire.user.DefaultUserProvider");
         // Check if we need to reset the provider class
         if (provider == null || !className.equals(provider.getClass().getName())) {

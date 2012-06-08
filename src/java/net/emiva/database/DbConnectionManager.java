@@ -30,7 +30,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
 
 import org.slf4j.Logger;
@@ -93,7 +93,7 @@ public class DbConnectionManager {
                 if (connectionProvider == null) {
                     // Attempt to load the connection provider classname as
                     // a emiva property.
-                    String className = EMIVAGlobals.getXMLProperty("connectionProvider.className");
+                    String className = Globals.getXMLProperty("connectionProvider.className");
                     if (className != null) {
                         // Attempt to load the class.
                         try {
@@ -627,7 +627,7 @@ public class DbConnectionManager {
             }
         }
         // Remember what connection provider we want to use for restarts.
-        EMIVAGlobals.setXMLProperty("connectionProvider.className", provider.getClass().getName());
+        Globals.setXMLProperty("connectionProvider.className", provider.getClass().getName());
     }
 
     /**

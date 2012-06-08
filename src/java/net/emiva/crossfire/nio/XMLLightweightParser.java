@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.PropertyEventDispatcher;
 import net.emiva.util.PropertyEventListener;
 
@@ -108,7 +108,7 @@ class XMLLightweightParser {
 
     static {
         // Set default max buffer size to 1MB. If limit is reached then close connection
-        maxBufferSize = EMIVAGlobals.getIntProperty(MAX_PROPERTY_NAME, 1048576);
+        maxBufferSize = Globals.getIntProperty(MAX_PROPERTY_NAME, 1048576);
         // Listen for changes to this property
         PropertyEventDispatcher.addListener(new PropertyListener());
     }

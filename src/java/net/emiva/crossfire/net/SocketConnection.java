@@ -45,7 +45,7 @@ import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.session.IncomingServerSession;
 import net.emiva.crossfire.session.LocalSession;
 import net.emiva.crossfire.session.Session;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
 
 import org.slf4j.Logger;
@@ -512,7 +512,7 @@ public class SocketConnection implements Connection {
         // Check that the sending operation is still active
         long writeTimestamp = writeStarted;
         if (writeTimestamp > -1 && System.currentTimeMillis() - writeTimestamp >
-                EMIVAGlobals.getIntProperty("xmpp.session.sending-limit", 60000)) {
+                Globals.getIntProperty("xmpp.session.sending-limit", 60000)) {
             // Close the socket
             if (Log.isDebugEnabled()) {
                 Log.debug("Closing connection: " + this + " that started sending data at: " +

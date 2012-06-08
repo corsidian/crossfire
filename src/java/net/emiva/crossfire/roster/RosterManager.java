@@ -34,7 +34,7 @@ import net.emiva.crossfire.group.GroupNotFoundException;
 import net.emiva.crossfire.user.User;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
 
@@ -67,7 +67,7 @@ public class RosterManager extends BasicModule implements GroupEventListener, Us
      * @return true if the roster service is enabled.
      */
     public static boolean isRosterServiceEnabled() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.client.roster.active", true);
+        return Globals.getBooleanProperty("xmpp.client.roster.active", true);
     }
 
     public RosterManager() {

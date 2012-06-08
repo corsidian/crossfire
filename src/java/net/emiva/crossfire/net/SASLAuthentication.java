@@ -51,7 +51,7 @@ import net.emiva.crossfire.session.LocalClientSession;
 import net.emiva.crossfire.session.LocalIncomingServerSession;
 import net.emiva.crossfire.session.LocalSession;
 import net.emiva.crossfire.session.Session;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.CertificateManager;
 import net.emiva.util.StringUtils;
 
@@ -255,7 +255,7 @@ public class SASLAuthentication {
                                 props.put(Sasl.SERVER_AUTH, "TRUE");
                             }
                             SaslServer ss = Sasl.createSaslServer(mechanism, "xmpp",
-                                    EMIVAGlobals.getProperty("xmpp.fqdn", session.getServerName()), props,
+                                    Globals.getProperty("xmpp.fqdn", session.getServerName()), props,
                                     new XMPPCallbackHandler());
                             // evaluateResponse doesn't like null parameter
                             byte[] token = new byte[0];
@@ -386,7 +386,7 @@ public class SASLAuthentication {
      * @return true if shared secret authentication is enabled.
      */
     public static boolean isSharedSecretAllowed() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.auth.sharedSecretEnabled");
+        return Globals.getBooleanProperty("xmpp.auth.sharedSecretEnabled");
     }
 
     /**
@@ -398,7 +398,7 @@ public class SASLAuthentication {
      * @param sharedSecretAllowed true if shared secret authentication should be enabled.
      */
     public static void setSharedSecretAllowed(boolean sharedSecretAllowed) {
-        EMIVAGlobals.setProperty("xmpp.auth.sharedSecretEnabled", sharedSecretAllowed ? "true" : "false");
+        Globals.setProperty("xmpp.auth.sharedSecretEnabled", sharedSecretAllowed ? "true" : "false");
     }
 
     /**
@@ -413,10 +413,10 @@ public class SASLAuthentication {
         if (!isSharedSecretAllowed()) {
             return null;
         }
-        String sharedSecret = EMIVAGlobals.getProperty("xmpp.auth.sharedSecret");
+        String sharedSecret = Globals.getProperty("xmpp.auth.sharedSecret");
         if (sharedSecret == null) {
             sharedSecret = StringUtils.randomString(8);
-            EMIVAGlobals.setProperty("xmpp.auth.sharedSecret", sharedSecret);
+            Globals.setProperty("xmpp.auth.sharedSecret", sharedSecret);
         }
         return sharedSecret;
     }
@@ -494,7 +494,7 @@ public class SASLAuthentication {
             // Flag that indicates if certificates of the remote server should be validated.
             // Disabling certificate validation is not recommended for production environments.
             boolean verify =
-                    EMIVAGlobals.getBooleanProperty("xmpp.server.certificate.verify", true);
+                    Globals.getBooleanProperty("xmpp.server.certificate.verify", true);
             if (!verify) {
                 authenticationSuccessful(session, hostname, null);
                 return Status.authenticated;
@@ -668,7 +668,7 @@ public class SASLAuthentication {
             retries = retries + 1;
         }
         session.setSessionData("authRetries", retries);
-        if (retries >= EMIVAGlobals.getIntProperty("xmpp.auth.retries", 3) ) {
+        if (retries >= Globals.getIntProperty("xmpp.auth.retries", 3) ) {
             // Close the connection
             session.close();
         }
@@ -735,13 +735,13 @@ public class SASLAuthentication {
 
     private static void initMechanisms() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("sasl.mechs");
-        EMIVAGlobals.migrateProperty("sasl.gssapi.debug");
-        EMIVAGlobals.migrateProperty("sasl.gssapi.config");
-        EMIVAGlobals.migrateProperty("sasl.gssapi.useSubjectCredsOnly");
+        Globals.migrateProperty("sasl.mechs");
+        Globals.migrateProperty("sasl.gssapi.debug");
+        Globals.migrateProperty("sasl.gssapi.config");
+        Globals.migrateProperty("sasl.gssapi.useSubjectCredsOnly");
 
         mechanisms = new HashSet<String>();
-        String available = EMIVAGlobals.getProperty("sasl.mechs");
+        String available = Globals.getProperty("sasl.mechs");
         if (available == null) {
             mechanisms.add("ANONYMOUS");
             mechanisms.add("PLAIN");
@@ -768,13 +768,13 @@ public class SASLAuthentication {
             }
 
             if (mechanisms.contains("GSSAPI")) {
-                if (EMIVAGlobals.getProperty("sasl.gssapi.config") != null) {
+                if (Globals.getProperty("sasl.gssapi.config") != null) {
                     System.setProperty("java.security.krb5.debug",
-                            EMIVAGlobals.getProperty("sasl.gssapi.debug", "false"));
+                            Globals.getProperty("sasl.gssapi.debug", "false"));
                     System.setProperty("java.security.auth.login.config",
-                            EMIVAGlobals.getProperty("sasl.gssapi.config"));
+                            Globals.getProperty("sasl.gssapi.config"));
                     System.setProperty("javax.security.auth.useSubjectCredsOnly",
-                            EMIVAGlobals.getProperty("sasl.gssapi.useSubjectCredsOnly", "false"));
+                            Globals.getProperty("sasl.gssapi.useSubjectCredsOnly", "false"));
                 }
                 else {
                     //Not configured, remove the option.

@@ -32,7 +32,7 @@ import net.emiva.crossfire.event.UserEventListener;
 import net.emiva.crossfire.user.User;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
 import net.emiva.util.PropertyEventDispatcher;
 import net.emiva.util.PropertyEventListener;
@@ -218,10 +218,10 @@ public class GroupManager {
 
     private void initProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("provider.group.className");
+        Globals.migrateProperty("provider.group.className");
 
         // Load a group provider.
-        String className = EMIVAGlobals.getProperty("provider.group.className",
+        String className = Globals.getProperty("provider.group.className",
                 "net.emiva.crossfire.group.DefaultGroupProvider");
         try {
             Class c = ClassUtils.forName(className);

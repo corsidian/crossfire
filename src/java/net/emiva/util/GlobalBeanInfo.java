@@ -40,15 +40,15 @@ import org.slf4j.LoggerFactory;
  * @author EMIVA Community
  * @see java.beans.BeanInfo
  */
-public abstract class EMIVABeanInfo implements BeanInfo {
+public abstract class GlobalBeanInfo implements BeanInfo {
 
-	private static final Logger Log = LoggerFactory.getLogger(EMIVABeanInfo.class);
+	private static final Logger Log = LoggerFactory.getLogger(GlobalBeanInfo.class);
 
     private ResourceBundle bundle;
 
-    public EMIVABeanInfo() {
+    public GlobalBeanInfo() {
         //Get the locale that should be used, then load the resource bundle.
-        Locale currentLocale = EMIVAGlobals.getLocale();
+        Locale currentLocale = Globals.getLocale();
         try {
             bundle = ResourceBundle.getBundle("bean_" + getName(),
                     currentLocale);

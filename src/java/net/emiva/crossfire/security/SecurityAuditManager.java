@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
 import net.emiva.util.PropertyEventDispatcher;
 import net.emiva.util.PropertyEventListener;
@@ -111,9 +111,9 @@ public class SecurityAuditManager {
      */
     private void initProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("provider.securityAudit.className");
+        Globals.migrateProperty("provider.securityAudit.className");
 
-        String className = EMIVAGlobals.getProperty("provider.securityAudit.className",
+        String className = Globals.getProperty("provider.securityAudit.className",
                 "net.emiva.crossfire.security.DefaultSecurityAuditProvider");
         // Check if we need to reset the provider class
         if (provider == null || !className.equals(provider.getClass().getName())) {

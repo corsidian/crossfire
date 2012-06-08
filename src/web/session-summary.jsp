@@ -20,7 +20,7 @@
 <%@ page import="net.emiva.crossfire.SessionManager,
                  net.emiva.crossfire.SessionResultFilter,
                  net.emiva.crossfire.session.ClientSession,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.util.ParamUtils,
                  java.util.Collection"
     errorPage="error.jsp"
@@ -280,7 +280,7 @@
 
 <br>
 <p>
-<fmt:message key="session.summary.last_update" />: <%= EMIVAGlobals.formatDateTime(new Date()) %>
+<fmt:message key="session.summary.last_update" />: <%= Globals.formatDateTime(new Date()) %>
 </p>
 
     </body>

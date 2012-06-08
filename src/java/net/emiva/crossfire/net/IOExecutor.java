@@ -20,7 +20,7 @@
 
 package net.emiva.crossfire.net;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -53,7 +53,7 @@ class IOExecutor {
     */
     protected IOExecutor() {
         // Read poolsize parameter...
-        int poolSize = EMIVAGlobals.getIntProperty("tiscali.pool.size", 15);
+        int poolSize = Globals.getIntProperty("tiscali.pool.size", 15);
         // Create queue for executor
         executeQueue = new LinkedBlockingQueue<Runnable>(10000);
         // Create executor

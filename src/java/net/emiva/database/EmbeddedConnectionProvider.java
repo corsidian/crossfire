@@ -20,7 +20,7 @@
 
 package net.emiva.database;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.Log;
 
 import java.io.File;
@@ -66,7 +66,7 @@ public class EmbeddedConnectionProvider implements ConnectionProvider {
     }
 
     public void start() {
-        File databaseDir = new File(EMIVAGlobals.getHomeDirectory(), File.separator + "embedded-db");
+        File databaseDir = new File(Globals.getHomeDirectory(), File.separator + "embedded-db");
         // If the database doesn't exist, create it.
         if (!databaseDir.exists()) {
             databaseDir.mkdirs();

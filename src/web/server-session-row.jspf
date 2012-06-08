@@ -4,7 +4,7 @@
 --%>
 
 <%@ page import="net.emiva.crossfire.session.IncomingServerSession,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  java.net.URLEncoder,
                  java.util.Calendar,
                  java.util.Date"%>
@@ -112,10 +112,10 @@
     %>
 
     <td align="center" width="20%" nowrap>
-        <%= sameCreationDay ? EMIVAGlobals.formatTime(creationDate) : EMIVAGlobals.formatDateTime(creationDate) %>
+        <%= sameCreationDay ? Globals.formatTime(creationDate) : Globals.formatDateTime(creationDate) %>
     </td>
     <td align="center" width="20%" nowrap>
-        <%= sameActiveDay ? EMIVAGlobals.formatTime(lastActiveDate) : EMIVAGlobals.formatDateTime(lastActiveDate) %>
+        <%= sameActiveDay ? Globals.formatTime(lastActiveDate) : Globals.formatDateTime(lastActiveDate) %>
     </td>
 
     <td width="1%" nowrap align="center" style="border-right:1px #ccc solid;">

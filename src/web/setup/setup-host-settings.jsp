@@ -5,7 +5,7 @@
 --%>
 
 <%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  java.util.Map,
                  java.util.HashMap,
                  java.net.InetAddress,
@@ -81,10 +81,10 @@
 
     // Load the current values:
     if (!doContinue) {
-        domain = EMIVAGlobals.getProperty("xmpp.domain");
-        embeddedPort = EMIVAGlobals.getXMLProperty("adminConsole.port", 9090);
-        securePort = EMIVAGlobals.getXMLProperty("adminConsole.securePort", 9091);
-        sslEnabled = EMIVAGlobals.getBooleanProperty("xmpp.socket.ssl.active", true);
+        domain = Globals.getProperty("xmpp.domain");
+        embeddedPort = Globals.getXMLProperty("adminConsole.port", 9090);
+        securePort = Globals.getXMLProperty("adminConsole.securePort", 9091);
+        sslEnabled = Globals.getBooleanProperty("xmpp.socket.ssl.active", true);
 
         // If the domain is still blank, guess at the value:
         if (domain == null) {

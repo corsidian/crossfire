@@ -24,7 +24,7 @@ import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.handler.IQPingHandler;
 import net.emiva.crossfire.net.ClientStanzaHandler;
 import net.emiva.crossfire.net.StanzaHandler;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.apache.mina.common.IdleStatus;
 import org.apache.mina.common.IoSession;
@@ -60,7 +60,7 @@ public class ClientConnectionHandler extends ConnectionHandler {
 
     @Override
 	int getMaxIdleTime() {
-        return EMIVAGlobals.getIntProperty("xmpp.client.idle", 6 * 60 * 1000) / 1000;
+        return Globals.getIntProperty("xmpp.client.idle", 6 * 60 * 1000) / 1000;
     }
 
 	/**
@@ -87,7 +87,7 @@ public class ClientConnectionHandler extends ConnectionHandler {
     public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
     	super.sessionIdle(session, status);
     	
-    	final boolean doPing = EMIVAGlobals.getBooleanProperty("xmpp.client.idle.ping", true);
+    	final boolean doPing = Globals.getBooleanProperty("xmpp.client.idle.ping", true);
         if (doPing && session.getIdleCount(status) == 1) {
             final ClientStanzaHandler handler = (ClientStanzaHandler) session.getAttribute(HANDLER);
             final JID entity = handler.getAddress();

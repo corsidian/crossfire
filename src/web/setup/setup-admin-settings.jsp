@@ -8,7 +8,7 @@
                  net.emiva.crossfire.auth.AuthFactory,
                  net.emiva.crossfire.user.User,
                  net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.util.ParamUtils" %>
 <%@ page import="net.emiva.util.StringUtils"%>
 <%@ page import="org.xmpp.packet.JID"%>
@@ -29,7 +29,7 @@
 
 <%! // Global vars, methods, etc
     void setSetupFinished(HttpSession session) {
-        EMIVAGlobals.setXMLProperty("setup","true");
+        Globals.setXMLProperty("setup","true");
     }
 %>
 

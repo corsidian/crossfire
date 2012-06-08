@@ -29,7 +29,7 @@ import net.emiva.crossfire.cluster.NodeID;
 import net.emiva.crossfire.handler.IQHandler;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
 
@@ -429,7 +429,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
                         if (identities.isEmpty()) {
                             Element identity = DocumentHelper.createElement("identity");
                             identity.addAttribute("category", "server");
-                            identity.addAttribute("name", EMIVAGlobals.getProperty(
+                            identity.addAttribute("name", Globals.getProperty(
                                     "xmpp.server.name", "crossfire Server"));
                             identity.addAttribute("type", "im");
 

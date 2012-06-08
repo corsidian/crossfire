@@ -26,7 +26,7 @@ import java.util.Map;
 
 import net.emiva.crossfire.lockout.LockOutManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.Blowfish;
 import net.emiva.util.ClassUtils;
 import net.emiva.util.LocaleUtils;
@@ -92,9 +92,9 @@ public class AuthFactory {
 
     private static void initProvider() {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("provider.auth.className");
+        Globals.migrateProperty("provider.auth.className");
 
-        String className = EMIVAGlobals.getProperty("provider.auth.className",
+        String className = Globals.getProperty("provider.auth.className",
                 "net.emiva.crossfire.auth.DefaultAuthProvider");
         // Check if we need to reset the auth provider class 
         if (authProvider == null || !className.equals(authProvider.getClass().getName())) {
@@ -275,13 +275,13 @@ public class AuthFactory {
         // encryption fully secure.
         String keyString;
         try {
-            keyString = EMIVAGlobals.getProperty("passwordKey");
+            keyString = Globals.getProperty("passwordKey");
             if (keyString == null) {
                 keyString = StringUtils.randomString(15);
-                EMIVAGlobals.setProperty("passwordKey", keyString);
+                Globals.setProperty("passwordKey", keyString);
                 // Check to make sure that setting the property worked. It won't work,
                 // for example, when in setup mode.
-                if (!keyString.equals(EMIVAGlobals.getProperty("passwordKey"))) {
+                if (!keyString.equals(Globals.getProperty("passwordKey"))) {
                     return null;
                 }
             }

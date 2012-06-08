@@ -19,7 +19,7 @@
 package net.emiva.crossfire.security;
 
 import net.emiva.database.EMIVAID;
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 
 
 import java.util.Date;
@@ -30,7 +30,7 @@ import java.util.Date;
  *
  * @author Daniel Henninger
  */
-@EMIVAID(EMIVAConstants.SECURITY_AUDIT)
+@EMIVAID(GlobalConstants.SECURITY_AUDIT)
 public class SecurityAuditEvent {
 
     private long msgID;

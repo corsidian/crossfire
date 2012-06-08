@@ -33,17 +33,17 @@ import javax.net.ssl.SSLSession;
  * two properties to store the SSLSession and the StartTlsResponse
  * objects. This is necessary when using the StartTLS extension.
  */
-public class EMIVAInitialLdapContext extends InitialLdapContext {
+public class GlobalInitialLdapContext extends InitialLdapContext {
 
 	private StartTlsResponse tlsResp;
 	private SSLSession sslSess;
 	
-	public EMIVAInitialLdapContext(Hashtable<?, ?> arg0, Control[] arg1)
+	public GlobalInitialLdapContext(Hashtable<?, ?> arg0, Control[] arg1)
 			throws NamingException {
 		super(arg0, arg1);
 	}
 	
-	public EMIVAInitialLdapContext() throws NamingException {
+	public GlobalInitialLdapContext() throws NamingException {
 		super();
 	}
 

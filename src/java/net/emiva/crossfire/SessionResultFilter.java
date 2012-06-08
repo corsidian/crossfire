@@ -284,7 +284,7 @@ public class SessionResultFilter {
      * <pre>
      * SessionResultFilter filter = new SessionResultFilter();
      * filter.setSortOrder(SessionResultFilter.DESCENDING);
-     * filter.setSortField(EMIVAGlobals.SORT_CREATION_DATE);
+     * filter.setSortField(Globals.SORT_CREATION_DATE);
      * <b>filter.setCreationDateRangeMin(SessionResultFilter.roundDate(forum.getModificationDate(), 60));</b>
      * filter.setNumResults(1);
      * Iterator messages = forum.messages(filter);

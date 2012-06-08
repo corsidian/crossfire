@@ -39,7 +39,7 @@ public class LocaleFilter implements Filter {
     }
 
     /**
-     * Ssets the locale context-wide based on a call to {@link EMIVAGlobals#getLocale()}.
+     * Ssets the locale context-wide based on a call to {@link Globals#getLocale()}.
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -51,14 +51,14 @@ public class LocaleFilter implements Filter {
             // sense to just set the locale in the user's session and if that's done we might
             // want to honor a preference to get the user's locale based on request headers.
             // For now, this is just a convenient place to set the locale globally.
-            Config.set(context, Config.FMT_LOCALE, EMIVAGlobals.getLocale());
+            Config.set(context, Config.FMT_LOCALE, Globals.getLocale());
         }
         else {
             try {
                 String[] parts = pathInfo.split("/");
                 String pluginName = parts[1];
                 ResourceBundle bundle = LocaleUtils.getPluginResourceBundle(pluginName);
-                LocalizationContext ctx = new LocalizationContext(bundle, EMIVAGlobals.getLocale());
+                LocalizationContext ctx = new LocalizationContext(bundle, Globals.getLocale());
                 Config.set(request, Config.FMT_LOCALIZATION_CONTEXT, ctx);
             }
             catch (Exception e) {
@@ -67,7 +67,7 @@ public class LocaleFilter implements Filter {
                 // sense to just set the locale in the user's session and if that's done we might
                 // want to honor a preference to get the user's locale based on request headers.
                 // For now, this is just a convenient place to set the locale globally.
-                Config.set(context, Config.FMT_LOCALE, EMIVAGlobals.getLocale());
+                Config.set(context, Config.FMT_LOCALE, Globals.getLocale());
             }
         }
         // Move along:

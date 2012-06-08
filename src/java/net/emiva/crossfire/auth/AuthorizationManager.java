@@ -27,7 +27,7 @@ import java.util.StringTokenizer;
 import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
 import net.emiva.util.StringUtils;
 
@@ -65,12 +65,12 @@ public class AuthorizationManager {
 
     static {
         // Convert XML based provider setup to Database based
-        EMIVAGlobals.migrateProperty("provider.authorization.classList");
-        EMIVAGlobals.migrateProperty("provider.authorizationMapping.classList");
-        EMIVAGlobals.migrateProperty("sasl.approvedRealms");
-        EMIVAGlobals.migrateProperty("sasl.realm");
+        Globals.migrateProperty("provider.authorization.classList");
+        Globals.migrateProperty("provider.authorizationMapping.classList");
+        Globals.migrateProperty("sasl.approvedRealms");
+        Globals.migrateProperty("sasl.realm");
 
-        String classList = EMIVAGlobals.getProperty("provider.authorization.classList");
+        String classList = Globals.getProperty("provider.authorization.classList");
         if (classList != null) {
             StringTokenizer st = new StringTokenizer(classList, " ,\t\n\r\f");
             while (st.hasMoreTokens()) {
@@ -92,7 +92,7 @@ public class AuthorizationManager {
             authorizationPolicies.add(new DefaultAuthorizationPolicy());
         }
 
-        classList = EMIVAGlobals.getProperty("provider.authorizationMapping.classList");
+        classList = Globals.getProperty("provider.authorizationMapping.classList");
         if (classList != null) {
             StringTokenizer st = new StringTokenizer(classList, " ,\t\n\r\f");
             while (st.hasMoreTokens()) {
@@ -168,7 +168,7 @@ public class AuthorizationManager {
                         Log.debug("AuthorizationManager: User " + username + " not found " + nfe.toString());
                     }
                     // Should we add the user?
-                    if(EMIVAGlobals.getBooleanProperty("xmpp.auth.autoadd",false)) {
+                    if(Globals.getBooleanProperty("xmpp.auth.autoadd",false)) {
                         if (UserManager.getUserProvider().isReadOnly()) {
                             return false;
                         }

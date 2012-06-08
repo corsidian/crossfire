@@ -20,7 +20,6 @@
 
 package net.emiva.crossfire;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,7 +39,6 @@ import net.emiva.crossfire.cluster.ClusterManager;
 import net.emiva.crossfire.component.InternalComponentManager;
 import net.emiva.crossfire.container.BasicModule;
 import net.emiva.crossfire.event.SessionEventDispatcher;
-import net.emiva.crossfire.multiplex.ConnectionMultiplexerManager;
 import net.emiva.crossfire.server.OutgoingSessionPromise;
 import net.emiva.crossfire.session.ClientSession;
 import net.emiva.crossfire.session.ClientSessionInfo;
@@ -50,7 +48,6 @@ import net.emiva.crossfire.session.GetSessionsCountTask;
 import net.emiva.crossfire.session.IncomingServerSession;
 import net.emiva.crossfire.session.LocalClientSession;
 import net.emiva.crossfire.session.LocalComponentSession;
-import net.emiva.crossfire.session.LocalConnectionMultiplexerSession;
 import net.emiva.crossfire.session.LocalIncomingServerSession;
 import net.emiva.crossfire.session.LocalOutgoingServerSession;
 import net.emiva.crossfire.session.OutgoingServerSession;
@@ -58,7 +55,7 @@ import net.emiva.crossfire.session.RemoteSessionLocator;
 import net.emiva.crossfire.session.Session;
 import net.emiva.crossfire.spi.BasicStreamIDFactory;
 import net.emiva.crossfire.user.UserManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
@@ -156,7 +153,6 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
     private ComponentSessionListener componentSessionListener = new ComponentSessionListener();
     private IncomingServerSessionListener incomingServerListener = new IncomingServerSessionListener();
     private OutgoingServerSessionListener outgoingServerListener = new OutgoingServerSessionListener();
-    private ConnectionMultiplexerSessionListener multiplexerSessionListener = new ConnectionMultiplexerSessionListener();
 
     /**
      * Local session manager responsible for keeping sessions connected to this JVM that are not
@@ -182,123 +178,14 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
 
     public SessionManager() {
         super("Session Manager");
-        if (EMIVAGlobals.getBooleanProperty("xmpp.audit.active")) {
+        if (Globals.getBooleanProperty("xmpp.audit.active")) {
             streamIDFactory = new AuditStreamIDFactory();
         }
         else {
             streamIDFactory = new BasicStreamIDFactory();
         }
         localSessionManager = new LocalSessionManager();
-        conflictLimit = EMIVAGlobals.getIntProperty("xmpp.session.conflict-limit", 0);
-    }
-
-    /**
-     * Returns the session originated from the specified address or <tt>null</tt> if none was
-     * found. The specified address MUST contain a resource that uniquely identifies the session.
-     *
-     * A single connection manager should connect to the same node.
-     *
-     * @param address the address of the connection manager (including resource that identifies specific socket)
-     * @return the session originated from the specified address.
-     */
-    public ConnectionMultiplexerSession getConnectionMultiplexerSession(JID address) {
-        // Search in the list of CMs connected to this JVM
-        LocalConnectionMultiplexerSession session =
-                localSessionManager.getConnnectionManagerSessions().get(address.toString());
-        if (session == null && server.getRemoteSessionLocator() != null) {
-            // Search in the list of CMs connected to other cluster members
-            byte[] nodeID = multiplexerSessionsCache.get(address.toString());
-            if (nodeID != null) {
-                return server.getRemoteSessionLocator().getConnectionMultiplexerSession(nodeID, address);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns all sessions originated from connection managers.
-     *
-     * @return all sessions originated from connection managers.
-     */
-    public List<ConnectionMultiplexerSession> getConnectionMultiplexerSessions() {
-        List<ConnectionMultiplexerSession> sessions = new ArrayList<ConnectionMultiplexerSession>();
-        // Add sessions of CMs connected to this JVM
-        sessions.addAll(localSessionManager.getConnnectionManagerSessions().values());
-        // Add sessions of CMs connected to other cluster nodes
-        RemoteSessionLocator locator = server.getRemoteSessionLocator();
-        if (locator != null) {
-            for (Map.Entry<String, byte[]> entry : multiplexerSessionsCache.entrySet()) {
-                if (!server.getNodeID().equals(entry.getValue())) {
-                    sessions.add(locator.getConnectionMultiplexerSession(entry.getValue(), new JID(entry.getKey())));
-                }
-            }
-        }
-        return sessions;
-    }
-
-    /**
-     * Returns a collection with all the sessions originated from the connection manager
-     * whose domain matches the specified domain. If there is no connection manager with
-     * the specified domain then an empty list is going to be returned.
-     *
-     * @param domain the domain of the connection manager.
-     * @return a collection with all the sessions originated from the connection manager
-     *         whose domain matches the specified domain.
-     */
-    public List<ConnectionMultiplexerSession> getConnectionMultiplexerSessions(String domain) {
-        List<ConnectionMultiplexerSession> sessions = new ArrayList<ConnectionMultiplexerSession>();
-        // Add sessions of CMs connected to this JVM
-        for (String address : localSessionManager.getConnnectionManagerSessions().keySet()) {
-            JID jid = new JID(address);
-            if (domain.equals(jid.getDomain())) {
-                sessions.add(localSessionManager.getConnnectionManagerSessions().get(address));
-            }
-        }
-        // Add sessions of CMs connected to other cluster nodes
-        RemoteSessionLocator locator = server.getRemoteSessionLocator();
-        if (locator != null) {
-            for (Map.Entry<String, byte[]> entry : multiplexerSessionsCache.entrySet()) {
-                if (!server.getNodeID().equals(entry.getValue())) {
-                    JID jid = new JID(entry.getKey());
-                    if (domain.equals(jid.getDomain())) {
-                        sessions.add(
-                                locator.getConnectionMultiplexerSession(entry.getValue(), new JID(entry.getKey())));
-                    }
-                }
-            }
-        }
-        return sessions;
-    }
-
-    /**
-     * Creates a new <tt>ConnectionMultiplexerSession</tt>.
-     *
-     * @param conn the connection to create the session from.
-     * @param address the JID (may include a resource) of the connection manager's session. 
-     * @return a newly created session.
-     */
-    public LocalConnectionMultiplexerSession createMultiplexerSession(Connection conn, JID address) {
-        if (serverName == null) {
-            throw new IllegalStateException("Server not initialized");
-        }
-        StreamID id = nextStreamID();
-        LocalConnectionMultiplexerSession session = new LocalConnectionMultiplexerSession(serverName, conn, id);
-        conn.init(session);
-        // Register to receive close notification on this session so we can
-        // figure out when users that were using this connection manager may become unavailable
-        conn.registerCloseListener(multiplexerSessionListener, session);
-
-        // Add to connection multiplexer session.
-        boolean firstConnection = getConnectionMultiplexerSessions(address.getDomain()).isEmpty();
-        localSessionManager.getConnnectionManagerSessions().put(address.toString(), session);
-        // Keep track of the cluster node hosting the new CM connection
-        multiplexerSessionsCache.put(address.toString(), server.getNodeID().toByteArray());
-        if (firstConnection) {
-            // Notify ConnectionMultiplexerManager that a new connection manager
-            // is available
-            ConnectionMultiplexerManager.getInstance().multiplexerAvailable(address.getDomain());
-        }
-        return session;
+        conflictLimit = Globals.getIntProperty("xmpp.session.conflict-limit", 0);
     }
 
     /**
@@ -1124,7 +1011,7 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
 
     public void setConflictKickLimit(int limit) {
         conflictLimit = limit;
-        EMIVAGlobals.setProperty("xmpp.session.conflict-limit", Integer.toString(conflictLimit));
+        Globals.setProperty("xmpp.session.conflict-limit", Integer.toString(conflictLimit));
     }
 
     private class ClientSessionListener implements ConnectionCloseListener {
@@ -1223,27 +1110,6 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
         }
     }
 
-    private class ConnectionMultiplexerSessionListener implements ConnectionCloseListener {
-        /**
-         * Handle a session that just closed.
-         *
-         * @param handback The session that just closed
-         */
-        public void onConnectionClose(Object handback) {
-            ConnectionMultiplexerSession session = (ConnectionMultiplexerSession)handback;
-            // Remove all the hostnames that were registered for this server session
-            String domain = session.getAddress().getDomain();
-            localSessionManager.getConnnectionManagerSessions().remove(session.getAddress().toString());
-            // Remove track of the cluster node hosting the CM connection
-            multiplexerSessionsCache.remove(session.getAddress().toString());
-            if (getConnectionMultiplexerSessions(domain).isEmpty()) {
-                // Terminate ClientSessions originated from this connection manager
-                // that are still active since the connection manager has gone down
-                ConnectionMultiplexerManager.getInstance().multiplexerUnavailable(domain);
-            }
-        }
-    }
-
     @Override
 	public void initialize(XMPPServer server) {
         super.initialize(server);
@@ -1254,17 +1120,17 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
         serverName = server.getServerInfo().getXMPPDomain();
         serverAddress = new JID(serverName);
 
-        if (EMIVAGlobals.getBooleanProperty("xmpp.audit.active")) {
+        if (Globals.getBooleanProperty("xmpp.audit.active")) {
             streamIDFactory = new AuditStreamIDFactory();
         }
         else {
             streamIDFactory = new BasicStreamIDFactory();
         }
 
-        String conflictLimitProp = EMIVAGlobals.getProperty("xmpp.session.conflict-limit");
+        String conflictLimitProp = Globals.getProperty("xmpp.session.conflict-limit");
         if (conflictLimitProp == null) {
             conflictLimit = 0;
-            EMIVAGlobals.setProperty("xmpp.session.conflict-limit", Integer.toString(conflictLimit));
+            Globals.setProperty("xmpp.session.conflict-limit", Integer.toString(conflictLimit));
         }
         else {
             try {
@@ -1272,7 +1138,7 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
             }
             catch (NumberFormatException e) {
                 conflictLimit = 0;
-                EMIVAGlobals.setProperty("xmpp.session.conflict-limit", Integer.toString(conflictLimit));
+                Globals.setProperty("xmpp.session.conflict-limit", Integer.toString(conflictLimit));
             }
         }
 
@@ -1344,7 +1210,7 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
         Log.debug("SessionManager: Stopping server");
         // Stop threads that are sending packets to remote servers
         OutgoingSessionPromise.getInstance().shutdown();
-        if (EMIVAGlobals.getBooleanProperty("shutdownMessage.enabled")) {
+        if (Globals.getBooleanProperty("shutdownMessage.enabled")) {
             sendServerMessage(null, LocaleUtils.getLocalizedString("admin.shutdown.now"));
         }
         localSessionManager.stop();
@@ -1363,7 +1229,7 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
      *         server.
      */
     public boolean isMultipleServerConnectionsAllowed() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.server.session.allowmultiple", true);
+        return Globals.getBooleanProperty("xmpp.server.session.allowmultiple", true);
     }
 
     /**
@@ -1378,8 +1244,8 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
      *        server.
      */
     public void setMultipleServerConnectionsAllowed(boolean allowed) {
-        EMIVAGlobals.setProperty("xmpp.server.session.allowmultiple", Boolean.toString(allowed));
-        if (allowed && EMIVAGlobals.getIntProperty("xmpp.server.session.idle", 10 * 60 * 1000) <= 0)
+        Globals.setProperty("xmpp.server.session.allowmultiple", Boolean.toString(allowed));
+        if (allowed && Globals.getIntProperty("xmpp.server.session.idle", 10 * 60 * 1000) <= 0)
         {
             Log.warn("Allowing multiple S2S connections for each domain, without setting a " +
                     "maximum idle timeout for these connections, is unrecommended! Either " +
@@ -1401,7 +1267,7 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
             return;
         }
         // Set the new property value
-        EMIVAGlobals.setProperty("xmpp.server.session.timeout", Integer.toString(timeout));
+        Globals.setProperty("xmpp.server.session.timeout", Integer.toString(timeout));
     }
 
     /**
@@ -1410,7 +1276,7 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
      * @return the number of milliseconds to elapse between clearing of idle server sessions.
      */
     public int getServerSessionTimeout() {
-        return EMIVAGlobals.getIntProperty("xmpp.server.session.timeout", 5 * 60 * 1000);
+        return Globals.getIntProperty("xmpp.server.session.timeout", 5 * 60 * 1000);
     }
 
     public void setServerSessionIdleTime(int idleTime) {
@@ -1418,7 +1284,7 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
             return;
         }
         // Set the new property value
-        EMIVAGlobals.setProperty("xmpp.server.session.idle", Integer.toString(idleTime));
+        Globals.setProperty("xmpp.server.session.idle", Integer.toString(idleTime));
 
         if (idleTime <= 0 && isMultipleServerConnectionsAllowed() )
         {
@@ -1430,7 +1296,7 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
     }
 
     public int getServerSessionIdleTime() {
-        return EMIVAGlobals.getIntProperty("xmpp.server.session.idle", 10 * 60 * 1000);
+        return Globals.getIntProperty("xmpp.server.session.idle", 10 * 60 * 1000);
     }
 
     public Cache<String, ClientSessionInfo> getSessionInfoCache() {
@@ -1468,11 +1334,6 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
         // Add external component sessions hosted locally to the cache (using new nodeID)
         for (Session session : localSessionManager.getComponentsSessions()) {
             componentSessionsCache.put(session.getAddress().toString(), server.getNodeID().toByteArray());
-        }
-
-        // Add connection multiplexer sessions hosted locally to the cache (using new nodeID)
-        for (String address : localSessionManager.getConnnectionManagerSessions().keySet()) {
-            multiplexerSessionsCache.put(address, server.getNodeID().toByteArray());
         }
 
         // Add incoming server sessions hosted locally to the cache (using new nodeID)

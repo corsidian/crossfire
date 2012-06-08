@@ -6,7 +6,7 @@
 
 <%@ page import="java.io.*,
                  net.emiva.util.ParamUtils,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.crossfire.auth.UnauthorizedException,
                  net.emiva.crossfire.user.UserNotFoundException,
                  net.emiva.crossfire.group.GroupNotFoundException"
@@ -14,7 +14,7 @@
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <fmt:setBundle basename="crossfire_i18n"/>
-<%  boolean debug = "true".equals(EMIVAGlobals.getProperty("skin.default.debug"));
+<%  boolean debug = "true".equals(Globals.getProperty("skin.default.debug"));
     if (debug) {
         exception.printStackTrace();
     }

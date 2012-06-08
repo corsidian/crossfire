@@ -25,7 +25,7 @@
                  net.emiva.crossfire.user.UserNotFoundException"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.util.EMIVAGlobals"%>
+<%@ page import="net.emiva.util.Globals"%>
 <%@ page import="net.emiva.util.LocaleUtils"%>
 <%@ page import="net.emiva.util.ParamUtils"%>
 <%@ page import="org.xmpp.packet.JID"%><%@ page import="org.xmpp.packet.Presence"%>
@@ -268,7 +268,7 @@
             <fmt:message key="user.properties.registered" />:
         </td>
         <td>
-            <%= EMIVAGlobals.formatDate(user.getCreationDate()) %>
+            <%= Globals.formatDate(user.getCreationDate()) %>
         </td>
     </tr>
     <tr>

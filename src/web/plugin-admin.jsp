@@ -25,7 +25,7 @@
 <%@ page import="java.util.Comparator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.*" %>
-<%@ page import="net.emiva.util.EMIVAGlobals" %>
+<%@ page import="net.emiva.util.Globals" %>
 <%@ page import="net.emiva.util.Log" %>
 <%@ page import="org.apache.commons.fileupload.FileItemFactory" %>
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
@@ -46,7 +46,7 @@
     boolean showChangelog = ParamUtils.getBooleanParameter(request, "showChangelog", false);
     boolean uploadPlugin = request.getParameter("uploadplugin") != null;
     String url = request.getParameter("url");
-    Boolean uploadEnabled = EMIVAGlobals.getBooleanProperty("plugins.upload.enabled", true);
+    Boolean uploadEnabled = Globals.getBooleanProperty("plugins.upload.enabled", true);
 
     final PluginManager pluginManager = webManager.getXMPPServer().getPluginManager();
 

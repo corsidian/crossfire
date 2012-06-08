@@ -36,7 +36,7 @@ import net.emiva.crossfire.net.SASLAuthentication;
 import net.emiva.crossfire.net.SSLConfig;
 import net.emiva.crossfire.net.SocketConnection;
 import net.emiva.crossfire.server.ServerDialback;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.CertificateManager;
 
 import org.dom4j.Element;
@@ -157,7 +157,7 @@ public class LocalIncomingServerSession extends LocalSession implements Incoming
             }
 
             // Indicate the compression policy to use for this connection
-            String policyName = EMIVAGlobals.getProperty("xmpp.server.compression.policy",
+            String policyName = Globals.getProperty("xmpp.server.compression.policy",
                     Connection.CompressionPolicy.disabled.toString());
             Connection.CompressionPolicy compressionPolicy =
                     Connection.CompressionPolicy.valueOf(policyName);
@@ -170,7 +170,7 @@ public class LocalIncomingServerSession extends LocalSession implements Incoming
             	// Don't offer stream-features to pre-1.0 servers, as it confuses them. Sending features to crossfire < 3.7.1 confuses it too - OF-443) 
                 sb.append("<stream:features>");
 
-	            if (EMIVAGlobals.getBooleanProperty("xmpp.server.tls.enabled", true)) {
+	            if (Globals.getBooleanProperty("xmpp.server.tls.enabled", true)) {
 	                sb.append("<starttls xmlns=\"urn:ietf:params:xml:ns:xmpp-tls\">");
 	                if (!ServerDialback.isEnabled()) {
 	                    // Server dialback is disabled so TLS is required

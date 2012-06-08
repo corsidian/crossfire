@@ -30,7 +30,7 @@ import net.emiva.crossfire.SessionManager;
 import net.emiva.crossfire.server.RemoteServerConfiguration.Permission;
 import net.emiva.crossfire.session.Session;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
 
@@ -110,7 +110,7 @@ public class RemoteServerManager {
     public static boolean canAccess(String domain) {
         // If s2s is disabled then it is not possible to send packets to remote servers or
         // receive packets from remote servers
-        if (!EMIVAGlobals.getBooleanProperty("xmpp.server.socket.active", true)) {
+        if (!Globals.getBooleanProperty("xmpp.server.socket.active", true)) {
             return false;
         }
 
@@ -163,7 +163,7 @@ public class RemoteServerManager {
      *         data from a remote server.
      */
     public static int getSocketTimeout() {
-        return EMIVAGlobals.getIntProperty("xmpp.server.read.timeout", 120000);
+        return Globals.getIntProperty("xmpp.server.read.timeout", 120000);
     }
 
     /**
@@ -299,12 +299,12 @@ public class RemoteServerManager {
      * @return the remote port to connect for the specified remote server.
      */
     public static int getPortForServer(String domain) {
-        int port = EMIVAGlobals.getIntProperty("xmpp.server.socket.remotePort", ConnectionManager.DEFAULT_SERVER_PORT);
+        int port = Globals.getIntProperty("xmpp.server.socket.remotePort", ConnectionManager.DEFAULT_SERVER_PORT);
         RemoteServerConfiguration config = getConfiguration(domain);
         if (config != null) {
             port = config.getRemotePort();
             if (port == 0) {
-                port = EMIVAGlobals
+                port = Globals
                         .getIntProperty("xmpp.server.socket.remotePort", ConnectionManager.DEFAULT_SERVER_PORT);
             }
         }
@@ -323,7 +323,7 @@ public class RemoteServerManager {
      */
     public static PermissionPolicy getPermissionPolicy() {
         try {
-            return PermissionPolicy.valueOf(EMIVAGlobals.getProperty("xmpp.server.permission",
+            return PermissionPolicy.valueOf(Globals.getProperty("xmpp.server.permission",
                     PermissionPolicy.blacklist.toString()));
         }
         catch (Exception e) {
@@ -342,7 +342,7 @@ public class RemoteServerManager {
      * @param policy the new PermissionPolicy to use.
      */
     public static void setPermissionPolicy(PermissionPolicy policy) {
-        EMIVAGlobals.setProperty("xmpp.server.permission", policy.toString());
+        Globals.setProperty("xmpp.server.permission", policy.toString());
         // Check if the connected servers can remain connected to the server
         for (String hostname : SessionManager.getInstance().getIncomingServers()) {
             if (!canAccess(hostname)) {

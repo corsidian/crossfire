@@ -40,7 +40,7 @@ import net.emiva.crossfire.privacy.PrivacyList;
 import net.emiva.crossfire.privacy.PrivacyListManager;
 import net.emiva.crossfire.user.PresenceEventDispatcher;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
 import net.emiva.util.cache.Cache;
 
@@ -116,13 +116,13 @@ public class LocalClientSession extends LocalSession implements ClientSession {
 
     static {
         // Fill out the allowedIPs with the system property
-        String allowed = EMIVAGlobals.getProperty("xmpp.client.login.allowed", "");
+        String allowed = Globals.getProperty("xmpp.client.login.allowed", "");
         StringTokenizer tokens = new StringTokenizer(allowed, ", ");
         while (tokens.hasMoreTokens()) {
             String address = tokens.nextToken().trim();
             allowedIPs.put(address, "");
         }
-        String allowedAnonym = EMIVAGlobals.getProperty("xmpp.client.login.allowedAnonym", "");
+        String allowedAnonym = Globals.getProperty("xmpp.client.login.allowedAnonym", "");
         tokens = new StringTokenizer(allowedAnonym, ", ");
         while (tokens.hasMoreTokens()) {
             String address = tokens.nextToken().trim();
@@ -367,7 +367,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
     public static void setAllowedIPs(Map<String, String> allowed) {
         allowedIPs = allowed;
         if (allowedIPs.isEmpty()) {
-            EMIVAGlobals.deleteProperty("xmpp.client.login.allowed");
+            Globals.deleteProperty("xmpp.client.login.allowed");
         }
         else {
             // Iterate through the elements in the map.
@@ -379,7 +379,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
             while (iter.hasNext()) {
                 buf.append(", ").append(iter.next());
             }
-            EMIVAGlobals.setProperty("xmpp.client.login.allowed", buf.toString());
+            Globals.setProperty("xmpp.client.login.allowed", buf.toString());
         }
     }
 
@@ -392,7 +392,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
     public static void setAllowedAnonymIPs(Map<String, String> allowed) {
         allowedAnonymIPs = allowed;
         if (allowedAnonymIPs.isEmpty()) {
-            EMIVAGlobals.deleteProperty("xmpp.client.login.allowedAnonym");
+            Globals.deleteProperty("xmpp.client.login.allowedAnonym");
         }
         else {
             // Iterate through the elements in the map.
@@ -404,7 +404,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
             while (iter.hasNext()) {
                 buf.append(", ").append(iter.next());
             }
-            EMIVAGlobals.setProperty("xmpp.client.login.allowedAnonym", buf.toString());
+            Globals.setProperty("xmpp.client.login.allowedAnonym", buf.toString());
         }
     }
 
@@ -419,7 +419,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
      */
     public static SocketConnection.TLSPolicy getTLSPolicy() {
         // Set the TLS policy stored as a system property
-        String policyName = EMIVAGlobals.getProperty("xmpp.client.tls.policy", Connection.TLSPolicy.optional.toString());
+        String policyName = Globals.getProperty("xmpp.client.tls.policy", Connection.TLSPolicy.optional.toString());
         SocketConnection.TLSPolicy tlsPolicy;
         try {
             tlsPolicy = Connection.TLSPolicy.valueOf(policyName);
@@ -440,7 +440,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
      * @param policy whether TLS is mandatory, optional or is disabled.
      */
     public static void setTLSPolicy(SocketConnection.TLSPolicy policy) {
-        EMIVAGlobals.setProperty("xmpp.client.tls.policy", policy.toString());
+        Globals.setProperty("xmpp.client.tls.policy", policy.toString());
     }
 
     /**
@@ -450,7 +450,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
      */
     public static SocketConnection.CompressionPolicy getCompressionPolicy() {
         // Set the Compression policy stored as a system property
-        String policyName = EMIVAGlobals
+        String policyName = Globals
                 .getProperty("xmpp.client.compression.policy", Connection.CompressionPolicy.optional.toString());
         SocketConnection.CompressionPolicy compressionPolicy;
         try {
@@ -468,7 +468,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
      * @param policy whether compression is optional or is disabled.
      */
     public static void setCompressionPolicy(SocketConnection.CompressionPolicy policy) {
-        EMIVAGlobals.setProperty("xmpp.client.compression.policy", policy.toString());
+        Globals.setProperty("xmpp.client.compression.policy", policy.toString());
     }
 
     /**

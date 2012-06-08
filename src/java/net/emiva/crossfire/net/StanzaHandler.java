@@ -27,7 +27,7 @@ import net.emiva.crossfire.PacketRouter;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.session.LocalSession;
 import net.emiva.crossfire.session.Session;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
 import net.emiva.util.StringUtils;
 
@@ -280,7 +280,7 @@ public abstract class StanzaHandler {
                 session.process(reply);
                 return;
             }
-            if (packet.getID() == null && EMIVAGlobals.getBooleanProperty("xmpp.server.validation.enabled", false)) {
+            if (packet.getID() == null && Globals.getBooleanProperty("xmpp.server.validation.enabled", false)) {
                 // IQ packets MUST have an 'id' attribute so close the connection
                 StreamError error = new StreamError(StreamError.Condition.invalid_xml);
                 session.deliverRawText(error.toXML());

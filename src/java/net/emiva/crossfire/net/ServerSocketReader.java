@@ -31,7 +31,7 @@ import net.emiva.crossfire.RoutingTable;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.interceptor.PacketRejectedException;
 import net.emiva.crossfire.session.LocalIncomingServerSession;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.dom4j.Element;
 import org.slf4j.Logger;
@@ -72,9 +72,9 @@ public class ServerSocketReader extends SocketReader {
         super(router, routingTable, serverName, socket, connection, useBlockingMode);
         // Create a pool of threads that will process received packets. If more threads are
         // required then the command will be executed on the SocketReader process
-        int coreThreads = EMIVAGlobals.getIntProperty("xmpp.server.processing.core.threads", 2);
-        int maxThreads = EMIVAGlobals.getIntProperty("xmpp.server.processing.max.threads", 50);
-        int queueSize = EMIVAGlobals.getIntProperty("xmpp.server.processing.queue", 50);
+        int coreThreads = Globals.getIntProperty("xmpp.server.processing.core.threads", 2);
+        int maxThreads = Globals.getIntProperty("xmpp.server.processing.max.threads", 50);
+        int queueSize = Globals.getIntProperty("xmpp.server.processing.queue", 50);
         threadPool =
                 new ThreadPoolExecutor(coreThreads, maxThreads, 60, TimeUnit.SECONDS,
                         new LinkedBlockingQueue<Runnable>(queueSize),

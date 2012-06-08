@@ -23,7 +23,7 @@ package net.emiva.crossfire.auth;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class DefaultAuthorizationMapping implements AuthorizationMapping {
     public DefaultAuthorizationMapping() {
         approvedRealms = new Vector<String>();
         
-        String realmList = EMIVAGlobals.getProperty("sasl.approvedRealms");
+        String realmList = Globals.getProperty("sasl.approvedRealms");
         if(realmList != null) {
             StringTokenizer st = new StringTokenizer(realmList, " ,\t\n\r\f");
             while(st.hasMoreTokens()) {
@@ -66,10 +66,10 @@ public class DefaultAuthorizationMapping implements AuthorizationMapping {
             String username = principal.substring(0,principal.lastIndexOf('@'));
 
             if(realm.length() > 0) {
-                if(realm.equals(EMIVAGlobals.getProperty("xmpp.domain"))) {
+                if(realm.equals(Globals.getProperty("xmpp.domain"))) {
                     Log.debug("DefaultAuthorizationMapping: realm = xmpp.domain");
                     return username;
-                } else if(realm.equals(EMIVAGlobals.getProperty("sasl.realm"))) {
+                } else if(realm.equals(Globals.getProperty("sasl.realm"))) {
                     Log.debug("DefaultAuthorizationMapping: ream = sasl.realm");
                     return username;
                 } else {

@@ -20,14 +20,14 @@
 
 package net.emiva.database;
 
-import net.emiva.util.EMIVABeanInfo;
+import net.emiva.util.GlobalBeanInfo;
 
 /**
  * BeanInfo class for the DefaultConnectionProvider class.
  *
  * @author EMIVA Community
  */
-public class DefaultConnectionProviderBeanInfo extends EMIVABeanInfo {
+public class DefaultConnectionProviderBeanInfo extends GlobalBeanInfo {
 
     public static final String[] PROPERTY_NAMES = {
         "driver",

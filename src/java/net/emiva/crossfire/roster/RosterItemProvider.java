@@ -35,7 +35,7 @@ import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.database.SequenceManager;
-import net.emiva.util.EMIVAConstants;
+import net.emiva.util.GlobalConstants;
 import net.emiva.util.LocaleUtils;
 
 import org.slf4j.Logger;
@@ -106,7 +106,7 @@ public class RosterItemProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            long rosterID = SequenceManager.nextID(EMIVAConstants.ROSTER);
+            long rosterID = SequenceManager.nextID(GlobalConstants.ROSTER);
             con = DbConnectionManager.getConnection();
             pstmt = con.prepareStatement(CREATE_ROSTER_ITEM);
             pstmt.setString(1, username);

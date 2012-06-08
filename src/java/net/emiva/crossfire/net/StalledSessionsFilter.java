@@ -23,7 +23,7 @@ package net.emiva.crossfire.net;
 import java.io.IOException;
 import java.util.Date;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.apache.mina.common.IoFilterAdapter;
 import org.apache.mina.common.IoSession;
@@ -42,7 +42,7 @@ public class StalledSessionsFilter extends IoFilterAdapter {
 	
 	private static final Logger Log = LoggerFactory.getLogger(StalledSessionsFilter.class);
 
-    private static final int bytesCap = EMIVAGlobals.getIntProperty("session.stalled.cap", 5242880);
+    private static final int bytesCap = Globals.getIntProperty("session.stalled.cap", 5242880);
 
     @Override
 	public void filterWrite(NextFilter nextFilter, IoSession session, WriteRequest writeRequest)

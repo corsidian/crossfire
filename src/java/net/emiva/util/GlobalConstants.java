@@ -23,7 +23,7 @@ package net.emiva.util;
 /**
  * Contains constant values representing various objects in emiva.
  */
-public class EMIVAConstants {
+public class GlobalConstants {
 
     public static final int SYSTEM = 17;
     public static final int ROSTER = 18;

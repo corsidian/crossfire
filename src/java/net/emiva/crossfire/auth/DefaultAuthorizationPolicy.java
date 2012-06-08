@@ -23,7 +23,7 @@ package net.emiva.crossfire.auth;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class DefaultAuthorizationPolicy implements AuthorizationPolicy {
     public DefaultAuthorizationPolicy() {
         approvedRealms = new Vector<String>();
         
-        String realmList = EMIVAGlobals.getProperty("sasl.approvedRealms");
+        String realmList = Globals.getProperty("sasl.approvedRealms");
         if(realmList != null) {
             StringTokenizer st = new StringTokenizer(realmList, " ,\t\n\r\f");
             while(st.hasMoreTokens()) {
@@ -103,7 +103,7 @@ public class DefaultAuthorizationPolicy implements AuthorizationPolicy {
 
         if(!userUser.equals(authenUser)) {
             //for this policy the user portion of both must match, so lets short circut here if we can
-            if(EMIVAGlobals.getBooleanProperty("xmpp.auth.ignorecase",true)) {
+            if(Globals.getBooleanProperty("xmpp.auth.ignorecase",true)) {
                 if(!userUser.toLowerCase().equals(authenUser.toLowerCase())){
                     if (Log.isDebugEnabled()) {
                         Log.debug("DefaultAuthorizationPolicy: usernames don't match ("+userUser+" "+authenUser+")");
@@ -118,10 +118,10 @@ public class DefaultAuthorizationPolicy implements AuthorizationPolicy {
         Log.debug("DefaultAuthorizationPolicy: Checking authenID realm");
         // Next up, check if the authenID realm is acceptable. 
         if(authenRealm != null) {
-            if(authenRealm.equals(EMIVAGlobals.getProperty("xmpp.domain")))  {
+            if(authenRealm.equals(Globals.getProperty("xmpp.domain")))  {
                 Log.debug("DefaultAuthorizationPolicy: authenRealm = xmpp.domain");
                 authorized = true;
-            } else if(authenRealm.equals(EMIVAGlobals.getProperty("sasl.realm")))  {
+            } else if(authenRealm.equals(Globals.getProperty("sasl.realm")))  {
                 Log.debug("DefaultAuthorizationPolicy: authenRealm = sasl.realm");
                 authorized = true;
             } else { 
@@ -151,7 +151,7 @@ public class DefaultAuthorizationPolicy implements AuthorizationPolicy {
         }
         //Next up, check if the username realm is acceptable.
         if(userRealm != null) {
-            if(userRealm.equals(EMIVAGlobals.getProperty("xmpp.domain"))) {
+            if(userRealm.equals(Globals.getProperty("xmpp.domain"))) {
                 Log.debug("DefaultAuthorizationPolicy: userRealm = xmpp.domain");
                 authorized = true;
             } else {

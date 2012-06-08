@@ -18,7 +18,7 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.EMIVAGlobals,
+<%@ page import="net.emiva.util.Globals,
                  net.emiva.util.ParamUtils"
 %>
 <%@ page import="org.xmpp.packet.JID"%>
@@ -176,7 +176,7 @@
             <% } %>
         </td>
         <td width="15%">
-            <%= EMIVAGlobals.formatDateTime(event.getEventStamp()) %>
+            <%= Globals.formatDateTime(event.getEventStamp()) %>
         </td>
     </tr>
 

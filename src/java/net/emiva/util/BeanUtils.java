@@ -201,7 +201,7 @@ public class BeanUtils {
         // class. This will bypass properties of parent classes, but this is
         // the normal behavior of classes that implement EMIVABeanInfo.
         try {
-            EMIVABeanInfo beanInfo = (EMIVABeanInfo)ClassUtils.forName(
+            GlobalBeanInfo beanInfo = (GlobalBeanInfo)ClassUtils.forName(
                     beanClass.getName() + "BeanInfo").newInstance();
             return beanInfo.getPropertyDescriptors();
         }

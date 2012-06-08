@@ -23,7 +23,7 @@ import net.emiva.crossfire.Connection;
 import net.emiva.crossfire.PacketRouter;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.session.LocalClientSession;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.dom4j.Element;
 import org.xmlpull.v1.XmlPullParser;
@@ -68,7 +68,7 @@ public class ClientStanzaHandler extends StanzaHandler {
 
     @Override
 	boolean validateHost() {
-        return EMIVAGlobals.getBooleanProperty("xmpp.client.validate.host",false);
+        return Globals.getBooleanProperty("xmpp.client.validate.host",false);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class ClientStanzaHandler extends StanzaHandler {
 	void startTLS() throws Exception {
         Connection.ClientAuth policy;
         try {
-            policy = Connection.ClientAuth.valueOf(EMIVAGlobals.getProperty("xmpp.client.cert.policy", "disabled"));
+            policy = Connection.ClientAuth.valueOf(Globals.getProperty("xmpp.client.cert.policy", "disabled"));
         } catch (IllegalArgumentException e) {
             policy = Connection.ClientAuth.disabled;
         }

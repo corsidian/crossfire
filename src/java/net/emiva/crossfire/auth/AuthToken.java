@@ -21,7 +21,7 @@
 package net.emiva.crossfire.auth;
 
 import net.emiva.crossfire.user.UserManager;
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 
 /**
@@ -45,7 +45,7 @@ public class AuthToken {
      */
     public AuthToken(String jid) {
         if (jid == null) {
-            this.domain = EMIVAGlobals.getProperty("xmpp.domain");
+            this.domain = Globals.getProperty("xmpp.domain");
             return;
         }
         int index = jid.indexOf("@");
@@ -54,7 +54,7 @@ public class AuthToken {
             this.domain = jid.substring(index+1);
         } else {
             this.username = jid;
-            this.domain = EMIVAGlobals.getProperty("xmpp.domain");
+            this.domain = Globals.getProperty("xmpp.domain");
         }
     }
 
@@ -65,7 +65,7 @@ public class AuthToken {
             this.domain = jid.substring(index+1);
         } else {
             this.username = jid;
-            this.domain = EMIVAGlobals.getProperty("xmpp.domain");
+            this.domain = Globals.getProperty("xmpp.domain");
         }
         this.anonymous = anonymous;
     }

@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.util.EMIVAGlobals,
+<%@ page import="net.emiva.util.Globals,
                  java.util.Map,
                  net.emiva.crossfire.XMPPServer"
 %>
@@ -33,12 +33,12 @@
     Map<String,String> xmppSettings = (Map<String,String>)session.getAttribute("xmppSettings");
     for (String name : xmppSettings.keySet()) {
         String value = xmppSettings.get(name);
-        EMIVAGlobals.setProperty(name, value);
+        Globals.setProperty(name, value);
     }
     Map<String,String> xmlSettings = (Map<String,String>)session.getAttribute("xmlSettings");
     for (String name : xmlSettings.keySet()) {
         String value = xmlSettings.get(name);
-        EMIVAGlobals.setXMLProperty(name, value);
+        Globals.setXMLProperty(name, value);
     }
     // Notify that the XMPP server that setup is finished.
     XMPPServer.getInstance().finishSetup();
@@ -92,8 +92,8 @@
     String url;
     if (XMPPServer.getInstance().isStandAlone()) {
         String server = request.getServerName();
-        int plainPort = EMIVAGlobals.getXMLProperty("adminConsole.port", 9090);
-        int securePort = EMIVAGlobals.getXMLProperty("adminConsole.securePort", 9091);
+        int plainPort = Globals.getXMLProperty("adminConsole.port", 9090);
+        int securePort = Globals.getXMLProperty("adminConsole.securePort", 9091);
         // Use secure login if we're currently secure (and the secure port isn't disabled)
         // or if the user disabled the plain port.
         if ((request.isSecure() && securePort > 0) || plainPort < 0) {

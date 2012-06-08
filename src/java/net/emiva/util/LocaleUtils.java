@@ -56,7 +56,7 @@ public class LocaleUtils {
             new ConcurrentHashMap<Locale, String[][]>();
 
     // The basename to use for looking up the appropriate resource bundles
-    // TODO - extract this out into a test that grabs the resource name from EMIVAGlobals
+    // TODO - extract this out into a test that grabs the resource name from Globals
     // TODO and defaults to crossfire_i18n if nothing set.
     private static final String resourceBaseName = "crossfire_i18n";
 
@@ -269,7 +269,7 @@ public class LocaleUtils {
      *         display name.
      */
     public static String[][] getTimeZoneList() {
-        Locale emivaLocale = EMIVAGlobals.getLocale();
+        Locale emivaLocale = Globals.getLocale();
 
         String[][] timeZoneList = timeZoneLists.get(emivaLocale);
         if (timeZoneList == null) {
@@ -305,7 +305,7 @@ public class LocaleUtils {
         // Add in the GMT part to the name. First, figure out the offset.
         int offset = zone.getRawOffset();
         if (zone.inDaylightTime(new Date()) && zone.useDaylightTime()) {
-            offset += (int)EMIVAConstants.HOUR;
+            offset += (int)GlobalConstants.HOUR;
         }
 
         buf.append("(");
@@ -316,8 +316,8 @@ public class LocaleUtils {
             buf.append("GMT+");
         }
         offset = Math.abs(offset);
-        int hours = offset / (int)EMIVAConstants.HOUR;
-        int minutes = (offset % (int)EMIVAConstants.HOUR) / (int)EMIVAConstants.MINUTE;
+        int hours = offset / (int)GlobalConstants.HOUR;
+        int minutes = (offset % (int)GlobalConstants.HOUR) / (int)GlobalConstants.MINUTE;
         buf.append(hours).append(":");
         if (minutes < 10) {
             buf.append("0").append(minutes);
@@ -362,14 +362,14 @@ public class LocaleUtils {
 
     /**
      * Returns an internationalized string loaded from a resource bundle.
-     * The locale used will be the locale specified by EMIVAGlobals.getLocale().
+     * The locale used will be the locale specified by Globals.getLocale().
      *
      * @param key the key to use for retrieving the string from the
      *      appropriate resource bundle.
      * @return the localized string.
      */
     public static String getLocalizedString(String key) {
-        Locale locale = EMIVAGlobals.getLocale();
+        Locale locale = Globals.getLocale();
 
         ResourceBundle bundle = ResourceBundle.getBundle(resourceBaseName, locale);
 
@@ -394,7 +394,7 @@ public class LocaleUtils {
 
     /**
      * Returns an internationalized string loaded from a resource bundle using
-     * the locale specified by EMIVAGlobals.getLocale() substituting the passed
+     * the locale specified by Globals.getLocale() substituting the passed
      * in arguments. Substitution is handled using the
      * {@link java.text.MessageFormat} class.
      *
@@ -405,7 +405,7 @@ public class LocaleUtils {
      * @return the localized string.
      */
     public static String getLocalizedString(String key, List arguments) {
-        Locale locale = EMIVAGlobals.getLocale();
+        Locale locale = Globals.getLocale();
 
         ResourceBundle bundle = ResourceBundle.getBundle(resourceBaseName, locale);
         return getLocalizedString(key, locale, arguments, bundle);
@@ -473,7 +473,7 @@ public class LocaleUtils {
         }
 
         if (locale == null) {
-        	locale = EMIVAGlobals.getLocale();
+        	locale = Globals.getLocale();
         }
         String i18nFile = pluginName + "_i18n";
 
@@ -491,7 +491,7 @@ public class LocaleUtils {
             return getLocalizedString(key, locale, arguments, bundle);
         }
         catch (MissingResourceException mre) {
-        	Locale emivasLocale = EMIVAGlobals.getLocale();
+        	Locale emivasLocale = Globals.getLocale();
         	if (fallback && !emivasLocale.equals(locale)) {
         		Log.info("Could not find the requested locale. Falling back to default locale.", mre);
             	return getLocalizedString(key, pluginName, arguments, emivasLocale, false);
@@ -510,7 +510,7 @@ public class LocaleUtils {
      * @throws Exception thrown if an exception occurs.
      */
     public static ResourceBundle getPluginResourceBundle(String pluginName) throws Exception {
-        final Locale locale = EMIVAGlobals.getLocale();
+        final Locale locale = Globals.getLocale();
 
         String i18nFile = pluginName + "_i18n";
 
@@ -548,7 +548,7 @@ public class LocaleUtils {
             throw new NullPointerException("Key cannot be null");
         }
         if (locale == null) {
-            locale = EMIVAGlobals.getLocale();
+            locale = Globals.getLocale();
         }
 
         String value;

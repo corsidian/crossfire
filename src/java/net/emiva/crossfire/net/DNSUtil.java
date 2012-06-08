@@ -20,7 +20,7 @@
 
 package net.emiva.crossfire.net;
 
-import net.emiva.util.EMIVAGlobals;
+import net.emiva.util.Globals;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +65,7 @@ public class DNSUtil {
             env.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
             context = new InitialDirContext(env);
 
-            String property = EMIVAGlobals.getProperty("dnsutil.dnsOverride");
+            String property = Globals.getProperty("dnsutil.dnsOverride");
             if (property != null) {
                 dnsOverride = decode(property);
             }
@@ -163,7 +163,7 @@ public class DNSUtil {
      */
     public static void setDnsOverride(Map<String, HostAddress> dnsOverride) {
         DNSUtil.dnsOverride = dnsOverride;
-        EMIVAGlobals.setProperty("dnsutil.dnsOverride", encode(dnsOverride));
+        Globals.setProperty("dnsutil.dnsOverride", encode(dnsOverride));
     }
 
     private static String encode(Map<String, HostAddress> internalDNS) {

@@ -21,7 +21,7 @@
 <%@ page import="java.io.*,
                  net.emiva.util.*,
                  java.text.*,
-                 net.emiva.util.EMIVAGlobals,
+                 net.emiva.util.Globals,
                  net.emiva.crossfire.user.*,
                  java.util.*"
 %>
@@ -441,7 +441,7 @@ IFRAME {
 <br>
 
 <span class="emiva-description" style="color:#666;">
-<fmt:message key="logviewer.log_dir" />: <%= EMIVAGlobals.getHomeDirectory() %><%= File.separator %>logs
+<fmt:message key="logviewer.log_dir" />: <%= Globals.getHomeDirectory() %><%= File.separator %>logs
 </span>
 
 <br><br>

@@ -17,7 +17,7 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.EMIVAGlobals,
+<%@ page import="net.emiva.util.Globals,
                  net.emiva.util.LocaleUtils,
                  net.emiva.util.Log,
                  net.emiva.util.ParamUtils"
@@ -44,7 +44,7 @@
         // Set the timezeone
         try {
             TimeZone tz = TimeZone.getTimeZone(timeZoneID);
-            EMIVAGlobals.setTimeZone(tz);
+            Globals.setTimeZone(tz);
             // Log the event
             webManager.logEvent("updated time zone to "+tz.getID(), tz.toString());
         }
@@ -57,7 +57,7 @@
                 errors.put("localeCode","");
             }
             else {
-                EMIVAGlobals.setLocale(newLocale);
+                Globals.setLocale(newLocale);
                 // Log the event
                 webManager.logEvent("updated locale to "+newLocale.getDisplayName(), null);
                 response.sendRedirect("server-locale.jsp?success=true");
@@ -66,13 +66,13 @@
         }
     }
 
-    Locale locale = EMIVAGlobals.getLocale();
+    Locale locale = Globals.getLocale();
 
     // Get the time zone list.
     String[][] timeZones = LocaleUtils.getTimeZoneList();
 
     // Get the current time zone.
-    TimeZone timeZone = EMIVAGlobals.getTimeZone();
+    TimeZone timeZone = Globals.getTimeZone();
 %>
 
 <html>
@@ -96,7 +96,7 @@
 	<div class="emiva-contentBox">
 		<p>
         <b><fmt:message key="locale.current" />:</b> <%= locale.getDisplayName(locale) %> /
-            <%= LocaleUtils.getTimeZoneName(EMIVAGlobals.getTimeZone().getID(), locale) %>
+            <%= LocaleUtils.getTimeZoneName(Globals.getTimeZone().getID(), locale) %>
         </p>
 
         <%  boolean usingPreset = false;
