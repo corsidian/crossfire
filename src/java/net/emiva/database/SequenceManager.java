@@ -95,7 +95,7 @@ public class SequenceManager {
     }
 
     /**
-     * Returns the next id for an object that has defined the annotation {@link EMIVAID}.
+     * Returns the next id for an object that has defined the annotation {@link GlobalID}.
      * The EMIVAID annotation value is the synonymous for the type integer.<p/>
      *
      * The annotation EMIVAID should contain the id type for the object (the same number you would
@@ -109,10 +109,10 @@ public class SequenceManager {
      *
      * @param o object that has annotation EMIVAID.
      * @return the next unique ID.
-     * @throws IllegalArgumentException If the object passed in does not defined {@link EMIVAID}
+     * @throws IllegalArgumentException If the object passed in does not defined {@link GlobalID}
      */
     public static long nextID(Object o) {
-        EMIVAID id = o.getClass().getAnnotation(EMIVAID.class);
+        GlobalID id = o.getClass().getAnnotation(GlobalID.class);
 
         if (id == null) {
             Log.error("Annotation EMIVAID must be defined in the class " + o.getClass());

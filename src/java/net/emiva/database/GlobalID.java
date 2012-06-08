@@ -28,7 +28,7 @@ import java.lang.annotation.ElementType;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface EMIVAID {
+public @interface GlobalID {
 
     /**
      * should return the int type for this object

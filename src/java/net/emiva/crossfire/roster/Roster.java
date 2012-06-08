@@ -47,7 +47,7 @@ import net.emiva.crossfire.session.ClientSession;
 import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserNameManager;
 import net.emiva.crossfire.user.UserNotFoundException;
-import net.emiva.database.EMIVAID;
+import net.emiva.database.GlobalID;
 import net.emiva.util.GlobalConstants;
 import net.emiva.util.cache.CacheSizes;
 import net.emiva.util.cache.Cacheable;
@@ -71,7 +71,7 @@ import org.xmpp.packet.Presence;
  *
  * @author Gaston Dombiak
  */
-@EMIVAID(GlobalConstants.ROSTER)
+@GlobalID(GlobalConstants.ROSTER)
 public class Roster implements Cacheable, Externalizable {
 
 	private static final Logger Log = LoggerFactory.getLogger(Roster.class);
