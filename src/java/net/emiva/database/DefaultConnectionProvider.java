@@ -337,7 +337,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
         String minCons = Globals.getXMLProperty("database.defaultProvider.minConnections");
         String maxCons = Globals.getXMLProperty("database.defaultProvider.maxConnections");
         String conTimeout = Globals.getXMLProperty("database.defaultProvider.connectionTimeout");
-        testSQL = Globals.getXMLProperty("database.defaultProvider.testSQL", DbConnectionManager.getTestSQL(driver));
+        testSQL = Globals.getXMLProperty("database.defaultProvider.testSQL", DbConnectionManager.getInstance().getTestSQL(driver));
         testBeforeUse = Globals.getXMLProperty("database.defaultProvider.testBeforeUse", true);
         testAfterUse = Globals.getXMLProperty("database.defaultProvider.testAfterUse", true);
 

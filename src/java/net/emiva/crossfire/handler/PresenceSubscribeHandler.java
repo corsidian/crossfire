@@ -32,9 +32,9 @@ import net.emiva.crossfire.RoutingTable;
 import net.emiva.crossfire.SharedGroupException;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.container.BasicModule;
-import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.roster.IRoster;
 import net.emiva.crossfire.roster.RosterItem;
-import net.emiva.crossfire.roster.RosterManager;
+import net.emiva.crossfire.roster.IRosterManager;
 import net.emiva.crossfire.user.PresenceEventDispatcher;
 import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserManager;
@@ -100,7 +100,7 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
     private String serverName;
     private PacketDeliverer deliverer;
     private PresenceManager presenceManager;
-    private RosterManager rosterManager;
+    private IRosterManager rosterManager;
     private UserManager userManager;
 
     public PresenceSubscribeHandler() {
@@ -154,11 +154,11 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
             }
 
             try {
-                Roster senderRoster = getRoster(senderJID);
+                IRoster senderRoster = getRoster(senderJID);
                 if (senderRoster != null) {
                     manageSub(recipientJID, true, type, senderRoster);
                 }
-                Roster recipientRoster = getRoster(recipientJID);
+                IRoster recipientRoster = getRoster(recipientJID);
                 boolean recipientSubChanged = false;
                 if (recipientRoster != null) {
                     recipientSubChanged = manageSub(senderJID, false, type, recipientRoster);
@@ -244,17 +244,12 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
      * @param address The address to check
      * @return The roster or null if the address is not managed on the server
      */
-    private Roster getRoster(JID address) {
+    private IRoster getRoster(JID address) {
         String username;
-        Roster roster = null;
+        IRoster roster = null;
         if (localServer.isLocal(address) && userManager.isRegisteredUser(address.getNode())) {
             username = address.getNode();
-            try {
-                roster = rosterManager.getRoster(username);
-            }
-            catch (UserNotFoundException e) {
-                // Do nothing
-            }
+            roster = rosterManager.getRoster(username);
         }
         return roster;
     }
@@ -267,10 +262,10 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
      * @param target    The roster target's jid (the item's jid to be changed)
      * @param isSending True if the request is being sent by the owner
      * @param type      The subscription change type (subscribe, unsubscribe, etc.)
-     * @param roster    The Roster that is updated.
+     * @param rosterImpl    The Roster that is updated.
      * @return <tt>true</tt> if the subscription state has changed.
      */
-    private boolean manageSub(JID target, boolean isSending, Presence.Type type, Roster roster)
+    private boolean manageSub(JID target, boolean isSending, Presence.Type type, IRoster rosterImpl)
             throws UserAlreadyExistsException, SharedGroupException
     {
         RosterItem item = null;
@@ -279,8 +274,8 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
         RosterItem.RecvType oldRecv;
         boolean newItem = false;
         try {
-            if (roster.isRosterItem(target)) {
-                item = roster.getRosterItem(target);
+            if (rosterImpl.isRosterItem(target)) {
+                item = rosterImpl.getRosterItem(target);
             }
             else {
                 if (Presence.Type.unsubscribed == type || Presence.Type.unsubscribe == type ||
@@ -290,7 +285,7 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
                     // subscription approval from an unknown user
                     return false;
                 }
-                item = roster.createRosterItem(target, false, true);
+                item = rosterImpl.createRosterItem(target, false, true);
                 newItem = true;
             }
             // Get a snapshot of the item state
@@ -302,13 +297,13 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
             // Update the roster IF the item state has changed
             if (oldAsk != item.getAskStatus() || oldSub != item.getSubStatus() ||
                     oldRecv != item.getRecvStatus()) {
-                roster.updateRosterItem(item);
+                rosterImpl.updateRosterItem(item);
             }
             else if (newItem) {
                 // Do not push items with a state of "None + Pending In"
                 if (item.getSubStatus() != RosterItem.SUB_NONE ||
                         item.getRecvStatus() != RosterItem.RECV_SUBSCRIBE) {
-                    roster.broadcast(item, false);
+                    rosterImpl.broadcast(item, false);
                 }
             }
         }

@@ -96,7 +96,7 @@ public class DefaultUserProvider implements UserProvider {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_USER);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -114,7 +114,7 @@ public class DefaultUserProvider implements UserProvider {
             throw new UserNotFoundException(e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
     }
 
@@ -148,7 +148,7 @@ public class DefaultUserProvider implements UserProvider {
             Connection con = null;
             PreparedStatement pstmt = null;
             try {
-                con = DbConnectionManager.getConnection();
+                con = DbConnectionManager.getInstance().getConnection();
                 pstmt = con.prepareStatement(INSERT_USER);
                 pstmt.setString(1, username);
                 if (password == null) {
@@ -183,7 +183,7 @@ public class DefaultUserProvider implements UserProvider {
                 Log.error(LocaleUtils.getLocalizedString("admin.error"), e);
             }
             finally {
-                DbConnectionManager.closeConnection(pstmt, con);
+                DbConnectionManager.getInstance().closeConnection(pstmt, con);
             }
             return new User(username, name, email, now, now);
         }
@@ -195,11 +195,11 @@ public class DefaultUserProvider implements UserProvider {
         boolean abortTransaction = false;
         try {
             // Delete all of the users's extended properties
-            con = DbConnectionManager.getTransactionConnection();
+            con = DbConnectionManager.getInstance().getTransactionConnection();
             pstmt = con.prepareStatement(DELETE_USER_PROPS);
             pstmt.setString(1, username);
             pstmt.execute();
-            DbConnectionManager.fastcloseStmt(pstmt);
+            DbConnectionManager.getInstance().fastcloseStmt(pstmt);
 
             // Delete the actual user entry
             pstmt = con.prepareStatement(DELETE_USER);
@@ -211,8 +211,8 @@ public class DefaultUserProvider implements UserProvider {
             abortTransaction = true;
         }
         finally {
-            DbConnectionManager.closeStatement(pstmt);
-            DbConnectionManager.closeTransactionConnection(pstmt, con, abortTransaction);
+            DbConnectionManager.getInstance().closeStatement(pstmt);
+            DbConnectionManager.getInstance().closeTransactionConnection(pstmt, con, abortTransaction);
         }
     }
 
@@ -222,7 +222,7 @@ public class DefaultUserProvider implements UserProvider {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(USER_COUNT);
             rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -233,7 +233,7 @@ public class DefaultUserProvider implements UserProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return count;
     }
@@ -253,23 +253,23 @@ public class DefaultUserProvider implements UserProvider {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             if ((startIndex==0) && (numResults==Integer.MAX_VALUE))
             {
                 pstmt = con.prepareStatement(ALL_USERS);
                 // Set the fetch size. This will prevent some JDBC drivers from trying
                 // to load the entire result set into memory.
-                DbConnectionManager.setFetchSize(pstmt, 500);
+                DbConnectionManager.getInstance().setFetchSize(pstmt, 500);
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
                     usernames.add(rs.getString(1));
                 }
             }
             else {
-                pstmt = DbConnectionManager.createScrollablePreparedStatement(con, ALL_USERS);
-                DbConnectionManager.limitRowsAndFetchSize(pstmt, startIndex, numResults);
+                pstmt = DbConnectionManager.getInstance().createScrollablePreparedStatement(con, ALL_USERS);
+                DbConnectionManager.getInstance().limitRowsAndFetchSize(pstmt, startIndex, numResults);
                 rs = pstmt.executeQuery();
-                DbConnectionManager.scrollResultSet(rs, startIndex);
+                DbConnectionManager.getInstance().scrollResultSet(rs, startIndex);
                 int count = 0;
                 while (rs.next() && count < numResults) {
                     usernames.add(rs.getString(1));
@@ -285,7 +285,7 @@ public class DefaultUserProvider implements UserProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return usernames;
     }
@@ -299,7 +299,7 @@ public class DefaultUserProvider implements UserProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_NAME);
             if (name == null || name.matches("\\s*")) {
             	pstmt.setNull(1, Types.VARCHAR);
@@ -314,7 +314,7 @@ public class DefaultUserProvider implements UserProvider {
             throw new UserNotFoundException(sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -322,7 +322,7 @@ public class DefaultUserProvider implements UserProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_EMAIL);
             if (email == null || email.matches("\\s*")) {
             	pstmt.setNull(1, Types.VARCHAR);
@@ -337,7 +337,7 @@ public class DefaultUserProvider implements UserProvider {
             throw new UserNotFoundException(sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -345,7 +345,7 @@ public class DefaultUserProvider implements UserProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_CREATION_DATE);
             pstmt.setString(1, StringUtils.dateToMillis(creationDate));
             pstmt.setString(2, username);
@@ -355,7 +355,7 @@ public class DefaultUserProvider implements UserProvider {
             throw new UserNotFoundException(sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -363,7 +363,7 @@ public class DefaultUserProvider implements UserProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_MODIFICATION_DATE);
             pstmt.setString(1, StringUtils.dateToMillis(modificationDate));
             pstmt.setString(2, username);
@@ -373,7 +373,7 @@ public class DefaultUserProvider implements UserProvider {
             throw new UserNotFoundException(sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -435,7 +435,7 @@ public class DefaultUserProvider implements UserProvider {
                 sql.append(" email LIKE ?");
                 queries++;
             }
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             if ((startIndex==0) && (numResults==Integer.MAX_VALUE))
             {
                 pstmt = con.prepareStatement(sql.toString());
@@ -448,15 +448,15 @@ public class DefaultUserProvider implements UserProvider {
                     usernames.add(rs.getString(1));
                 }
             } else {
-                pstmt = DbConnectionManager.createScrollablePreparedStatement(con, sql.toString());
-                DbConnectionManager.limitRowsAndFetchSize(pstmt, startIndex, numResults);
+                pstmt = DbConnectionManager.getInstance().createScrollablePreparedStatement(con, sql.toString());
+                DbConnectionManager.getInstance().limitRowsAndFetchSize(pstmt, startIndex, numResults);
                 for (int i=1; i<=queries; i++)
                 {
                 	pstmt.setString(i, query);
                 }
                 rs = pstmt.executeQuery();
                 // Scroll to the start index.
-                DbConnectionManager.scrollResultSet(rs, startIndex);
+                DbConnectionManager.getInstance().scrollResultSet(rs, startIndex);
                 int count = 0;
                 while (rs.next() && count < numResults) {
                     usernames.add(rs.getString(1));
@@ -473,7 +473,7 @@ public class DefaultUserProvider implements UserProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return new UserCollection(usernames.toArray(new String[usernames.size()]));
     }

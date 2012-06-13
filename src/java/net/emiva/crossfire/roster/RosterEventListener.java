@@ -20,6 +20,7 @@
 
 package net.emiva.crossfire.roster;
 
+
 /**
  * Interface to listen for roster events. Use the
  * {@link RosterEventDispatcher#addListener(RosterEventListener)}
@@ -32,9 +33,9 @@ public interface RosterEventListener {
     /**
      * Notification message indicating that a roster has just been loaded.
      *
-     * @param roster the loaded roster.
+     * @param rosterImpl the loaded roster.
      */
-    public void rosterLoaded(Roster roster);
+    public void rosterLoaded(IRoster roster);
 
     /**
      * Notification message indicating that a contact is about to be added to a roster. New
@@ -42,12 +43,12 @@ public interface RosterEventListener {
      * about to be persisted should not be persisted. Only one listener is needed to return
      * <tt>false</tt> so that the contact is not persisted.
      *
-     * @param roster the roster that was updated.
+     * @param rosterImpl the roster that was updated.
      * @param item the new roster item.
      * @param persistent true if the new contact is going to be saved to the database.
      * @return false if the contact should not be persisted to the database.
      */
-    public boolean addingContact(Roster roster, RosterItem item, boolean persistent);
+    public boolean addingContact(IRoster roster, RosterItem item, boolean persistent);
 
     /**
      * Notification message indicating that a contact has been added to a roster.
@@ -55,7 +56,7 @@ public interface RosterEventListener {
      * @param roster the roster that was updated.
      * @param item the new roster item.
      */
-    public void contactAdded(Roster roster, RosterItem item);
+    public void contactAdded(IRoster roster, RosterItem item);
 
     /**
      * Notification message indicating that a contact has been updated.
@@ -63,7 +64,7 @@ public interface RosterEventListener {
      * @param roster the roster that was updated.
      * @param item the updated roster item.
      */
-    public void contactUpdated(Roster roster, RosterItem item);
+    public void contactUpdated(IRoster roster, RosterItem item);
 
     /**
      * Notification message indicating that a contact has been deleted from a roster.
@@ -71,5 +72,5 @@ public interface RosterEventListener {
      * @param roster the roster that was updated.
      * @param item the roster item that was deleted.
      */
-    public void contactDeleted(Roster roster, RosterItem item);
+    public void contactDeleted(IRoster roster, RosterItem item);
 }

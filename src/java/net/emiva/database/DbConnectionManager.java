@@ -51,34 +51,42 @@ public class DbConnectionManager {
 
 	private static final Logger Log = LoggerFactory.getLogger(DbConnectionManager.class);
 
-    private static ConnectionProvider connectionProvider;
-    private static final Object providerLock = new Object();
+    private ConnectionProvider connectionProvider;
+    private final Object providerLock = new Object();
 
     // True if connection profiling is turned on. Always false by default.
-    private static boolean profilingEnabled = false;
+    private boolean profilingEnabled = false;
 
     // True if the database support transactions.
-    private static boolean transactionsSupported;
+    private boolean transactionsSupported;
     // True if the database requires large text fields to be streamed.
-    private static boolean streamTextRequired;
+    private boolean streamTextRequired;
     /** True if the database supports the Statement.setMaxRows() method. */
-    private static boolean maxRowsSupported;
+    private boolean maxRowsSupported;
     /** True if the database supports the rs.setFetchSize() method. */
-    private static boolean fetchSizeSupported;
+    private boolean fetchSizeSupported;
     // True if the database supports correlated subqueries.
-    private static boolean subqueriesSupported;
+    private boolean subqueriesSupported;
     // True if the database supports scroll-insensitive results.
-    private static boolean scrollResultsSupported;
+    private boolean scrollResultsSupported;
     // True if the database supports batch updates.
-    private static boolean batchUpdatesSupported;
+    private boolean batchUpdatesSupported;
     /** True if the database supports the Statement.setFetchSize()) method. */
-    static boolean pstmt_fetchSizeSupported = true;
+    private boolean pstmt_fetchSizeSupported = true;
 
 
     private static DatabaseType databaseType = DatabaseType.unknown;
 
     private static SchemaManager schemaManager = new SchemaManager();
 
+    private static class DbConnectionManagerContainer {
+    	private static DbConnectionManager instance = new DbConnectionManager();
+    }
+    
+    public static DbConnectionManager getInstance() {
+    	return DbConnectionManagerContainer.instance;
+    }
+    
     /**
      * Returns a database connection from the currently active connection
      * provider. An exception will be thrown if no connection was found.
@@ -87,7 +95,7 @@ public class DbConnectionManager {
      * @return a connection.
      * @throws SQLException if a SQL exception occurs or no connection was found.
      */
-    public static Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         if (connectionProvider == null) {
             synchronized (providerLock) {
                 if (connectionProvider == null) {
@@ -156,7 +164,7 @@ public class DbConnectionManager {
      * @return a connection with transactions enabled.
      * @throws SQLException if a SQL exception occurs.
      */
-    public static Connection getTransactionConnection() throws SQLException {
+    public Connection getTransactionConnection() throws SQLException {
         Connection con = getConnection();
         if (isTransactionsSupported()) {
             con.setAutoCommit(false);
@@ -172,7 +180,7 @@ public class DbConnectionManager {
      * @param con the connection to close.
      * @param abortTransaction true if the transaction should be rolled back.
      */
-    public static void closeTransactionConnection(PreparedStatement pstmt, Connection con,
+    public void closeTransactionConnection(PreparedStatement pstmt, Connection con,
             boolean abortTransaction)
     {
         closeStatement(pstmt);
@@ -186,7 +194,7 @@ public class DbConnectionManager {
      * @param con the connection to close.
      * @param abortTransaction true if the transaction should be rolled back.
      */
-    public static void closeTransactionConnection(Connection con, boolean abortTransaction) {
+    public void closeTransactionConnection(Connection con, boolean abortTransaction) {
         // Rollback or commit the transaction
         if (isTransactionsSupported()) {
             try {
@@ -235,7 +243,7 @@ public class DbConnectionManager {
      *
      * @param rs the result set to close.
      */
-    public static void closeResultSet(ResultSet rs) {
+    public void closeResultSet(ResultSet rs) {
         if (rs != null) {
             try {
                     rs.close();
@@ -267,7 +275,7 @@ public class DbConnectionManager {
      *
      * @param stmt the statement.
      */
-    public static void closeStatement(Statement stmt) {
+    public void closeStatement(Statement stmt) {
         if (stmt != null) {
             try {
                 stmt.close();
@@ -301,7 +309,7 @@ public class DbConnectionManager {
      *
      * @param stmt the statement.
      */
-    public static void closeStatement(ResultSet rs, Statement stmt) {
+    public void closeStatement(ResultSet rs, Statement stmt) {
         closeResultSet(rs);
         closeStatement(stmt);
     }
@@ -328,7 +336,7 @@ public class DbConnectionManager {
      * @param rs the result set to close.
      * @param stmt the statement to close.
      */
-    public static void fastcloseStmt(PreparedStatement pstmt) throws SQLException
+    public void fastcloseStmt(PreparedStatement pstmt) throws SQLException
     {
         pstmt.close();
     }
@@ -356,7 +364,7 @@ public class DbConnectionManager {
      * @param rs the result set to close.
      * @param stmt the statement to close.
      */
-    public static void fastcloseStmt(ResultSet rs, PreparedStatement pstmt) throws SQLException
+    public void fastcloseStmt(ResultSet rs, PreparedStatement pstmt) throws SQLException
     {
         rs.close();
         pstmt.close();
@@ -388,7 +396,7 @@ public class DbConnectionManager {
      * @param stmt the statement.
      * @param con the connection.
      */
-    public static void closeConnection(ResultSet rs, Statement stmt, Connection con) {
+    public void closeConnection(ResultSet rs, Statement stmt, Connection con) {
         closeResultSet(rs);
         closeStatement(stmt);
         closeConnection(con);
@@ -417,7 +425,7 @@ public class DbConnectionManager {
      * @param stmt the statement.
      * @param con the connection.
      */
-    public static void closeConnection(Statement stmt, Connection con) {
+    public void closeConnection(Statement stmt, Connection con) {
         closeStatement(stmt);
         closeConnection(con);
     }
@@ -443,7 +451,7 @@ public class DbConnectionManager {
      *
      * @param con the connection.
      */
-    public static void closeConnection(Connection con) {
+    public void closeConnection(Connection con) {
         if (con != null) {
             try {
                con.close();
@@ -463,7 +471,7 @@ public class DbConnectionManager {
      * @throws SQLException if an error occurs.
      */
     @Deprecated
-    public static Statement createScrollableStatement(Connection con) throws SQLException {
+    public Statement createScrollableStatement(Connection con) throws SQLException {
         if (isScrollResultsSupported()) {
             return con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -482,7 +490,7 @@ public class DbConnectionManager {
      * @return a PreparedStatement
      * @throws java.sql.SQLException if an error occurs.
      */
-    public static PreparedStatement createScrollablePreparedStatement(Connection con, String sql)
+    public PreparedStatement createScrollablePreparedStatement(Connection con, String sql)
             throws SQLException {
         if (isScrollResultsSupported()) {
             return con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -502,7 +510,7 @@ public class DbConnectionManager {
      * @param rowNumber the row number to scroll forward to.
      * @throws SQLException if an error occurs.
      */
-    public static void scrollResultSet(ResultSet rs, int rowNumber) throws SQLException {
+    public void scrollResultSet(ResultSet rs, int rowNumber) throws SQLException {
         // If the driver supports scrollable result sets, use that feature.
         if (isScrollResultsSupported()) {
             if (rowNumber > 0) {
@@ -541,7 +549,7 @@ public class DbConnectionManager {
      * @param startIndex the first row with interesting data
      * @param numResults the number of interesting results
      */
-    public static void limitRowsAndFetchSize(PreparedStatement pstmt, int startIndex, int numResults) {
+    public void limitRowsAndFetchSize(PreparedStatement pstmt, int startIndex, int numResults) {
         final int MAX_FETCHRESULTS = 500;
         final int maxRows = startIndex + numResults;
         setMaxRows(pstmt, maxRows);
@@ -564,7 +572,7 @@ public class DbConnectionManager {
      * @param pstmt the PreparedStatement to set the fetch size for.
      * @param fetchSize the fetchSize.
      */
-    public static void setFetchSize(PreparedStatement pstmt, int fetchSize) {
+    public void setFetchSize(PreparedStatement pstmt, int fetchSize) {
         if (pstmt_fetchSizeSupported) {
             try {
                 pstmt.setFetchSize(fetchSize);
@@ -589,7 +597,7 @@ public class DbConnectionManager {
      *
      * @return the connection provider.
      */
-    public static ConnectionProvider getConnectionProvider() {
+    public ConnectionProvider getConnectionProvider() {
         return connectionProvider;
     }
 
@@ -602,7 +610,7 @@ public class DbConnectionManager {
      * @param provider the ConnectionProvider that the manager should obtain
      *                 connections from.
      */
-    public static void setConnectionProvider(ConnectionProvider provider) {
+    public void setConnectionProvider(ConnectionProvider provider) {
         synchronized (providerLock) {
             if (connectionProvider != null) {
                 connectionProvider.destroy();
@@ -636,7 +644,7 @@ public class DbConnectionManager {
      * ConnectionProvider is set, or one is automatically loaded by a call to
      * {@link #getConnection()}.
      */
-    public static void destroyConnectionProvider() {
+    public void destroyConnectionProvider() {
         synchronized (providerLock) {
             if (connectionProvider != null) {
                 connectionProvider.destroy();
@@ -656,7 +664,7 @@ public class DbConnectionManager {
      * @return the String value of the text field.
      * @throws SQLException if an SQL exception occurs.
      */
-    public static String getLargeTextField(ResultSet rs, int columnIndex) throws SQLException {
+    public String getLargeTextField(ResultSet rs, int columnIndex) throws SQLException {
         if (isStreamTextRequired()) {
             Reader bodyReader = null;
             String value = null;
@@ -706,7 +714,7 @@ public class DbConnectionManager {
      * @param value the String to set.
      * @throws SQLException if an SQL exception occurs.
      */
-    public static void setLargeTextField(PreparedStatement pstmt, int parameterIndex,
+    public void setLargeTextField(PreparedStatement pstmt, int parameterIndex,
                                          String value) throws SQLException {
         if (isStreamTextRequired()) {
             Reader bodyReader;
@@ -734,7 +742,7 @@ public class DbConnectionManager {
      * @param stmt    the Statement to set the max number of rows for.
      * @param maxRows the max number of rows to return.
      */
-    public static void setMaxRows(Statement stmt, int maxRows) {
+    public void setMaxRows(Statement stmt, int maxRows) {
         if (isMaxRowsSupported()) {
             try {
                 stmt.setMaxRows(maxRows);
@@ -759,7 +767,7 @@ public class DbConnectionManager {
      * @param rs the ResultSet to set the fetch size for.
      * @param fetchSize the fetchSize.
      */
-    public static void setFetchSize(ResultSet rs, int fetchSize) {
+    public void setFetchSize(ResultSet rs, int fetchSize) {
         if (isFetchSizeSupported()) {
             try {
                 rs.setFetchSize(fetchSize);
@@ -782,7 +790,7 @@ public class DbConnectionManager {
      *
      * @return a SchemaManager instance.
      */
-    public static SchemaManager getSchemaManager() {
+    public SchemaManager getSchemaManager() {
         return schemaManager;
     }
 
@@ -793,7 +801,7 @@ public class DbConnectionManager {
      * @param con the connection.
      * @throws SQLException if an SQL exception occurs.
      */
-    private static void setMetaData(Connection con) throws SQLException {
+    private void setMetaData(Connection con) throws SQLException {
         DatabaseMetaData metaData = con.getMetaData();
         // Supports transactions?
         transactionsSupported = metaData.supportsTransactions();
@@ -878,7 +886,7 @@ public class DbConnectionManager {
      *
      * @return the database type.
      */
-    public static DatabaseType getDatabaseType() {
+    public DatabaseType getDatabaseType() {
         return databaseType;
     }
 
@@ -889,7 +897,7 @@ public class DbConnectionManager {
      *
      * @return true if connection profiling is enabled.
      */
-    public static boolean isProfilingEnabled() {
+    public boolean isProfilingEnabled() {
         return profilingEnabled;
     }
 
@@ -900,7 +908,7 @@ public class DbConnectionManager {
      *
      * @param enable true to enable profiling; false to disable.
      */
-    public static void setProfilingEnabled(boolean enable) {
+    public void setProfilingEnabled(boolean enable) {
         // If enabling profiling, call the start method on ProfiledConnection
         if (!profilingEnabled && enable) {
 
@@ -912,43 +920,43 @@ public class DbConnectionManager {
         profilingEnabled = enable;
     }
 
-    public static boolean isTransactionsSupported() {
+    public boolean isTransactionsSupported() {
         return transactionsSupported;
     }
 
-    public static boolean isStreamTextRequired() {
+    public boolean isStreamTextRequired() {
         return streamTextRequired;
     }
 
-    public static boolean isMaxRowsSupported() {
+    public boolean isMaxRowsSupported() {
         return maxRowsSupported;
     }
 
-    public static boolean isFetchSizeSupported() {
+    public boolean isFetchSizeSupported() {
         return fetchSizeSupported;
     }
     
-    public static boolean isPstmtFetchSizeSupported() {
+    public boolean isPstmtFetchSizeSupported() {
         return pstmt_fetchSizeSupported;
     }
 
-    public static boolean isSubqueriesSupported() {
+    public boolean isSubqueriesSupported() {
         return subqueriesSupported;
     }
 
-    public static boolean isScrollResultsSupported() {
+    public boolean isScrollResultsSupported() {
         return scrollResultsSupported;
     }
 
-    public static boolean isBatchUpdatesSupported() {
+    public boolean isBatchUpdatesSupported() {
         return batchUpdatesSupported;
     }
 
-    public static boolean isEmbeddedDB() {
+    public boolean isEmbeddedDB() {
         return connectionProvider != null && connectionProvider instanceof EmbeddedConnectionProvider;
     }
 
-    public static String getTestSQL(String driver) {
+    public String getTestSQL(String driver) {
         if (driver == null) {
             return "select 1";
         }
@@ -971,7 +979,7 @@ public class DbConnectionManager {
      * performance reasons.
      */
     @SuppressWarnings({"UnnecessarySemicolon"}) // Support for QDox parsing
-    public static enum DatabaseType {
+    public enum DatabaseType {
 
         oracle,
 

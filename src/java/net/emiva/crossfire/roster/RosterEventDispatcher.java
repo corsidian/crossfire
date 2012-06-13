@@ -23,6 +23,7 @@ package net.emiva.crossfire.roster;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+
 /**
  * Dispatches roster events. The following events are supported:
  * <ul>
@@ -38,7 +39,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class RosterEventDispatcher {
 
-    private static List<RosterEventListener> listeners =
+    private List<RosterEventListener> listeners =
             new CopyOnWriteArrayList<RosterEventListener>();
 
     /**
@@ -46,7 +47,7 @@ public class RosterEventDispatcher {
      *
      * @param listener the listener.
      */
-    public static void addListener(RosterEventListener listener) {
+    public void addListener(RosterEventListener listener) {
         if (listener == null) {
             throw new NullPointerException();
         }
@@ -58,19 +59,19 @@ public class RosterEventDispatcher {
      *
      * @param listener the listener.
      */
-    public static void removeListener(RosterEventListener listener) {
+    public void removeListener(RosterEventListener listener) {
         listeners.remove(listener);
     }
 
     /**
      * Notifies the listeners that a roster has just been loaded.
      *
-     * @param roster the loaded roster.
+     * @param rosterImpl the loaded roster.
      */
-    public static void rosterLoaded(Roster roster) {
+    public void rosterLoaded(IRoster rosterImpl) {
         if (!listeners.isEmpty()) {
             for (RosterEventListener listener : listeners) {
-                listener.rosterLoaded(roster);
+                listener.rosterLoaded(rosterImpl);
             }
         }
     }
@@ -81,16 +82,16 @@ public class RosterEventDispatcher {
      * to be persisted should not be persisted. Only one listener is needed to return
      * <tt>false</tt> so that the contact is not persisted.
      *
-     * @param roster the roster that was updated.
+     * @param rosterImpl the roster that was updated.
      * @param item the new roster item.
      * @param persistent true if the new contact is going to be saved to the database.
      * @return false if the contact should not be persisted to the database.
      */
-    public static boolean addingContact(Roster roster, RosterItem item, boolean persistent) {
+    public boolean addingContact(IRoster rosterImpl, RosterItem item, boolean persistent) {
         boolean answer = persistent;
         if (!listeners.isEmpty()) {
             for (RosterEventListener listener : listeners) {
-                if (!listener.addingContact(roster, item, persistent)) {
+                if (!listener.addingContact(rosterImpl, item, persistent)) {
                     answer = false;
                 }
             }
@@ -104,7 +105,7 @@ public class RosterEventDispatcher {
      * @param roster the roster that was updated.
      * @param item   the new roster item.
      */
-    public static void contactAdded(Roster roster, RosterItem item) {
+    public void contactAdded(Roster roster, RosterItem item) {
         if (!listeners.isEmpty()) {
             for (RosterEventListener listener : listeners) {
                 listener.contactAdded(roster, item);
@@ -118,7 +119,7 @@ public class RosterEventDispatcher {
      * @param roster the roster that was updated.
      * @param item   the updated roster item.
      */
-    public static void contactUpdated(Roster roster, RosterItem item) {
+    public void contactUpdated(Roster roster, RosterItem item) {
         if (!listeners.isEmpty()) {
             for (RosterEventListener listener : listeners) {
                 listener.contactUpdated(roster, item);
@@ -132,7 +133,7 @@ public class RosterEventDispatcher {
      * @param roster the roster that was updated.
      * @param item   the roster item that was deleted.
      */
-    public static void contactDeleted(Roster roster, RosterItem item) {
+    public void contactDeleted(Roster roster, RosterItem item) {
         if (!listeners.isEmpty()) {
             for (RosterEventListener listener : listeners) {
                 listener.contactDeleted(roster, item);

@@ -164,7 +164,7 @@ public class JDBCUserProvider implements UserProvider {
 			throw new UserNotFoundException(e);
 		}
 		finally {
-			DbConnectionManager.closeConnection(rs, pstmt, con);
+			DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
 		}
 	}
 
@@ -196,7 +196,7 @@ public class JDBCUserProvider implements UserProvider {
 			Log.error(e.getMessage(), e);
 		}
 		finally {
-			DbConnectionManager.closeConnection(rs, pstmt, con);
+			DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
 		}
 		return count;
 	}
@@ -222,17 +222,17 @@ public class JDBCUserProvider implements UserProvider {
                 pstmt = con.prepareStatement(allUsersSQL);
                 // Set the fetch size. This will prevent some JDBC drivers from trying
                 // to load the entire result set into memory.
-                DbConnectionManager.setFetchSize(pstmt, 500);
+                DbConnectionManager.getInstance().setFetchSize(pstmt, 500);
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
                     usernames.add(rs.getString(1));
                 }
             }
             else {
-                pstmt = DbConnectionManager.createScrollablePreparedStatement(con, allUsersSQL);
-                DbConnectionManager.limitRowsAndFetchSize(pstmt, startIndex, numResults);
+                pstmt = DbConnectionManager.getInstance().createScrollablePreparedStatement(con, allUsersSQL);
+                DbConnectionManager.getInstance().limitRowsAndFetchSize(pstmt, startIndex, numResults);
                 rs = pstmt.executeQuery();
-                DbConnectionManager.scrollResultSet(rs, startIndex);
+                DbConnectionManager.getInstance().scrollResultSet(rs, startIndex);
                 int count = 0;
                 while (rs.next() && count < numResults) {
                     usernames.add(rs.getString(1));
@@ -248,7 +248,7 @@ public class JDBCUserProvider implements UserProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return usernames;
     }
@@ -355,15 +355,15 @@ public class JDBCUserProvider implements UserProvider {
                     usernames.add(rs.getString(1));
                 }
             } else {
-                pstmt = DbConnectionManager.createScrollablePreparedStatement(con, sql.toString());
-                DbConnectionManager.limitRowsAndFetchSize(pstmt, startIndex, numResults);
+                pstmt = DbConnectionManager.getInstance().createScrollablePreparedStatement(con, sql.toString());
+                DbConnectionManager.getInstance().limitRowsAndFetchSize(pstmt, startIndex, numResults);
                 for (int i=1; i<=queries; i++)
                 {
                     pstmt.setString(i, query);
                 }
                 rs = pstmt.executeQuery();
                 // Scroll to the start index.
-                DbConnectionManager.scrollResultSet(rs, startIndex);
+                DbConnectionManager.getInstance().scrollResultSet(rs, startIndex);
                 int count = 0;
                 while (rs.next() && count < numResults) {
                     usernames.add(rs.getString(1));
@@ -380,7 +380,7 @@ public class JDBCUserProvider implements UserProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return new UserCollection(usernames.toArray(new String[usernames.size()]));
     }
@@ -423,7 +423,7 @@ public class JDBCUserProvider implements UserProvider {
 
 	private Connection getConnection() throws SQLException {
 	    if (useConnectionProvider) {
-	        return DbConnectionManager.getConnection();
+	        return DbConnectionManager.getInstance().getConnection();
 	    } else
 	    {
 	        return DriverManager.getConnection(connectionString);

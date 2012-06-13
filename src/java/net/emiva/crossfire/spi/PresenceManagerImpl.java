@@ -45,9 +45,9 @@ import net.emiva.crossfire.event.UserEventListener;
 import net.emiva.crossfire.handler.PresenceUpdateHandler;
 import net.emiva.crossfire.privacy.PrivacyList;
 import net.emiva.crossfire.privacy.PrivacyListManager;
-import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.roster.IRoster;
 import net.emiva.crossfire.roster.RosterItem;
-import net.emiva.crossfire.roster.RosterManager;
+import net.emiva.crossfire.roster.IRosterManager;
 import net.emiva.crossfire.session.ClientSession;
 import net.emiva.crossfire.user.User;
 import net.emiva.crossfire.user.UserManager;
@@ -89,7 +89,7 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
     private RoutingTable routingTable;
     private SessionManager sessionManager;
     private UserManager userManager;
-    private RosterManager rosterManager;
+    private IRosterManager rosterManagerImpl;
     private XMPPServer server;
     private PacketDeliverer deliverer;
     private PresenceUpdateHandler presenceUpdateHandler;
@@ -224,7 +224,7 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_OFFLINE_PRESENCE);
             pstmt.setString(1, username);
             pstmt.execute();
@@ -233,7 +233,7 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -281,11 +281,11 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
             Connection con = null;
             PreparedStatement pstmt = null;
             try {
-                con = DbConnectionManager.getConnection();
+                con = DbConnectionManager.getInstance().getConnection();
                 pstmt = con.prepareStatement(INSERT_OFFLINE_PRESENCE);
                 pstmt.setString(1, username);
                 if (offlinePresence != null) {
-                    DbConnectionManager.setLargeTextField(pstmt, 2, offlinePresence);
+                    DbConnectionManager.getInstance().setLargeTextField(pstmt, 2, offlinePresence);
                 }
                 else {
                     pstmt.setNull(2, Types.VARCHAR);
@@ -297,7 +297,7 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
                 Log.error("Error storing offline presence of user: " + username, sqle);
             }
             finally {
-                DbConnectionManager.closeConnection(pstmt, con);
+                DbConnectionManager.getInstance().closeConnection(pstmt, con);
             }
         }
     }
@@ -305,8 +305,8 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
     public void handleProbe(Presence packet) throws UnauthorizedException {
         String username = packet.getTo().getNode();
         try {
-            Roster roster = rosterManager.getRoster(username);
-            RosterItem item = roster.getRosterItem(packet.getFrom());
+            IRoster rosterImpl = rosterManagerImpl.getRoster(username);
+            RosterItem item = rosterImpl.getRosterItem(packet.getFrom());
             if (item.getSubStatus() == RosterItem.SUB_FROM
                     || item.getSubStatus() == RosterItem.SUB_BOTH) {
                 probePresence(packet.getFrom(),  packet.getTo());
@@ -336,7 +336,7 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
     }
 
     public boolean canProbePresence(JID prober, String probee) throws UserNotFoundException {
-        RosterItem item = rosterManager.getRoster(probee).getRosterItem(prober);
+        RosterItem item = rosterManagerImpl.getRoster(probee).getRosterItem(prober);
         return item.getSubStatus() == RosterItem.SUB_FROM
                 || item.getSubStatus() == RosterItem.SUB_BOTH;
     }
@@ -520,7 +520,7 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
         sessionManager = server.getSessionManager();
         userManager = server.getUserManager();
         presenceUpdateHandler = server.getPresenceUpdateHandler();
-        rosterManager = server.getRosterManager();
+        rosterManagerImpl = server.getRosterManager();
         routingTable = server.getRoutingTable();
     }
 
@@ -556,12 +556,12 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
         try {
             lock.lock();
             if (!offlinePresenceCache.containsKey(username) || !lastActivityCache.containsKey(username)) {
-                con = DbConnectionManager.getConnection();
+                con = DbConnectionManager.getInstance().getConnection();
                 pstmt = con.prepareStatement(LOAD_OFFLINE_PRESENCE);
                 pstmt.setString(1, username);
                 rs = pstmt.executeQuery();
                 if (rs.next()) {
-                    String offlinePresence = DbConnectionManager.getLargeTextField(rs, 1);
+                    String offlinePresence = DbConnectionManager.getInstance().getLargeTextField(rs, 1);
                     if (rs.wasNull()) {
                         offlinePresence = NULL_STRING;
                     }
@@ -579,7 +579,7 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
             lock.unlock();
         }
     }

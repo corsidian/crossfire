@@ -69,7 +69,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
         PreparedStatement pstmt = null;
         try {
             long msgID = SequenceManager.nextID(GlobalConstants.SECURITY_AUDIT);
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOG_ENTRY);
             pstmt.setLong(1, msgID);
             pstmt.setString(2, username);
@@ -83,7 +83,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
             Log.warn("Error trying to insert a new row in ofSecurityAuditLog: ", e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -123,8 +123,8 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
         }
         sql += " ORDER BY entryStamp DESC";
         try {
-            con = DbConnectionManager.getConnection();
-            pstmt = DbConnectionManager.createScrollablePreparedStatement(con, sql);
+            con = DbConnectionManager.getInstance().getConnection();
+            pstmt = DbConnectionManager.getInstance().createScrollablePreparedStatement(con, sql);
             
             int i = 1;
             if (username != null) {
@@ -141,10 +141,10 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
             
             rs = pstmt.executeQuery();
             if (skipEvents != null) {
-                DbConnectionManager.scrollResultSet(rs, skipEvents);
+                DbConnectionManager.getInstance().scrollResultSet(rs, skipEvents);
             }
             if (numEvents != null) {
-                DbConnectionManager.setFetchSize(rs, numEvents);
+                DbConnectionManager.getInstance().setFetchSize(rs, numEvents);
             }
             
             int count = 0;
@@ -164,7 +164,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return events;
     }
@@ -179,7 +179,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
         ResultSet rs = null;
         SecurityAuditEvent event = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(GET_EVENT);
             pstmt.setLong(1, msgID);
             rs = pstmt.executeQuery();
@@ -198,7 +198,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
             throw new EventNotFoundException();
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
 
         return event;
@@ -214,7 +214,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
         ResultSet rs = null;
         Integer cnt = 0;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(GET_EVENT_COUNT);
             rs = pstmt.executeQuery();
             cnt = rs.getInt(1);
@@ -224,7 +224,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
             Log.error("Error while looking up number of security audit events: ", e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
 
         return cnt;

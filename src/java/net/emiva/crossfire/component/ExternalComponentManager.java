@@ -252,7 +252,7 @@ public class ExternalComponentManager {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_CONFIGURATION);
             pstmt.setString(1, configuration.getSubdomain() + (configuration.isWildcard() ? "%" : ""));
             pstmt.setInt(2, configuration.isWildcard() ? 1 : 0);
@@ -262,7 +262,7 @@ public class ExternalComponentManager {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -276,7 +276,7 @@ public class ExternalComponentManager {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(ADD_CONFIGURATION);
             pstmt.setString(1, configuration.getSubdomain() + (configuration.isWildcard() ? "%" : ""));
             pstmt.setInt(2, configuration.isWildcard() ? 1 : 0);
@@ -288,7 +288,7 @@ public class ExternalComponentManager {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -308,7 +308,7 @@ public class ExternalComponentManager {
         ResultSet rs = null;
         try {
             // Check if there is a configuration for the subdomain
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_CONFIGURATION);
             pstmt.setString(1, subdomain);
             rs = pstmt.executeQuery();
@@ -322,14 +322,14 @@ public class ExternalComponentManager {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
 
         if (configuration == null && useWildcard) {
             // Check if there is a configuration that is using wildcards for domains
             try {
                 // Check if there is a configuration for the subdomain
-                con = DbConnectionManager.getConnection();
+                con = DbConnectionManager.getInstance().getConnection();
                 pstmt = con.prepareStatement(LOAD_WILDCARD_CONFIGURATION);
                 pstmt.setString(1, subdomain);
                 rs = pstmt.executeQuery();
@@ -343,7 +343,7 @@ public class ExternalComponentManager {
                 Log.error(sqle.getMessage(), sqle);
             }
             finally {
-                DbConnectionManager.closeConnection(rs, pstmt, con);
+                DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
            }
         }
         return configuration;
@@ -357,7 +357,7 @@ public class ExternalComponentManager {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_CONFIGURATIONS);
             pstmt.setString(1, permission.toString());
             rs = pstmt.executeQuery();
@@ -376,7 +376,7 @@ public class ExternalComponentManager {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return answer;
     }

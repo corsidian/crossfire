@@ -146,7 +146,7 @@ public class JDBCGroupProvider implements GroupProvider {
 
     private Connection getConnection() throws SQLException {
         if (useConnectionProvider)
-            return DbConnectionManager.getConnection();
+            return DbConnectionManager.getInstance().getConnection();
         return DriverManager.getConnection(connectionString);
     }
 
@@ -171,7 +171,7 @@ public class JDBCGroupProvider implements GroupProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         Collection<JID> members = getMembers(name, false);
         Collection<JID> administrators = getMembers(name, true);
@@ -216,7 +216,7 @@ public class JDBCGroupProvider implements GroupProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return members;
     }
@@ -261,7 +261,7 @@ public class JDBCGroupProvider implements GroupProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return count;
     }
@@ -288,7 +288,7 @@ public class JDBCGroupProvider implements GroupProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return groupNames;
     }
@@ -300,9 +300,9 @@ public class JDBCGroupProvider implements GroupProvider {
         ResultSet rs = null;
         try {
             con = getConnection();
-            pstmt = DbConnectionManager.createScrollablePreparedStatement(con, allGroupsSQL);
+            pstmt = DbConnectionManager.getInstance().createScrollablePreparedStatement(con, allGroupsSQL);
             rs = pstmt.executeQuery();
-            DbConnectionManager.scrollResultSet(rs, start);
+            DbConnectionManager.getInstance().scrollResultSet(rs, start);
             int count = 0;
             while (rs.next() && count < num) {
                 groupNames.add(rs.getString(1));
@@ -313,7 +313,7 @@ public class JDBCGroupProvider implements GroupProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return groupNames;
     }
@@ -336,7 +336,7 @@ public class JDBCGroupProvider implements GroupProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return groupNames;
     }

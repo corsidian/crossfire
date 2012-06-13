@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.auth.AuthFactory;
 import net.emiva.crossfire.event.UserEventDispatcher;
-import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.roster.IRoster;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.util.StringUtils;
 import net.emiva.util.cache.CacheSizes;
@@ -104,7 +104,7 @@ public class User implements Cacheable, Externalizable, Result {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_PROPERTY);
             pstmt.setString(1, username);
             pstmt.setString(2, propertyName);
@@ -117,7 +117,7 @@ public class User implements Cacheable, Externalizable, Result {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return propertyValue;
     }
@@ -379,14 +379,8 @@ public class User implements Cacheable, Externalizable, Result {
      *
      * @return the user's roster.
      */
-    public Roster getRoster() {
-        try {
-            return XMPPServer.getInstance().getRosterManager().getRoster(username);
-        }
-        catch (UserNotFoundException unfe) {
-            Log.error(unfe.getMessage(), unfe);
-            return null;
-        }
+    public IRoster getRoster() {
+    	return XMPPServer.getInstance().getRosterManager().getRoster(username);
     }
 
     public int getCachedSize()
@@ -516,7 +510,7 @@ public class User implements Cacheable, Externalizable, Result {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_PROPERTIES);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -528,7 +522,7 @@ public class User implements Cacheable, Externalizable, Result {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
     }
 
@@ -536,7 +530,7 @@ public class User implements Cacheable, Externalizable, Result {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(INSERT_PROPERTY);
             pstmt.setString(1, username);
             pstmt.setString(2, propName);
@@ -547,7 +541,7 @@ public class User implements Cacheable, Externalizable, Result {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -555,7 +549,7 @@ public class User implements Cacheable, Externalizable, Result {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_PROPERTY);
             pstmt.setString(1, propValue);
             pstmt.setString(2, propName);
@@ -566,7 +560,7 @@ public class User implements Cacheable, Externalizable, Result {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -574,7 +568,7 @@ public class User implements Cacheable, Externalizable, Result {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_PROPERTY);
             pstmt.setString(1, username);
             pstmt.setString(2, propName);
@@ -584,7 +578,7 @@ public class User implements Cacheable, Externalizable, Result {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 

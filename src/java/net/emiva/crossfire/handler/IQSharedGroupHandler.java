@@ -20,7 +20,7 @@ import net.emiva.crossfire.IQHandlerInfo;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.group.Group;
-import net.emiva.crossfire.roster.RosterManager;
+import net.emiva.crossfire.roster.IRosterManager;
 
 import org.dom4j.Element;
 import org.xmpp.packet.IQ;
@@ -39,7 +39,7 @@ public class IQSharedGroupHandler extends IQHandler {
 
     private IQHandlerInfo info;
     private String serverName;
-    private RosterManager rosterManager;
+    private IRosterManager rosterManager;
 
     public IQSharedGroupHandler() {
         super("Shared Groups Handler");

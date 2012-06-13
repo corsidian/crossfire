@@ -20,7 +20,7 @@
 
 package net.emiva.crossfire.privacy;
 
-import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.roster.IRoster;
 import net.emiva.crossfire.roster.RosterItem;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.cache.CacheSizes;
@@ -129,12 +129,12 @@ class PrivacyItem implements Cacheable, Comparable {
      * considered.
      *
      * @param packet the packet to analyze if matches the rule's condition.
-     * @param roster the roster of the owner of the privacy list.
+     * @param rosterImpl the roster of the owner of the privacy list.
      * @param userJID the JID of the owner of the privacy list.
      * @return true if the packet to analyze matches the condition defined by this rule.
      */
-    boolean matchesCondition(Packet packet, Roster roster, JID userJID) {
-        return matchesPacketSenderCondition(packet, roster, userJID) &&
+    boolean matchesCondition(Packet packet, IRoster rosterImpl, JID userJID) {
+        return matchesPacketSenderCondition(packet, rosterImpl, userJID) &&
                 matchesPacketTypeCondition(packet, userJID);
     }
 
@@ -142,7 +142,7 @@ class PrivacyItem implements Cacheable, Comparable {
         return allow;
     }
 
-    private boolean matchesPacketSenderCondition(Packet packet, Roster roster, JID userJID) {
+    private boolean matchesPacketSenderCondition(Packet packet, IRoster rosterImpl, JID userJID) {
         if (type == null) {
             // This is the "fall-through" case
             return true;
@@ -156,16 +156,16 @@ class PrivacyItem implements Cacheable, Comparable {
         if (isPresence && !incoming && (filterEverything || filterPresence_out)) {
             // If this is an outgoing presence and we are filtering by outgoing presence
             // notification then use the receipient of the packet in the analysis
-            matches = verifyJID(packet.getTo(), roster);
+            matches = verifyJID(packet.getTo(), rosterImpl);
         }
         if (!matches && incoming &&
                 (filterEverything || filterPresence_in || filterIQ || filterMessage)) {
-            matches = verifyJID(packet.getFrom(), roster);
+            matches = verifyJID(packet.getFrom(), rosterImpl);
         }
         return matches;
     }
 
-    private boolean verifyJID(JID jid, Roster roster) {
+    private boolean verifyJID(JID jid, IRoster rosterImpl) {
         if (jid == null) {
             return false;
         }
@@ -188,7 +188,7 @@ class PrivacyItem implements Cacheable, Comparable {
             Collection<String> contactGroups;
             try {
                 // Get the groups where the contact belongs
-                RosterItem item = roster.getRosterItem(jid);
+                RosterItem item = rosterImpl.getRosterItem(jid);
                 contactGroups = item.getGroups();
             }
             catch (UserNotFoundException e) {
@@ -202,7 +202,7 @@ class PrivacyItem implements Cacheable, Comparable {
             RosterItem.SubType contactSubscription = RosterItem.SUB_NONE;
             try {
                 // Get the groups where the contact belongs
-                RosterItem item = roster.getRosterItem(jid);
+                RosterItem item = rosterImpl.getRosterItem(jid);
                 contactSubscription = item.getSubStatus();
             }
             catch (UserNotFoundException e) {

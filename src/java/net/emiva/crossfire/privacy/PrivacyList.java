@@ -31,7 +31,7 @@ import java.util.List;
 
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.net.MXParser;
-import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.roster.IRoster;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.cache.CacheSizes;
 import net.emiva.util.cache.Cacheable;
@@ -164,9 +164,9 @@ public class PrivacyList implements Cacheable, Externalizable {
             return false;
         }
         // Iterate over the rules and check each rule condition
-        Roster roster = getRoster();
+        IRoster rosterImpl = getRoster();
         for (PrivacyItem item : items) {
-            if (item.matchesCondition(packet, roster, userJID)) {
+            if (item.matchesCondition(packet, rosterImpl, userJID)) {
                 if (item.isAllow()) {
                     return false;
                 }
@@ -225,8 +225,8 @@ public class PrivacyList implements Cacheable, Externalizable {
             // If the user's roster is required to evaluation whether a packet must be blocked
             // then ensure that the roster is available
             if (newItem.isRosterRequired()) {
-                Roster roster = getRoster();
-                if (roster == null) {
+                IRoster rosterImpl = getRoster();
+                if (rosterImpl == null) {
                     Log.warn("Privacy item removed since roster of user was not found: " + userJID.getNode());
                     items.remove(newItem);
                 }
@@ -240,13 +240,8 @@ public class PrivacyList implements Cacheable, Externalizable {
         }
     }
 
-    private Roster getRoster() {
-        try {
-            return XMPPServer.getInstance().getRosterManager().getRoster(userJID.getNode());
-        } catch (UserNotFoundException e) {
-            Log.warn("Roster not found for user: " + userJID);
-        }
-        return null;
+    private IRoster getRoster() {
+        return XMPPServer.getInstance().getRosterManager().getRoster(userJID.getNode());
     }
 
     public int getCachedSize() throws CannotCalculateSizeException {

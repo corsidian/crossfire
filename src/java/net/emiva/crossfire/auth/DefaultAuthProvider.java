@@ -143,7 +143,7 @@ public class DefaultAuthProvider implements AuthProvider {
             }
         }
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_PASSWORD);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -166,7 +166,7 @@ public class DefaultAuthProvider implements AuthProvider {
             throw new UserNotFoundException(sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
     }
 
@@ -200,7 +200,7 @@ public class DefaultAuthProvider implements AuthProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_PASSWORD);
             if (password == null) {
                 pstmt.setNull(1, Types.VARCHAR);
@@ -221,7 +221,7 @@ public class DefaultAuthProvider implements AuthProvider {
             throw new UserNotFoundException(sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 

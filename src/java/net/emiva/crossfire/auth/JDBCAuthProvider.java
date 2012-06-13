@@ -261,7 +261,7 @@ public class JDBCAuthProvider implements AuthProvider {
 
     private Connection getConnection() throws SQLException {
         if (useConnectionProvider)
-            return DbConnectionManager.getConnection();
+            return DbConnectionManager.getInstance().getConnection();
         return DriverManager.getConnection(connectionString);
     }
 
@@ -308,7 +308,7 @@ public class JDBCAuthProvider implements AuthProvider {
             throw new UserNotFoundException();
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return password;
     }
@@ -351,7 +351,7 @@ public class JDBCAuthProvider implements AuthProvider {
             throw new UserNotFoundException();
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
         
     }

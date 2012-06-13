@@ -450,7 +450,7 @@ public class PluginManager {
                 }
 
                 // Check the plugin's database schema (if it requires one).
-                if (!DbConnectionManager.getSchemaManager().checkPluginSchema(plugin)) {
+                if (!DbConnectionManager.getInstance().getSchemaManager().checkPluginSchema(plugin)) {
                     // The schema was not there and auto-upgrade failed.
                     Log.error(pluginName + " - " +
                             LocaleUtils.getLocalizedString("upgrade.database.failure"));

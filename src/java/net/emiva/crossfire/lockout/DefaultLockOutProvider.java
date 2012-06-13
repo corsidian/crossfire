@@ -66,7 +66,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
         ResultSet rs = null;
         LockOutFlag ret = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(RETRIEVE_FLAG);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -89,7 +89,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
             return null;
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
 
         return ret;
@@ -103,7 +103,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_FLAG);
             pstmt.setString(1, flag.getUsername());
             pstmt.executeUpdate();
@@ -112,10 +112,10 @@ public class DefaultLockOutProvider implements LockOutProvider {
             // Nothing to do.
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(ADD_FLAG);
             pstmt.setString(1, flag.getUsername());
             if (flag.getStartTime() != null) {
@@ -136,7 +136,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
             // Nothing to do.
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -148,7 +148,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_FLAG);
             pstmt.setString(1, username);
             pstmt.executeUpdate();
@@ -157,7 +157,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
             // Nothing to do.
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 

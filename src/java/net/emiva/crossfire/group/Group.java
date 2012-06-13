@@ -98,7 +98,7 @@ public class Group implements Cacheable, Externalizable {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_SHARED_GROUPS);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -109,7 +109,7 @@ public class Group implements Cacheable, Externalizable {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return groupNames;
     }
@@ -614,7 +614,7 @@ public class Group implements Cacheable, Externalizable {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_PROPERTIES);
             pstmt.setString(1, name);
             rs = pstmt.executeQuery();
@@ -637,7 +637,7 @@ public class Group implements Cacheable, Externalizable {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
     }
 
@@ -645,7 +645,7 @@ public class Group implements Cacheable, Externalizable {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(INSERT_PROPERTY);
             pstmt.setString(1, name);
             pstmt.setString(2, propName);
@@ -656,7 +656,7 @@ public class Group implements Cacheable, Externalizable {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -664,7 +664,7 @@ public class Group implements Cacheable, Externalizable {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_PROPERTY);
             pstmt.setString(1, propValue);
             pstmt.setString(2, propName);
@@ -675,7 +675,7 @@ public class Group implements Cacheable, Externalizable {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -683,7 +683,7 @@ public class Group implements Cacheable, Externalizable {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_PROPERTY);
             pstmt.setString(1, name);
             pstmt.setString(2, propName);
@@ -693,7 +693,7 @@ public class Group implements Cacheable, Externalizable {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 

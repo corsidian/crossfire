@@ -812,14 +812,14 @@ public class Globals {
             return false;
         }
         // Check if the DB configuration is done
-        if (DbConnectionManager.getConnectionProvider() == null) {
+        if (DbConnectionManager.getInstance().getConnectionProvider() == null) {
             // DB setup is still not completed so setup is needed
             return true;
         }
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             // Properties can now be loaded from DB so consider setup done
         }
         catch (SQLException e) {
@@ -827,7 +827,7 @@ public class Globals {
             return true;
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
         return false;
     }

@@ -132,7 +132,7 @@ public class SchemaManager {
         }
         Connection con = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             return checkSchema(con, schemaKey, schemaVersion, new ResourceLoader() {
                 @Override
 				public InputStream loadResource(String resourceName) {
@@ -152,7 +152,7 @@ public class SchemaManager {
             System.out.println(LocaleUtils.getLocalizedString("upgrade.database.failure"));
         }
         finally {
-            DbConnectionManager.closeConnection(con);
+            DbConnectionManager.getInstance().closeConnection(con);
         }
         return false;
     }
@@ -185,7 +185,7 @@ public class SchemaManager {
         catch (SQLException sqle) {
             // The database schema must not be installed.
             Log.debug("SchemaManager: Error verifying "+schemaKey+" version, probably ignorable.", sqle);
-            DbConnectionManager.closeStatement(rs, pstmt);
+            DbConnectionManager.getInstance().closeStatement(rs, pstmt);
             if (schemaKey.equals("crossfire")) {
                 try {
                     // Releases of crossfire before 3.6.0 stored the version in a emivaVersion table.
@@ -199,7 +199,7 @@ public class SchemaManager {
                 catch (SQLException sqlea) {
                     // The database schema must not be installed.
                     Log.debug("SchemaManager: Error verifying "+schemaKey+" version, probably ignorable.", sqlea);
-                    DbConnectionManager.closeStatement(rs, pstmt);
+                    DbConnectionManager.getInstance().closeStatement(rs, pstmt);
 
                     // Releases of crossfire before 2.6.0 stored a major and minor version
                     // number so the normal check for version can fail. Check for the
@@ -220,7 +220,7 @@ public class SchemaManager {
             }
         }
         finally {
-            DbConnectionManager.closeStatement(rs, pstmt);
+            DbConnectionManager.getInstance().closeStatement(rs, pstmt);
         }
         // If already up to date, return.
         if (currentVersion >= requiredVersion) {
@@ -234,7 +234,7 @@ public class SchemaManager {
                     Arrays.asList(schemaKey)));
             // Resource will be like "/database/crossfire_hsqldb.sql"
             String resourceName = schemaKey + "_" +
-                    DbConnectionManager.getDatabaseType() + ".sql";
+                    DbConnectionManager.getInstance().getDatabaseType() + ".sql";
             InputStream resource = resourceLoader.loadResource(resourceName);
             if (resource == null) {
                 return false;
@@ -267,13 +267,13 @@ public class SchemaManager {
             System.out.println(LocaleUtils.getLocalizedString("upgrade.database.old_schema",
                     Arrays.asList(currentVersion, schemaKey, requiredVersion)));
             // If the database type is unknown, we don't know how to upgrade it.
-            if (DbConnectionManager.getDatabaseType() == DbConnectionManager.DatabaseType.unknown) {
+            if (DbConnectionManager.getInstance().getDatabaseType() == DbConnectionManager.DatabaseType.unknown) {
                 Log.info(LocaleUtils.getLocalizedString("upgrade.database.unknown_db"));
                 System.out.println(LocaleUtils.getLocalizedString("upgrade.database.unknown_db"));
                 return false;
             }
             // Upgrade scripts for interbase are not maintained.
-            else if (DbConnectionManager.getDatabaseType() == DbConnectionManager.DatabaseType.interbase) {
+            else if (DbConnectionManager.getInstance().getDatabaseType() == DbConnectionManager.DatabaseType.interbase) {
                 Log.info(LocaleUtils.getLocalizedString("upgrade.database.interbase_db"));
                 System.out.println(LocaleUtils.getLocalizedString("upgrade.database.interbase_db"));
                 return false;
@@ -316,7 +316,7 @@ public class SchemaManager {
             String path = Globals.getHomeDirectory() + File.separator + "resources" +
                     File.separator + "database" + File.separator + "upgrade" + File.separator +
                     upgradeVersion;
-            String filename = schemaKey + "_" + DbConnectionManager.getDatabaseType() + ".sql";
+            String filename = schemaKey + "_" + DbConnectionManager.getInstance().getDatabaseType() + ".sql";
             File file = new File(path, filename);
             try {
                 resource = new FileInputStream(file);
@@ -327,7 +327,7 @@ public class SchemaManager {
         }
         else {
             String resourceName = "upgrade/" + upgradeVersion + "/" + schemaKey + "_" +
-                    DbConnectionManager.getDatabaseType() + ".sql";
+                    DbConnectionManager.getInstance().getDatabaseType() + ".sql";
             resource = resourceLoader.loadResource(resourceName);
         }
         return resource;
@@ -345,7 +345,7 @@ public class SchemaManager {
             // So silently move on.
         }
         finally {
-            DbConnectionManager.closeStatement(pstmt);
+            DbConnectionManager.getInstance().closeStatement(pstmt);
         }
     }
 
@@ -384,8 +384,8 @@ public class SchemaManager {
                 // Send command to database.
                 if (!done && !command.toString().equals("")) {
                     // Remove last semicolon when using Oracle or DB2 to prevent "invalid character error"
-                    if (DbConnectionManager.getDatabaseType() == DbConnectionManager.DatabaseType.oracle ||
-                            DbConnectionManager.getDatabaseType() == DbConnectionManager.DatabaseType.db2) {
+                    if (DbConnectionManager.getInstance().getDatabaseType() == DbConnectionManager.DatabaseType.oracle ||
+                            DbConnectionManager.getInstance().getDatabaseType() == DbConnectionManager.DatabaseType.db2) {
                         command.deleteCharAt(command.length() - 1);
                     }
                     PreparedStatement pstmt = null;
@@ -403,7 +403,7 @@ public class SchemaManager {
                         throw e;
                     }
                     finally {
-                        DbConnectionManager.closeStatement(pstmt);
+                        DbConnectionManager.getInstance().closeStatement(pstmt);
                     }
                 }
             }

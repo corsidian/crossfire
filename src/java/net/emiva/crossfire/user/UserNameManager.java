@@ -47,8 +47,16 @@ public class UserNameManager {
     /**
      * Map that keeps the UserNameProvider to use for each specific domain.
      */
-    private static Map<String, UserNameProvider> providersByDomain =
+    private Map<String, UserNameProvider> providersByDomain =
             new ConcurrentHashMap<String, UserNameProvider>();
+
+    private static class UserNameManagerContainer {
+    	private static UserNameManager instance = new UserNameManager();
+    }
+
+    public static UserNameManager getInstance() {
+    	return UserNameManagerContainer.instance;
+    }
 
     private UserNameManager() {
     }
@@ -59,7 +67,7 @@ public class UserNameManager {
      * @param domain   the domain hosted by the UserNameProvider.
      * @param provider the provider that will provide the name of users in the specified domain.
      */
-    public static void addUserNameProvider(String domain, UserNameProvider provider) {
+    public void addUserNameProvider(String domain, UserNameProvider provider) {
         providersByDomain.put(domain, provider);
     }
 
@@ -68,7 +76,7 @@ public class UserNameManager {
      *
      * @param domain the domain hosted by a UserNameProvider.
      */
-    public static void removeUserNameProvider(String domain) {
+    public void removeUserNameProvider(String domain) {
         providersByDomain.remove(domain);
     }
 
@@ -84,7 +92,7 @@ public class UserNameManager {
      * @throws UserNotFoundException if the jid belongs to the local server but no user was
      *                               found for that jid.
      */
-    public static String getUserName(JID entity) throws UserNotFoundException {
+    public String getUserName(JID entity) throws UserNotFoundException {
         return getUserName(entity, entity.toString());
     }
 
@@ -101,7 +109,7 @@ public class UserNameManager {
      * @throws UserNotFoundException if the jid belongs to the local server but no user was
      *                               found for that jid.
      */
-    public static String getUserName(JID entity, String defaultName) throws UserNotFoundException {
+    public String getUserName(JID entity, String defaultName) throws UserNotFoundException {
         if (server.isLocal(entity)) {
             // Contact is a local entity so search for his user name
             User localUser = UserManager.getInstance().getUser(entity.getNode());

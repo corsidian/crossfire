@@ -179,7 +179,7 @@ public class RemoteServerManager {
         java.sql.Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_CONFIGURATION);
             pstmt.setString(1, domain);
             pstmt.executeUpdate();
@@ -188,7 +188,7 @@ public class RemoteServerManager {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -204,7 +204,7 @@ public class RemoteServerManager {
         java.sql.Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(ADD_CONFIGURATION);
             pstmt.setString(1, configuration.getDomain());
             pstmt.setInt(2, configuration.getRemotePort());
@@ -215,7 +215,7 @@ public class RemoteServerManager {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -236,7 +236,7 @@ public class RemoteServerManager {
             PreparedStatement pstmt = null;
             ResultSet rs = null;
             try {
-                con = DbConnectionManager.getConnection();
+                con = DbConnectionManager.getInstance().getConnection();
                 pstmt = con.prepareStatement(LOAD_CONFIGURATION);
                 pstmt.setString(1, domain);
                 rs = pstmt.executeQuery();
@@ -250,7 +250,7 @@ public class RemoteServerManager {
                 Log.error(sqle.getMessage(), sqle);
             }
             finally {
-                DbConnectionManager.closeConnection(rs, pstmt, con);
+                DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
             }
             if (configuration != null) {
                 configurationsCache.put(domain, configuration);
@@ -270,7 +270,7 @@ public class RemoteServerManager {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_CONFIGURATIONS);
             pstmt.setString(1, permission.toString());
             rs = pstmt.executeQuery();
@@ -286,7 +286,7 @@ public class RemoteServerManager {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return answer;
     }

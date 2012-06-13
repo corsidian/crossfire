@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.emiva.crossfire.JIDFactory;
+import net.emiva.crossfire.PacketRouter;
 import net.emiva.crossfire.PresenceManager;
 import net.emiva.crossfire.RoutingTable;
 import net.emiva.crossfire.SessionManager;
@@ -72,7 +74,7 @@ import org.xmpp.packet.Presence;
  * @author Gaston Dombiak
  */
 @GlobalID(GlobalConstants.ROSTER)
-public class Roster implements Cacheable, Externalizable {
+public class Roster implements Cacheable, Externalizable, IRoster {
 
 	private static final Logger Log = LoggerFactory.getLogger(Roster.class);
 
@@ -88,14 +90,21 @@ public class Roster implements Cacheable, Externalizable {
 
     private RosterItemProvider rosterItemProvider;
     private String username;
+
     private SessionManager sessionManager;
-    private XMPPServer server = XMPPServer.getInstance();
     private RoutingTable routingTable;
     private PresenceManager presenceManager;
+    private JIDFactory jidFactory;
+    private PacketRouter packetRouter;
+    private GroupManager groupManager;
+    private UserNameManager userNameManager;
+    
+    private RosterEventDispatcher rosterEventDispatcher;
+    
     /**
      * Note: Used only for shared groups logic.
      */
-    private RosterManager rosterManager;
+    private IRosterManager rosterManager;
 
 
     /**
@@ -118,11 +127,21 @@ public class Roster implements Cacheable, Externalizable {
      *
      * @param username The username of the user that owns this roster
      */
-    Roster(String username) {
-        presenceManager = XMPPServer.getInstance().getPresenceManager();
-        rosterManager = XMPPServer.getInstance().getRosterManager();
-        sessionManager = SessionManager.getInstance();
-        routingTable = XMPPServer.getInstance().getRoutingTable();
+    Roster(String username, PresenceManager presenceManager, IRosterManager rosterManager, 
+    		SessionManager sessionManager, RoutingTable routingTable, 
+    		JIDFactory jidFactory, PacketRouter packetRouter, GroupManager groupManager,
+    		UserNameManager userNameManager) {
+        this.presenceManager = presenceManager;
+        this.rosterManager = rosterManager;
+        this.sessionManager = sessionManager;
+        this.routingTable = routingTable;
+        this.jidFactory = jidFactory;
+        this.packetRouter = packetRouter;
+        this.rosterItemProvider = rosterManager.getRosterItemProvider();
+        this.rosterEventDispatcher = rosterManager.getRosterEventDispatcher();
+        this.groupManager = groupManager;
+        this.userNameManager = userNameManager;
+        
         this.username = username;
 
         // Get the shared groups of this user
@@ -130,7 +149,6 @@ public class Roster implements Cacheable, Externalizable {
         //Collection<Group> userGroups = GroupManager.getInstance().getGroups(getUserJID());
 
         // Add RosterItems that belong to the personal roster
-        rosterItemProvider =  RosterItemProvider.getInstance();
         Iterator<RosterItem> items = rosterItemProvider.getItems(username);
         while (items.hasNext()) {
             RosterItem item = items.next();
@@ -154,7 +172,7 @@ public class Roster implements Cacheable, Externalizable {
                 Collection<Group> itemGroups = new ArrayList<Group>();
                 String nickname = "";
                 RosterItem item = new RosterItem(jid, RosterItem.SUB_TO, RosterItem.ASK_NONE,
-                        RosterItem.RECV_NONE, nickname , null);
+                        RosterItem.RECV_NONE, nickname , null, userNameManager, groupManager);
                 // Add the shared groups to the new roster item
                 for (Group group : groups) {
                     if (group.isUser(jid)) {
@@ -190,7 +208,7 @@ public class Roster implements Cacheable, Externalizable {
                 // optimization to reduce objects in memory and avoid loading users in memory
                 // to get their nicknames that will never be shown
                 if (item.getSubStatus() != RosterItem.SUB_FROM) {
-                    item.setNickname(UserNameManager.getUserName(jid));
+                    item.setNickname(userNameManager.getUserName(jid));
                     rosterItems.put(item.getJid().toBareJID(), item);
                 }
                 else {
@@ -206,42 +224,32 @@ public class Roster implements Cacheable, Externalizable {
             }
         }
         // Fire event indicating that a roster has just been loaded
-        RosterEventDispatcher.rosterLoaded(this);
+        rosterEventDispatcher.rosterLoaded(this);
     }
 
-    /**
-     * Returns true if the specified user is a member of the roster, false otherwise.
-     *
-     * @param user the user object to check.
-     * @return true if the specified user is a member of the roster, false otherwise.
-     */
-    public boolean isRosterItem(JID user) {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#isRosterItem(org.xmpp.packet.JID)
+	 */
+    @Override
+	public boolean isRosterItem(JID user) {
         // Optimization: Check if the contact has a FROM subscription due to shared groups
         // (only when not present in the rosterItems collection)
         return rosterItems.containsKey(user.toBareJID()) || getImplicitRosterItem(user) != null;
     }
 
-    /**
-     * Returns a collection of users in this roster.<p>
-     *
-     * Note: Roster items with subscription type FROM that exist only because of shared groups
-     * are not going to be returned.
-     *
-     * @return a collection of users in this roster.
-     */
-    public Collection<RosterItem> getRosterItems() {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#getRosterItems()
+	 */
+    @Override
+	public Collection<RosterItem> getRosterItems() {
         return Collections.unmodifiableCollection(rosterItems.values());
     }
 
-    /**
-     * Returns the roster item that is associated with the specified JID. If no roster item
-     * was found then a UserNotFoundException will be thrown.
-     *
-     * @param user the XMPPAddress for the roster item to retrieve
-     * @return The roster item associated with the user XMPPAddress.
-     * @throws UserNotFoundException if no roster item was found for the specified JID.
-     */
-    public RosterItem getRosterItem(JID user) throws UserNotFoundException {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#getRosterItem(org.xmpp.packet.JID)
+	 */
+    @Override
+	public RosterItem getRosterItem(JID user) throws UserNotFoundException {
         RosterItem item = rosterItems.get(user.toBareJID());
         if (item == null) {
             // Optimization: Check if the contact has a FROM subscription due to shared groups
@@ -268,50 +276,37 @@ public class Roster implements Cacheable, Externalizable {
         Set<String> invisibleSharedGroups = implicitFrom.get(user.toBareJID());
         if (invisibleSharedGroups != null) {
             RosterItem rosterItem = new RosterItem(user, RosterItem.SUB_FROM, RosterItem.ASK_NONE,
-                    RosterItem.RECV_NONE, "", null);
+                    RosterItem.RECV_NONE, "", null, userNameManager, groupManager);
             rosterItem.setInvisibleSharedGroupsNames(invisibleSharedGroups);
             return rosterItem;
         }
         return null;
     }
 
-    /**
-     * Create a new item to the roster. Roster items may not be created that contain the same user
-     * address as an existing item.
-     *
-     * @param user       The item to add to the roster.
-     * @param push       True if the new item must be pushed to the user.
-     * @param persistent True if the new roster item should be persisted to the DB.
-     */
-    public RosterItem createRosterItem(JID user, boolean push, boolean persistent)
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#createRosterItem(org.xmpp.packet.JID, boolean, boolean)
+	 */
+    @Override
+	public RosterItem createRosterItem(JID user, boolean push, boolean persistent)
             throws UserAlreadyExistsException, SharedGroupException {
         return createRosterItem(user, null, null, push, persistent);
     }
 
-    /**
-     * Create a new item to the roster. Roster items may not be created that contain the same user
-     * address as an existing item.
-     *
-     * @param user       The item to add to the roster.
-     * @param nickname   The nickname for the roster entry (can be null).
-     * @param push       True if the new item must be push to the user.
-     * @param persistent True if the new roster item should be persisted to the DB.
-     * @param groups   The list of groups to assign this roster item to (can be null)
-     */
-    public RosterItem createRosterItem(JID user, String nickname, List<String> groups, boolean push,
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#createRosterItem(org.xmpp.packet.JID, java.lang.String, java.util.List, boolean, boolean)
+	 */
+    @Override
+	public RosterItem createRosterItem(JID user, String nickname, List<String> groups, boolean push,
                                        boolean persistent)
             throws UserAlreadyExistsException, SharedGroupException {
         return provideRosterItem(user, nickname, groups, push, persistent);
     }
 
-    /**
-     * Create a new item to the roster based as a copy of the given item.
-     * Roster items may not be created that contain the same user address
-     * as an existing item in the roster.
-     *
-     * @param item the item to copy and add to the roster.
-     */
-    public void createRosterItem(org.xmpp.packet.Roster.Item item)
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#createRosterItem(org.xmpp.packet.Roster.Item)
+	 */
+    @Override
+	public void createRosterItem(org.xmpp.packet.Roster.Item item)
             throws UserAlreadyExistsException, SharedGroupException {
         provideRosterItem(item.getJID(), item.getName(), new ArrayList<String>(item.getGroups()), true, true);
     }
@@ -331,7 +326,7 @@ public class Roster implements Cacheable, Externalizable {
             throws UserAlreadyExistsException, SharedGroupException {
         if (groups != null && !groups.isEmpty()) {
             // Raise an error if the groups the item belongs to include a shared group
-            Collection<Group> sharedGroups = GroupManager.getInstance().getSharedGroups();
+            Collection<Group> sharedGroups = groupManager.getSharedGroups();
             for (String group : groups) {
                 for (Group sharedGroup : sharedGroups) {
                     if (group.equals(sharedGroup.getProperties().get("sharedRoster.displayName"))) {
@@ -345,9 +340,9 @@ public class Roster implements Cacheable, Externalizable {
         org.xmpp.packet.Roster.Item item = roster.addItem(user, nickname, null,
                 org.xmpp.packet.Roster.Subscription.none, groups);
 
-        RosterItem rosterItem = new RosterItem(item);
+        RosterItem rosterItem = new RosterItem(item, userNameManager, groupManager);
         // Fire event indicating that a roster item is about to be added
-        persistent = RosterEventDispatcher.addingContact(this, rosterItem, persistent);
+        persistent = rosterEventDispatcher.addingContact(this, rosterItem, persistent);
 
         // Check if we need to make the new roster item persistent
         if (persistent) {
@@ -362,24 +357,22 @@ public class Roster implements Cacheable, Externalizable {
         rosterItems.put(user.toBareJID(), rosterItem);
 
         // Fire event indicating that a roster item has been added
-        RosterEventDispatcher.contactAdded(this, rosterItem);
+        rosterEventDispatcher.contactAdded(this, rosterItem);
 
         return rosterItem;
     }
 
-    /**
-     * Update an item that is already in the roster.
-     *
-     * @param item the item to update in the roster.
-     * @throws UserNotFoundException If the roster item for the given user doesn't already exist
-     */
-    public void updateRosterItem(RosterItem item) throws UserNotFoundException {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#updateRosterItem(net.emiva.crossfire.roster.RosterItem)
+	 */
+    @Override
+	public void updateRosterItem(RosterItem item) throws UserNotFoundException {
         // Check if we need to convert an implicit roster item into an explicit one
         if (implicitFrom.remove(item.getJid().toBareJID()) != null) {
             // Ensure that the item is an explicit roster item
             rosterItems.put(item.getJid().toBareJID(), item);
             // Fire event indicating that a roster item has been updated
-            RosterEventDispatcher.contactUpdated(this, item);
+            rosterEventDispatcher.contactUpdated(this, item);
         }
         if (rosterItems.putIfAbsent(item.getJid().toBareJID(), item) == null) {
             rosterItems.remove(item.getJid().toBareJID());
@@ -396,7 +389,7 @@ public class Roster implements Cacheable, Externalizable {
                 if (item.isOnlyShared()) {
                     String defaultContactName;
                     try {
-                        defaultContactName = UserNameManager.getUserName(item.getJid());
+                        defaultContactName = userNameManager.getUserName(item.getJid());
                     }
                     catch (UserNotFoundException e) {
                         // Cannot update a roster item for a local user that does not exist
@@ -431,18 +424,14 @@ public class Roster implements Cacheable, Externalizable {
             probePresence(item.getJid());
         }*/
         // Fire event indicating that a roster item has been updated
-        RosterEventDispatcher.contactUpdated(this, item);
+        rosterEventDispatcher.contactUpdated(this, item);
     }
 
-    /**
-     * Remove a user from the roster.
-     *
-     * @param user the user to remove from the roster.
-     * @param doChecking flag that indicates if checkings should be done before deleting the user.
-     * @return The roster item being removed or null if none existed
-     * @throws SharedGroupException if the user to remove belongs to a shared group
-     */
-    public RosterItem deleteRosterItem(JID user, boolean doChecking) throws SharedGroupException {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#deleteRosterItem(org.xmpp.packet.JID, boolean)
+	 */
+    @Override
+	public RosterItem deleteRosterItem(JID user, boolean doChecking) throws SharedGroupException {
         // Answer an error if user (i.e. contact) to delete belongs to a shared group
         RosterItem itemToRemove = rosterItems.get(user.toBareJID());
         if (doChecking && itemToRemove != null && !itemToRemove.getSharedGroups().isEmpty()) {
@@ -455,19 +444,19 @@ public class Roster implements Cacheable, Externalizable {
             // Cancel any existing presence subscription between the user and the contact
             if (subType == RosterItem.SUB_TO || subType == RosterItem.SUB_BOTH) {
                 Presence presence = new Presence();
-                presence.setFrom(server.createJID(username, null));
+                presence.setFrom(jidFactory.createJID(username, null));
                 presence.setTo(itemToRemove.getJid());
                 presence.setType(Presence.Type.unsubscribe);
-                server.getPacketRouter().route(presence);
+                packetRouter.route(presence);
             }
 
             // cancel any existing presence subscription between the contact and the user
             if (subType == RosterItem.SUB_FROM || subType == RosterItem.SUB_BOTH) {
                 Presence presence = new Presence();
-                presence.setFrom(server.createJID(username, null));
+                presence.setFrom(jidFactory.createJID(username, null));
                 presence.setTo(itemToRemove.getJid());
                 presence.setType(Presence.Type.unsubscribed);
-                server.getPacketRouter().route(presence);
+                packetRouter.route(presence);
             }
 
             // If removing the user was successful, remove the user from the subscriber list:
@@ -487,7 +476,7 @@ public class Roster implements Cacheable, Externalizable {
                 roster.addItem(user, org.xmpp.packet.Roster.Subscription.remove);
                 broadcast(roster);
                 // Fire event indicating that a roster item has been deleted
-                RosterEventDispatcher.contactDeleted(this, item);
+                rosterEventDispatcher.contactDeleted(this, item);
             }
 
             return item;
@@ -499,36 +488,34 @@ public class Roster implements Cacheable, Externalizable {
             if (item != null) {
                 implicitFrom.remove(user.toBareJID());
                 // If the contact being removed is not a local user then ACK unsubscription
-                if (!server.isLocal(user)) {
+                if (!jidFactory.isLocal(user)) {
                     Presence presence = new Presence();
-                    presence.setFrom(server.createJID(username, null));
+                    presence.setFrom(jidFactory.createJID(username, null));
                     presence.setTo(user);
                     presence.setType(Presence.Type.unsubscribed);
-                    server.getPacketRouter().route(presence);
+                    packetRouter.route(presence);
                 }
                 // Fire event indicating that a roster item has been deleted
-                RosterEventDispatcher.contactDeleted(this, item);
+                rosterEventDispatcher.contactDeleted(this, item);
             }
         }
 
         return null;
     }
 
-    /**
-     * <p>Return the username of the user or chatbot that owns this roster.</p>
-     *
-     * @return the username of the user or chatbot that owns this roster
-     */
-    public String getUsername() {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#getUsername()
+	 */
+    @Override
+	public String getUsername() {
         return username;
     }
 
-    /**
-     * <p>Obtain a 'roster reset', a snapshot of the full cached roster as an Roster.</p>
-     *
-     * @return The roster reset (snapshot) as an Roster
-     */
-    public org.xmpp.packet.Roster getReset() {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#getReset()
+	 */
+    @Override
+	public org.xmpp.packet.Roster getReset() {
         org.xmpp.packet.Roster roster = new org.xmpp.packet.Roster();
 
         // Add the roster items (includes the personal roster and shared groups) to the answer
@@ -573,14 +560,11 @@ public class Roster implements Cacheable, Externalizable {
         return org.xmpp.packet.Roster.Ask.valueOf(askType.getName());
     }
 
-    /**
-     * <p>Broadcast the presence update to all subscribers of the roter.</p>
-     * <p/>
-     * <p>Any presence change typically results in a broadcast to the roster members.</p>
-     *
-     * @param packet The presence packet to broadcast
-     */
-    public void broadcastPresence(Presence packet) {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#broadcastPresence(org.xmpp.packet.Presence)
+	 */
+    @Override
+	public void broadcastPresence(Presence packet) {
         if (routingTable == null) {
             return;
         }
@@ -684,25 +668,16 @@ public class Roster implements Cacheable, Externalizable {
     }
 
     private void broadcast(org.xmpp.packet.Roster roster) {
-        JID recipient = server.createJID(username, null, true);
+        JID recipient = jidFactory.createJID(username, null, true);
         roster.setTo(recipient);
-        if (sessionManager == null) {
-            sessionManager = SessionManager.getInstance();
-        }
         sessionManager.userBroadcast(username, roster);
     }
 
-    /**
-     * Broadcasts the RosterItem to all the connected resources of this user. Due to performance
-     * optimizations and due to some clients errors that are showing items with subscription status
-     * FROM we added a flag that indicates if a roster items that exists only because of a shared
-     * group with subscription status FROM will not be sent.
-     *
-     * @param item     the item to broadcast.
-     * @param optimize true indicates that items that exists only because of a shared
-     *                 group with subscription status FROM will not be sent
-     */
-    public void broadcast(RosterItem item, boolean optimize) {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#broadcast(net.emiva.crossfire.roster.RosterItem, boolean)
+	 */
+    @Override
+	public void broadcast(RosterItem item, boolean optimize) {
         // Do not broadcast items with status FROM that exist only because of shared groups
         if (optimize && item.isOnlyShared() && item.getSubStatus() == RosterItem.SUB_FROM) {
             return;
@@ -734,7 +709,11 @@ public class Roster implements Cacheable, Externalizable {
         }
     }
 
-    public int getCachedSize() throws CannotCalculateSizeException {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#getCachedSize()
+	 */
+    @Override
+	public int getCachedSize() throws CannotCalculateSizeException {
         // Approximate the size of the object in bytes by calculating the size
         // of the content of each field, if that content is likely to be eligable for
     	// garbage collection if the Roster instance is dereferenced.
@@ -763,7 +742,7 @@ public class Roster implements Cacheable, Externalizable {
      * @param group the shared group where the user was added.
      * @param addedUser the contact to update in the roster.
      */
-    void addSharedUser(Group group, JID addedUser) {
+    public void addSharedUser(Group group, JID addedUser) {
         boolean newItem = false;
         RosterItem item = null;
         try {
@@ -778,10 +757,10 @@ public class Roster implements Cacheable, Externalizable {
         catch (UserNotFoundException e) {
             try {
                 // Create a new RosterItem for this new user
-                String nickname = UserNameManager.getUserName(addedUser);
+                String nickname = userNameManager.getUserName(addedUser);
                 item =
                         new RosterItem(addedUser, RosterItem.SUB_BOTH, RosterItem.ASK_NONE,
-                                RosterItem.RECV_NONE, nickname, null);
+                                RosterItem.RECV_NONE, nickname, null, userNameManager, groupManager);
                 // Add the new item to the list of items
                 rosterItems.put(item.getJid().toBareJID(), item);
                 newItem = true;
@@ -800,7 +779,7 @@ public class Roster implements Cacheable, Externalizable {
         }
 
         // Update the subscription of the item **based on the item groups**
-        Collection<Group> userGroups = GroupManager.getInstance().getGroups(getUserJID());
+        Collection<Group> userGroups = groupManager.getGroups(getUserJID());
         Collection<Group> sharedGroups = new ArrayList<Group>();
         sharedGroups.addAll(item.getSharedGroups());
         // Add the new group to the list of groups to check
@@ -862,11 +841,11 @@ public class Roster implements Cacheable, Externalizable {
         }
         if (newItem) {
             // Fire event indicating that a roster item has been added
-            RosterEventDispatcher.contactAdded(this, item);
+            rosterEventDispatcher.contactAdded(this, item);
         }
         else {
             // Fire event indicating that a roster item has been updated
-            RosterEventDispatcher.contactUpdated(this, item);
+            rosterEventDispatcher.contactUpdated(this, item);
         }
     }
 
@@ -878,7 +857,7 @@ public class Roster implements Cacheable, Externalizable {
      * @param addedUser the new contact to add to the roster
      * @param groups the groups where the contact is a member
      */
-    void addSharedUser(JID addedUser, Collection<Group> groups, Group addedGroup) {
+    public void addSharedUser(JID addedUser, Collection<Group> groups, Group addedGroup) {
         boolean newItem = false;
         RosterItem item = null;
         try {
@@ -889,10 +868,10 @@ public class Roster implements Cacheable, Externalizable {
         catch (UserNotFoundException e) {
             try {
                 // Create a new RosterItem for this new user
-                String nickname = UserNameManager.getUserName(addedUser);
+                String nickname = userNameManager.getUserName(addedUser);
                 item =
                         new RosterItem(addedUser, RosterItem.SUB_BOTH, RosterItem.ASK_NONE,
-                                RosterItem.RECV_NONE, nickname, null);
+                                RosterItem.RECV_NONE, nickname, null, userNameManager, groupManager);
                 // Add the new item to the list of items
                 rosterItems.put(item.getJid().toBareJID(), item);
                 newItem = true;
@@ -981,11 +960,11 @@ public class Roster implements Cacheable, Externalizable {
         }
         if (newItem) {
             // Fire event indicating that a roster item has been added
-            RosterEventDispatcher.contactAdded(this, item);
+            rosterEventDispatcher.contactAdded(this, item);
         }
         else {
             // Fire event indicating that a roster item has been updated
-            RosterEventDispatcher.contactUpdated(this, item);
+            rosterEventDispatcher.contactUpdated(this, item);
         }
     }
 
@@ -999,7 +978,7 @@ public class Roster implements Cacheable, Externalizable {
      * @param sharedGroup the shared group from where the user was deleted.
      * @param deletedUser the contact to update in the roster.
      */
-    void deleteSharedUser(Group sharedGroup, JID deletedUser) {
+    public void deleteSharedUser(Group sharedGroup, JID deletedUser) {
         try {
             // Get the RosterItem for the *local* user to remove
             RosterItem item = getRosterItem(deletedUser);
@@ -1049,7 +1028,7 @@ public class Roster implements Cacheable, Externalizable {
         }
     }
 
-    void deleteSharedUser(JID deletedUser, Group deletedGroup) {
+    public void deleteSharedUser(JID deletedUser, Group deletedGroup) {
         try {
             // Get the RosterItem for the *local* user to remove
             RosterItem item = getRosterItem(deletedUser);
@@ -1071,7 +1050,7 @@ public class Roster implements Cacheable, Externalizable {
                     item.removeSharedGroup(deletedGroup);
                 }
                 // Get the groups of the deleted user
-                Collection<Group> groups = GroupManager.getInstance().getGroups(deletedUser);
+                Collection<Group> groups = groupManager.getGroups(deletedUser);
                 // Remove all invalid shared groups from the roster item
                 for (Group group : groups) {
                     if (!rosterManager.isGroupVisible(group, getUserJID())) {
@@ -1083,7 +1062,7 @@ public class Roster implements Cacheable, Externalizable {
                 // Update the subscription of the item **based on the item groups**
                 if (item.isOnlyShared()) {
                     Collection<Group> userGroups =
-                            GroupManager.getInstance().getGroups(getUserJID());
+                            groupManager.getGroups(getUserJID());
                     // Set subscription type to BOTH if the roster user belongs to a shared group
                     // that is mutually visible with a shared group of the new roster item
                     if (rosterManager
@@ -1120,7 +1099,7 @@ public class Roster implements Cacheable, Externalizable {
      *
      * @param users group users of the renamed group.
      */
-    void shareGroupRenamed(Collection<JID> users) {
+    public void shareGroupRenamed(Collection<JID> users) {
         JID userJID = getUserJID();
         for (JID user : users) {
             if (userJID.equals(user)) {
@@ -1143,19 +1122,30 @@ public class Roster implements Cacheable, Externalizable {
         return XMPPServer.getInstance().createJID(getUsername(), null, true);
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#writeExternal(java.io.ObjectOutput)
+	 */
+    @Override
+	public void writeExternal(ObjectOutput out) throws IOException {
         ExternalizableUtil.getInstance().writeSafeUTF(out, username);
         ExternalizableUtil.getInstance().writeExternalizableMap(out, rosterItems);
         ExternalizableUtil.getInstance().writeStringsMap(out, implicitFrom);
     }
 
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+    /* (non-Javadoc)
+	 * @see net.emiva.crossfire.roster.IRoster#readExternal(java.io.ObjectInput)
+	 */
+    @Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         presenceManager = XMPPServer.getInstance().getPresenceManager();
         rosterManager = XMPPServer.getInstance().getRosterManager();
         sessionManager = SessionManager.getInstance();
-        rosterItemProvider =  RosterItemProvider.getInstance();
+        rosterItemProvider =  rosterManager.getRosterItemProvider();
+        
         routingTable = XMPPServer.getInstance().getRoutingTable();
-
+        jidFactory = XMPPServer.getInstance();
+        packetRouter = XMPPServer.getInstance().getPacketRouter();
+        
         username = ExternalizableUtil.getInstance().readSafeUTF(in);
         ExternalizableUtil.getInstance().readExternalizableMap(in, rosterItems, getClass().getClassLoader());
         ExternalizableUtil.getInstance().readStringsMap(in, implicitFrom);

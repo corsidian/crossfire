@@ -112,7 +112,7 @@ public class PrivacyListProvider {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_LIST_NAMES);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -124,7 +124,7 @@ public class PrivacyListProvider {
             Log.error("Error loading names of privacy lists for username: " + username, e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
         return names;
     }
@@ -152,7 +152,7 @@ public class PrivacyListProvider {
         ResultSet rs = null;
 
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_PRIVACY_LIST);
             pstmt.setString(1, username);
             pstmt.setString(2, listName);
@@ -170,7 +170,7 @@ public class PrivacyListProvider {
             return null;
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
 
         PrivacyList privacyList = null;
@@ -215,7 +215,7 @@ public class PrivacyListProvider {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_DEFAULT_PRIVACY_LIST);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -232,7 +232,7 @@ public class PrivacyListProvider {
             return null;
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
 
         PrivacyList privacyList = null;
@@ -266,7 +266,7 @@ public class PrivacyListProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(INSERT_PRIVACY_LIST);
             pstmt.setString(1, username);
             pstmt.setString(2, list.getName());
@@ -279,7 +279,7 @@ public class PrivacyListProvider {
                     e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
         // Set the privacy list count to -1. We don't know how many privacy lists there
         // are, but it's not "0", which is the case we care about.
@@ -296,7 +296,7 @@ public class PrivacyListProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_PRIVACY_LIST);
             pstmt.setInt(1, (list.isDefault() ? 1 : 0));
             pstmt.setString(2, list.asElement().asXML());
@@ -309,7 +309,7 @@ public class PrivacyListProvider {
                     username, e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -327,7 +327,7 @@ public class PrivacyListProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_PRIVACY_LIST);
             pstmt.setString(1, username);
             pstmt.setString(2, listName);
@@ -337,7 +337,7 @@ public class PrivacyListProvider {
             Log.error("Error deleting privacy list: " + listName + " of username: " + username, e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
         // Set the privacy list count to -1. We don't know how many privacy lists there
         // are, but it's probably not "0", which is the case we care about.
@@ -357,7 +357,7 @@ public class PrivacyListProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_PRIVACY_LISTS);
             pstmt.setString(1, username);
             pstmt.executeUpdate();
@@ -366,7 +366,7 @@ public class PrivacyListProvider {
             Log.error("Error deleting privacy lists of username: " + username, e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
         // Set the privacy list count to -1. We don't know how many privacy lists there
         // are, but it's probably not "0", which is the case we care about.
@@ -381,7 +381,7 @@ public class PrivacyListProvider {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(PRIVACY_LIST_COUNT);
             rs = pstmt.executeQuery();
             rs.next();
@@ -391,7 +391,7 @@ public class PrivacyListProvider {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
     }
 }

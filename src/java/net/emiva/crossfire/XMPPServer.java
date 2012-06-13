@@ -73,7 +73,8 @@ import net.emiva.crossfire.lockout.LockOutManager;
 import net.emiva.crossfire.net.MulticastDNSService;
 import net.emiva.crossfire.net.SSLConfig;
 import net.emiva.crossfire.net.ServerTrafficCounter;
-import net.emiva.crossfire.roster.RosterManager;
+import net.emiva.crossfire.roster.IRosterManager;
+import net.emiva.crossfire.roster.RosterModule;
 import net.emiva.crossfire.session.RemoteSessionLocator;
 import net.emiva.crossfire.spi.ConnectionManagerImpl;
 import net.emiva.crossfire.spi.PacketDelivererImpl;
@@ -85,8 +86,8 @@ import net.emiva.crossfire.spi.XMPPServerInfoImpl;
 import net.emiva.crossfire.transport.TransportHandler;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.database.DbConnectionManager;
-import net.emiva.util.Globals;
 import net.emiva.util.CertificateManager;
+import net.emiva.util.Globals;
 import net.emiva.util.InitializationException;
 import net.emiva.util.LocaleUtils;
 import net.emiva.util.TaskEngine;
@@ -128,7 +129,7 @@ import org.xmpp.packet.JID;
  *
  * @author Gaston Dombiak
  */
-public class XMPPServer {
+public class XMPPServer implements JIDFactory {
 
 	private static final Logger Log = LoggerFactory.getLogger(XMPPServer.class);
 
@@ -502,7 +503,7 @@ public class XMPPServer {
         // Load boot modules
         loadModule(RoutingTableImpl.class.getName());
         loadModule(AuditManagerImpl.class.getName());
-        loadModule(RosterManager.class.getName());
+        loadModule(RosterModule.class.getName());
         // Load core modules
         loadModule(PresenceManagerImpl.class.getName());
         loadModule(SessionManager.class.getName());
@@ -720,7 +721,7 @@ public class XMPPServer {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement("SELECT count(*) FROM ofID");
             rs = pstmt.executeQuery();
             rs.next();
@@ -733,7 +734,7 @@ public class XMPPServer {
             throw new IllegalArgumentException(e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
     }
 
@@ -923,7 +924,7 @@ public class XMPPServer {
         }
         modules.clear();
         // Stop the Db connection manager.
-        DbConnectionManager.destroyConnectionProvider();
+        DbConnectionManager.getInstance().destroyConnectionProvider();
         // hack to allow safe stopping
         Log.info("crossfire stopped");
     }
@@ -977,10 +978,16 @@ public class XMPPServer {
      *
      * @return the <code>RosterManager</code> registered with this server.
      */
-    public RosterManager getRosterManager() {
-        return (RosterManager) modules.get(RosterManager.class);
+    public IRosterManager getRosterManager() {
+    	RosterModule rosterModule = (RosterModule) modules.get(RosterModule.class);
+    	return rosterModule.getRosterManager();
     }
 
+    // should be refactored to eliminate this
+    public RosterModule getRosterModule() {
+    	return (RosterModule) modules.get(RosterModule.class);
+    }
+    
     /**
      * Returns the <code>PresenceManager</code> registered with this server. The
      * <code>PresenceManager</code> was registered with the server as a module while starting up

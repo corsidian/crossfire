@@ -37,7 +37,7 @@ import net.emiva.crossfire.XMPPServerInfo;
 import net.emiva.crossfire.auth.AuthToken;
 import net.emiva.crossfire.group.GroupManager;
 import net.emiva.crossfire.lockout.LockOutManager;
-import net.emiva.crossfire.roster.RosterManager;
+import net.emiva.crossfire.roster.IRosterManager;
 import net.emiva.crossfire.security.SecurityAuditManager;
 import net.emiva.crossfire.user.User;
 import net.emiva.crossfire.user.UserManager;
@@ -103,7 +103,7 @@ public class WebManager extends WebBean {
         return SecurityAuditManager.getInstance();
     }
 
-    public RosterManager getRosterManager() {
+    public IRosterManager getRosterManager() {
         return getXMPPServer().getRosterManager();
     }
 

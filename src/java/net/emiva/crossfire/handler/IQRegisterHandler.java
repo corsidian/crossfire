@@ -33,7 +33,7 @@ import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.disco.ServerFeaturesProvider;
 import net.emiva.crossfire.group.GroupManager;
-import net.emiva.crossfire.roster.RosterManager;
+import net.emiva.crossfire.roster.IRosterManager;
 import net.emiva.crossfire.session.ClientSession;
 import net.emiva.crossfire.session.Session;
 import net.emiva.crossfire.user.User;
@@ -88,7 +88,7 @@ public class IQRegisterHandler extends IQHandler implements ServerFeaturesProvid
     private static Element probeResult;
 
     private UserManager userManager;
-    private RosterManager rosterManager;
+    private IRosterManager rosterManager;
 
     private IQHandlerInfo info;
 

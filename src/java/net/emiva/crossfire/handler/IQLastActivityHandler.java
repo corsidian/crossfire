@@ -22,7 +22,7 @@ import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.disco.ServerFeaturesProvider;
 import net.emiva.crossfire.roster.RosterItem;
-import net.emiva.crossfire.roster.RosterManager;
+import net.emiva.crossfire.roster.IRosterManager;
 import net.emiva.crossfire.user.User;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
@@ -46,7 +46,7 @@ public class IQLastActivityHandler extends IQHandler implements ServerFeaturesPr
 
     private IQHandlerInfo info;
     private PresenceManager presenceManager;
-    private RosterManager rosterManager;
+    private IRosterManager rosterManager;
 
     public IQLastActivityHandler() {
         super("XMPP Last Activity Handler");

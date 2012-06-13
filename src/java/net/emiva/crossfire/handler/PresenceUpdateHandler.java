@@ -40,9 +40,9 @@ import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.cluster.ClusterEventListener;
 import net.emiva.crossfire.cluster.ClusterManager;
 import net.emiva.crossfire.container.BasicModule;
-import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.roster.IRoster;
 import net.emiva.crossfire.roster.RosterItem;
-import net.emiva.crossfire.roster.RosterManager;
+import net.emiva.crossfire.roster.IRosterManager;
 import net.emiva.crossfire.session.ClientSession;
 import net.emiva.crossfire.session.LocalSession;
 import net.emiva.crossfire.session.Session;
@@ -119,7 +119,7 @@ public class PresenceUpdateHandler extends BasicModule implements ChannelHandler
     private Map<String, Collection<DirectedPresence>> localDirectedPresences;
 
     private RoutingTable routingTable;
-    private RosterManager rosterManager;
+    private IRosterManager rosterManager;
     private XMPPServer localServer;
     private PresenceManager presenceManager;
     private PacketDeliverer deliverer;
@@ -239,9 +239,9 @@ public class PresenceUpdateHandler extends BasicModule implements ChannelHandler
             String username = session.getAddress().getNode();
 
             // Send pending subscription requests to user if roster service is enabled
-            if (RosterManager.isRosterServiceEnabled()) {
-                Roster roster = rosterManager.getRoster(username);
-                for (RosterItem item : roster.getRosterItems()) {
+            if (XMPPServer.getInstance().getRosterModule().isRosterServiceEnabled()) {
+                IRoster rosterImpl = rosterManager.getRoster(username);
+                for (RosterItem item : rosterImpl.getRosterItems()) {
                     if (item.getRecvStatus() == RosterItem.RECV_SUBSCRIBE) {
                         session.process(createSubscribePresence(item.getJid(),
                                 new JID(session.getAddress().toBareJID()), true));
@@ -296,19 +296,16 @@ public class PresenceUpdateHandler extends BasicModule implements ChannelHandler
         }
         if (localServer.isLocal(update.getFrom())) {
             // Do nothing if roster service is disabled
-            if (!RosterManager.isRosterServiceEnabled()) {
+            if (!XMPPServer.getInstance().getRosterModule().isRosterServiceEnabled()) {
                 return;
             }
             // Local updates can simply run through the roster of the local user
             String name = update.getFrom().getNode();
             try {
                 if (name != null && !"".equals(name)) {
-                    Roster roster = rosterManager.getRoster(name);
-                    roster.broadcastPresence(update);
+                    IRoster rosterImpl = rosterManager.getRoster(name);
+                    rosterImpl.broadcastPresence(update);
                 }
-            }
-            catch (UserNotFoundException e) {
-                Log.warn("Presence being sent from unknown user " + name, e);
             }
             catch (PacketException e) {
                 Log.error(LocaleUtils.getLocalizedString("admin.error"), e);
@@ -342,18 +339,18 @@ public class PresenceUpdateHandler extends BasicModule implements ChannelHandler
             String name = update.getFrom().getNode();
             if (name != null && !"".equals(name)) {
                 // Keep track of all directed presences if roster service is disabled
-                if (!RosterManager.isRosterServiceEnabled()) {
+                if (!XMPPServer.getInstance().getRosterModule().isRosterServiceEnabled()) {
                     keepTrack = true;
                 }
                 else {
                     try {
-                        Roster roster = rosterManager.getRoster(name);
+                        IRoster rosterImpl = rosterManager.getRoster(name);
                         // If the directed presence was sent to an entity that is not in the user's
                         // roster, keep a registry of this so that when the user goes offline we
                         // will be able to send the unavailable presence to the entity
                         RosterItem rosterItem = null;
                         try {
-                            rosterItem = roster.getRosterItem(update.getTo());
+                            rosterItem = rosterImpl.getRosterItem(update.getTo());
                         }
                         catch (UserNotFoundException e) {
                             // Ignore
@@ -363,9 +360,6 @@ public class PresenceUpdateHandler extends BasicModule implements ChannelHandler
                                 RosterItem.SUB_TO == rosterItem.getSubStatus()) {
                             keepTrack = true;
                         }
-                    }
-                    catch (UserNotFoundException e) {
-                        Log.warn("Presence being sent from unknown user " + name, e);
                     }
                     catch (PacketException e) {
                         Log.error(LocaleUtils.getLocalizedString("admin.error"), e);

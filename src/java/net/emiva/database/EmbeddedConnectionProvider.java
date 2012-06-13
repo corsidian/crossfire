@@ -107,7 +107,7 @@ public class EmbeddedConnectionProvider implements ConnectionProvider {
             Log.error(sqle.getMessage(), sqle);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
         // Blank out the settings
         settings = null;

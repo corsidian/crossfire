@@ -288,7 +288,7 @@ public class GlobalProperties implements Map<String, String> {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(INSERT_PROPERTY);
             pstmt.setString(1, name);
             pstmt.setString(2, value);
@@ -298,7 +298,7 @@ public class GlobalProperties implements Map<String, String> {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -306,7 +306,7 @@ public class GlobalProperties implements Map<String, String> {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(UPDATE_PROPERTY);
             pstmt.setString(1, value);
             pstmt.setString(2, name);
@@ -316,7 +316,7 @@ public class GlobalProperties implements Map<String, String> {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -324,7 +324,7 @@ public class GlobalProperties implements Map<String, String> {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(DELETE_PROPERTY);
             pstmt.setString(1, name + "%");
             pstmt.executeUpdate();
@@ -333,7 +333,7 @@ public class GlobalProperties implements Map<String, String> {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(pstmt, con);
         }
     }
 
@@ -342,7 +342,7 @@ public class GlobalProperties implements Map<String, String> {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = DbConnectionManager.getInstance().getConnection();
             pstmt = con.prepareStatement(LOAD_PROPERTIES);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -355,7 +355,7 @@ public class GlobalProperties implements Map<String, String> {
             Log.error(e.getMessage(), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            DbConnectionManager.getInstance().closeConnection(rs, pstmt, con);
         }
     }
 }

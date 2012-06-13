@@ -31,7 +31,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import net.emiva.crossfire.group.GroupManager;
 import net.emiva.crossfire.user.UserAlreadyExistsException;
+import net.emiva.crossfire.user.UserNameManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.database.SequenceManager;
@@ -78,13 +80,17 @@ public class RosterItemProvider {
     private static final String LOAD_ROSTER_ITEM_GROUPS =
             "SELECT rosterID,groupName FROM ofRosterGroups";
 
-
-    private static RosterItemProvider instance = new RosterItemProvider();
-
-    public static RosterItemProvider getInstance() {
-        return instance;
+    private UserNameManager userNameManager;
+    private GroupManager groupManager;
+    private DbConnectionManager dbConnectionManager;
+    
+    public RosterItemProvider(UserNameManager userNameManager, 
+    		GroupManager groupManager, DbConnectionManager dbConnectionManager) {
+    	this.userNameManager = userNameManager;
+    	this.groupManager = groupManager;
+    	this.dbConnectionManager = dbConnectionManager;
     }
-
+    
     /**
      * Creates a new roster item for the given user (optional operation).<p>
      *
@@ -107,7 +113,7 @@ public class RosterItemProvider {
         PreparedStatement pstmt = null;
         try {
             long rosterID = SequenceManager.nextID(GlobalConstants.ROSTER);
-            con = DbConnectionManager.getConnection();
+            con = dbConnectionManager.getConnection();
             pstmt = con.prepareStatement(CREATE_ROSTER_ITEM);
             pstmt.setString(1, username);
             pstmt.setLong(2, rosterID);
@@ -126,7 +132,7 @@ public class RosterItemProvider {
             throw new UserAlreadyExistsException(item.getJid().toBareJID());
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            dbConnectionManager.closeConnection(pstmt, con);
         }
         return item;
     }
@@ -146,7 +152,7 @@ public class RosterItemProvider {
         PreparedStatement pstmt = null;
         long rosterID = item.getID();
         try {
-            con = DbConnectionManager.getConnection();
+            con = dbConnectionManager.getConnection();
             // Update existing roster item
             pstmt = con.prepareStatement(UPDATE_ROSTER_ITEM);
             pstmt.setInt(1, item.getSubStatus().getValue());
@@ -156,7 +162,7 @@ public class RosterItemProvider {
             pstmt.setLong(5, rosterID);
             pstmt.executeUpdate();
             // Close now the statement (do not wait to be GC'ed)
-            DbConnectionManager.fastcloseStmt(pstmt);
+            dbConnectionManager.fastcloseStmt(pstmt);
 
             // Delete old group list
             pstmt = con.prepareStatement(DELETE_ROSTER_ITEM_GROUPS);
@@ -169,7 +175,7 @@ public class RosterItemProvider {
             Log.error(LocaleUtils.getLocalizedString("admin.error"), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            dbConnectionManager.closeConnection(pstmt, con);
         }
     }
 
@@ -187,14 +193,14 @@ public class RosterItemProvider {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = dbConnectionManager.getConnection();
             // Remove roster groups
             pstmt = con.prepareStatement(DELETE_ROSTER_ITEM_GROUPS);
 
             pstmt.setLong(1, rosterItemID);
             pstmt.executeUpdate();
             // Close now the statement (do not wait to be GC'ed)
-            DbConnectionManager.fastcloseStmt(pstmt);
+            dbConnectionManager.fastcloseStmt(pstmt);
 
             // Remove roster
             pstmt = con.prepareStatement(DELETE_ROSTER_ITEM);
@@ -206,7 +212,7 @@ public class RosterItemProvider {
             Log.error(LocaleUtils.getLocalizedString("admin.error"), e);
         }
         finally {
-            DbConnectionManager.closeConnection(pstmt, con);
+            dbConnectionManager.closeConnection(pstmt, con);
         }
     }
 
@@ -222,7 +228,7 @@ public class RosterItemProvider {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = dbConnectionManager.getConnection();
             pstmt = con.prepareStatement(LOAD_USERNAMES);
             pstmt.setString(1, jid);
             rs = pstmt.executeQuery();
@@ -234,7 +240,7 @@ public class RosterItemProvider {
             Log.error(LocaleUtils.getLocalizedString("admin.error"), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            dbConnectionManager.closeConnection(rs, pstmt, con);
         }
         return answer.iterator();
     }
@@ -251,7 +257,7 @@ public class RosterItemProvider {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            con = DbConnectionManager.getConnection();
+            con = dbConnectionManager.getConnection();
             pstmt = con.prepareStatement(COUNT_ROSTER_ITEMS);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -263,7 +269,7 @@ public class RosterItemProvider {
             Log.error(LocaleUtils.getLocalizedString("admin.error"), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            dbConnectionManager.closeConnection(rs, pstmt, con);
         }
         return count;
     }
@@ -286,7 +292,7 @@ public class RosterItemProvider {
         ResultSet rs = null;
         try {
             // Load all the contacts in the roster
-            con = DbConnectionManager.getConnection();
+            con = dbConnectionManager.getConnection();
             pstmt = con.prepareStatement(LOAD_ROSTER);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -298,13 +304,15 @@ public class RosterItemProvider {
                         RosterItem.AskType.getTypeFromInt(rs.getInt(4)),
                         RosterItem.RecvType.getTypeFromInt(rs.getInt(5)),
                         rs.getString(6),
-                        null);
+                        null,
+                        userNameManager,
+                        groupManager);
                 // Add the loaded RosterItem (ie. user contact) to the result
                 itemList.add(item);
                 itemsByID.put(item.getID(), item);
             }
             // Close the statement and result set
-            DbConnectionManager.fastcloseStmt(rs, pstmt);
+            dbConnectionManager.fastcloseStmt(rs, pstmt);
             // Set null to pstmt to be sure that it's not closed twice. It seems that
             // Sybase driver is raising an error when trying to close an already closed statement.
             // it2000 comment: TODO interesting, that's the only place with the sybase fix
@@ -331,7 +339,7 @@ public class RosterItemProvider {
             Log.error(LocaleUtils.getLocalizedString("admin.error"), e);
         }
         finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
+            dbConnectionManager.closeConnection(rs, pstmt, con);
         }
         return itemList.iterator();
     }
@@ -365,7 +373,7 @@ public class RosterItemProvider {
             }
         }
         finally {
-            DbConnectionManager.closeStatement(pstmt);
+            dbConnectionManager.closeStatement(pstmt);
         }
     }
 }

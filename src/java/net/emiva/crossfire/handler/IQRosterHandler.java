@@ -32,9 +32,9 @@ import net.emiva.crossfire.SharedGroupException;
 import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.disco.ServerFeaturesProvider;
-import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.roster.IRoster;
+import net.emiva.crossfire.roster.IRosterManager;
 import net.emiva.crossfire.roster.RosterItem;
-import net.emiva.crossfire.roster.RosterManager;
 import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
@@ -87,9 +87,9 @@ public class IQRosterHandler extends IQHandler implements ServerFeaturesProvider
     private UserManager userManager;
     private XMPPServer localServer;
     private PacketRouter router;
-
+    
     public IQRosterHandler() {
-        super("XMPP Roster Handler");
+        super("XMPP Roster Handler");        
         info = new IQHandlerInfo("query", "jabber:iq:roster");
     }
 
@@ -167,7 +167,7 @@ public class IQRosterHandler extends IQHandler implements ServerFeaturesProvider
         try {
             for (org.xmpp.packet.Roster.Item packetItem : packet.getItems()) {
                 if (packetItem.getSubscription() == org.xmpp.packet.Roster.Subscription.remove) {
-                    Roster roster = userManager.getUser(recipientJID.getNode()).getRoster();
+                    IRoster roster = userManager.getUser(recipientJID.getNode()).getRoster();
                     RosterItem item = roster.getRosterItem(senderJID);
                     roster.deleteRosterItem(senderJID, true);
                     item.setSubStatus(RosterItem.SUB_REMOVE);
@@ -200,7 +200,7 @@ public class IQRosterHandler extends IQHandler implements ServerFeaturesProvider
         IQ.Type type = packet.getType();
 
         try {
-            if ((sender.getNode() == null || !RosterManager.isRosterServiceEnabled() ||
+            if ((sender.getNode() == null || !XMPPServer.getInstance().getRosterModule().isRosterServiceEnabled() ||
                     !userManager.isRegisteredUser(sender.getNode())) &&
                     IQ.Type.get == type) {
                 // If anonymous user asks for his roster or roster service is disabled then
@@ -215,7 +215,7 @@ public class IQRosterHandler extends IQHandler implements ServerFeaturesProvider
                 return null;
             }
 
-            Roster cachedRoster = userManager.getUser(sender.getNode()).getRoster();
+            IRoster cachedRoster = userManager.getUser(sender.getNode()).getRoster();
             if (IQ.Type.get == type) {
                 returnPacket = cachedRoster.getReset();
                 returnPacket.setType(IQ.Type.result);
@@ -260,11 +260,11 @@ public class IQRosterHandler extends IQHandler implements ServerFeaturesProvider
      * Remove the roster item from the sender's roster (and possibly the recipient's).
      * Actual roster removal is done in the removeItem(Roster,RosterItem) method.
      *
-     * @param roster The sender's roster.
+     * @param rosterImpl The sender's roster.
      * @param sender The JID of the sender of the removal request
      * @param item   The removal item element
      */
-    private void removeItem(net.emiva.crossfire.roster.Roster roster, JID sender,
+    private void removeItem(IRoster roster, JID sender,
             org.xmpp.packet.Roster.Item item) throws SharedGroupException {
         JID recipient = item.getJID();
         // Remove recipient from the sender's roster
@@ -272,7 +272,7 @@ public class IQRosterHandler extends IQHandler implements ServerFeaturesProvider
         // Forward set packet to the subscriber
         if (localServer.isLocal(recipient)) { // Recipient is local so let's handle it here
             try {
-                Roster recipientRoster = userManager.getUser(recipient.getNode()).getRoster();
+                IRoster recipientRoster = userManager.getUser(recipient.getNode()).getRoster();
                 recipientRoster.deleteRosterItem(sender, true);
             }
             catch (UserNotFoundException e) {

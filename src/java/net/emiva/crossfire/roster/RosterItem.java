@@ -153,6 +153,9 @@ public class RosterItem implements Cacheable, Externalizable {
      */
     private long rosterID;
 
+    private UserNameManager userNameManager;
+    private GroupManager groupManager;
+    
     /**
      * Constructor added for Externalizable. Do not use this constructor.
      */
@@ -165,8 +168,10 @@ public class RosterItem implements Cacheable, Externalizable {
                                 AskType askStatus,
                                 RecvType recvStatus,
                                 String nickname,
-                                List<String> groups) {
-        this(jid, subStatus, askStatus, recvStatus, nickname, groups);
+                                List<String> groups,
+                                UserNameManager userNameManager, 
+                                GroupManager groupManager) {
+        this(jid, subStatus, askStatus, recvStatus, nickname, groups, userNameManager, groupManager);
         this.rosterID = id;
     }
 
@@ -175,7 +180,12 @@ public class RosterItem implements Cacheable, Externalizable {
                            AskType askStatus,
                            RecvType recvStatus,
                            String nickname,
-                           List<String> groups) {
+                           List<String> groups,
+                           UserNameManager userNameManager,
+                           GroupManager groupManager) {
+    	this.userNameManager = userNameManager;
+    	this.groupManager = groupManager;
+    	
         this.jid = jid;
         this.subStatus = subStatus;
         this.askStatus = askStatus;
@@ -194,13 +204,14 @@ public class RosterItem implements Cacheable, Externalizable {
      *
      * @param item Item that contains the info of the roster item.
      */
-    public RosterItem(org.xmpp.packet.Roster.Item item) {
+    public RosterItem(org.xmpp.packet.Roster.Item item, 
+    		UserNameManager userNameManager, GroupManager groupManager) {
         this(item.getJID(),
                 getSubType(item),
                 getAskStatus(item),
                 RosterItem.RECV_NONE,
                 item.getName(),
-                new LinkedList<String>(item.getGroups()));
+                new LinkedList<String>(item.getGroups()), userNameManager, groupManager);
     }
 
     private static RosterItem.AskType getAskStatus(org.xmpp.packet.Roster.Item item) {
@@ -251,7 +262,7 @@ public class RosterItem implements Cacheable, Externalizable {
         // Optimization: Load user only if we need to set the nickname of the roster item
         if ("".equals(nickname) && (subStatus == SUB_BOTH || subStatus == SUB_TO)) {
             try {
-                nickname = UserNameManager.getUserName(jid);
+                nickname = userNameManager.getUserName(jid);
             }
             catch (UserNotFoundException e) {
                 // Do nothing
@@ -360,7 +371,7 @@ public class RosterItem implements Cacheable, Externalizable {
             }
 
             // Remove shared groups from the param
-            Collection<Group> existingGroups = GroupManager.getInstance().getSharedGroups();
+            Collection<Group> existingGroups = groupManager.getSharedGroups();
             for (Iterator<String> it=groups.iterator(); it.hasNext();) {
                 String groupName = it.next();
                 try {
@@ -368,7 +379,7 @@ public class RosterItem implements Cacheable, Externalizable {
                     // group name is the same as the display name for the shared roster
 
                     // Check if exists a shared group with this name
-                    Group group = GroupManager.getInstance().getGroup(groupName);
+                    Group group = groupManager.getGroup(groupName);
                     // Get the display name of the group
                     String displayName = group.getProperties().get("sharedRoster.displayName");
                     if (displayName != null && displayName.equals(groupName)) {
@@ -411,7 +422,7 @@ public class RosterItem implements Cacheable, Externalizable {
         Collection<Group> groups = new ArrayList<Group>(sharedGroups.size());
         for (String groupName : sharedGroups) {
             try {
-                groups.add(GroupManager.getInstance().getGroup(groupName));
+                groups.add(groupManager.getGroup(groupName));
             }
             catch (GroupNotFoundException e) {
                 // Do nothing
@@ -431,7 +442,7 @@ public class RosterItem implements Cacheable, Externalizable {
         Collection<Group> groups = new ArrayList<Group>(invisibleSharedGroups.size());
         for (String groupName : invisibleSharedGroups) {
             try {
-                groups.add(GroupManager.getInstance().getGroup(groupName));
+                groups.add(groupManager.getGroup(groupName));
             }
             catch (GroupNotFoundException e) {
                 // Do nothing
