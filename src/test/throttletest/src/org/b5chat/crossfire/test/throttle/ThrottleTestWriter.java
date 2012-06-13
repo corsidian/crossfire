@@ -3,7 +3,7 @@
  * $Revision: 3144 $
  * $Date: 2005-12-01 14:20:11 -0300 (Thu, 01 Dec 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@
 
 package org.b5chat.crossfire.test.throttle;
 
-import net.emiva.smack.XMPPConnection;
-import net.emiva.smack.PacketCollector;
-import net.emiva.smack.ConnectionConfiguration;
-import net.emiva.smack.filter.PacketIDFilter;
-import net.emiva.smack.packet.IQ;
-import net.emiva.smack.packet.Packet;
-import net.emiva.smack.packet.Message;
-import net.emiva.smackx.packet.Time;
+import net.B5Chat.smack.XMPPConnection;
+import net.B5Chat.smack.PacketCollector;
+import net.B5Chat.smack.ConnectionConfiguration;
+import net.B5Chat.smack.filter.PacketIDFilter;
+import net.B5Chat.smack.packet.IQ;
+import net.B5Chat.smack.packet.Packet;
+import net.B5Chat.smack.packet.Message;
+import net.B5Chat.smackx.packet.Time;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

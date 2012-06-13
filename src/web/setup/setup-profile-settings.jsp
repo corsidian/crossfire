@@ -66,8 +66,8 @@
 	<fmt:message key="setup.profile.description" />
 	</p>
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN B5Chat-contentBox -->
+	<div class="B5Chat-contentBox">
 	<form action="setup-profile-settings.jsp" name="profileform" method="post">
 
 <table cellpadding="3" cellspacing="2" border="0">
@@ -84,12 +84,12 @@
 
 <br>
 		<div align="right">
-			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="B5Chat-setup-save" border="0">
 		</div>
 
 	</form>
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END B5Chat-contentBox -->
 
 </body>
 </html>

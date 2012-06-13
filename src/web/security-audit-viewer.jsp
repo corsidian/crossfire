@@ -3,7 +3,7 @@
   -	$Revision$
   -	$Date$
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -128,7 +128,7 @@
 </p>
 </form>
 
-<div class="emiva-table">
+<div class="B5Chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -158,7 +158,7 @@
         for (SecurityAuditEvent event : events) {
             i++;
 %>
-    <tr class="emiva-<%= (((i%2)==0) ? "even" : "odd") %>" valign="top">
+    <tr class="B5Chat-<%= (((i%2)==0) ? "even" : "odd") %>" valign="top">
         <td width="1%">
             <%= event.getMsgID() %>
         </td>

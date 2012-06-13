@@ -110,11 +110,11 @@
 %>
 
 <br><br>
-	<div id="loginlink" style="display:none;" class="emiva_setup_launchAdmin">
+	<div id="loginlink" style="display:none;" class="B5Chat_setup_launchAdmin">
 		<a href="<%= url %>"><fmt:message key="setup.finished.login" /></a>
 	</div>
 
-	<div id="logintext" class="emiva_setup_launchAdmin">
+	<div id="logintext" class="B5Chat_setup_launchAdmin">
 		<fmt:message key="setup.finished.wait" /> <img src="../images/working-16x16.gif" alt="<fmt:message key="setup.finished.wait" />" width="16" height="16">
 	</div>
 

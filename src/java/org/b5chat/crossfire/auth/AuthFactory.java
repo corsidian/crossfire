@@ -3,7 +3,7 @@
  * $Revision: 2814 $
  * $Date: 2005-09-13 16:41:10 -0300 (Tue, 13 Sep 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -218,7 +218,7 @@ public class AuthFactory {
 
     /**
      * Returns an encrypted version of the plain-text password. Encryption is performed
-     * using the Blowfish algorithm. The encryption key is stored as the emiva property
+     * using the Blowfish algorithm. The encryption key is stored as the B5Chat property
      * "passwordKey". If the key is not present, it will be automatically generated.
      *
      * @param password the plain-text password.
@@ -239,7 +239,7 @@ public class AuthFactory {
 
     /**
      * Returns a decrypted version of the encrypted password. Encryption is performed
-     * using the Blowfish algorithm. The encryption key is stored as the emiva property
+     * using the Blowfish algorithm. The encryption key is stored as the B5Chat property
      * "passwordKey". If the key is not present, it will be automatically generated.
      *
      * @param encryptedPassword the encrypted password.
@@ -260,7 +260,7 @@ public class AuthFactory {
 
     /**
      * Returns a Blowfish cipher that can be used for encrypting and decrypting passwords.
-     * The encryption key is stored as the emiva property "passwordKey". If it's not present,
+     * The encryption key is stored as the B5Chat property "passwordKey". If it's not present,
      * it will be automatically generated.
      *
      * @return the Blowfish cipher, or <tt>null</tt> if crossfire is not able to create a Cipher;

@@ -13,6 +13,6 @@ activeLink = thisID.id+"Link";
 		$(activeLink).className = "";
 	} else {
 		Effect.toggle($(thisID),'slide', {duration: .4});
-		$(activeLink).className = "emivaAdvancedButtonOn";
+		$(activeLink).className = "B5ChatAdvancedButtonOn";
 	}
 }

@@ -3,7 +3,7 @@
  * $Revision: 11291 $
  * $Date: 2009-09-30 06:17:14 -0400 (Wed, 30 Sep 2009) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * TLicensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import java.sql.SQLException;
  * It is expected that each subclass be a JavaBean, so that properties of
  * the connection provider are exposed through bean introspection.
  *
- * @author EMIVA Community
+ * @author B5Chat Community
  */
 public interface ConnectionProvider {
 
@@ -38,7 +38,7 @@ public interface ConnectionProvider {
      * Returns true if this connection provider provides connections out
      * of a connection pool. Implementing and using connection providers that
      * are pooled is strongly recommended, as they greatly increase the speed
-     * of emiva.
+     * of B5Chat.
      *
      * @return true if the Connection objects returned by this provider are
      *         pooled.
@@ -46,7 +46,7 @@ public interface ConnectionProvider {
     public boolean isPooled();
 
     /**
-     * Returns a database connection. When a emiva component is done with a
+     * Returns a database connection. When a B5Chat component is done with a
      * connection, it will call the close method of that connection. Therefore,
      * connection pools with special release methods are not directly
      * supported by the connection provider infrastructure. Instead, connections

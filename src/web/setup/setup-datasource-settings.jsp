@@ -47,7 +47,7 @@
                     + "file, then go back to fix the problem.");
             }
             else {
-            	// See if the emiva db schema is installed.
+            	// See if the B5Chat db schema is installed.
             	try {
             		Statement stmt = con.createStatement();
             		// Pick an arbitrary table to see if it's there.
@@ -143,14 +143,14 @@
 
 <%  if (errors.size() > 0) { %>
 
-    <p class="emiva-error-text">
+    <p class="B5Chat-error-text">
     <%= errors.get("general") %>
     </p>
 
 <%  } %>
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN B5Chat-contentBox -->
+	<div class="B5Chat-contentBox">
 
 		<form action="setup-datasource-settings.jsp">
 
@@ -199,12 +199,12 @@
 
 
 		<div align="right">
-			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="B5Chat-setup-save" border="0">
 		</div>
 	</form>
 
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END B5Chat-contentBox -->
 
 
 </body>

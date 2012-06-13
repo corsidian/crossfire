@@ -32,7 +32,7 @@
 
 <body>
 
-<div id="emiva-header">
+<div id="B5Chat-header">
 <table cellpadding="0" cellspacing="0" width="100%" border="0">
 <tbody>
     <tr>
@@ -54,18 +54,18 @@
 </table>
 </div>
 
-<div id="emiva-main">
+<div id="B5Chat-main">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tbody>
     <tr valign="top">
         <td width="1%">
-            <div id="emiva-sidebar">
+            <div id="B5Chat-sidebar">
                 <img src="<%= path %>/images/blank.gif" width="5" height="1" border="0" alt="">
             </div>
         </td>
-        <td width="99%" id="emiva-content">
+        <td width="99%" id="B5Chat-content">
 
-        <div id="emiva-title">
+        <div id="B5Chat-title">
             <%= title %>
         </div>
 

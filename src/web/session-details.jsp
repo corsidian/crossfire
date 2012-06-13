@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -98,7 +98,7 @@
 
 </p>
 
-<div class="emiva-table">
+<div class="B5Chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -283,7 +283,7 @@
     <b><fmt:message key="session.details.multiple_session" /></b>
     </p>
 
-    <div class="emiva-table">
+    <div class="B5Chat-table">
     <table cellpadding="3" cellspacing="1" border="0" width="100%">
     <tr>
         <th>&nbsp;</th>
@@ -315,9 +315,9 @@
     <tr>
         <td width="1%" nowrap>
 
-            <div class="emiva-table">
+            <div class="B5Chat-table">
             <table cellpadding="0" cellspacing="0" border="0">
-            <tr class="emiva-current"><td><img src="images/blank.gif" width="12" height="12" border="0" alt=""></td></tr>
+            <tr class="B5Chat-current"><td><img src="images/blank.gif" width="12" height="12" border="0" alt=""></td></tr>
             </table>
             </div>
 

@@ -1,5 +1,5 @@
 <servlet>
     <servlet-name>XMPPBootServlet</servlet-name>
-    <servlet-class>net.emiva.messenger.XMPPBootServlet</servlet-class>
+    <servlet-class>net.B5Chat.messenger.XMPPBootServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
 </servlet>

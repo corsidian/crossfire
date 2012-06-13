@@ -3,7 +3,7 @@
  * $Revision: 11388 $
  * $Date: 2009-11-08 19:26:55 -0500 (Sun, 08 Nov 2009) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Controls emiva properties. emiva properties are only meant to be set and retrieved
- * by core emiva classes. Some properties may be stored in XML format while others in the
+ * Controls B5Chat properties. B5Chat properties are only meant to be set and retrieved
+ * by core B5Chat classes. Some properties may be stored in XML format while others in the
  * database.<p>
  *
  * When starting up the application this class needs to be configured so that the initial
@@ -58,10 +58,10 @@ public class Globals {
 
 	private static final Logger Log = LoggerFactory.getLogger(Globals.class);
 
-    private static String emiva_CONFIG_FILENAME = "conf" + File.separator + "crossfire.xml";
+    private static String B5Chat_CONFIG_FILENAME = "conf" + File.separator + "crossfire.xml";
 
     /**
-     * Location of the emivaHome directory. All configuration files should be
+     * Location of the B5ChatHome directory. All configuration files should be
      * located here.
      */
     private static String home = null;
@@ -78,11 +78,11 @@ public class Globals {
     private static DateFormat timeFormat = null;
 
     /**
-     * Returns the global Locale used by emiva. A locale specifies language
+     * Returns the global Locale used by B5Chat. A locale specifies language
      * and country codes, and is used for internationalization. The default
      * locale is system dependant - Locale.getDefault().
      *
-     * @return the global locale used by emiva.
+     * @return the global locale used by B5Chat.
      */
     public static Locale getLocale() {
         if (locale == null) {
@@ -120,15 +120,15 @@ public class Globals {
     }
 
     /**
-     * Sets the global locale used by emiva. A locale specifies language
+     * Sets the global locale used by B5Chat. A locale specifies language
      * and country codes, and is used for formatting dates and numbers.
      * The default locale is Locale.US.
      *
-     * @param newLocale the global Locale for emiva.
+     * @param newLocale the global Locale for B5Chat.
      */
     public static void setLocale(Locale newLocale) {
         locale = newLocale;
-        // Save values to emiva properties.
+        // Save values to B5Chat properties.
         setXMLProperty("locale", locale.toString());
 
         // Reset the date formatter objects
@@ -138,10 +138,10 @@ public class Globals {
     }
 
     /**
-     * Returns the global TimeZone used by emiva. The default is the VM's
+     * Returns the global TimeZone used by B5Chat. The default is the VM's
      * default time zone.
      *
-     * @return the global time zone used by emiva.
+     * @return the global time zone used by B5Chat.
      */
     public static TimeZone getTimeZone() {
         if (timeZone == null) {
@@ -162,7 +162,7 @@ public class Globals {
     }
 
     /**
-     * Sets the global time zone used by emiva. The default time zone is the VM's
+     * Sets the global time zone used by B5Chat. The default time zone is the VM's
      * time zone.
      *
      * @param newTimeZone Time zone to set.
@@ -283,7 +283,7 @@ public class Globals {
 
     /**
      * Returns a local property. Local properties are stored in the file defined in
-     * <tt>emiva_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
+     * <tt>B5Chat_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
      * Properties are always specified as "foo.bar.prop", which would map to
      * the following entry in the XML file:
      * <pre>
@@ -312,7 +312,7 @@ public class Globals {
 
     /**
      * Returns a local property. Local properties are stored in the file defined in
-     * <tt>emiva_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
+     * <tt>B5Chat_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
      * Properties are always specified as "foo.bar.prop", which would map to
      * the following entry in the XML file:
      * <pre>
@@ -348,7 +348,7 @@ public class Globals {
 
     /**
      * Returns an integer value local property. Local properties are stored in the file defined in
-     * <tt>emiva_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
+     * <tt>B5Chat_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
      * Properties are always specified as "foo.bar.prop", which would map to
      * the following entry in the XML file:
      * <pre>
@@ -382,7 +382,7 @@ public class Globals {
 
     /**
      * Returns a boolean value local property. Local properties are stored in the
-     * file defined in <tt>emiva_CONFIG_FILENAME</tt> that exists in the <tt>home</tt>
+     * file defined in <tt>B5Chat_CONFIG_FILENAME</tt> that exists in the <tt>home</tt>
      * directory. Properties are always specified as "foo.bar.prop", which would map to
      * the following entry in the XML file:
      * <pre>
@@ -412,7 +412,7 @@ public class Globals {
     /**
      * Sets a local property. If the property doesn't already exists, a new
      * one will be created. Local properties are stored in the file defined in
-     * <tt>emiva_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
+     * <tt>B5Chat_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
      * Properties are always specified as "foo.bar.prop", which would map to
      * the following entry in the XML file:
      * <pre>
@@ -431,7 +431,7 @@ public class Globals {
             loadSetupProperties();
         }
 
-        // emivaHome not loaded?
+        // B5ChatHome not loaded?
         if (xmlProperties != null) {
             xmlProperties.setProperty(name, value);
         }
@@ -440,7 +440,7 @@ public class Globals {
     /**
      * Sets multiple local properties at once. If a property doesn't already exists, a new
      * one will be created. Local properties are stored in the file defined in
-     * <tt>emiva_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
+     * <tt>B5Chat_CONFIG_FILENAME</tt> that exists in the <tt>home</tt> directory.
      * Properties are always specified as "foo.bar.prop", which would map to
      * the following entry in the XML file:
      * <pre>
@@ -470,7 +470,7 @@ public class Globals {
      * the immediate child properties of <tt>X.Y</tt> are <tt>A</tt>, <tt>B</tt>, and
      * <tt>C</tt> (the value of <tt>C.D</tt> would not be returned using this method).<p>
      *
-     * Local properties are stored in the file defined in <tt>emiva_CONFIG_FILENAME</tt> that exists
+     * Local properties are stored in the file defined in <tt>B5Chat_CONFIG_FILENAME</tt> that exists
      * in the <tt>home</tt> directory. Properties are always specified as "foo.bar.prop",
      * which would map to the following entry in the XML file:
      * <pre>
@@ -490,7 +490,7 @@ public class Globals {
             loadSetupProperties();
         }
 
-        // emivaHome not loaded?
+        // B5ChatHome not loaded?
         if (xmlProperties == null) {
             return Collections.EMPTY_LIST;
         }
@@ -521,7 +521,7 @@ public class Globals {
     }
 
     /**
-     * Returns a emiva property.
+     * Returns a B5Chat property.
      *
      * @param name the name of the property to return.
      * @return the property value specified by name.
@@ -537,7 +537,7 @@ public class Globals {
     }
 
     /**
-     * Returns a emiva property. If the specified property doesn't exist, the
+     * Returns a B5Chat property. If the specified property doesn't exist, the
      * <tt>defaultValue</tt> will be returned.
      *
      * @param name the name of the property to return.
@@ -561,7 +561,7 @@ public class Globals {
     }
 
     /**
-     * Returns an integer value emiva property. If the specified property doesn't exist, the
+     * Returns an integer value B5Chat property. If the specified property doesn't exist, the
      * <tt>defaultValue</tt> will be returned.
      *
      * @param name the name of the property to return.
@@ -583,7 +583,7 @@ public class Globals {
     }
 
     /**
-     * Returns a long value emiva property. If the specified property doesn't exist, the
+     * Returns a long value B5Chat property. If the specified property doesn't exist, the
      * <tt>defaultValue</tt> will be returned.
      *
      * @param name the name of the property to return.
@@ -605,7 +605,7 @@ public class Globals {
     }
 
     /**
-     * Returns a boolean value emiva property.
+     * Returns a boolean value B5Chat property.
      *
      * @param name the name of the property to return.
      * @return true if the property value exists and is set to <tt>"true"</tt> (ignoring case).
@@ -616,7 +616,7 @@ public class Globals {
     }
 
     /**
-     * Returns a boolean value emiva property. If the property doesn't exist, the <tt>defaultValue</tt>
+     * Returns a boolean value B5Chat property. If the property doesn't exist, the <tt>defaultValue</tt>
      * will be returned.
      *
      * If the specified property can't be found, or if the value is not a number, the
@@ -638,7 +638,7 @@ public class Globals {
     }
 
     /**
-     * Return all immediate children property names of a parent emiva property as a list of strings,
+     * Return all immediate children property names of a parent B5Chat property as a list of strings,
      * or an empty list if there are no children. For example, given
      * the properties <tt>X.Y.A</tt>, <tt>X.Y.B</tt>, <tt>X.Y.C</tt> and <tt>X.Y.C.D</tt>, then
      * the immediate child properties of <tt>X.Y</tt> are <tt>A</tt>, <tt>B</tt>, and
@@ -658,7 +658,7 @@ public class Globals {
     }
 
     /**
-     * Return all immediate children property values of a parent emiva property as a list of strings,
+     * Return all immediate children property values of a parent B5Chat property as a list of strings,
      * or an empty list if there are no children. For example, given
      * the properties <tt>X.Y.A</tt>, <tt>X.Y.B</tt>, <tt>X.Y.C</tt> and <tt>X.Y.C.D</tt>, then
      * the immediate child properties of <tt>X.Y</tt> are <tt>X.Y.A</tt>, <tt>X.Y.B</tt>, and
@@ -688,7 +688,7 @@ public class Globals {
     }
 
     /**
-     * Returns all emiva property names.
+     * Returns all B5Chat property names.
      *
      * @return a List of all property names (Strings).
      */
@@ -703,7 +703,7 @@ public class Globals {
     }
 
     /**
-     * Sets a emiva property. If the property doesn't already exists, a new
+     * Sets a B5Chat property. If the property doesn't already exists, a new
      * one will be created.
      *
      * @param name the name of the property being set.
@@ -720,7 +720,7 @@ public class Globals {
     }
 
    /**
-     * Sets multiple emiva properties at once. If a property doesn't already exists, a new
+     * Sets multiple B5Chat properties at once. If a property doesn't already exists, a new
      * one will be created.
      *
      * @param propertyMap a map of properties, keyed on property name.
@@ -737,7 +737,7 @@ public class Globals {
     }
 
     /**
-     * Deletes a emiva property. If the property doesn't exist, the method
+     * Deletes a B5Chat property. If the property doesn't exist, the method
      * does nothing. All children of the property will be deleted as well.
      *
      * @param name the name of the property to delete.
@@ -786,7 +786,7 @@ public class Globals {
     * @param configName the name of the config file.
     */
     public static void setConfigName(String configName) {
-        emiva_CONFIG_FILENAME = configName;
+        B5Chat_CONFIG_FILENAME = configName;
     }
 
     /**
@@ -795,7 +795,7 @@ public class Globals {
      * @return the name of the config file.
      */
     static String getConfigName() {
-        return emiva_CONFIG_FILENAME;
+        return B5Chat_CONFIG_FILENAME;
     }
 
     /**

@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -149,14 +149,14 @@
 <c:set var="submit" value="${param.create}"/>
 
 <%  if (errors.get("general") != null) { %>
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon">
+            <td class="B5Chat-icon">
                 <img src="images/error-16x16.gif" width="16" height="16" border="0" alt="">
             </td>
-            <td class="emiva-icon-label">
+            <td class="B5Chat-icon-label">
                 <fmt:message key="group.create.error" />
             </td>
         </tr>
@@ -192,7 +192,7 @@
    <% } %>
 
     <!-- BEGIN create group -->
-	<div class="emiva-contentBoxHeader">
+	<div class="B5Chat-contentBoxHeader">
         <%
             // If editing the group.
             if (groupName != null) {
@@ -205,7 +205,7 @@
         <fmt:message key="group.create.new_group_title" />
         <% } %>
     </div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
     <tr valign="top">
         <td width="1%" nowrap>
@@ -223,9 +223,9 @@
             <td width="1%" nowrap>&nbsp;</td>
             <td width="99%">
                 <%  if (errors.get("name") != null) { %>
-                    <span class="emiva-error-text"><fmt:message key="group.create.invalid_group_name" /></span>
+                    <span class="B5Chat-error-text"><fmt:message key="group.create.invalid_group_name" /></span>
                 <%  } else if (errors.get("groupAlreadyExists") != null) { %>
-                    <span class="emiva-error-text"><fmt:message key="group.create.invalid_group_info" /></span>
+                    <span class="B5Chat-error-text"><fmt:message key="group.create.invalid_group_info" /></span>
                 <%  } %>
             </td>
         </tr>
@@ -249,7 +249,7 @@
                 &nbsp;
             </td>
             <td width="99%">
-                <span class="emiva-error-text"><fmt:message key="group.create.invalid_description" /></span>
+                <span class="B5Chat-error-text"><fmt:message key="group.create.invalid_description" /></span>
             </td>
         </tr>
 
@@ -274,7 +274,7 @@
 	</tr>
     </table>
 	</div>
-	<span class="emiva-description">* <fmt:message key="group.create.required_fields" /> </span>
+	<span class="B5Chat-description">* <fmt:message key="group.create.required_fields" /> </span>
 	<!-- END create group -->
 
 </form>

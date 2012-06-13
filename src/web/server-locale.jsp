@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -90,10 +90,10 @@
 
 <!-- BEGIN locale settings -->
 <form action="server-locale.jsp" method="post" name="sform">
-	<div class="emiva-contentBoxHeader">
+	<div class="B5Chat-contentBoxHeader">
 		<fmt:message key="locale.system.set" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
 		<p>
         <b><fmt:message key="locale.current" />:</b> <%= locale.getDisplayName(locale) %> /
             <%= LocaleUtils.getTimeZoneName(Globals.getTimeZone().getID(), locale) %>

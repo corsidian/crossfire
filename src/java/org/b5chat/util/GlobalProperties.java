@@ -3,7 +3,7 @@
  * $Revision: 11691 $
  * $Date: 2010-05-01 12:42:07 -0400 (Sat, 01 May 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Retrieves and stores emiva properties. Properties are stored in the database.
+ * Retrieves and stores B5Chat properties. Properties are stored in the database.
  *
  * @author Matt Tucker
  */
@@ -62,9 +62,9 @@ public class GlobalProperties implements Map<String, String> {
     private Map<String, String> properties;
 
     /**
-     * Returns a singleton instance of EMIVAProperties.
+     * Returns a singleton instance of B5ChatProperties.
      *
-     * @return an instance of EMIVAProperties.
+     * @return an instance of B5ChatProperties.
      */
     public static GlobalProperties getInstance() {
         return GlobalPropertyHolder.instance;

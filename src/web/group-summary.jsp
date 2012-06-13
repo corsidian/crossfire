@@ -3,7 +3,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -70,11 +70,11 @@
 
 <%  if (request.getParameter("deletesuccess") != null) { %>
 
-    <div class="emiva-success">
+    <div class="B5Chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="group.summary.delete_group" />
         </td></tr>
     </tbody>
@@ -131,7 +131,7 @@ document.searchForm.search.focus();
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="group-summary.jsp?start=<%= (i*range) %><%= search!=null? "&search=" + URLEncoder.encode(search, "UTF-8") : ""%>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "B5Chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>
@@ -140,7 +140,7 @@ document.searchForm.search.focus();
 
 <%  } %>
 
-<div class="emiva-table">
+<div class="B5Chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -173,7 +173,7 @@ document.searchForm.search.focus();
         String groupName = URLEncoder.encode(group.getName(), "UTF-8");
         i++;
 %>
-    <tr class="emiva-<%= (((i%2)==0) ? "even" : "odd") %>">
+    <tr class="B5Chat-<%= (((i%2)==0) ? "even" : "odd") %>">
         <td width="1%" valign="top">
             <%= i %>
         </td>
@@ -181,7 +181,7 @@ document.searchForm.search.focus();
             <a href="group-edit.jsp?group=<%= groupName %>"><%= group.getName() %></a>
             <% if (group.getDescription() != null) { %>
             <br>
-                <span class="emiva-description">
+                <span class="B5Chat-description">
                 <%= group.getDescription() %>
                 </span>
              <% } %>
@@ -224,7 +224,7 @@ document.searchForm.search.focus();
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="group-summary.jsp?start=<%= (i*range) %><%= search!=null? "&search=" + URLEncoder.encode(search, "UTF-8") : ""%>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "B5Chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>

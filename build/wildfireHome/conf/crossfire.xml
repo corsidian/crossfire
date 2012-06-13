@@ -16,7 +16,7 @@
 	property viewer and editor is included in the admin console.
 -->
 <!-- root element, all properties must be under this element -->
-<emiva> 
+<B5Chat> 
   <adminConsole> 
     <!-- Disable either port by setting the value to -1 -->  
     <port>9090</port>  
@@ -74,4 +74,4 @@
     <className>org.b5chat.database.EmbeddedConnectionProvider</className> 
   </connectionProvider>  
   <setup>true</setup> 
-</emiva>
+</B5Chat>

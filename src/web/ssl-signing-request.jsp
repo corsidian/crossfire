@@ -117,66 +117,66 @@
 </head>
 <body>
 <%  if (errors.containsKey("name")) { %>
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_name" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("organizationalUnit")) { %>
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_ou" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("organization")) { %>
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_o" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("city")) { %>
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_city" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("state")) { %>
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_state" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("countryCode")) { %>
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_country" />
         </td></tr>
     </tbody>
@@ -187,10 +187,10 @@
 <!-- BEGIN 'Issuer information form' -->
 <form action="ssl-signing-request.jsp" method="post">
     <input type="hidden" name="save" value="true">
-    <div class="emiva-contentBoxHeader">
+    <div class="B5Chat-contentBoxHeader">
         <fmt:message key="ssl.signing-request.issuer_information"/>
     </div>
-    <div class="emiva-contentBox">
+    <div class="B5Chat-contentBox">
         <p>
             <fmt:message key="ssl.signing-request.issuer_information_info"/>
         </p>

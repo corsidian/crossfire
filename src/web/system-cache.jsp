@@ -6,7 +6,7 @@
   -	$Revision: $
   -	$Date: $
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -88,10 +88,10 @@
             }
             if (r) {
                 if (el.checked) {
-                    r.className = "emiva-row-sel";
+                    r.className = "B5Chat-row-sel";
                 }
                 else {
-                    r.className = "emiva-row";
+                    r.className = "B5Chat-row";
                 }
             }
         }
@@ -122,11 +122,11 @@
 
 <%  if (doClearCache) { %>
 
-    <div class="emiva-success">
+    <div class="B5Chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="system.cache.cleared" />
         </td></tr>
     </tbody>
@@ -152,7 +152,7 @@
 
 <form action="system-cache.jsp" method="post" name="cacheForm">
 
-<div class="emiva-table">
+<div class="B5Chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -188,7 +188,7 @@
             lowEffec = (hits > 500 && hitValue < 85.0 && freeMem < 20.0);
         }
 %>
-    <tr class="<%= (lowEffec ? "emiva-error" : "") %>">
+    <tr class="<%= (lowEffec ? "B5Chat-error" : "") %>">
         <td class="c1">
             <table cellpadding="0" cellspacing="0" border="0">
             <tr>
@@ -238,7 +238,7 @@
 </table>
 </div>
 
-<p class="emiva-description">
+<p class="B5Chat-description">
 <fmt:message key="system.cache.desc.effectiveness" />
 </p>
 

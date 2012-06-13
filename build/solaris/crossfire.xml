@@ -25,7 +25,7 @@
         <loctext xml:lang='C'>crossfire XMPP Server</loctext>
       </common_name>
       <documentation>
-        <doc_link name='emiva.net' uri='http://www.emiva.net/projects/crossfire/index.jsp'/>
+        <doc_link name='b5chat.org' uri='http://www.b5chat.org/projects/crossfire/index.jsp'/>
       </documentation>
     </template>
   </service>

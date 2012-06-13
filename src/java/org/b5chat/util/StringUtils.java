@@ -2,7 +2,7 @@
  * $Revision: 11929 $
  * $Date: 2010-10-14 13:24:45 -0400 (Thu, 14 Oct 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -326,7 +326,7 @@ public class StringUtils {
      * since we can store the hash and a hacker will then have a very hard time
      * determining the original password.
      * <p/>
-     * In emiva, every time a user logs in, we simply
+     * In B5Chat, every time a user logs in, we simply
      * take their plain text password, compute the hash, and compare the
      * generated hash to the stored hash. Since it is almost impossible that
      * two passwords will generate the same hash, we know if the user gave us
@@ -354,7 +354,7 @@ public class StringUtils {
      * since we can store the hash and a hacker will then have a very hard time
      * determining the original password.
      * <p/>
-     * In emiva, every time a user logs in, we simply
+     * In B5Chat, every time a user logs in, we simply
      * take their plain text password, compute the hash, and compare the
      * generated hash to the stored hash. Since it is almost impossible that
      * two passwords will generate the same hash, we know if the user gave us
@@ -389,7 +389,7 @@ public class StringUtils {
      * since we can store the hash and a hacker will then have a very hard time
      * determining the original password.
      * <p/>
-     * In emiva, every time a user logs in, we simply
+     * In B5Chat, every time a user logs in, we simply
      * take their plain text password, compute the hash, and compare the
      * generated hash to the stored hash. Since it is almost impossible that
      * two passwords will generate the same hash, we know if the user gave us
@@ -411,7 +411,7 @@ public class StringUtils {
                 }
                 catch (NoSuchAlgorithmException nsae) {
                     Log.error("Failed to load the " + algorithm + " MessageDigest. " +
-                            "emiva will be unable to function normally.", nsae);
+                            "B5Chat will be unable to function normally.", nsae);
                     return null;
                 }
             }
@@ -557,7 +557,7 @@ public class StringUtils {
      * Converts a line of text into an array of lower case words using a
      * BreakIterator.wordInstance().<p>
      *
-     * This method is under the emiva Open Source Software License and was
+     * This method is under the B5Chat Open Source Software License and was
      * written by Mark Imbriaco.
      *
      * @param text a String of text to convert into an array of words
@@ -1058,11 +1058,11 @@ public class StringUtils {
      * Abbreviates a string to a specified length and then adds an ellipsis
      * if the input is greater than the maxWidth. Example input:
      * <pre>
-     *      user1@emiva.net/home
+     *      user1@b5chat.org/home
      * </pre>
      * and a maximum length of 20 characters, the abbreviate method will return:
      * <pre>
-     *      user1@emiva.c...
+     *      user1@B5Chat.c...
      * </pre>
      * @param str the String to abbreviate.
      * @param maxWidth the maximum size of the string, minus the ellipsis.

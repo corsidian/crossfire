@@ -3,7 +3,7 @@
  * $Revision: $
  * $Date: $
  *
- * Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -304,7 +304,7 @@ public class SASLAuthentication {
                     if (mechanism.equalsIgnoreCase("EXTERNAL")) {
                         status = doExternalAuthentication(session, doc);
                     }
-                    else if (mechanism.equalsIgnoreCase("emiva-SHAREDSECRET")) {
+                    else if (mechanism.equalsIgnoreCase("B5Chat-SHAREDSECRET")) {
                         status = doSharedSecretAuthentication(session, doc);
                     }
                     else if (mechanisms.contains(mechanism)) {
@@ -723,7 +723,7 @@ public class SASLAuthentication {
                     it.remove();
                 }
             }
-            else if (mech.equals("emiva-SHAREDSECRET")) {
+            else if (mech.equals("B5Chat-SHAREDSECRET")) {
                 // Check shared secret is supported
                 if (!isSharedSecretAllowed()) {
                     it.remove();
@@ -747,7 +747,7 @@ public class SASLAuthentication {
             mechanisms.add("PLAIN");
             mechanisms.add("DIGEST-MD5");
             mechanisms.add("CRAM-MD5");
-            mechanisms.add("emiva-SHAREDSECRET");
+            mechanisms.add("B5Chat-SHAREDSECRET");
         }
         else {
             StringTokenizer st = new StringTokenizer(available, " ,\t\n\r\f");
@@ -760,7 +760,7 @@ public class SASLAuthentication {
                         mech.equals("CRAM-MD5") ||
                         mech.equals("GSSAPI") ||
                         mech.equals("EXTERNAL") ||
-                        mech.equals("emiva-SHAREDSECRET")) 
+                        mech.equals("B5Chat-SHAREDSECRET")) 
                 {
                     Log.debug("SASLAuthentication: Added " + mech + " to mech list");
                     mechanisms.add(mech);

@@ -146,8 +146,8 @@
     <property name="installer.application_id" value="6886-9911-0474-3571"/>
     <property name="installer.unix_install_dir" value="crossfire"/>
     <property name="installer.windows_install_dir" value="crossfire"/>
-    <property name="installer.publisher" value="EMIVA Community"/>
-    <property name="installer.publisher_url" value="www.emiva.net"/>
+    <property name="installer.publisher" value="B5Chat Community"/>
+    <property name="installer.publisher_url" value="www.b5chat.org"/>
     <property name="installer.file_prefix" value="${installer.app_short_name}"/>
     <property name="installer.release_root_path" value="${release.dest.dir}"/>
 
@@ -381,7 +381,7 @@
         <!-- Make main crossfire jar -->
         <jar jarfile="${jar.dest.dir}/${jar.name}" index="true" duplicate="preserve">
             <fileset dir="${compile.dir}" includes="**/*.class"
-                     excludes="net/emiva/crossfire/starter/ServerStarter*.class,net/emiva/crossfire/launcher/*.class">
+                     excludes="net/B5Chat/crossfire/starter/ServerStarter*.class,net/B5Chat/crossfire/launcher/*.class">
                 <!-- don't include files that have an overlay counterpart -->
                  <present present="srconly" targetdir="${overlay.compile.dir}"/>
             </fileset>
@@ -392,23 +392,23 @@
             <fileset dir="${resources.dir}/jar" includes="**"/>
             <zipgroupfileset dir="${lib.merge.dir}" includes="*.jar"/>
             <manifest>
-                <attribute name="Built-By" value="EMIVA (www.emiva.net)"/>
+                <attribute name="Built-By" value="B5Chat (www.b5chat.org)"/>
             </manifest>
         </jar>
 
         <!-- Make startup jar -->
         <jar jarfile="${jar.dest.dir}/${jar.starter.name}">
             <fileset dir="${compile.dir}">
-                <include name="net/emiva/crossfire/starter/ServerStarter*.class"/>
-                <include name="net/emiva/crossfire/launcher/*.class"/>
-                <include name="net/emiva/crossfire/starter/emivaClassLoader*.class"/>
+                <include name="net/B5Chat/crossfire/starter/ServerStarter*.class"/>
+                <include name="net/B5Chat/crossfire/launcher/*.class"/>
+                <include name="net/B5Chat/crossfire/starter/B5ChatClassLoader*.class"/>
             </fileset>
             <fileset dir="${lib.build.installer.dir}/images" includes="**/*.gif"/>
             <fileset dir="${lib.build.installer.dir}/images" includes="**/*.png"/>
             <manifest>
                 <attribute name="Main-Class"
                            value="org.b5chat.crossfire.starter.ServerStarter"/>
-                <attribute name="Built-By" value="EMIVA (www.emiva.net)"/>
+                <attribute name="Built-By" value="B5Chat (www.b5chat.org)"/>
             </manifest>
         </jar>
         <!-- Copy application dependent files -->
@@ -475,7 +475,7 @@
     <target name="-javadoc-impl" unless="no.javadoc">
         <!-- Run javadoc over all source code -->
         <javadoc
-                packagenames="net.emiva.*, org.xmpp.*"
+                packagenames="net.B5Chat.*, org.xmpp.*"
                 destdir="${javadoc.dest.dir}"
                 windowtitle="crossfire ${version} Javadoc"
                 overview="${src.java.dir}/overview.html"
@@ -487,7 +487,7 @@
             <doctitle>
                 <![CDATA[<font face="arial,helvetica,sans-serif">crossfire ${version} Javadoc</font>]]></doctitle>
             <header><![CDATA[<b>crossfire ${version} Javadoc</b>]]></header>
-            <bottom><![CDATA[<i>Copyright &copy; 2003-2008 EMIVA Community.</i>]]></bottom>
+            <bottom><![CDATA[<i>Copyright &copy; 2003-2008 B5Chat Community.</i>]]></bottom>
             <classpath>
                 <path refid="javadoc.dependencies"/>
             </classpath>
@@ -546,7 +546,7 @@
                 debug="on"
                 source="1.5"
                 target="1.5"
-                includes="net/emiva/crossfire/admin/**/*.java"
+                includes="net/B5Chat/crossfire/admin/**/*.java"
                 >
             <src path="${jspc.java.dest.dir}"/>
             <classpath>

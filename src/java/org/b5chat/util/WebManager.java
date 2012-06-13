@@ -3,7 +3,7 @@
  * $Revision: 11388 $
  * $Date: 2009-11-08 19:26:55 -0500 (Sun, 08 Nov 2009) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class WebManager extends WebBean {
      * Returns the auth token redirects to the login page if an auth token is not found.
      */
     public AuthToken getAuthToken() {
-        return (AuthToken)session.getAttribute("emiva.admin.authToken");
+        return (AuthToken)session.getAttribute("B5Chat.admin.authToken");
     }
 
     /**

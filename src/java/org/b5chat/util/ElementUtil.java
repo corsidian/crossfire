@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2004-2009 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2009 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -362,12 +362,12 @@ public class ElementUtil {
     }
 
     /**
-     * Returns an array representation of the given emiva property. emiva
+     * Returns an array representation of the given B5Chat property. B5Chat
      * properties are always in the format "prop.name.is.this" which would be
      * represented as an array of four Strings.
      *
-     * @param name the name of the emiva property.
-     * @return an array representation of the given emiva property.
+     * @param name the name of the B5Chat property.
+     * @return an array representation of the given B5Chat property.
      */
     private static String[] parsePropertyName(String name) {
         List propName = new ArrayList(5);

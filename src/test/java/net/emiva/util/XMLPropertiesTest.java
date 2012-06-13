@@ -3,7 +3,7 @@
  * $Revision: 11291 $
  * $Date: 2009-09-30 06:17:14 -0400 (Wed, 30 Sep 2009) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package net.emiva.util;
+package net.B5Chat.util;
 
 import junit.framework.TestCase;
 
@@ -40,7 +40,7 @@ public class XMLPropertiesTest extends TestCase {
 
     public void testGetProperty() throws Exception {
         XMLProperties props = new XMLProperties(
-                "./resources/net/emiva/util/XMLProperties.test01.xml");
+                "./resources/net/B5Chat/util/XMLProperties.test01.xml");
         assertEquals("123", props.getProperty("foo.bar"));
         assertEquals("456", props.getProperty("foo.bar.baz"));
         assertNull(props.getProperty("foo"));
@@ -49,7 +49,7 @@ public class XMLPropertiesTest extends TestCase {
 
     public void testGetChildPropertiesIterator() throws Exception {
         XMLProperties props = new XMLProperties(
-                "./resources/net/emiva/util/XMLProperties.test02.xml");
+                "./resources/net/B5Chat/util/XMLProperties.test02.xml");
         String[] names = {"a","b","c","d"};
         String[] values = {"1","2","3","4"};
         String[] children = props.getChildrenProperties("foo.bar");

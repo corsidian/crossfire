@@ -2,7 +2,7 @@
  * $Revision$
  * $Date$
  *
- * Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,11 +59,11 @@ public class SchemaManager {
 	private static final Logger Log = LoggerFactory.getLogger(SchemaManager.class);
 
     private static final String CHECK_VERSION_OLD =
-            "SELECT minorVersion FROM emivaVersion";
+            "SELECT minorVersion FROM B5ChatVersion";
     private static final String CHECK_VERSION =
             "SELECT version FROM ofVersion WHERE name=?";
-    private static final String CHECK_VERSION_emiva =
-            "SELECT version FROM emivaVersion WHERE name=?";
+    private static final String CHECK_VERSION_B5Chat =
+            "SELECT version FROM B5ChatVersion WHERE name=?";
 
     /**
      * Current crossfire database schema version.
@@ -188,8 +188,8 @@ public class SchemaManager {
             DbConnectionManager.getInstance().closeStatement(rs, pstmt);
             if (schemaKey.equals("crossfire")) {
                 try {
-                    // Releases of crossfire before 3.6.0 stored the version in a emivaVersion table.
-                    pstmt = con.prepareStatement(CHECK_VERSION_emiva);
+                    // Releases of crossfire before 3.6.0 stored the version in a B5ChatVersion table.
+                    pstmt = con.prepareStatement(CHECK_VERSION_B5Chat);
                     pstmt.setString(1, schemaKey);
                     rs = pstmt.executeQuery();
                     if (rs.next()) {
@@ -240,7 +240,7 @@ public class SchemaManager {
                 return false;
             }
             try {
-                // For plugins, we will automatically convert emivaVersion to ofVersion
+                // For plugins, we will automatically convert B5ChatVersion to ofVersion
                 executeSQLScript(con, resource, !schemaKey.equals("crossfire") && !schemaKey.equals("wildfire"));
             }
             catch (Exception e) {
@@ -336,7 +336,7 @@ public class SchemaManager {
     private void updateTocrossfire(Connection con){
         PreparedStatement pstmt = null;
         try {
-            pstmt = con.prepareStatement("UPDATE emivaVersion SET name='crossfire' WHERE name='wildfire'");
+            pstmt = con.prepareStatement("UPDATE B5ChatVersion SET name='crossfire' WHERE name='wildfire'");
             pstmt.executeUpdate();
         }
         catch (Exception ex) {
@@ -354,7 +354,7 @@ public class SchemaManager {
      *
      * @param con database connection.
      * @param resource an input stream for the script to execute.
-     * @param autoreplace automatically replace emivaVersion with ofVersion
+     * @param autoreplace automatically replace B5ChatVersion with ofVersion
      * @throws IOException if an IOException occurs.
      * @throws SQLException if an SQLException occurs.
      */
@@ -392,7 +392,7 @@ public class SchemaManager {
                     try {
                         String cmdString = command.toString();
                         if (autoreplace)  {
-                            cmdString = cmdString.replaceAll("emivaVersion", "ofVersion");
+                            cmdString = cmdString.replaceAll("B5ChatVersion", "ofVersion");
                         }
                         pstmt = con.prepareStatement(cmdString);
                         pstmt.execute();

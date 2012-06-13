@@ -3,7 +3,7 @@
  * $Revision: 1089 $
  * $Date: 2005-03-07 02:36:27 -0300 (Mon, 07 Mar 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import java.net.URLClassLoader;
  * @author Derek DeMoro
  * @author Iain Shigeoka
  */
-class emivaClassLoader extends URLClassLoader {
+class B5ChatClassLoader extends URLClassLoader {
 
     /**
      * Constructs the classloader.
@@ -47,7 +47,7 @@ class emivaClassLoader extends URLClassLoader {
      * @param libDir the directory to load jar files from.
      * @throws java.net.MalformedURLException if the libDir path is not valid.
      */
-    emivaClassLoader(ClassLoader parent, File libDir) throws MalformedURLException {
+    B5ChatClassLoader(ClassLoader parent, File libDir) throws MalformedURLException {
         super(new URL[] { libDir.toURI().toURL() }, parent);
 
         File[] jars = libDir.listFiles(new FilenameFilter() {

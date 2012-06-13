@@ -197,8 +197,8 @@
 <%  } %>
 
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN B5Chat-contentBox -->
+	<div class="B5Chat-contentBox">
 
 
 <script language="JavaScript" type="text/javascript">
@@ -235,7 +235,7 @@ function checkClick() {
 %>
 
 <tr valign="top">
-    <td class="emiva-label">
+    <td class="B5Chat-label">
         <fmt:message key="setup.admin.settings.current_password" />
     </td>
     <td>
@@ -243,11 +243,11 @@ function checkClick() {
          value="<%= ((password!=null) ? password : "") %>"><br>
 
         <%  if (errors.get("password") != null) { %>
-            <span class="emiva-error-text">
+            <span class="B5Chat-error-text">
             <fmt:message key="setup.admin.settings.current_password_error" />
             </span>
         <%  } else { %>
-            <span class="emiva-description">
+            <span class="B5Chat-description">
             <fmt:message key="setup.admin.settings.current_password_description" />
             </span>
         <% } %>
@@ -271,7 +271,7 @@ function checkClick() {
 %>
 
 <tr valign="top">
-    <td class="emiva-label" align="right">
+    <td class="B5Chat-label" align="right">
         <fmt:message key="setup.admin.settings.email" />
     </td>
     <td>
@@ -279,18 +279,18 @@ function checkClick() {
          value="<%= ((email!=null) ? email : currentEmail) %>"><br>
 
         <%  if (errors.get("email") != null) { %>
-            <span class="emiva-error-text">
+            <span class="B5Chat-error-text">
             <fmt:message key="setup.admin.settings.email_error" />
             </span>
         <%  } else { %>
-            <span class="emiva-description">
+            <span class="B5Chat-description">
             <fmt:message key="setup.admin.settings.email_description" />
             </span>
         <% } %>
     </td>
 </tr>
 <tr valign="top">
-    <td class="emiva-label" align="right">
+    <td class="B5Chat-label" align="right">
         <fmt:message key="setup.admin.settings.new_password" />
     </td>
     <td>
@@ -298,25 +298,25 @@ function checkClick() {
          value="<%= ((newPassword!=null) ? newPassword : "") %>"><br>
 
         <%  if (errors.get("newPassword") != null) { %>
-            <span class="emiva-error-text">
+            <span class="B5Chat-error-text">
             <fmt:message key="setup.admin.settings.valid_new_password" />
             </span>
         <%  } else if (errors.get("match") != null) { %>
-            <span class="emiva-error-text">
+            <span class="B5Chat-error-text">
             <fmt:message key="setup.admin.settings.not_new_password" />
             </span>
         <%  } %>
     </td>
 </tr>
 <tr valign="top">
-    <td class="emiva-label" align="right">
+    <td class="B5Chat-label" align="right">
         <fmt:message key="setup.admin.settings.confirm_password" />
     </td>
     <td>
         <input type="password" name="newPasswordConfirm" size="20" maxlength="50"
          value="<%= ((newPasswordConfirm!=null) ? newPasswordConfirm : "") %>"><br>
         <%  if (errors.get("newPasswordConfirm") != null) { %>
-            <span class="emiva-error-text">
+            <span class="B5Chat-error-text">
             <fmt:message key="setup.admin.settings.valid_confirm" />
             </span>
         <%  } %>
@@ -326,13 +326,13 @@ function checkClick() {
 
 <br>
 		<div align="right">
-			<input type="submit" name="doSkip" value="<fmt:message key="setup.admin.settings.skip_this_step" />" id="emiva-setup-skip" border="0">
-			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="submit" name="doSkip" value="<fmt:message key="setup.admin.settings.skip_this_step" />" id="B5Chat-setup-skip" border="0">
+			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="B5Chat-setup-save" border="0">
 		</div>
 
 	</form>
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END B5Chat-contentBox -->
 
 
 <script language="JavaScript" type="text/javascript">

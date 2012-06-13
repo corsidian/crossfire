@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2004-2009 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2009 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import java.util.Collection;
 
 /**
  * Handler of IQ packets whose child element is "sharedgroup" with namespace
- * "http://www.emiva.net/protocol/sharedgroup". This handler will return the list of
+ * "http://www.b5chat.org/protocol/sharedgroup". This handler will return the list of
  * shared groups where the user sending the request belongs.
  *
  * @author Gaston Dombiak
@@ -43,7 +43,7 @@ public class IQSharedGroupHandler extends IQHandler {
 
     public IQSharedGroupHandler() {
         super("Shared Groups Handler");
-        info = new IQHandlerInfo("sharedgroup", "http://www.emiva.net/protocol/sharedgroup");
+        info = new IQHandlerInfo("sharedgroup", "http://www.b5chat.org/protocol/sharedgroup");
     }
 
     @Override
@@ -61,7 +61,7 @@ public class IQSharedGroupHandler extends IQHandler {
 
         Collection<Group> groups = rosterManager.getSharedGroups(username);
         Element sharedGroups = result.setChildElement("sharedgroup",
-                "http://www.emiva.net/protocol/sharedgroup");
+                "http://www.b5chat.org/protocol/sharedgroup");
         for (Group sharedGroup : groups) {
             String displayName = sharedGroup.getProperties().get("sharedRoster.displayName");
             if (displayName != null) {

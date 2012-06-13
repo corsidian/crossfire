@@ -3,7 +3,7 @@
  * $Revision: 1485 $
  * $Date: 2005-06-05 18:36:19 -0300 (Sun, 05 Jun 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ package org.b5chat.crossfire.container;
 import java.io.File;
 
 /**
- * Represents the data model used to represent development mode within the emiva
+ * Represents the data model used to represent development mode within the B5Chat
  * crossfire plugin framework.
  *
  * @author Derek DeMoro

@@ -3,7 +3,7 @@
  * $Revision: $
  * $Date: $
  *
- * Copyright (C) 2005-2008 EMIVA Community and Artur Hefczyc. All rights reserved.
+ * Copyright (C) 2005-2008 B5Chat Community and Artur Hefczyc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,10 +94,10 @@ public class TLSWrapper {
             String trustpass = (c2sConnection ? SSLConfig.getc2sTrustPassword() : SSLConfig.gets2sTrustPassword());
 
             // KeyManager's decide which key material to use.
-            KeyManager[] km = SSLEMIVAKeyManagerFactory.getKeyManagers(ksKeys, keypass);
+            KeyManager[] km = SSLKeyManagerFactory.getKeyManagers(ksKeys, keypass);
 
             // TrustManager's decide whether to allow connections.
-            TrustManager[] tm = SSLEMIVATrustManagerFactory.getTrustManagers(ksTrust, trustpass);
+            TrustManager[] tm = SSLTrustManagerFactory.getTrustManagers(ksTrust, trustpass);
             if (clientMode || needClientAuth) {
                 if (c2sConnection) {
                     // Check if we can trust certificates presented by the client

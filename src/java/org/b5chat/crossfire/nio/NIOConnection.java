@@ -2,7 +2,7 @@
  * $Revision: $
  * $Date: $
  *
- * Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@ import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 
-
 import org.apache.mina.common.ByteBuffer;
 import org.apache.mina.common.IoFilterChain;
 import org.apache.mina.common.IoSession;
@@ -45,8 +44,8 @@ import org.b5chat.crossfire.PacketDeliverer;
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.net.ClientTrustManager;
 import org.b5chat.crossfire.net.SSLConfig;
-import org.b5chat.crossfire.net.SSLEMIVAKeyManagerFactory;
-import org.b5chat.crossfire.net.SSLEMIVATrustManagerFactory;
+import org.b5chat.crossfire.net.SSLKeyManagerFactory;
+import org.b5chat.crossfire.net.SSLTrustManagerFactory;
 import org.b5chat.crossfire.net.ServerTrustManager;
 import org.b5chat.crossfire.session.LocalSession;
 import org.b5chat.crossfire.session.Session;
@@ -331,10 +330,10 @@ public class NIOConnection implements Connection {
         if (c2s)  Log.debug("NIOConnection: startTLS: using c2s");
         else Log.debug("NIOConnection: startTLS: using s2s");
         // KeyManager's decide which key material to use.
-        KeyManager[] km = SSLEMIVAKeyManagerFactory.getKeyManagers(ksKeys, keypass);
+        KeyManager[] km = SSLKeyManagerFactory.getKeyManagers(ksKeys, keypass);
 
         // TrustManager's decide whether to allow connections.
-        TrustManager[] tm = SSLEMIVATrustManagerFactory.getTrustManagers(ksTrust, trustpass);
+        TrustManager[] tm = SSLTrustManagerFactory.getTrustManagers(ksTrust, trustpass);
 
         if (clientMode || authentication == ClientAuth.needed || authentication == ClientAuth.wanted) {
             // We might need to verify a certificate from our peer, so get different TrustManager[]'s

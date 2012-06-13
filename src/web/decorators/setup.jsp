@@ -2,7 +2,7 @@
   -	$Revision: 2701 $
   -	$Date: 2005-08-19 16:48:22 -0700 (Fri, 19 Aug 2005) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@
                     + "file, then go back to fix the problem.");
             }
             else {
-            	// See if the emiva db schema is installed.
+            	// See if the B5Chat db schema is installed.
             	try {
             		Statement stmt = con.createStatement();
             		// Pick an arbitrary table to see if it's there.
@@ -123,42 +123,42 @@
 
 <body onload="<decorator:getProperty property="body.onload" />">
 
-<!-- BEGIN emiva-main -->
+<!-- BEGIN B5Chat-main -->
 <div id="main">
 
-    <!-- BEGIN emiva-header -->
-    <div id="emiva-header">
-        <div id="emiva-logo">
+    <!-- BEGIN B5Chat-header -->
+    <div id="B5Chat-header">
+        <div id="B5Chat-logo">
             <a href="/index.jsp"><img src="/images/login_logo.gif" alt="crossfire" width="179" height="53" /></a>
         </div>
-        <div id="emiva-userstatus">
+        <div id="B5Chat-userstatus">
             <%= AdminConsole.getAppName() %> <%= AdminConsole.getVersionString() %><br/>
         </div>
-        <div id="emiva-nav">
-            <div id="emiva-nav-left"></div>
+        <div id="B5Chat-nav">
+            <div id="B5Chat-nav-left"></div>
             <ul>
                 <li><a><fmt:message key="setup.title"/></a></li>
             </ul>
-            <div id="emiva-nav-right"></div>
+            <div id="B5Chat-nav-right"></div>
         </div>
-        <div id="emiva-subnav">
+        <div id="B5Chat-subnav">
             &nbsp;
         </div>
     </div>
-    <!-- END emiva-header -->
+    <!-- END B5Chat-header -->
 
 
-    <div id="emiva-main">
+    <div id="B5Chat-main">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
     <tbody>
         <tr valign="top">
             <td width="1%">
-                <div id="emiva-sidebar-container">
-                    <div id="emiva-sidebar-box">
+                <div id="B5Chat-sidebar-container">
+                    <div id="B5Chat-sidebar-box">
 
 
-<!-- BEGIN emiva-sidebar -->
-                        <div id="emiva-sidebar">
+<!-- BEGIN B5Chat-sidebar -->
+                        <div id="B5Chat-sidebar">
                             <%  if (showSidebar) {
                                     String[] names;
                                     String[] links;
@@ -186,7 +186,7 @@
                                          };
                                     }
                                     %>
-                                <ul id="emiva-sidebar-progress">
+                                <ul id="B5Chat-sidebar-progress">
                                     <%  if (!showPreloginSidebar) { %>
                                     <li class="category"><fmt:message key="setup.sidebar.title" /></li>
                                     <li><img src="../images/setup_sidebar_progress<%= currentStep %>.gif" alt="" width="142" height="13" border="0"></li>
@@ -206,20 +206,20 @@
 
 
                         </div>
-<!-- END emiva-sidebar -->
+<!-- END B5Chat-sidebar -->
 
                     </div>
                 </div>
             </td>
-            <td width="99%" id="emiva-content">
+            <td width="99%" id="B5Chat-content">
 
-<!-- BEGIN emiva-body -->
+<!-- BEGIN B5Chat-body -->
 
-                <div id="emiva-main-content">
+                <div id="B5Chat-main-content">
                     <decorator:body/>
                 </div>
 
-<!-- END emiva-body -->
+<!-- END B5Chat-body -->
             </td>
         </tr>
     </tbody>
@@ -227,15 +227,15 @@
     </div>
 
 </div>
-<!-- END emiva-main -->
+<!-- END B5Chat-main -->
 
-<!-- BEGIN emiva-footer -->
-    <div id="emiva-footer">
-        <div class="emiva-footer-copyright">
-            Built by the <a href="http://www.emiva.net">EMIVA</a> community
+<!-- BEGIN B5Chat-footer -->
+    <div id="B5Chat-footer">
+        <div class="B5Chat-footer-copyright">
+            Built by the <a href="http://www.b5chat.org">B5Chat</a> community
         </div>
     </div>
-<!-- END emiva-footer -->
+<!-- END B5Chat-footer -->
 
 </body>
 </html>

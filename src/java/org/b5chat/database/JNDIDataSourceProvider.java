@@ -2,7 +2,7 @@
  * $Revision: 11388 $
  * $Date: 2009-11-08 19:26:55 -0500 (Sun, 08 Nov 2009) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,10 +35,10 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of ConnectionProvider that utilizes a JDBC 2.0 DataSource
  * made available via JNDI. This is useful for application servers where a pooled
- * data connection is already provided so emiva can share the pool with the
+ * data connection is already provided so B5Chat can share the pool with the
  * other applications.<p>
  * <p/>
- * The JNDI location of the DataSource stored as the emiva property
+ * The JNDI location of the DataSource stored as the B5Chat property
  * <code>database.JNDIProvider.name</code>. This can be overridden by setting
  * the provider's <code>name</code> property if required.
  *

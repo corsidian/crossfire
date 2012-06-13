@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleGetInfoString</key>
-	<string>%VERSION%, Copyright @ %COPYRIGHT% EMIVA Community</string>
+	<string>%VERSION%, Copyright @ %COPYRIGHT% B5Chat Community</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.emiva.crossfire</string>
+	<string>com.B5Chat.crossfire</string>
 	<key>CFBundleShortVersionString</key>
 	<string>%VERSION%</string>
 	<key>IFMajorVersion</key>

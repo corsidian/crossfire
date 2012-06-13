@@ -3,7 +3,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -94,7 +94,7 @@
 
 <%  if ("success".equals(request.getParameter("close"))) { %>
 
-    <p class="emiva-success-text">
+    <p class="B5Chat-success-text">
     <fmt:message key="component.session.summary.close" />
     </p>
 
@@ -132,7 +132,7 @@
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="component-session-summary.jsp?start=<%= (i*range) %>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "B5Chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>
@@ -148,7 +148,7 @@
 </fmt:message>
 </p>
 
-<div class="emiva-table">
+<div class="B5Chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -181,7 +181,7 @@
         for (ComponentSession componentSession : sessions) {
             count++;
     %>
-    <tr class="emiva-<%= (((count % 2) == 0) ? "even" : "odd") %>">
+    <tr class="B5Chat-<%= (((count % 2) == 0) ? "even" : "odd") %>">
         <td width="1%" nowrap><%= count %></td>
         <td width="43%" nowrap>
             <a href="component-session-details.jsp?jid=<%= URLEncoder.encode(componentSession.getAddress().toString(), "UTF-8") %>" title="<fmt:message key="session.row.cliked" />"><%= componentSession.getAddress() %></a>
@@ -264,7 +264,7 @@
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="component-session-summary.jsp?start=<%= (i*range) %>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "B5Chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>

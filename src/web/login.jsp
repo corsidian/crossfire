@@ -93,7 +93,7 @@
             }
             if (errors.isEmpty()) {
                 LoginLimitManager.getInstance().recordSuccessfulAttempt(loginUsername, request.getRemoteAddr());
-                session.setAttribute("emiva.admin.authToken", authToken);
+                session.setAttribute("B5Chat.admin.authToken", authToken);
                 response.sendRedirect(go(url));
                 return;
             }
@@ -161,11 +161,11 @@
 
 <div align="center">
     <!-- BEGIN login box -->
-    <div id="emiva-loginBox">
+    <div id="B5Chat-loginBox">
         
-        <div align="center" id="emiva-loginTable">
+        <div align="center" id="B5Chat-loginTable">
 
-            <span id="emiva-login-header" style="background: transparent url(images/login_logo.gif) no-repeat left; padding: 29px 0 10px 205px;">
+            <span id="B5Chat-login-header" style="background: transparent url(images/login_logo.gif) no-repeat left; padding: 29px 0 10px 205px;">
             <fmt:message key="admin.console" />
             </span>
 
@@ -181,7 +181,7 @@
                                     <table cellpadding="0" cellspacing="0" border="0">
                                     <tr valign="top">
                                         <td><img src="images/error-16x16.gif" width="16" height="16" border="0" alt="" vspace="2"></td>
-                                        <td><div class="emiva-error-text" style="padding-left:5px; color:#cc0000;"><fmt:message key="login.error" /></div></td>
+                                        <td><div class="B5Chat-error-text" style="padding-left:5px; color:#cc0000;"><fmt:message key="login.error" /></div></td>
                                     </tr>
                                     </table>
                                 </td>
@@ -194,7 +194,7 @@
                                         <% for (String error:errors.values()) { %>
                                     <tr valign="top">
                                         <td><img src="images/error-16x16.gif" width="16" height="16" border="0" alt="" vspace="2"></td>
-                                        <td><div class="emiva-error-text" style="padding-left:5px; color:#cc0000;"><%= error%></div></td>
+                                        <td><div class="B5Chat-error-text" style="padding-left:5px; color:#cc0000;"><%= error%></div></td>
                                     </tr>
                                         <% } %>
                                     </table>
@@ -207,8 +207,8 @@
                             <td align="center"><input type="submit" value="&nbsp; <fmt:message key="login.login" /> &nbsp;"></td>
                         </tr>
                         <tr valign="top">
-                            <td class="emiva-login-label"><label for="u01"><fmt:message key="login.username" /></label></td>
-                            <td class="emiva-login-label"><label for="p01"><fmt:message key="login.password" /></label></td>
+                            <td class="B5Chat-login-label"><label for="u01"><fmt:message key="login.username" /></label></td>
+                            <td class="B5Chat-login-label"><label for="p01"><fmt:message key="login.password" /></label></td>
                             <td>&nbsp;</td>
                         </tr>
                         </table>
@@ -216,7 +216,7 @@
                 </tr>
                 <tr>
                     <td align="right">
-                        <div align="right" id="emiva-loginVersion">
+                        <div align="right" id="B5Chat-loginVersion">
                         <%= AdminConsole.getAppName() %>, <fmt:message key="login.version" />: <%= AdminConsole.getVersionString() %>
                         </div>
                     </td>

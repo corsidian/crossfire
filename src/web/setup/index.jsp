@@ -18,11 +18,11 @@
 
 <%! // Global vars, methods, etc
 
-    static final String emiva_HOME = "emiva_home";
-    static final String emiva_LICENSE = "emiva_license_file";
-    static final String emiva_LICENSE_TEXT = "emiva_license_text";
-    static final String emiva_DEPENDENCY = "emiva_dependency";
-    static final String emiva_CONFIG_FILE = "emiva_config_file";
+    static final String B5Chat_HOME = "B5Chat_home";
+    static final String B5Chat_LICENSE = "B5Chat_license_file";
+    static final String B5Chat_LICENSE_TEXT = "B5Chat_license_text";
+    static final String B5Chat_DEPENDENCY = "B5Chat_dependency";
+    static final String B5Chat_CONFIG_FILE = "B5Chat_config_file";
 %>
 
 <%
@@ -79,8 +79,8 @@
 	</p>
 
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN B5Chat-contentBox -->
+	<div class="B5Chat-contentBox">
 
 	<h2><fmt:message key="setup.index.choose_lang" /></h2>
 
@@ -92,7 +92,7 @@
         if (usingPreset) { break; }
     }
 %>
-		<div id="emiva-setup-language">
+		<div id="B5Chat-setup-language">
 			<p>
 			<label for="loc01">
 			<input type="radio" name="localeCode" value="cs_CZ" <%= ("cs_CZ".equals(locale.toString()) ? "checked" : "") %> id="loc01" />
@@ -153,12 +153,12 @@
 		</div>
 
 		<div align="right">
-			<input type="Submit" name="save" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="Submit" name="save" value="<fmt:message key="global.continue" />" id="B5Chat-setup-save" border="0">
 		</div>
 	</form>
 
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END B5Chat-contentBox -->
 
 
 </body>

@@ -16,15 +16,15 @@
 
 
 
-<!-- BEGIN emiva-header -->
-<div id="emiva-header">
-	<div id="emiva-logo" title="crossfire"></div>
-	<div id="emiva-header-text"><fmt:message key="setup.title" /></div>
+<!-- BEGIN B5Chat-header -->
+<div id="B5Chat-header">
+	<div id="B5Chat-logo" title="crossfire"></div>
+	<div id="B5Chat-header-text"><fmt:message key="setup.title" /></div>
 </div>
-<!-- END emiva-header -->
+<!-- END B5Chat-header -->
 
-<!-- BEGIN emiva-body -->
-<div id="emiva-body" style="left: 0px; padding: 30px 50px 30px 50px;">
+<!-- BEGIN B5Chat-body -->
+<div id="B5Chat-body" style="left: 0px; padding: 30px 50px 30px 50px;">
 
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -43,7 +43,7 @@
         </p>
 
 	    <br><br>
-		    <div class="emiva_setup_launchAdmin" align="center">
+		    <div class="B5Chat_setup_launchAdmin" align="center">
 			    <a href="../index.jsp"><fmt:message key="setup.finished.login" /></a>
 		    </div>
 
@@ -52,13 +52,13 @@
 </tr>
 </table>
 </div>
-<!-- END emiva-body -->
+<!-- END B5Chat-body -->
 
 
 
-<!-- BEGIN emiva-footer -->
-<div id="emiva-footer"></div>
-<!-- END emiva-footer -->
+<!-- BEGIN B5Chat-footer -->
+<div id="B5Chat-footer"></div>
+<!-- END B5Chat-footer -->
 
 
 

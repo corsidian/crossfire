@@ -3,7 +3,7 @@
  * $Revision: 11388 $
  * $Date: 2009-11-08 19:26:55 -0500 (Sun, 08 Nov 2009) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A set of methods for retrieving and converting locale specific strings and numbers.
  *
- * @author EMIVA Community
+ * @author B5Chat Community
  */
 public class LocaleUtils {
 
@@ -269,9 +269,9 @@ public class LocaleUtils {
      *         display name.
      */
     public static String[][] getTimeZoneList() {
-        Locale emivaLocale = Globals.getLocale();
+        Locale B5ChatLocale = Globals.getLocale();
 
-        String[][] timeZoneList = timeZoneLists.get(emivaLocale);
+        String[][] timeZoneList = timeZoneLists.get(B5ChatLocale);
         if (timeZoneList == null) {
             String[] timeZoneIDs = timeZoneIds;
             // Now, create String[][] using the unique zones.
@@ -279,11 +279,11 @@ public class LocaleUtils {
             for (int i = 0; i < timeZoneList.length; i++) {
                 String zoneID = timeZoneIDs[i];
                 timeZoneList[i][0] = zoneID;
-                timeZoneList[i][1] = getTimeZoneName(zoneID, emivaLocale);
+                timeZoneList[i][1] = getTimeZoneName(zoneID, B5ChatLocale);
             }
 
             // Add the new list to the map of locales to lists
-            timeZoneLists.put(emivaLocale, timeZoneList);
+            timeZoneLists.put(B5ChatLocale, timeZoneList);
         }
 
         return timeZoneList;
@@ -348,8 +348,8 @@ public class LocaleUtils {
     /**
      * Returns the specified resource bundle, which is a properties file
      * that aids in localization of skins. This method is handy since it
-     * uses the class loader that other emiva classes are loaded from (hence,
-     * it can load bundles that are stored in emiva.jar).
+     * uses the class loader that other B5Chat classes are loaded from (hence,
+     * it can load bundles that are stored in B5Chat.jar).
      *
      * @param baseName the name of the resource bundle to load.
      * @param locale the desired Locale.
@@ -448,7 +448,7 @@ public class LocaleUtils {
 	 * If the plugin name is <tt>null</tt>, the key will be looked up using the
 	 * standard resource bundle.
 	 * 
-	 * If the locale is <tt>null</tt>, the emiva Global locale will be used.
+	 * If the locale is <tt>null</tt>, the B5Chat Global locale will be used.
 	 * 
 	 * @param key
 	 *            the key to use for retrieving the string from the appropriate
@@ -491,10 +491,10 @@ public class LocaleUtils {
             return getLocalizedString(key, locale, arguments, bundle);
         }
         catch (MissingResourceException mre) {
-        	Locale emivasLocale = Globals.getLocale();
-        	if (fallback && !emivasLocale.equals(locale)) {
+        	Locale B5ChatsLocale = Globals.getLocale();
+        	if (fallback && !B5ChatsLocale.equals(locale)) {
         		Log.info("Could not find the requested locale. Falling back to default locale.", mre);
-            	return getLocalizedString(key, pluginName, arguments, emivasLocale, false);
+            	return getLocalizedString(key, pluginName, arguments, B5ChatsLocale, false);
         	}
         	
             Log.error(mre.getMessage(), mre);

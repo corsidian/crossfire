@@ -3,7 +3,7 @@
  * $Revision: 3170 $
  * $Date: 2005-12-07 14:00:58 -0300 (Wed, 07 Dec 2005) $
  *
- * Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -129,8 +129,8 @@ public class SessionManager extends BasicModule implements ClusterEventListener 
     /**
      * Cache (unlimited, never expire) that holds list of incoming sessions
      * originated from the same remote server (domain/subdomain). For instance, jabber.org
-     * may have 2 connections to the server running in emiva.net (one socket to
-     * emiva.net and the other socket to conference.emiva.net).
+     * may have 2 connections to the server running in b5chat.org (one socket to
+     * b5chat.org and the other socket to conference.b5chat.org).
      * Key: remote hostname (domain/subdomain), Value: list of stream IDs that identify each socket.
      */
     private Cache<String, List<String>> hostnameSessionsCache;

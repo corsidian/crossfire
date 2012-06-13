@@ -3,10 +3,10 @@
  * $Revision: 11608 $
  * $Date: 2010-02-07 16:03:12 -0500 (Sun, 07 Feb 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  */
 
-package net.emiva.util;
+package net.B5Chat.util;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -45,7 +45,7 @@ public class AdminConsoleTest extends TestCase {
     public void testModifyGlobalProps() throws Exception {
         // Add a new stream to the AdminConsole:
         String filename = TestUtils.prepareFilename(
-                "./resources/net/emiva/admin/AdminConsoleTest.admin-sidebar-01.xml");
+                "./resources/net/B5Chat/admin/AdminConsoleTest.admin-sidebar-01.xml");
         InputStream in = new FileInputStream(filename);
         AdminConsole.addModel("test1", in);
         in.close();
@@ -58,7 +58,7 @@ public class AdminConsoleTest extends TestCase {
     public void testNewTabs() throws Exception {
         // Add a new stream to the AdminConsole:
         String filename = TestUtils.prepareFilename(
-                "./resources/net/emiva/admin/AdminConsoleTest.admin-sidebar-02.xml");
+                "./resources/net/B5Chat/admin/AdminConsoleTest.admin-sidebar-02.xml");
         InputStream in = new FileInputStream(filename);
         AdminConsole.addModel("test2", in);
         in.close();
@@ -82,7 +82,7 @@ public class AdminConsoleTest extends TestCase {
     public void testTabOverwrite() throws Exception {
         // Add a new stream to the AdminConsole:
         String filename = TestUtils.prepareFilename(
-                "./resources/net/emiva/admin/AdminConsoleTest.admin-sidebar-03.xml");
+                "./resources/net/B5Chat/admin/AdminConsoleTest.admin-sidebar-03.xml");
         InputStream in = new FileInputStream(filename);
         AdminConsole.addModel("test3", in);
         in.close();

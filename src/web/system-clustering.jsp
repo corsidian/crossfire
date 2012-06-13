@@ -3,7 +3,7 @@
   -	$Revision: $
   -	$Date: 2007-09-21 $
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@
 <title><fmt:message key="system.clustering.title"/></title>
 <meta name="pageID" content="system-clustering"/>
 <style type="text/css">
-.emiva-contentBox .local {
+.B5Chat-contentBox .local {
     background-color: #ffc;
     }
 </style>
@@ -127,11 +127,11 @@
 <%  if (update) {
         if (updateSucess) { %>
 
-    <div class="emiva-success">
+    <div class="B5Chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <% if (ClusterManager.isClusteringStarted()) { %>
             <fmt:message key="system.clustering.enabled" />
         <% } else { %>
@@ -146,12 +146,12 @@
 
 <%  } else { %>
 
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
-            <td class="emiva-icon-label">
+            <td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
+            <td class="B5Chat-icon-label">
                 <fmt:message key="system.clustering.failed-start" />
             </td>
         </tr>
@@ -166,7 +166,7 @@
     <table cellpadding="0" cellspacing="0" border="0" >
     <tbody>
         <tr>
-            <td class="emiva-icon-label">
+            <td class="B5Chat-icon-label">
             <b><fmt:message key="system.clustering.not-available" /></b><br/><br/>
             </td>
         </tr>
@@ -187,10 +187,10 @@
 
 <!-- BEGIN 'Clustering Enabled' -->
 <form action="system-clustering.jsp" method="post">
-	<div class="emiva-contentBoxHeader">
+	<div class="B5Chat-contentBoxHeader">
 		<fmt:message key="system.clustering.enabled.legend" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
 			<tr>
@@ -225,10 +225,10 @@
 </form>
 <!-- END 'Clustering Enabled' -->
 <br>
-<div class="emiva-contentBoxHeader">
+<div class="B5Chat-contentBoxHeader">
     <fmt:message key="system.clustering.overview.label"/>
 </div>
-<div class="emiva-contentBox">
+<div class="B5Chat-contentBox">
     <p>
         <fmt:message key="system.clustering.overview.info">
             <fmt:param value="<%= clusterNodesInfo.size() %>" />
@@ -287,7 +287,7 @@
                        title="Click for more details"
                        ><img src="images/server-network-24x24.gif" width="24" height="24" border="0" alt=""></a>
                   </td>
-                  <td class="emiva-description" nowrap width="1%" valign="middle">
+                  <td class="B5Chat-description" nowrap width="1%" valign="middle">
                       <a href="plugins/clustering/system-clustering-node.jsp?UID=<%= nodeID %>">
                       <%  if (isLocalMember) { %>
                           <b><%= nodeInfo.getHostName() %></b>
@@ -295,19 +295,19 @@
                           <%= nodeInfo.getHostName() %>
                       <%  } %></a>
                   </td>
-                  <td class="emiva-description" nowrap width="1%" valign="middle">
+                  <td class="B5Chat-description" nowrap width="1%" valign="middle">
                       <%= Globals.formatDateTime(new Date(nodeInfo.getJoinedTime())) %>
                   </td>
-                  <td class="emiva-description" nowrap width="1%" valign="middle">
+                  <td class="B5Chat-description" nowrap width="1%" valign="middle">
                       <%= nodeStats != null ? nodeStats.get(GetBasicStatistics.CLIENT) : "N/A" %>
                   </td>
-                  <td class="emiva-description" nowrap width="1%" valign="middle">
+                  <td class="B5Chat-description" nowrap width="1%" valign="middle">
                       <%= nodeStats != null ? nodeStats.get(GetBasicStatistics.INCOMING) : "N/A" %>
                   </td>
-                  <td class="emiva-description" nowrap width="1%" valign="middle">
+                  <td class="B5Chat-description" nowrap width="1%" valign="middle">
                       <%= nodeStats != null ? nodeStats.get(GetBasicStatistics.OUTGOING) : "N/A" %>
                   </td>
-                  <td class="emiva-description" nowrap width="75%" valign="middle">
+                  <td class="B5Chat-description" nowrap width="75%" valign="middle">
                   <table width="100%">
                     <tr>
                       <%
@@ -350,7 +350,7 @@
                           </table>
                           </div>
                         </td>
-                        <td class="emiva-description">
+                        <td class="B5Chat-description">
                           <%= memory %>
                         </td>
                       </tr>

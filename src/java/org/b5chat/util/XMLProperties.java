@@ -3,7 +3,7 @@
  * $Revision: 11674 $
  * $Date: 2010-04-10 05:22:05 -0400 (Sat, 10 Apr 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,7 +116,7 @@ public class XMLProperties {
         if (!file.exists()) {
             // Attempt to recover from this error case by seeing if the
             // tmp file exists. It's possible that the rename of the
-            // tmp file failed the last time emiva was running,
+            // tmp file failed the last time B5Chat was running,
             // but that it exists now.
             File tempFile;
             tempFile = new File(file.getParentFile(), file.getName() + ".tmp");
@@ -569,12 +569,12 @@ public class XMLProperties {
     }
 
     /**
-     * Returns an array representation of the given emiva property. emiva
+     * Returns an array representation of the given B5Chat property. B5Chat
      * properties are always in the format "prop.name.is.this" which would be
      * represented as an array of four Strings.
      *
-     * @param name the name of the emiva property.
-     * @return an array representation of the given emiva property.
+     * @param name the name of the B5Chat property.
+     * @return an array representation of the given B5Chat property.
      */
     private String[] parsePropertyName(String name) {
         List<String> propName = new ArrayList<String>(5);

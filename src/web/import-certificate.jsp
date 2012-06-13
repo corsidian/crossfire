@@ -79,11 +79,11 @@
 
   <%  if (errors.containsKey("privateKey")) { %>
 
-      <div class="emiva-error">
+      <div class="B5Chat-error">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="B5Chat-icon-label">
           <fmt:message key="ssl.import.certificate.error.private-key" />
           </td></tr>
       </tbody>
@@ -92,11 +92,11 @@
 
   <%  } else if (errors.containsKey("certificate")) { %>
 
-      <div class="emiva-error">
+      <div class="B5Chat-error">
   <table cellpadding="0" cellspacing="0" border="0">
   <tbody>
-      <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-      <td class="emiva-icon-label">
+      <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+      <td class="B5Chat-icon-label">
       <fmt:message key="ssl.import.certificate.error.certificate" />
       </td></tr>
   </tbody>
@@ -107,11 +107,11 @@
           Exception e = (Exception)errors.get("import");
   %>
 
-      <div class="emiva-error">
+      <div class="B5Chat-error">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="B5Chat-icon-label">
           <fmt:message key="ssl.import.certificate.error.import" />
           <%  if (e != null && e.getMessage() != null) { %>
               <fmt:message key="ssl.certificates.error_messenge" />: <%= e.getMessage() %>
@@ -131,10 +131,10 @@
 
   <!-- BEGIN 'Import Private Key and Certificate' -->
   <form action="import-certificate.jsp" method="post" name="f">
-      <div class="emiva-contentBoxHeader">
+      <div class="B5Chat-contentBoxHeader">
           <fmt:message key="ssl.import.certificate.boxtitle" />
       </div>
-      <div class="emiva-contentBox">
+      <div class="B5Chat-contentBox">
           <table cellpadding="3" cellspacing="0" border="0">
           <tbody>
               <tr valign="top">

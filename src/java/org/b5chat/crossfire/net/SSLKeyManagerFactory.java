@@ -3,7 +3,7 @@
  * $Revision: 2774 $
  * $Date: 2005-09-05 01:53:16 -0300 (Mon, 05 Sep 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A custom KeyManagerFactory that creates a key manager list using the
  * default key manager or a standard keystore as specified in crossfire.xml.
- * The default keystore provided with the emiva distribution uses the Sun Java
+ * The default keystore provided with the B5Chat distribution uses the Sun Java
  * Keystore (JKS) and that takes a single password which must apply to both the
  * keystore and the key itself. Users may specify another keystore type and keystore
  * location. Alternatively, don't set a keystore type to use the JVM defaults and
@@ -46,20 +46,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author Iain Shigeoka
  */
-public class SSLEMIVAKeyManagerFactory {
+public class SSLKeyManagerFactory {
 
-	private static final Logger Log = LoggerFactory.getLogger(SSLEMIVAKeyManagerFactory.class);
+	private static final Logger Log = LoggerFactory.getLogger(SSLKeyManagerFactory.class);
 
     /**
      * Creates a KeyManager list which is null if the storeType is null, or
      * is a standard KeyManager that uses a KeyStore of type storeType,
      * located at 'keystore' location under home, and uses 'keypass' as
      * the password for the keystore password and key password. The default
-     * emiva keystore contains a self-signed X509 certificate pair under the
+     * B5Chat keystore contains a self-signed X509 certificate pair under the
      * alias '127.0.0.1' in a Java KeyStore (JKS) with initial password 'changeit'.
      * This is sufficient for local host testing but should be using standard
      * key management tools for any significant testing or deployment. See
-     * the emiva XMPP server security documentation for more information.
+     * the B5Chat XMPP server security documentation for more information.
      *
      * @param storeType The type of keystore (e.g. "JKS") to use or null to indicate no keystore should be used
      * @param keystore  The relative location of the keystore under home
@@ -106,15 +106,15 @@ public class SSLEMIVAKeyManagerFactory {
 			}
 		} catch (KeyStoreException e) {
 			keyManagers = null;
-			Log.error("SSLEMIVAKeyManagerFactory startup problem.\n" +
+			Log.error("SSLB5ChatKeyManagerFactory startup problem.\n" +
                     "  the keystore is corrupt", e);
 		} catch (NoSuchAlgorithmException e) {
 			keyManagers = null;
-			Log.error("SSLEMIVAKeyManagerFactory startup problem.\n" +
+			Log.error("SSLB5ChatKeyManagerFactory startup problem.\n" +
                     "  the keystore type doesn't exist (not provided or configured with your JVM)", e);
 		} catch (UnrecoverableKeyException e) {
 			keyManagers = null;
-			Log.error("SSLEMIVAKeyManagerFactory startup problem.\n" +
+			Log.error("SSLB5ChatKeyManagerFactory startup problem.\n" +
                     "  the keystore could not be opened (typically the password is bad)", e);
 		} 
 		return keyManagers;

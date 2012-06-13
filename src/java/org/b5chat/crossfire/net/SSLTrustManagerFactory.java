@@ -3,7 +3,7 @@
  * $Revision: 2774 $
  * $Date: 2005-09-05 01:53:16 -0300 (Mon, 05 Sep 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A custom TrustManagerFactory that creates a trust manager list using the
  * default trust manager or a standard keystore as specified in crossfire.xml.
- * There is no default trust keystore provided with the emiva distribution as most
+ * There is no default trust keystore provided with the B5Chat distribution as most
  * clients will not need to be authenticated with the server.
  * <p/>
  * The Java Keystore (JKS) takes a single password which must apply to both the
@@ -47,9 +47,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Iain Shigeoka
  */
-public class SSLEMIVATrustManagerFactory {
+public class SSLTrustManagerFactory {
 
-	private static final Logger Log = LoggerFactory.getLogger(SSLEMIVATrustManagerFactory.class);
+	private static final Logger Log = LoggerFactory.getLogger(SSLTrustManagerFactory.class);
 
     /**
      * Creates a TrustManager list which is null if the storeType is null, or
@@ -58,7 +58,7 @@ public class SSLEMIVATrustManagerFactory {
      * the password for the keystore password and key password (note that
      * trust managers typically don't need a key password as public keys
      * are stored in the clear and can be obtained without a key password).
-     * The default emiva distribution doesn't ship with a trust keystore
+     * The default B5Chat distribution doesn't ship with a trust keystore
      * as it is not needed (the server does not require client authentication).
      *
      * @param storeType  The type of keystore (e.g. "JKS") to use or null to indicate no keystore should be used
@@ -109,11 +109,11 @@ public class SSLEMIVATrustManagerFactory {
 			}
 		} catch (KeyStoreException e) {
 			trustManagers = null;
-			Log.error("SSLEMIVAKeyManagerFactory startup problem.\n" +
+			Log.error("SSLB5ChatKeyManagerFactory startup problem.\n" +
                     "  the keystore is corrupt", e);
 		} catch (NoSuchAlgorithmException e) {
 			trustManagers = null;
-			Log.error("SSLEMIVAKeyManagerFactory startup problem.\n" +
+			Log.error("SSLB5ChatKeyManagerFactory startup problem.\n" +
                     "  the keystore type doesn't exist (not provided or configured with your JVM)", e);
 		}
 		return trustManagers;

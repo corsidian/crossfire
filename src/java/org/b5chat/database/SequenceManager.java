@@ -3,7 +3,7 @@
  * $Revision: 11691 $
  * $Date: 2010-05-01 12:42:07 -0400 (Sat, 01 May 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * combination VM/database solution.<p/>
  *
  * A special table in the database doles out blocks of unique ID's to each
- * virtual machine that interacts with emiva. This has the following consequences:
+ * virtual machine that interacts with B5Chat. This has the following consequences:
  * <ul>
  * <li>There is no need to go to the database every time we want a new unique id.
  * <li>Multiple app servers can interact with the same db without id collision.
@@ -96,18 +96,18 @@ public class SequenceManager {
 
     /**
      * Returns the next id for an object that has defined the annotation {@link GlobalID}.
-     * The EMIVAID annotation value is the synonymous for the type integer.<p/>
+     * The B5ChatID annotation value is the synonymous for the type integer.<p/>
      *
-     * The annotation EMIVAID should contain the id type for the object (the same number you would
+     * The annotation B5ChatID should contain the id type for the object (the same number you would
      * use to call nextID(int type)). Example class definition:
      * <code>
-     * \@EMIVAID(10)
+     * \@B5ChatID(10)
      * public class MyClass {
      *
      * }
      * </code>
      *
-     * @param o object that has annotation EMIVAID.
+     * @param o object that has annotation B5ChatID.
      * @return the next unique ID.
      * @throws IllegalArgumentException If the object passed in does not defined {@link GlobalID}
      */
@@ -115,9 +115,9 @@ public class SequenceManager {
         GlobalID id = o.getClass().getAnnotation(GlobalID.class);
 
         if (id == null) {
-            Log.error("Annotation EMIVAID must be defined in the class " + o.getClass());
+            Log.error("Annotation B5ChatID must be defined in the class " + o.getClass());
             throw new IllegalArgumentException(
-                    "Annotation EMIVAID must be defined in the class " + o.getClass());
+                    "Annotation B5ChatID must be defined in the class " + o.getClass());
         }
 
         return nextID(id.value());
@@ -253,7 +253,7 @@ public class SequenceManager {
     }
 
     private void createNewID(Connection con, int type) throws SQLException {
-        Log.warn("Autocreating EMIVAID row for type '" + type + "'");
+        Log.warn("Autocreating B5ChatID row for type '" + type + "'");
 
         // create new ID row
         PreparedStatement pstmt = null;

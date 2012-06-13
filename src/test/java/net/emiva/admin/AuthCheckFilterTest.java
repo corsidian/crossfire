@@ -1,4 +1,4 @@
-package net.emiva.admin;
+package net.B5Chat.admin;
 
 import org.b5chat.admin.AuthCheckFilter;
 

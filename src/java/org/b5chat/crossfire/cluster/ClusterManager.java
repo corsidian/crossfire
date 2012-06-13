@@ -3,7 +3,7 @@
  * $Revision: $
  * $Date: $
  *
- * Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -273,7 +273,7 @@ public class ClusterManager {
     }
 
     /**
-     * Shuts down the clustering service. This method should be called when the emiva
+     * Shuts down the clustering service. This method should be called when the B5Chat
      * system is shutting down, and must not be called otherwise. Failing to call
      * this method may temporarily impact cluster performance, as the system will
      * have to do extra work to recover from a non-clean shutdown.
@@ -315,7 +315,7 @@ public class ClusterManager {
             shutdown();
         }
         else {
-            // Reload emiva properties. This will ensure that this nodes copy of the
+            // Reload B5Chat properties. This will ensure that this nodes copy of the
             // properties starts correct.
            GlobalProperties.getInstance().init();
            startup();

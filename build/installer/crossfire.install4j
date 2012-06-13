@@ -27,8 +27,8 @@
       <variable name="APP_NAME" value="crossfire" />
       <variable name="APP_SHORT_NAME" value="crossfire" />
       <variable name="PRODUCT_NAME" value="crossfire" />
-      <variable name="PUBLISHER" value="EMIVA Community" />
-      <variable name="PUBLISHER_URL" value="www.emiva.net" />
+      <variable name="PUBLISHER" value="B5Chat Community" />
+      <variable name="PUBLISHER_URL" value="www.b5chat.org" />
       <variable name="RELEASE_DIR" value="crossfire" />
       <variable name="RELEASE_ROOT_PATH" value="..\..\target\release" />
       <variable name="RELEASE_FULL_PATH" value="${compiler:RELEASE_ROOT_PATH}/${compiler:RELEASE_DIR}" />

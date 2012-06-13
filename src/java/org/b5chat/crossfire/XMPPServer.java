@@ -3,7 +3,7 @@
  * $Revision: 3144 $
  * $Date: 2005-12-01 14:20:11 -0300 (Thu, 01 Dec 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -741,18 +741,18 @@ public class XMPPServer implements JIDFactory {
     /**
      * Verifies that the given home guess is a real crossfire home directory.
      * We do the verification by checking for the crossfire config file in
-     * the config dir of emivaHome.
+     * the config dir of B5ChatHome.
      *
      * @param homeGuess a guess at the path to the home directory.
-     * @param emivaConfigName the name of the config file to check.
+     * @param B5ChatConfigName the name of the config file to check.
      * @return a file pointing to the home directory or null if the
      *         home directory guess was wrong.
      * @throws java.io.FileNotFoundException if there was a problem with the home
      *                                       directory provided
      */
-    private File verifyHome(String homeGuess, String emivaConfigName) throws FileNotFoundException {
+    private File verifyHome(String homeGuess, String B5ChatConfigName) throws FileNotFoundException {
         File crossfireHome = new File(homeGuess);
-        File configFile = new File(crossfireHome, emivaConfigName);
+        File configFile = new File(crossfireHome, B5ChatConfigName);
         if (!configFile.exists()) {
             throw new FileNotFoundException();
         }
@@ -767,18 +767,18 @@ public class XMPPServer implements JIDFactory {
     }
 
     /**
-     * <p>Retrieve the emiva home for the container.</p>
+     * <p>Retrieve the B5Chat home for the container.</p>
      *
-     * @throws FileNotFoundException If emivaHome could not be located
+     * @throws FileNotFoundException If B5ChatHome could not be located
      */
     private void locatecrossfire() throws FileNotFoundException {
-        String emivaConfigName = "conf" + File.separator + "crossfire.xml";
+        String B5ChatConfigName = "conf" + File.separator + "crossfire.xml";
         // First, try to load it crossfireHome as a system property.
         if (crossfireHome == null) {
             String homeProperty = System.getProperty("crossfireHome");
             try {
                 if (homeProperty != null) {
-                    crossfireHome = verifyHome(homeProperty, emivaConfigName);
+                    crossfireHome = verifyHome(homeProperty, B5ChatConfigName);
                 }
             }
             catch (FileNotFoundException fe) {
@@ -791,7 +791,7 @@ public class XMPPServer implements JIDFactory {
         // by looking for the config file
         if (crossfireHome == null) {
             try {
-                crossfireHome = verifyHome("..", emivaConfigName).getCanonicalFile();
+                crossfireHome = verifyHome("..", B5ChatConfigName).getCanonicalFile();
             }
             catch (FileNotFoundException fe) {
                 // Ignore.
@@ -814,7 +814,7 @@ public class XMPPServer implements JIDFactory {
                     String path = doc.getRootElement().getText();
                     try {
                         if (path != null) {
-                            crossfireHome = verifyHome(path, emivaConfigName);
+                            crossfireHome = verifyHome(path, B5ChatConfigName);
                         }
                     }
                     catch (FileNotFoundException fe) {
@@ -847,7 +847,7 @@ public class XMPPServer implements JIDFactory {
             // Set the home directory for the config file
             Globals.setHomeDirectory(crossfireHome.toString());
             // Set the name of the config file
-            Globals.setConfigName(emivaConfigName);
+            Globals.setConfigName(B5ChatConfigName);
         }
     }
 

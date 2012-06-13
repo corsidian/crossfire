@@ -3,7 +3,7 @@
  * $Revision: 3186 $
  * $Date: 2005-12-11 00:07:52 -0300 (Sun, 11 Dec 2005) $
  *
- * Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -197,7 +197,7 @@ public class AuditorImpl implements Auditor {
         if (xmlWriter != null) {
             try {
                 xmlWriter.flush();
-                writer.write("</emiva>");
+                writer.write("</B5Chat>");
                 xmlWriter.close();
                 writer = null;
                 xmlWriter = null;
@@ -228,7 +228,7 @@ public class AuditorImpl implements Auditor {
         // Get list of existing audit files
         FilenameFilter filter = new FilenameFilter() {
             public boolean accept(File dir, String name) {
-                return name.startsWith("emiva.audit-") && name.endsWith(".log");
+                return name.startsWith("B5Chat.audit-") && name.endsWith(".log");
             }
         };
         File[] files = baseFolder.listFiles(filter);
@@ -273,12 +273,12 @@ public class AuditorImpl implements Auditor {
         calendar.add(Calendar.DATE, maxDays * -1);
 
         final String oldestFile =
-                "emiva.audit-" + dateFormat.format(calendar.getTime()) + "-000.log";
+                "B5Chat.audit-" + dateFormat.format(calendar.getTime()) + "-000.log";
 
         // Get list of audit files to delete
         FilenameFilter filter = new FilenameFilter() {
             public boolean accept(File dir, String name) {
-                return name.startsWith("emiva.audit-") && name.endsWith(".log") &&
+                return name.startsWith("B5Chat.audit-") && name.endsWith(".log") &&
                         name.compareTo(oldestFile) < 0;
             }
         };
@@ -297,19 +297,19 @@ public class AuditorImpl implements Auditor {
 	* use log4j or change the file format from YYYYmmdd-nnn to YYYYmmdd-HHMM */
 	/**
 	* Sets <b>xmlWriter</b> so this class can use it to write audit logs<br>
-	* The audit filename <b>currentAuditFile</b> will be `emiva.audit-YYYYmmdd-nnn.log´<br>
+	* The audit filename <b>currentAuditFile</b> will be `B5Chat.audit-YYYYmmdd-nnn.log´<br>
 	* `nnn´ will be reset to `000´ when a new log file is created the next day <br>
 	* `nnn´ will be increased for log files which belong to the same day<br>
 	* <b>WARNING:</b> If log files of the current day are deleted and the server is restarted then
 	* the value of `nnn´ may be random (it's calculated by `Math.max(files.length, filesIndex);´
-	* with `filesIndex=0´ and  `files.length=nr(existing emiva.audit-YYYYmmdd-???.log files)´ - 
+	* with `filesIndex=0´ and  `files.length=nr(existing B5Chat.audit-YYYYmmdd-???.log files)´ - 
 	* if there are 10 audit files (033-043) then nnn will be 10 instead of 44).<br>
 	* If  `nnn=999´ then all audit data will be written to this file till the next day.<br>
 	* @param auditDate
 	* @throws IOException
 	*/
 	private void createAuditFile(Date auditDate) throws IOException {
-		final String filePrefix = "emiva.audit-" + dateFormat.format(auditDate) + "-";
+		final String filePrefix = "B5Chat.audit-" + dateFormat.format(auditDate) + "-";
 		if (currentDateLimit == null || auditDate.after(currentDateLimit)) {
    		// Set limit date after which we need to rollover the audit file (based on the date)
    		Calendar calendar = Calendar.getInstance();
@@ -351,7 +351,7 @@ public class AuditorImpl implements Auditor {
 		close();
 		// always append to an existing file (after restart)
 		writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentAuditFile, true), "UTF-8"));
-		writer.write("<emiva xmlns=\"http://www.emiva.net\">");
+		writer.write("<B5Chat xmlns=\"http://www.b5chat.org\">");
 		xmlWriter = new org.b5chat.util.XMLWriter(writer);
 	}
 
@@ -418,7 +418,7 @@ public class AuditorImpl implements Auditor {
         private Date creationDate;
 
         public AuditPacket(Packet packet, Session session) {
-            element = docFactory.createElement("packet", "http://www.emiva.net");
+            element = docFactory.createElement("packet", "http://www.b5chat.org");
             creationDate = new Date();
             if (session != null && session.getStreamID() != null) {
                 element.addAttribute("streamID", session.getStreamID().toString());

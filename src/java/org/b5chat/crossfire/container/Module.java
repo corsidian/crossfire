@@ -3,7 +3,7 @@
  * $Revision: 624 $
  * $Date: 2004-12-05 02:38:08 -0300 (Sun, 05 Dec 2004) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,14 +27,14 @@ import org.b5chat.crossfire.XMPPServer;
  * represents an operational unit and may contain zero or more services
  * and rely on zero or more services that may be hosted by the container.
  * <p/>
- * In order to be hosted in the emiva server container, all modules must:
+ * In order to be hosted in the B5Chat server container, all modules must:
  * </p>
  * <ul>
  * <li>Implement the Module interface</li>
  * <li>Have a public no-arg constructor</li>
  * </ul>
  * <p/>
- * The emiva container will run all modules through a simple lifecycle:
+ * The B5Chat container will run all modules through a simple lifecycle:
  * <pre>
  * constructor -> initialize() -> start() -> stop() -> destroy() -> finalizer
  *                    |<-----------------------|          ^

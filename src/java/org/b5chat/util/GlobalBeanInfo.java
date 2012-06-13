@@ -3,7 +3,7 @@
  * $Revision: 11388 $
  * $Date: 2009-11-08 19:26:55 -0500 (Sun, 08 Nov 2009) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * An abstract BeanInfo implementation that automatically constructs
  * PropertyDescriptors and handles i18n through ResourceBundles.
  *
- * @author EMIVA Community
+ * @author B5Chat Community
  * @see java.beans.BeanInfo
  */
 public abstract class GlobalBeanInfo implements BeanInfo {

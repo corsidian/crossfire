@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -274,17 +274,17 @@
 </p>
 
 <p>
-	<a href="group-summary.jsp" class="emiva-link-back"><span>&laquo;</span> Back to all groups</a>
+	<a href="group-summary.jsp" class="B5Chat-link-back"><span>&laquo;</span> Back to all groups</a>
 </p>
 
 <%
     if (success) {
 %>
-    <div class="emiva-success">
+    <div class="B5Chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <% if (groupInfoChanged) { %>
         <fmt:message key="group.edit.update" />
         <% } else if ("true".equals(request.getParameter("success"))) { %>
@@ -306,11 +306,11 @@
     }
     else if(!success && add){
 %>
-	<div class="emiva-error">
+	<div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <% if(add) { %>
         <fmt:message key="group.edit.not_update" />
         <%= errorBuf %>
@@ -321,19 +321,19 @@
     </div><br>
 <% } %>
 
-	<div class="emiva-horizontalRule"></div>
+	<div class="B5Chat-horizontalRule"></div>
 
 <form name="ff" action="group-edit.jsp">
 <input type="hidden" name="group" value="<%= groupName %>"/>
 
 
 	<!-- BEGIN group name and description -->
-	<div class="emiva-contentBox-plain">
+	<div class="B5Chat-contentBox-plain">
         <%  // Only show edit and delete options if the groups aren't read-only.
             if (!webManager.getGroupManager().isReadOnly()) { %>
-        <div class="emiva-contentBox-toolbox">
-			<a href="group-create.jsp?group=<%= URLEncoder.encode(group.getName(), "UTF-8")%>&name=<%= URLEncoder.encode(group.getName(), "UTF-8")%>&description=<%= group.getDescription() != null? URLEncoder.encode(group.getDescription(), "UTF-8") : "" %>" class="emiva-link-edit"><fmt:message key="group.edit.edit_details" /></a>
-			<a href="group-delete.jsp?group=<%= URLEncoder.encode(group.getName(), "UTF-8")%>" class="emiva-link-delete"><fmt:message key="group.edit.delete" /></a>
+        <div class="B5Chat-contentBox-toolbox">
+			<a href="group-create.jsp?group=<%= URLEncoder.encode(group.getName(), "UTF-8")%>&name=<%= URLEncoder.encode(group.getName(), "UTF-8")%>&description=<%= group.getDescription() != null? URLEncoder.encode(group.getDescription(), "UTF-8") : "" %>" class="B5Chat-link-edit"><fmt:message key="group.edit.edit_details" /></a>
+			<a href="group-delete.jsp?group=<%= URLEncoder.encode(group.getName(), "UTF-8")%>" class="B5Chat-link-delete"><fmt:message key="group.edit.delete" /></a>
 		</div>
         <% } %>
 
@@ -348,11 +348,11 @@
 
 
 	<!-- BEGIN contact list settings -->
-	<div class="emiva-contentBoxHeader">
+	<div class="B5Chat-contentBoxHeader">
 		<fmt:message key="group.edit.share_title" />
 
 	</div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
             <% if (webManager.getGroupManager().isPropertyReadOnly()) { %>
         <p>
                 <% if (enableRosterGroups) { %>
@@ -371,7 +371,7 @@
 		<tbody>
 		<tr>
             <td width="1%">
-                <input type="radio" name="enableRosterGroups" value="false" id="rb201" <%= !enableRosterGroups ? "checked" : "" %> onClick="document.getElementById('emiva-roster').style.display = 'none';">
+                <input type="radio" name="enableRosterGroups" value="false" id="rb201" <%= !enableRosterGroups ? "checked" : "" %> onClick="document.getElementById('B5Chat-roster').style.display = 'none';">
             </td>
             <td width="99%">
                 <label for="rb201"><fmt:message key="group.edit.share_not_in_rosters" /></label>
@@ -379,23 +379,23 @@
         </tr>
         <tr>
             <td width="1%" valign="top">
-                <input type="radio" name="enableRosterGroups" value="true" id="rb202" <%= enableRosterGroups ? "checked" : "" %> onClick="document.getElementById('emiva-roster').style.display = 'block';">
+                <input type="radio" name="enableRosterGroups" value="true" id="rb202" <%= enableRosterGroups ? "checked" : "" %> onClick="document.getElementById('B5Chat-roster').style.display = 'block';">
             </td>
             <td width="99%">
                 <label for="rb202"><fmt:message key="group.edit.share_in_rosters" /></label>
 
-                <div id="emiva-roster" style="display: <%= !enableRosterGroups ? "none" : "block"  %>;">
+                <div id="B5Chat-roster" style="display: <%= !enableRosterGroups ? "none" : "block"  %>;">
 	               <b><fmt:message key="group.edit.share_display_name" /></b>
 	               <input type="text" name="groupDisplayName" size="30" maxlength="100" value="<%= (groupDisplayName != null ? groupDisplayName : "") %>"><br>
                        <%  if (errors.get("groupDisplayName") != null) { %>
-                           <span class="emiva-error-text"><fmt:message key="group.edit.share_display_name" /></span><br/>
+                           <span class="B5Chat-error-text"><fmt:message key="group.edit.share_display_name" /></span><br/>
                        <%  } %>
 	                   <script type="text/javascript" language="JavaScript">
 		                   function toggleRosterShare() {
 			                   if (document.getElementById('cb101').checked == false) {
-			                       document.getElementById('emiva-rosterShare').style.display = 'none';
+			                       document.getElementById('B5Chat-rosterShare').style.display = 'none';
                                 } else {
-				                   document.getElementById('emiva-rosterShare').style.display = 'block';
+				                   document.getElementById('B5Chat-rosterShare').style.display = 'block';
                                    document.getElementById('rb002').checked = true;
 			                   }
 		                   }
@@ -404,7 +404,7 @@
 	               <input type="checkbox" id="cb101" name="shareContactList" onClick="toggleRosterShare();" style="vertical-align: middle;"
 										 <%= (shareAdditional ? "checked" : "") %>>
 	               <label for="cb101"><fmt:message key="group.edit.share_additional" /></label>
-	                    <div id="emiva-rosterShare" style="display: <%= (enableRosterGroups && shareAdditional) ? "block" : "none"  %>;">
+	                    <div id="B5Chat-rosterShare" style="display: <%= (enableRosterGroups && shareAdditional) ? "block" : "none"  %>;">
 		                    <table cellpadding="2" cellspacing="0" border="0" width="100%">
 							<tbody>
 								<tr>
@@ -477,10 +477,10 @@
 
 
 	<!-- BEGIN group membership management -->
-	<div class="emiva-contentBoxHeader">
+	<div class="B5Chat-contentBoxHeader">
 		<fmt:message key="group.edit.members" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
 		<%  // Only show if the group isn't read-only.
             if (!webManager.getGroupManager().isReadOnly()) { %>
         <p>
@@ -507,14 +507,14 @@
 
         <form action="group-edit.jsp" method="post" name="main">
         <input type="hidden" name="group" value="<%= groupName %>">
-        <table class="emiva-table" cellpadding="3" cellspacing="0" border="0" width="435">
+        <table class="B5Chat-table" cellpadding="3" cellspacing="0" border="0" width="435">
             <tr>
 	            <th>&nbsp;</th>
                 <th nowrap><fmt:message key="group.edit.username" /></th>
                 <%  // Only show if the group isn't read-only.
                 if (!webManager.getGroupManager().isReadOnly()) { %>
-                <th width="1%" nowrap class="emiva-table-th-center"><fmt:message key="group.edit.admin" /></th>
-                <th width="1%" nowrap class="emiva-table-th-center"><fmt:message key="group.edit.remove" /></th>
+                <th width="1%" nowrap class="B5Chat-table-th-center"><fmt:message key="group.edit.admin" /></th>
+                <th width="1%" nowrap class="B5Chat-table-th-center"><fmt:message key="group.edit.remove" /></th>
                 <% } %>
             </tr>
             <!-- Add admins first -->

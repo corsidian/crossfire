@@ -2,7 +2,7 @@
   -	$Revision$
   -	$Date$
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -103,11 +103,11 @@
 
     <%  if (request.getParameter("addsuccess") != null) { %>
 
-        <div class="emiva-success">
+        <div class="B5Chat-success">
         <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-            <tr><td class="emiva-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
-            <td class="emiva-icon-label">
+            <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
+            <td class="B5Chat-icon-label">
             <fmt:message key="user.roster.added" />
             </td></tr>
         </tbody>
@@ -118,11 +118,11 @@
 
     <%  if (request.getParameter("editsuccess") != null) { %>
 
-        <div class="emiva-success">
+        <div class="B5Chat-success">
         <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-            <tr><td class="emiva-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
-            <td class="emiva-icon-label">
+            <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
+            <td class="B5Chat-icon-label">
             <fmt:message key="user.roster.edited" />
             </td></tr>
         </tbody>
@@ -133,11 +133,11 @@
 
     <%  if (request.getParameter("deletesuccess") != null) { %>
 
-        <div class="emiva-success">
+        <div class="B5Chat-success">
         <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-            <tr><td class="emiva-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
-            <td class="emiva-icon-label">
+            <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
+            <td class="B5Chat-icon-label">
             <fmt:message key="user.roster.deleted" />
             </td></tr>
         </tbody>
@@ -190,7 +190,7 @@
             boolean isCurrent = (i + 1) == curPage;
     %>
         <a href="user-roster.jsp?username=<%= URLEncoder.encode(username, "UTF-8") %>&start=<%= (i*range) %>&range=<%= range %>&filter=<%= filter %>"
-        class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+        class="<%= ((isCurrent) ? "B5Chat-current" : "") %>"
         ><%= (i+1) %></a><%= sep %>
 
     <%  } %>
@@ -236,7 +236,7 @@
 </select>
 </p>
 
-<div class="emiva-table" style="clear: both">
+<div class="B5Chat-table" style="clear: both">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -286,7 +286,7 @@
                     break;
                 }
     %>
-    <tr class="emiva-<%= (((i%2)==0) ? "even" : "odd") %>">
+    <tr class="B5Chat-<%= (((i%2)==0) ? "even" : "odd") %>">
 
         <td width="1%">
             <%= i %>

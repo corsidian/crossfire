@@ -6,7 +6,7 @@ body {
 	margin:0;
 	padding:0;
 }
-#emiva-main {
+#B5Chat-main {
 	padding-bottom:20px;
 }
 body, div, p, td, th {
@@ -33,7 +33,7 @@ fieldset div {
 	padding:5px 3px 5px 0;
 	width:100%;
 }
-fieldset div .emiva-table {
+fieldset div .B5Chat-table {
 	margin:0;
 	padding:0;
 }
@@ -106,7 +106,7 @@ iframe {
 /*  Header                                       */
 /* --------------------------------------------- */
 
-#emiva-header {
+#B5Chat-header {
     clear:both;
     float:left;
     margin:0;
@@ -115,14 +115,14 @@ iframe {
     width:100%;
 }
 
-#emiva-logo-image {
+#B5Chat-logo-image {
     color:#FFFFFF;
     display:block;
     left:0;
     position:relative;
     top:0;
 }
-#emiva-logo-image_new {
+#B5Chat-logo-image_new {
     background:transparent url(../images/header-title_new.gif) no-repeat scroll 0;
     color:#FFFFFF;
     display:block;
@@ -133,19 +133,19 @@ iframe {
     top:0;
     width:350px;
 }
-#emiva-logo-image_new strong {
+#B5Chat-logo-image_new strong {
     display:block;
     margin:0 0 0 130px;
     padding-top:23px;
     position:relative;
 }
-#emiva-secondary {
+#B5Chat-secondary {
     background-color:#EEEEEE;
     border-bottom:1px solid #BBBBBB;
     border-top:1px solid #CCCCCC;
     padding:6px 6px 6px 12px;
 }
-#emiva-header .info {
+#B5Chat-header .info {
     color:#FFFFFF;
     display:block;
     font-size:8pt;
@@ -156,27 +156,27 @@ iframe {
     top:10px;
     width:220px;
 }
-#emiva-header .info img {
+#B5Chat-header .info img {
     margin:0 0 4px;
 }
-#emiva-content {
+#B5Chat-content {
     padding:10px 20px 12px 32px;
 }
 
 /* name and logo image */
-#emiva-logo {
+#B5Chat-logo {
     float:left;
     height:76px;
     overflow:hidden;
 }
-#emiva-logo h1 {
+#B5Chat-logo h1 {
     clear:none;
     color:#555555;
     float:left;
     font-size:14pt;
     padding:0;
 }
-#emiva-logo img {
+#B5Chat-logo img {
     border:medium none;
     float:left;
     padding-left:10px;
@@ -184,7 +184,7 @@ iframe {
 }
 
 /* version, login and site link */
-#emiva-userStatus {
+#B5Chat-userStatus {
     color:#999999;
     float:right;
     font-size:8pt;
@@ -194,7 +194,7 @@ iframe {
     text-align:right;
     width:275px;
 }
-#emiva-userStatus a {
+#B5Chat-userStatus a {
     font-weight:bold;
 }
 
@@ -202,38 +202,38 @@ iframe {
 /*  Main nav                                     */
 /* --------------------------------------------- */
 
-#emiva-header #emiva-nav {
-    background:#F7F7F7 url(../images/emiva-nav-bg.gif) repeat-x scroll 0;
+#B5Chat-header #B5Chat-nav {
+    background:#F7F7F7 url(../images/B5Chat-nav-bg.gif) repeat-x scroll 0;
     clear:both;
     height:27px;
     margin:0;
     padding:0;
 }
-#emiva-header #emiva-nav-left, #emiva-header #emiva-nav-right {
+#B5Chat-header #B5Chat-nav-left, #B5Chat-header #B5Chat-nav-right {
     height:27px;
     width:15px;
 }
-#emiva-header #emiva-nav-left {
-    background:transparent url(../images/emiva-nav-div.gif) no-repeat scroll right center;
+#B5Chat-header #B5Chat-nav-left {
+    background:transparent url(../images/B5Chat-nav-div.gif) no-repeat scroll right center;
     float:left;
 }
-#emiva-header #emiva-nav-right {
+#B5Chat-header #B5Chat-nav-right {
     float:right;
 }
-#emiva-header #emiva-nav ul {
+#B5Chat-header #B5Chat-nav ul {
     list-style-type:none;
     margin:0 0 0 5px;
     padding:0;
 }
-#emiva-header #emiva-nav ul li {
-    background:transparent url(../images/emiva-nav-div.gif) no-repeat scroll right center;
+#B5Chat-header #B5Chat-nav ul li {
+    background:transparent url(../images/B5Chat-nav-div.gif) no-repeat scroll right center;
     color:#FFFFFF;
     float:left;
     font-size:11pt;
     margin:0;
     padding:4px 2px 5px 0;
 }
-#emiva-header #emiva-nav ul li a, #emiva-header #emiva-nav ul li a:visited {
+#B5Chat-header #B5Chat-nav ul li a, #B5Chat-header #B5Chat-nav ul li a:visited {
     color:#333333;
     font-size:10pt;
     font-weight:bold;
@@ -241,41 +241,41 @@ iframe {
     padding:4px 13px;
     text-decoration:none;
 }
-#emiva-header #emiva-nav ul li a:hover, #emiva-header #emiva-nav ul li a:active {
-    background:transparent url(../images/emiva-nav-bg-over.gif) repeat-x scroll right center;
+#B5Chat-header #B5Chat-nav ul li a:hover, #B5Chat-header #B5Chat-nav ul li a:active {
+    background:transparent url(../images/B5Chat-nav-bg-over.gif) repeat-x scroll right center;
     text-decoration:underline;
 }
-#emiva-header #emiva-nav ul li.currentlink a, #emiva-header #emiva-nav ul li.currentlink a:visited, #emiva-header #emiva-nav ul li.currentlink a:active, #emiva-header #emiva-nav ul li.currentlink a:hover {
-    background:transparent url(../images/emiva-nav-bg-on.gif) repeat-x scroll right center;
+#B5Chat-header #B5Chat-nav ul li.currentlink a, #B5Chat-header #B5Chat-nav ul li.currentlink a:visited, #B5Chat-header #B5Chat-nav ul li.currentlink a:active, #B5Chat-header #B5Chat-nav ul li.currentlink a:hover {
+    background:transparent url(../images/B5Chat-nav-bg-on.gif) repeat-x scroll right center;
     color:#FFFFFF;
 }
 
 /* Subnav */
-#emiva-subnav {
-    background:#F7F7F7 url(../images/emiva-subnav-bg.gif) repeat-x scroll 0;
+#B5Chat-subnav {
+    background:#F7F7F7 url(../images/B5Chat-subnav-bg.gif) repeat-x scroll 0;
     clear:both;
     height:28px;
     margin:0;
     padding:0;
     width:100%;
 }
-#emiva-subnav .subnav-community {
-    background:#F7F7F7 url(../images/emiva-subnav-bg.gif) repeat-x scroll 100px 50%;
+#B5Chat-subnav .subnav-community {
+    background:#F7F7F7 url(../images/B5Chat-subnav-bg.gif) repeat-x scroll 100px 50%;
 }
-#emiva-subnav ul {
+#B5Chat-subnav ul {
     list-style-type:none;
     margin:0 0 0 13px;
     padding:0;
 }
-#emiva-subnav ul li {
-    background:transparent url(../images/emiva-subnav-div.gif) no-repeat scroll right center;
+#B5Chat-subnav ul li {
+    background:transparent url(../images/B5Chat-subnav-div.gif) no-repeat scroll right center;
     color:#FFFFFF;
     float:left;
     font-size:11pt;
     margin:9px 0 0 0;
     padding:0 1px 2px 0;
 }
-#emiva-subnav ul li a, #emiva-subnav ul li a:visited {
+#B5Chat-subnav ul li a, #B5Chat-subnav ul li a:visited {
     font-family:verdana,sans-serif;
     font-size:8pt;
     font-weight:bold;
@@ -283,13 +283,13 @@ iframe {
     padding:3px 15px;
     text-decoration:none;
 }
-#emiva-subnav ul li a:hover, #emiva-subnav ul li a:active {
+#B5Chat-subnav ul li a:hover, #B5Chat-subnav ul li a:active {
     background-color:#E3E3E3;
     text-decoration:underline;
 }
-#emiva-subnav ul li.current {
+#B5Chat-subnav ul li.current {
 }
-#emiva-subnav ul li.current a, #emiva-subnav ul li.current a:visited {
+#B5Chat-subnav ul li.current a, #B5Chat-subnav ul li.current a:visited {
     background-color:#F9F9F9;
     border-color:#cecece;
     border-style:solid;
@@ -297,7 +297,7 @@ iframe {
     padding:3px 15px 4px 15px;
     border: 0;
 }
-#emiva-subnav ul li.current a:hover, #emiva-subnav ul li.current a:active {
+#B5Chat-subnav ul li.current a:hover, #B5Chat-subnav ul li.current a:active {
     background-color:#F9F9F9;
     text-decoration:underline;
     border: 0;
@@ -311,25 +311,25 @@ iframe {
     font-family:verdana,sans-serif;
     font-size:8pt;
 }
-#logviewer .emiva-tab, .emiva-tab-active {
+#logviewer .B5Chat-tab, .B5Chat-tab-active {
     background-color:#DDDDDD;
     border:1px solid #CCCCCC;
     padding:4px 1em;
     white-space:nowrap;
 }
-#logviewer .emiva-tab-active {
+#logviewer .B5Chat-tab-active {
     background-color:#FFFFFF;
     border-bottom:1px solid #FFFFFF;
 }
-#logviewer .emiva-spacer, .emiva-stretch {
+#logviewer .B5Chat-spacer, .B5Chat-stretch {
     border-bottom:1px solid #CCCCCC;
 }
-#logviewer .emiva-tab a, #logviewer .emiva-tab-active a {
+#logviewer .B5Chat-tab a, #logviewer .B5Chat-tab-active a {
     color:#000000;
     font-weight:bold;
     text-decoration:none;
 }
-#logviewer .emiva-tab a:hover, #logviewer .emiva-tab-active a:hover {
+#logviewer .B5Chat-tab a:hover, #logviewer .B5Chat-tab-active a:hover {
     text-decoration:underline;
 }
 
@@ -337,7 +337,7 @@ iframe {
 /*  Titles                                       */
 /* --------------------------------------------- */
 
-#emiva-main #emiva-title {
+#B5Chat-main #B5Chat-title {
     font-size:12pt;
     font-weight:bold;
     padding-bottom:1em;
@@ -347,17 +347,17 @@ iframe {
 /*  Breadcrumbs                                  */
 /* --------------------------------------------- */
 
-#emiva-main #emiva-breadcrumbs {
+#B5Chat-main #B5Chat-breadcrumbs {
     font-family:verdana,sans-serif;
     font-size:8pt;
     padding-top:2px;
     white-space:nowrap;
 }
-#emiva-main #emiva-breadcrumbs a {
+#B5Chat-main #B5Chat-breadcrumbs a {
     color:#000000;
     text-decoration:none;
 }
-#emiva-main #emiva-breadcrumbs a:hover {
+#B5Chat-main #B5Chat-breadcrumbs a:hover {
     color:#000000;
     text-decoration:underline;
 }
@@ -366,8 +366,8 @@ iframe {
 /*  Sidebar                                      */
 /* --------------------------------------------- */
 
-#emiva-main {
-    background:#FFFFFF url(../images/emiva-body-bg.gif) repeat-x scroll center top;
+#B5Chat-main {
+    background:#FFFFFF url(../images/B5Chat-body-bg.gif) repeat-x scroll center top;
     clear:both;
     display:block;
     float:left;
@@ -376,7 +376,7 @@ iframe {
     position:relative;
     width:100%;
 }
-#emiva-sidebar-container {
+#B5Chat-sidebar-container {
     float:left;
     font-size:9pt;
     margin:0;
@@ -384,19 +384,19 @@ iframe {
     padding:0;
     width:200px;
 }
-#emiva-sidebar-box {
+#B5Chat-sidebar-box {
     margin:0;
     overflow:hidden;
     padding:0;
     width:200px;
     background-color: #f9f9f9;
 }
-#emiva-sidebar {
-    background:transparent url(../images/emiva-tertnav-top.gif) no-repeat scroll right top;
+#B5Chat-sidebar {
+    background:transparent url(../images/B5Chat-tertnav-top.gif) no-repeat scroll right top;
     margin-bottom:12px;
     padding-top:0;
 }
-#emiva-sidebar ul {
+#B5Chat-sidebar ul {
     -moz-border-radius-bottomleft:0;
     -moz-border-radius-bottomright:5px;
     -moz-border-radius-topleft:0;
@@ -407,29 +407,29 @@ iframe {
     margin:0 5px 0 0;
     padding:8px 22px 15px;
 }
-#emiva-sidebar ul li {
+#B5Chat-sidebar ul li {
     border-bottom:1px solid #e6e6e6;
     padding:0;
     border-top:1px solid #f9f9f9;
 }
-#emiva-sidebar ul li a {
+#B5Chat-sidebar ul li a {
     color:#777;
     display:block;
     padding:4px 0 4px 10px;
     text-decoration:none;
 }
-#emiva-sidebar ul li a:link, #emiva-sidebar ul li a:visited {
+#B5Chat-sidebar ul li a:link, #B5Chat-sidebar ul li a:visited {
     color:#444444;
     text-decoration:none;
 }
-#emiva-sidebar ul li a:hover {
+#B5Chat-sidebar ul li a:hover {
     text-decoration:underline;
 }
-#emiva-sidebar ul li.currentlink {
-    background:transparent url(../images/emiva-tertnav-arrow.gif) no-repeat scroll left center;
+#B5Chat-sidebar ul li.currentlink {
+    background:transparent url(../images/B5Chat-tertnav-arrow.gif) no-repeat scroll left center;
     font-weight:bold;
 }
-#emiva-sidebar ul.subitems {
+#B5Chat-sidebar ul.subitems {
     background-color:#f9f9f9;
     border-top: 1.0px solid #f9f9f9;
     border-bottom: 1.0px solid #f9f9f9;
@@ -438,28 +438,28 @@ iframe {
     padding:0 0 0 10px;
     margin:1px 0 1px 0;
 }
-#emiva-sidebar ul.subitems li {
+#B5Chat-sidebar ul.subitems li {
     border-top:1px solid #e6e6e6;
     border-bottom: 1.0px solid #f9f9f9;
     padding:0;
 }
-#emiva-sidebar ul.subitems li.category {
+#B5Chat-sidebar ul.subitems li.category {
     border-top: 1.0px solid #f9f9f9;
     color:#777;
     font-weight:bold;
     padding:4px 0;
 }
-#emiva-sidebar ul.subitems li a {
+#B5Chat-sidebar ul.subitems li a {
     color:#777;
     display:block;
     padding:4px 0 4px 10px;
     text-decoration:none;
 }
-#emiva-sidebar ul.subitems li a:hover {
+#B5Chat-sidebar ul.subitems li a:hover {
     text-decoration:underline;
 }
-#emiva-sidebar ul.subitems li.currentlink a, #emiva-sidebar ul.subitems li.currentlink a:visited, #emiva-sidebar ul.subitems li.currentlink a:hover {
-    background:transparent url(../images/emiva-tertnav-arrow.gif) no-repeat scroll left center;
+#B5Chat-sidebar ul.subitems li.currentlink a, #B5Chat-sidebar ul.subitems li.currentlink a:visited, #B5Chat-sidebar ul.subitems li.currentlink a:hover {
+    background:transparent url(../images/B5Chat-tertnav-arrow.gif) no-repeat scroll left center;
     color:#555555;
     font-weight:bold;
     text-decoration:none;
@@ -469,7 +469,7 @@ iframe {
 /*  Tasks                                        */
 /* --------------------------------------------- */
 
-#emiva-runningtask {
+#B5Chat-runningtask {
     margin-left:1em;
 }
 
@@ -477,10 +477,10 @@ iframe {
 /*  Back link                                    */
 /* --------------------------------------------- */
 
-a.emiva-link-back {
+a.B5Chat-link-back {
     font-size:9pt;
 }
-a.emiva-link-back span {
+a.B5Chat-link-back span {
     font-size:10pt;
 }
 
@@ -488,16 +488,16 @@ a.emiva-link-back span {
 /*  Edit & Delete links                          */
 /* --------------------------------------------- */
 
-a.emiva-link-edit, a.emiva-link-delete {
+a.B5Chat-link-edit, a.B5Chat-link-delete {
     display:block;
     font-size:8pt;
     margin:3px 5px 6px 0;
     padding-left:19px;
 }
-a.emiva-link-edit {
+a.B5Chat-link-edit {
     background:transparent url(../images/edit-16x16.gif) no-repeat scroll left center;
 }
-a.emiva-link-delete {
+a.B5Chat-link-delete {
     background:transparent url(../images/delete-16x16.gif) no-repeat scroll left center;
 }
 
@@ -505,7 +505,7 @@ a.emiva-link-delete {
 /*  Hoizontal Rule                               */
 /* --------------------------------------------- */
 
-.emiva-horizontalRule {
+.B5Chat-horizontalRule {
     background-color:#DCDCDC;
     height:1px;
     margin:20px 0 10px;
@@ -523,42 +523,42 @@ pre, tt {
 }
 
 /* Messages - errors, success and info */
-.emiva-error table, .emiva-info table, .emiva-success table {
+.B5Chat-error table, .B5Chat-info table, .B5Chat-success table {
     border:1px solid #CCCCCC;
 }
-.emiva-error td, .emiva-info td, .emiva-success td {
+.B5Chat-error td, .B5Chat-info td, .B5Chat-success td {
     padding:3px;
     vertical-align:top;
 }
-.emiva-error-text, .emiva-error .emiva-icon-label, .emiva-error-text a, .emiva-error .emiva-icon-label a {
+.B5Chat-error-text, .B5Chat-error .B5Chat-icon-label, .B5Chat-error-text a, .B5Chat-error .B5Chat-icon-label a {
     color:#FF0000;
 }
-.emiva-success-text, .emiva-success .emiva-icon-label, .emiva-success-text a, .emiva-success .emiva-icon-label a {
+.B5Chat-success-text, .B5Chat-success .B5Chat-icon-label, .B5Chat-success-text a, .B5Chat-success .B5Chat-icon-label a {
     color:#009900;
 }
-.emiva-info-text, .emiva-info .emiva-icon-label, .emiva-info-text a, .emiva-info .emiva-icon-label a {
+.B5Chat-info-text, .B5Chat-info .B5Chat-icon-label, .B5Chat-info-text a, .B5Chat-info .B5Chat-icon-label a {
     color:#330066;
 }
 
 /* tables */
-.emiva-table {
+.B5Chat-table {
     border-color:#CCCCCC;
     border-style:solid;
     border-width:1px 1px 0;
 }
-.emiva-table .c1, fieldset .c1 {
+.B5Chat-table .c1, fieldset .c1 {
     width:30%;
 }
-.emiva-table th, .emiva-table td, .emiva-option-table th, .emiva-option-table td {
+.B5Chat-table th, .B5Chat-table td, .B5Chat-option-table th, .B5Chat-option-table td {
     padding:6px;
 }
-.emiva-table th th, .emiva-table td td {
+.B5Chat-table th th, .B5Chat-table td td {
     padding:0;
 }
-.emiva-table td.icon {
+.B5Chat-table td.icon {
     padding:0 5px 0 3px;
 }
-.emiva-table th {
+.B5Chat-table th {
     background-color:#EEEEEE;
     border-bottom:1px solid #CCCCCC;
     font-family:verdana,arial,helvetica,sans-serif;
@@ -566,57 +566,57 @@ pre, tt {
     font-weight:bold;
     text-align:left;
 }
-.emiva-table th table th {
+.B5Chat-table th table th {
     border-bottom:medium none;
     border-right:medium none;
 }
-.emiva-table th table th a {
+.B5Chat-table th table th a {
     color:#000000;
     text-decoration:none;
 }
-.emiva-table tr td {
+.B5Chat-table tr td {
     border-bottom:1px solid #E3E3E3;
 }
-.emiva-table td {
+.B5Chat-table td {
     font-family:arial,helvetica,sans-serif;
     font-size:10pt;
 }
-.emiva-table .emiva-odd td {
+.B5Chat-table .B5Chat-odd td {
     background-color:#FFFFFF;
 }
-.emiva-table .emiva-even td {
+.B5Chat-table .B5Chat-even td {
     background-color:#FBFBFB;
 }
-.emiva-table tfoot td {
+.B5Chat-table tfoot td {
     background-color:#EEEEEE;
     border-bottom:1px solid #CCCCCC;
     font-family:verdana,arial,helvetica,sans-serif;
     font-size:8pt;
 }
-.emiva-table td td {
+.B5Chat-table td td {
     border-width:0;
 }
-.emiva-table input, .emiva-table select, .emiva-option-table input, .emiva-option-table select {
+.B5Chat-table input, .B5Chat-table select, .B5Chat-option-table input, .B5Chat-option-table select {
     font-family:verdana,arial,helvetica,sans-serif;
     font-size:8pt;
 }
-.emiva-description, .emiva-description a, .emiva-table .emiva-date, .emiva-description input, .emiva-description select {
+.B5Chat-description, .B5Chat-description a, .B5Chat-table .B5Chat-date, .B5Chat-description input, .B5Chat-description select {
     font-family:arial,helvetica,sans-serif;
     font-size:8pt;
 }
-.emiva-label, .emiva-option-table label {
+.B5Chat-label, .B5Chat-option-table label {
     font-weight:bold;
     padding-right:10px;
     white-space:nowrap;
 }
-.emiva-label {
+.B5Chat-label {
     padding-right:20px;
     vertical-align:top;
 }
-.emiva-buttons .emiva-icon {
+.B5Chat-buttons .B5Chat-icon {
     padding:3px;
 }
-.emiva-buttons .emiva-icon-label {
+.B5Chat-buttons .B5Chat-icon-label {
     font-family:verdana,arial,helvetica,sans-serif;
     font-size:8pt;
     padding:3px 1em 3px 3px;
@@ -707,12 +707,12 @@ a.cal:hover {
 /*  Quote original styles                        */
 /* --------------------------------------------- */
 
-.emiva-quoteheader {
+.B5Chat-quoteheader {
     font-weight:bold;
     margin-left:15px;
     width:90%;
 }
-.emiva-quote {
+.B5Chat-quote {
     background-color:#FAFAFA;
     border:1px solid #D1D7DC;
     color:#444444;
@@ -772,7 +772,7 @@ a.cal:hover {
 /*  Content Box                                  */
 /* --------------------------------------------- */
 
-.emiva-contentBox {
+.B5Chat-contentBox {
     -moz-border-radius-bottomleft:4px;
     -moz-border-radius-bottomright:4px;
     -moz-border-radius-topleft:0;
@@ -783,7 +783,7 @@ a.cal:hover {
     margin:0 0 20px;
     padding:12px 10px;
 }
-.emiva-contentBoxHeader {
+.B5Chat-contentBoxHeader {
     background-color:#EEEEEE;
     border-color:#CCCCCC rgb(204, 204, 204);
     border-style:solid solid none;
@@ -794,16 +794,16 @@ a.cal:hover {
     margin:8px 0 0;
     padding:4px 4px 4px 6px;
 }
-.emiva-contentBoxGrey {
+.B5Chat-contentBoxGrey {
     background-color:#F9F9F9;
 }
-.emiva-contentBox h3 {
+.B5Chat-contentBox h3 {
     color:#555555;
     font-size:10pt;
     margin:0;
     padding:0 0 5px;
 }
-.emiva-contentBox h4 {
+.B5Chat-contentBox h4 {
     background-color:#FCFCFC;
     border:1px solid #E9E9E9;
     color:#555555;
@@ -811,46 +811,46 @@ a.cal:hover {
     margin:0 0 4px;
     padding:3px 0 3px 4px;
 }
-.emiva-contentBox form {
+.B5Chat-contentBox form {
     margin:0;
     padding:0;
 }
-.emiva-contentBox table {
+.B5Chat-contentBox table {
     margin:0;
     padding:0;
 }
-.emiva-contentBox table td {
+.B5Chat-contentBox table td {
     padding:2px;
 }
-.emiva-contentBox table th {
+.B5Chat-contentBox table th {
     background-color:#eeeeee;
     padding:4px;
 }
-th.emiva-table-th-center {
+th.B5Chat-table-th-center {
     text-align:center;
 }
-.emiva-contentBox table td.emiva-formLabel {
+.B5Chat-contentBox table td.B5Chat-formLabel {
     color:#555555;
     font-weight:bold;
     padding-right:5px;
     text-align:right;
     white-space:nowrap;
 }
-.emiva-contentBox-toolbox {
+.B5Chat-contentBox-toolbox {
     float:right;
     margin-left:20px;
 }
-.emiva-contentBox-plain {
+.B5Chat-contentBox-plain {
     display:block;
     margin:0 0 5px;
     padding:12px 0;
 }
-.emiva-contentBox-plain h3 {
+.B5Chat-contentBox-plain h3 {
     color:#555555;
     font-size:14pt;
     margin:2px 0;
 }
-.emiva-contentBox-plain p {
+.B5Chat-contentBox-plain p {
     font-size:9pt;
     margin:0 0 10px;
 }
@@ -859,7 +859,7 @@ th.emiva-table-th-center {
 /*  Roster box (in Group Settings page)          */
 /* --------------------------------------------- */
 
-#emiva-roster {
+#B5Chat-roster {
     -moz-border-radius-bottomleft:4px;
     -moz-border-radius-bottomright:4px;
     -moz-border-radius-topleft:4px;
@@ -872,7 +872,7 @@ th.emiva-table-th-center {
     padding:12px;
     width:390px;
 }
-#emiva-roster b {
+#B5Chat-roster b {
     color:#555555;
     display:block;
     font-size:8pt;
@@ -883,7 +883,7 @@ th.emiva-table-th-center {
 /*  Footer                                       */
 /* --------------------------------------------- */
 
-#emiva-footer {
+#B5Chat-footer {
     border-top:1px solid #DCDCDC;
     clear:both;
     color:#666666;
@@ -892,14 +892,14 @@ th.emiva-table-th-center {
     padding:5px 0 40px;
     width:100%;
 }
-.emiva-footer-nav {
+.B5Chat-footer-nav {
     float:left;
     padding-left:5px;
 }
-.emiva-footer-nav a {
+.B5Chat-footer-nav a {
     padding:0 5px;
 }
-.emiva-footer-copyright {
+.B5Chat-footer-copyright {
     float:right;
     padding-right:12px;
 }
@@ -931,7 +931,7 @@ th.emiva-table-th-center {
     padding:7px;
 }
 
-.emiva-current {
+.B5Chat-current {
     font-weight : bold;
     text-decoration : none;
 }
@@ -940,12 +940,12 @@ th.emiva-table-th-center {
 /*  Main content                                 */
 /* --------------------------------------------- */
 
-#emiva-main-content {
+#B5Chat-main-content {
 	-moz-border-radius-bottomleft:4px;
 	-moz-border-radius-bottomright:4px;
 	-moz-border-radius-topleft:4px;
 	-moz-border-radius-topright:4px;
-	background:#F5F5F5 url(../images/emiva-body-contentbox-bg.gif) repeat-x scroll center top;
+	background:#F5F5F5 url(../images/B5Chat-body-contentbox-bg.gif) repeat-x scroll center top;
 	border:1px solid #DCDCDC;
 	margin:15px 0 20px 0;
 	padding:18px 20px;

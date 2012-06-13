@@ -3,7 +3,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@
         if (input == null || "".equals(input)) {
             return input;
         }
-        if (input.indexOf("net.emiva.") > -1) {
+        if (input.indexOf("net.B5Chat.") > -1) {
             StringBuffer buf = new StringBuffer();
             buf.append("<span class=\"hilite\">").append(input).append("</span>");
             return buf.toString();

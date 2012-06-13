@@ -3,7 +3,7 @@
  * $Revision: 11696 $
  * $Date: 2010-05-13 07:33:23 -0400 (Thu, 13 May 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * operations that may not work on all databases such as setting the max number
  * or rows that a query should return.
  *
- * @author EMIVA Community
+ * @author B5Chat Community
  * @see ConnectionProvider
  */
 public class DbConnectionManager {
@@ -100,7 +100,7 @@ public class DbConnectionManager {
             synchronized (providerLock) {
                 if (connectionProvider == null) {
                     // Attempt to load the connection provider classname as
-                    // a emiva property.
+                    // a B5Chat property.
                     String className = Globals.getXMLProperty("connectionProvider.className");
                     if (className != null) {
                         // Attempt to load the class.
@@ -736,7 +736,7 @@ public class DbConnectionManager {
 
     /**
      * Sets the max number of rows that should be returned from executing a
-     * statement. The operation is automatically bypassed if emiva knows that the
+     * statement. The operation is automatically bypassed if B5Chat knows that the
      * the JDBC driver or database doesn't support it.
      *
      * @param stmt    the Statement to set the max number of rows for.
@@ -761,7 +761,7 @@ public class DbConnectionManager {
 
     /**
      * Sets the number of rows that the JDBC driver should buffer at a time.
-     * The operation is automatically bypassed if emiva knows that the
+     * The operation is automatically bypassed if B5Chat knows that the
      * the JDBC driver or database doesn't support it.
      *
      * @param rs the ResultSet to set the fetch size for.
@@ -972,7 +972,7 @@ public class DbConnectionManager {
     }
 
     /**
-     * A class that identifies the type of the database that emiva is connected
+     * A class that identifies the type of the database that B5Chat is connected
      * to. In most cases, we don't want to make any database specific calls
      * and have no need to know the type of database we're using. However,
      * there are certain cases where it's critical to know the database for

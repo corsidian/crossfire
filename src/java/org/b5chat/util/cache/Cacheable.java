@@ -3,7 +3,7 @@
  * $Revision: 12942 $
  * $Date: 2012-01-01 08:07:50 -0500 (Sun, 01 Jan 2012) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ package org.b5chat.util.cache;
  * taken to minimize the computation time so that cache operations are
  * speedy.
  *
- * @author EMIVA Community
+ * @author B5Chat Community
  * @see org.b5chat.util.cache.Cache
  */
 public interface Cacheable extends java.io.Serializable {

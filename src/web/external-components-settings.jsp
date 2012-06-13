@@ -3,7 +3,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -212,12 +212,12 @@
 
 <%  if (!errors.isEmpty()) { %>
 
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
-            <td class="emiva-icon-label">
+            <td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
+            <td class="B5Chat-icon-label">
 
             <% if (errors.get("port") != null) { %>
                 <fmt:message key="component.settings.valid.port" />
@@ -237,12 +237,12 @@
 
 <%  } else if (operationFailed) { %>
 
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
-            <td class="emiva-icon-label">
+            <td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
+            <td class="B5Chat-icon-label">
                 <fmt:message key="component.settings.modification.denied" /> <%= operationFailedDetail != null ? operationFailedDetail : ""%>
             </td>
         </tr>
@@ -253,11 +253,11 @@
 
 <%  } else if (updateSucess || allowSuccess || blockSuccess || deleteSuccess) { %>
 
-    <div class="emiva-success">
+    <div class="B5Chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <% if (updateSucess) { %>
             <fmt:message key="component.settings.confirm.updated" />
         <% } else if (allowSuccess) { %>
@@ -279,10 +279,10 @@
 
 <!-- BEGIN 'Services Enabled' -->
 <form action="external-components-settings.jsp" method="post">
-	<div class="emiva-contentBoxHeader">
+	<div class="B5Chat-contentBoxHeader">
 		<fmt:message key="component.settings.enabled.legend" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
 			<tr>
@@ -346,10 +346,10 @@
 <br>
 
 <!-- BEGIN 'Allowed to Connect' -->
-	<div class="emiva-contentBoxHeader">
+	<div class="B5Chat-contentBoxHeader">
 		<fmt:message key="component.settings.allowed" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
 		<form action="external-components-settings.jsp" method="post">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
@@ -382,7 +382,7 @@
 		<input type="submit" name="permissionUpdate" value="<fmt:message key="global.save_settings" />">
 		</form>
 		<br>
-		<table class="emiva-table" cellpadding="0" cellspacing="0" border="0">
+		<table class="B5Chat-table" cellpadding="0" cellspacing="0" border="0">
 		<thead>
 			<tr>
 				<th width="1%">&nbsp;</th>
@@ -403,7 +403,7 @@
 			for (Iterator<ExternalComponentConfiguration> it=configs.iterator(); it.hasNext(); count++) {
 				ExternalComponentConfiguration configuration = it.next();
 		   %>
-			<tr class="emiva-<%= (((count%2)==0) ? "even" : "odd") %>">
+			<tr class="B5Chat-<%= (((count%2)==0) ? "even" : "odd") %>">
 				<td>
 					<%= count %>
 				</td>
@@ -454,17 +454,17 @@
 <br>
 
 <!-- BEGIN 'Not Allowed to Connect' -->
-	<div class="emiva-contentBoxHeader">
+	<div class="B5Chat-contentBoxHeader">
 		<fmt:message key="component.settings.disallowed" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0" >
 		<tbody>
 			<tr><td><p><fmt:message key="component.settings.disallowed.info" /></p></td></tr>
 		</tbody>
 		</table>
 		<br><br>
-		<table class="emiva-table" cellpadding="3" cellspacing="0" border="0" >
+		<table class="B5Chat-table" cellpadding="3" cellspacing="0" border="0" >
 		<thead>
 			<tr>
 				<th width="1%">&nbsp;</th>
@@ -484,7 +484,7 @@
 			for (Iterator<ExternalComponentConfiguration> it=blockedComponents.iterator(); it.hasNext(); count++) {
 				ExternalComponentConfiguration configuration = it.next();
 		   %>
-			<tr class="emiva-<%= (((count%2)==0) ? "even" : "odd") %>">
+			<tr class="B5Chat-<%= (((count%2)==0) ? "even" : "odd") %>">
 				<td>
 					<%= count %>
 				</td>

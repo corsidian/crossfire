@@ -3,7 +3,7 @@
  * $Revision: 624 $
  * $Date: 2004-12-05 02:38:08 -0300 (Sun, 05 Dec 2004) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

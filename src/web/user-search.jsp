@@ -55,7 +55,7 @@
     <body>
 
 <%    if (errors.size() > 0) { %>
-<p class="emiva-error-text"><fmt:message key="user.search.not_found" /></p>
+<p class="B5Chat-error-text"><fmt:message key="user.search.not_found" /></p>
 <%    } %>
 <form name="f" action="user-search.jsp">
   <input type="hidden" name="search" value="true"/>

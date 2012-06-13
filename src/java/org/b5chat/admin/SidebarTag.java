@@ -3,7 +3,7 @@
  * $Revision: 11685 $
  * $Date: 2010-04-21 13:37:53 -0400 (Wed, 21 Apr 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,10 +52,10 @@ import java.io.IOException;
  * LI containing an "A" tag specfied by the body content of this tag. For example, the body should contain
  * a template A tag which will have its values replaced at runtime: <ul><tt>
  *
- *      &lt;emiva:sidebar bean="emivapageinfo"&gt; <br>
+ *      &lt;B5Chat:sidebar bean="B5Chatpageinfo"&gt; <br>
  *          &nbsp;&nbsp;&nbsp;&lt;a href="[url]" title="[description]"&gt;[name]&lt;/a&gt; <br>
- *          &nbsp;&nbsp;&nbsp;&lt;emiva:subsidebar&gt; ... &lt;/emiva:subsidebar&gt; <br>
- *      &lt;/emiva:sidebar&gt;</tt></ul>
+ *          &nbsp;&nbsp;&nbsp;&lt;B5Chat:subsidebar&gt; ... &lt;/B5Chat:subsidebar&gt; <br>
+ *      &lt;/B5Chat:sidebar&gt;</tt></ul>
  *
  * There is a subsidebar tag for rendering the sub-sidebars. For more info, see the
  * {@link SubSidebarTag} class.</p>

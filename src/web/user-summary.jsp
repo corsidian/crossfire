@@ -3,7 +3,7 @@
   -	$Revision: 11767 $
   -	$Date: 2010-07-14 12:04:28 -0400 (Wed, 14 Jul 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -71,11 +71,11 @@
 
 <%  if (request.getParameter("deletesuccess") != null) { %>
 
-    <div class="emiva-success">
+    <div class="B5Chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="user.summary.deleted" />
         </td></tr>
     </tbody>
@@ -135,7 +135,7 @@
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="user-summary.jsp?start=<%= (i*range) %>&range=<%= range %>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "B5Chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>
@@ -152,7 +152,7 @@
 
 <%  } %>
 
-<div class="emiva-table">
+<div class="B5Chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -199,7 +199,7 @@
         }
         Boolean isAdmin = AdminManager.getInstance().isUserAdmin(user.getUsername(), false);
 %>
-    <tr class="emiva-<%= (((i%2)==0) ? "even" : "odd") %>">
+    <tr class="B5Chat-<%= (((i%2)==0) ? "even" : "odd") %>">
         <td width="1%">
             <%= i %>
         </td>
@@ -296,7 +296,7 @@
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="user-summary.jsp?start=<%= (i*range) %>&range=<%= range %>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "B5Chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>

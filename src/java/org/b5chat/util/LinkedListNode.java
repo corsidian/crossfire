@@ -3,7 +3,7 @@
  * $Revision: 11608 $
  * $Date: 2010-02-07 16:03:12 -0500 (Sun, 07 Feb 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,12 +30,12 @@ package org.b5chat.util;
  * remove existed in the main LinkedList class, a linear scan would have to
  * be performed to find the correct node to delete.
  * <p/>
- * The linked list implementation was specifically written for the emiva
+ * The linked list implementation was specifically written for the B5Chat
  * cache system. While it can be used as a general purpose linked list, for
  * most applications, it is more suitable to use the linked list that is part
  * of the Java Collections package.
  *
- * @author EMIVA Community
+ * @author B5Chat Community
  * @see org.b5chat.util.LinkedList
  */
 public class LinkedListNode {

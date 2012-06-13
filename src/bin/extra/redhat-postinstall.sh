@@ -12,8 +12,8 @@
 # Please specify it here
 # crossfire_HOME=
  
-crossfire_USER="emiva"
-crossfire_GROUP="emiva"
+crossfire_USER="B5Chat"
+crossfire_GROUP="B5Chat"
 
 if [ ! $crossfire_HOME ]; then
 	if [ -d "/opt/crossfire" ]; then
@@ -31,7 +31,7 @@ cp $crossfire_HOME/bin/extra/crossfired /etc/init.d
 /sbin/chkconfig --add crossfired
 /sbin/chkconfig crossfired on
 
-# Create the emiva user and group
+# Create the B5Chat user and group
 /usr/sbin/groupadd $crossfire_GROUP
 /usr/sbin/useradd $crossfire_USER -g $crossfire_GROUP -s /bin/bash
 

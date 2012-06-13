@@ -1,11 +1,11 @@
 /**
- * Copyright (C) 2004-2007 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2007 B5Chat Community. All rights reserved.
  *
  * This software is published under the terms of the GNU Public License (GPL),
  * a copy of which is included in this distribution.
  */
 
-package net.emiva.util;
+package net.B5Chat.util;
 
 import junit.framework.TestCase;
 import org.xmpp.packet.JID;

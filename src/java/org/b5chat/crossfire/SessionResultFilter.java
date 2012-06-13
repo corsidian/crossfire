@@ -2,7 +2,7 @@
  * $Revision: 580 $
  * $Date: 2004-12-01 18:46:33 -0300 (Wed, 01 Dec 2004) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -278,7 +278,7 @@ public class SessionResultFilter {
      *
      * This method is useful when calculating the last post in
      * a forum or the number of new messages from a given date. Using a rounded
-     * date allows emiva to internally cache the results of the date query.
+     * date allows B5Chat to internally cache the results of the date query.
      * Here's an example that shows the last posted message in a forum accurate
      * to the last 60 seconds:<p>
      *

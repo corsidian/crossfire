@@ -2,7 +2,7 @@
   -	$Revision$
   -	$Date$
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -116,12 +116,12 @@
 
 <%  if (!errors.isEmpty()) { %>
 
-    <div class="emiva-error">
+    <div class="B5Chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
-            <td class="emiva-icon-label">
+            <td class="B5Chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
+            <td class="B5Chat-icon-label">
 
             <% if (errors.get("general") != null) { %>
                 <fmt:message key="user.roster.add.error_adding_item" />
@@ -141,11 +141,11 @@
 
 <%  } else if (request.getParameter("success") != null) { %>
 
-    <div class="emiva-success">
+    <div class="B5Chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="B5Chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="B5Chat-icon-label">
         <fmt:message key="user.roster.add.success" />
         </td></tr>
     </tbody>
@@ -158,10 +158,10 @@
 
 <input type="hidden" name="username" value="<%= username %>">
 
-    <div class="emiva-contentBoxHeader">
+    <div class="B5Chat-contentBoxHeader">
 		<fmt:message key="user.roster.add.new_item" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="B5Chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
 		<tr>
@@ -200,7 +200,7 @@
 
 	</div>
 
-	<span class="emiva-description">
+	<span class="B5Chat-description">
     * <fmt:message key="user.roster.add.required" />
     </span>
 

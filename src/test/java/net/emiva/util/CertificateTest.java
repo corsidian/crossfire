@@ -1,4 +1,4 @@
-package net.emiva.util;
+package net.B5Chat.util;
 
 import junit.framework.TestCase;
 

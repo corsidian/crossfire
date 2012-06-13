@@ -2,7 +2,7 @@
   -	$Revision$
   -	$Date$
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@
             }
             // Disabled your own user account, force login
             if (username.equals(webManager.getAuthToken().getUsername())){
-                session.removeAttribute("emiva.admin.authToken");
+                session.removeAttribute("B5Chat.admin.authToken");
                 response.sendRedirect("login.jsp");
                 return;
             }
@@ -159,7 +159,7 @@
 </p>
 
 <c:if test="${webManager.user.username == param.username}">
-    <p class="emiva-warning-text">
+    <p class="B5Chat-warning-text">
     <fmt:message key="user.lockout.warning" /> <b><fmt:message key="user.lockout.warning2" /></b> <fmt:message key="user.lockout.warning3" />
     </p>
 </c:if>

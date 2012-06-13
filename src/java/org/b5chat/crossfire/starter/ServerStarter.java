@@ -3,7 +3,7 @@
  * $Revision: 1089 $
  * $Date: 2005-03-07 02:36:27 -0300 (Mon, 07 Mar 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public class ServerStarter {
      * started and the server starter should not be used again.
      */
     private void start() {
-        // Setup the classpath using emivaClassLoader
+        // Setup the classpath using B5ChatClassLoader
         try {
             // Load up the bootstrap container
             final ClassLoader parent = findParentClassLoader();
@@ -106,7 +106,7 @@ public class ServerStarter {
                     " does not exist. Web admin console may not work.");
             }
 
-            ClassLoader loader = new emivaClassLoader(parent, libDir);
+            ClassLoader loader = new B5ChatClassLoader(parent, libDir);
 
             Thread.currentThread().setContextClassLoader(loader);
             Class containerClass = loader.loadClass(

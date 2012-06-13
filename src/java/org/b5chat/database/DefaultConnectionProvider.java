@@ -3,7 +3,7 @@
  * $Revision: 11608 $
  * $Date: 2010-02-07 16:03:12 -0500 (Sun, 07 Feb 2010) $
  *
- * Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,9 +35,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Default emiva connection provider, which uses an internal connection pool.<p>
+ * Default B5Chat connection provider, which uses an internal connection pool.<p>
  *
- * @author EMIVA Community
+ * @author B5Chat Community
  */
 public class DefaultConnectionProvider implements ConnectionProvider {
 
@@ -63,7 +63,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
 
     /**
      * MySQL doesn't currently support Unicode. However, a workaround is
-     * implemented in the mm.mysql JDBC driver. Setting the emiva property
+     * implemented in the mm.mysql JDBC driver. Setting the B5Chat property
      * database.mysql.useUnicode to true will turn this feature on.
      */
     private boolean mysqlUseUnicode;
@@ -326,7 +326,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Load properties that already exist from emiva properties.
+     * Load properties that already exist from B5Chat properties.
      */
     private void loadProperties() {
 
@@ -361,7 +361,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Save properties as emiva properties.
+     * Save properties as B5Chat properties.
      */
     private void saveProperties() {
 

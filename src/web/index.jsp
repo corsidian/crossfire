@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@
 
 <%  // Simple logout code
     if ("true".equals(request.getParameter("logout"))) {
-        session.removeAttribute("emiva.admin.authToken");
+        session.removeAttribute("B5Chat.admin.authToken");
         response.sendRedirect("index.jsp");
         return;
     }
@@ -84,11 +84,11 @@
 .bar TD {
     padding : 0;
 }
-#emiva-latest-activity .emiva-bottom-line {
+#B5Chat-latest-activity .B5Chat-bottom-line {
 	padding-top: 10px;
     border-bottom : 1px #e8a400 solid;
 	}
-#emiva-latest-activity {
+#B5Chat-latest-activity {
     border: 1px #E8A400 solid;
     background-color: #FFFBE2;
 	font-family: Lucida Grande, Arial, Helvetica, sans-serif;
@@ -100,21 +100,21 @@
     width: 95%;
     margin-right: 20px;
 	}
-#emiva-latest-activity h4 {
+#B5Chat-latest-activity h4 {
 	font-size: 13pt;
 	margin: 15px 0 4px 0;
 	}
-#emiva-latest-activity h5 {
+#B5Chat-latest-activity h5 {
 	font-size: 9pt;
 	font-weight: normal;
     margin: 15px 0 5px 5px;
 	padding: 0;
 	}
-#emiva-latest-activity .emiva-blog-date {
+#B5Chat-latest-activity .B5Chat-blog-date {
     font-size: 8pt;
     white-space: nowrap;
 	}
-#emiva-latest-activity .emiva-feed-icon {
+#B5Chat-latest-activity .B5Chat-feed-icon {
     float: right;
     padding-top: 10px;
 	}
@@ -145,7 +145,7 @@
 <table border="0" width="100%">
     <td valign="top">
 
-        <!-- <div class="emiva-table"> -->
+        <!-- <div class="B5Chat-table"> -->
         <table border="0" cellpadding="2" cellspacing="2" width="100%" class="info-table">
         <thead>
             <tr>
@@ -319,8 +319,8 @@
 
 <br>
 
-<div id="emiva-title"><fmt:message key="index.server_port" /></div>
-<div class="emiva-table">
+<div id="B5Chat-title"><fmt:message key="index.server_port" /></div>
+<div class="B5Chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>

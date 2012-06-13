@@ -3,7 +3,7 @@
  * $Revision: 11608 $
  * $Date: 2010-02-07 16:03:12 -0500 (Sun, 07 Feb 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ package org.b5chat.util;
  * are public, which allows very fast delete operations when one has a
  * reference to the node that is to be deleted.<p>
  *
- * @author EMIVA Community
+ * @author B5Chat Community
  */
 public class LinkedList {
 

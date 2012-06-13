@@ -3,7 +3,7 @@
  * $Revision: 11608 $
  * $Date: 2010-02-07 16:03:12 -0500 (Sun, 07 Feb 2010) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@ import javax.servlet.jsp.JspTagException;
  *
  * <p>Sample usage:<ul><tt>
  *
- *      &lt;emiva:sidebar bean="emivapageinfo"&gt; <br>
+ *      &lt;B5Chat:sidebar bean="B5Chatpageinfo"&gt; <br>
  *          &nbsp;&nbsp;&nbsp;&lt;a href="[url]" title="[description]"&gt;[name]&lt;/a&gt; <br>
- *          &nbsp;&nbsp;&nbsp;&lt;emiva:subsidebar&gt; <br>
+ *          &nbsp;&nbsp;&nbsp;&lt;B5Chat:subsidebar&gt; <br>
  *          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="[url]"&gt;[name]&lt;/a&gt; <br>
- *          &nbsp;&nbsp;&nbsp;&lt;/emiva:subsidebar&gt; <br>
- *      &lt;/emiva:sidebar&gt;</tt></ul></p>
+ *          &nbsp;&nbsp;&nbsp;&lt;/B5Chat:subsidebar&gt; <br>
+ *      &lt;/B5Chat:sidebar&gt;</tt></ul></p>
  *
  * <p>Note, this class has no attributes.</p>
  */

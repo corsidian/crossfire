@@ -2,7 +2,7 @@
  * $Revision: 243 $
  * $Date: 2004-11-09 10:37:52 -0800 (Tue, 09 Nov 2004) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -184,7 +184,7 @@ public class BeanUtils {
     /**
      * Returns the PropertyDescriptor array for the specified Java Bean Class.
      * The method also does a special check to see of the bean has a BeanInfo
-     * class that extends the EMIVABeanInfo class. If yes, we load the
+     * class that extends the B5ChatBeanInfo class. If yes, we load the
      * PropertyDescriptor array directly from that BeanInfo class rather than
      * through the Introspector in order to preserve the desired ordering of
      * properties.
@@ -197,9 +197,9 @@ public class BeanUtils {
             throws IntrospectionException
     {
         // See if the Java Bean has a BeanInfo class that implements
-        // EMIVABeanInfo. If so, return the PropertyDescriptor from that
+        // B5ChatBeanInfo. If so, return the PropertyDescriptor from that
         // class. This will bypass properties of parent classes, but this is
-        // the normal behavior of classes that implement EMIVABeanInfo.
+        // the normal behavior of classes that implement B5ChatBeanInfo.
         try {
             GlobalBeanInfo beanInfo = (GlobalBeanInfo)ClassUtils.forName(
                     beanClass.getName() + "BeanInfo").newInstance();

@@ -3,7 +3,7 @@
  * $Revision: 3144 $
  * $Date: 2005-12-01 14:20:11 -0300 (Thu, 01 Dec 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,7 +89,7 @@ public class CacheFactory {
         localCacheFactoryClass = Globals.getProperty(LOCAL_CACHE_PROPERTY_NAME,
                 "org.b5chat.util.cache.DefaultLocalCacheStrategy");
         clusteredCacheFactoryClass = Globals.getProperty(CLUSTERED_CACHE_PROPERTY_NAME,
-                "com.emiva.util.cache.CoherenceClusteredCacheFactory");
+                "com.B5Chat.util.cache.CoherenceClusteredCacheFactory");
 
         cacheNames.put("Favicon Hits", "faviconHits");
         cacheNames.put("Favicon Misses", "faviconMisses");

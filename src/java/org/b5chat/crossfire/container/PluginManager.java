@@ -3,7 +3,7 @@
  * $Revision: 3001 $
  * $Date: 2005-10-31 05:39:25 -0300 (Mon, 31 Oct 2005) $
  *
- * Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+ * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -274,7 +274,7 @@ public class PluginManager {
      * <li>Add all jars in the <tt>lib</tt> dir (if it exists) to the class loader</li>
      * <li>Add all files in <tt>classes</tt> dir (if it exists) to the class loader</li>
      * <li>Locate and load <tt>module.xml</tt> into the context</li>
-     * <li>For each emiva.module entry, load the given class as a module and start it</li>
+     * <li>For each B5Chat.module entry, load the given class as a module and start it</li>
      * <p/>
      * </ul>
      *

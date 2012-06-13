@@ -33,7 +33,7 @@
         isSecured = outSession.isSecure();
     }
 %>
-<tr class="emiva-<%= (((count % 2) == 0) ? "even" : "odd") %>">
+<tr class="B5Chat-<%= (((count % 2) == 0) ? "even" : "odd") %>">
     <td width="1%" nowrap><%= count %></td>
     <td width="47%" nowrap>
         <table cellpadding="0" cellspacing="0" border="0">
