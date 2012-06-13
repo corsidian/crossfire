@@ -1,4 +1,4 @@
-package net.B5Chat.crossfire.nio;
+package org.b5chat.crossfire.nio;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

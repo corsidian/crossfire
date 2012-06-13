@@ -1,4 +1,4 @@
-package net.B5Chat.crossfire.roster;
+package org.b5chat.crossfire.roster;
 
 import junit.framework.TestCase;
 

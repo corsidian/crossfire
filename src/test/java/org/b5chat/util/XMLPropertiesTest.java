@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package net.B5Chat.util;
+package org.b5chat.util;
 
 import junit.framework.TestCase;
 

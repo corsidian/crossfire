@@ -5,7 +5,7 @@
  * a copy of which is included in this distribution.
  */
 
-package net.B5Chat.util;
+package org.b5chat.util;
 
 import junit.framework.TestCase;
 import org.xmpp.packet.JID;

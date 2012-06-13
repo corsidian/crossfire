@@ -6,7 +6,7 @@
  * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  */
 
-package net.B5Chat.util;
+package org.b5chat.util;
 
 import java.io.File;
 import java.io.BufferedReader;

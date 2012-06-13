@@ -1,4 +1,4 @@
-package net.B5Chat.admin;
+package org.b5chat.admin;
 
 import org.b5chat.admin.AuthCheckFilter;
 
