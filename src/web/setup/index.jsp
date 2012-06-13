@@ -7,9 +7,9 @@
   -	$Date: 2005-09-23 10:54:57 -0700 (Fri, 23 Sep 2005) $
 --%>
 
-<%@ page import="net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.XMPPServer" %>
+<%@ page import="org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.XMPPServer" %>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.Map"%>

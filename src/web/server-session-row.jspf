@@ -3,8 +3,8 @@
   -	$Date: 2008-02-18 23:21:33 -0500 (Mon, 18 Feb 2008) $
 --%>
 
-<%@ page import="net.emiva.crossfire.session.IncomingServerSession,
-                 net.emiva.util.Globals,
+<%@ page import="org.b5chat.crossfire.session.IncomingServerSession,
+                 org.b5chat.util.Globals,
                  java.net.URLEncoder,
                  java.util.Calendar,
                  java.util.Date"%>
@@ -22,7 +22,7 @@
 <% // Show the secured icon only if ALL sessions are secure
     boolean isSecured = true;
     // Check if all incoming sessions are secured
-    for (net.emiva.crossfire.session.IncomingServerSession inSession : inSessions) {
+    for (org.b5chat.crossfire.session.IncomingServerSession inSession : inSessions) {
         if (!inSession.isSecure()) {
             isSecured = false;
             break;

@@ -17,16 +17,16 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.user.UserNotFoundException"
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.user.UserNotFoundException"
     errorPage="error.jsp"
 %>
 <%@ page import="java.net.URLEncoder"%>
-<%@ page import="net.emiva.crossfire.roster.Roster" %>
-<%@ page import="net.emiva.crossfire.roster.RosterItem" %>
-<%@ page import="net.emiva.util.LocaleUtils" %>
+<%@ page import="org.b5chat.crossfire.roster.Roster" %>
+<%@ page import="org.b5chat.crossfire.roster.RosterItem" %>
+<%@ page import="org.b5chat.util.LocaleUtils" %>
 <%@ page import="java.util.*" %>
-<%@ page import="net.emiva.crossfire.group.Group" %>
+<%@ page import="org.b5chat.crossfire.group.Group" %>
 <%@ page import="org.xmpp.packet.JID" %>
 
 <%!
@@ -36,7 +36,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 
 <%
     class RosterItemComparator implements Comparator<RosterItem> {

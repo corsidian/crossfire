@@ -17,25 +17,25 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.PresenceManager,
-                 net.emiva.crossfire.admin.AdminManager,
-                 net.emiva.crossfire.group.Group,
-                 net.emiva.crossfire.user.User,
-                 net.emiva.crossfire.user.UserManager,
-                 net.emiva.crossfire.user.UserNotFoundException"
+<%@ page import="org.b5chat.crossfire.PresenceManager,
+                 org.b5chat.crossfire.admin.AdminManager,
+                 org.b5chat.crossfire.group.Group,
+                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.user.UserManager,
+                 org.b5chat.crossfire.user.UserNotFoundException"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.util.Globals"%>
-<%@ page import="net.emiva.util.LocaleUtils"%>
-<%@ page import="net.emiva.util.ParamUtils"%>
+<%@ page import="org.b5chat.util.Globals"%>
+<%@ page import="org.b5chat.util.LocaleUtils"%>
+<%@ page import="org.b5chat.util.ParamUtils"%>
 <%@ page import="org.xmpp.packet.JID"%><%@ page import="org.xmpp.packet.Presence"%>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.Collection" %>
-<%@ page import="net.emiva.util.StringUtils" %>
+<%@ page import="org.b5chat.util.StringUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 
 <%  // Get parameters //
     boolean cancel = request.getParameter("cancel") != null;

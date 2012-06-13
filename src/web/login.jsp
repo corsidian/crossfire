@@ -4,24 +4,24 @@
   -	$Date: 2010-01-10 16:44:34 -0500 (Sun, 10 Jan 2010) $
 --%>
 
-<%@ page import="net.emiva.admin.AdminConsole,
-                 net.emiva.crossfire.admin.AdminManager"
+<%@ page import="org.b5chat.admin.AdminConsole,
+                 org.b5chat.crossfire.admin.AdminManager"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.crossfire.cluster.ClusterManager" %>
-<%@ page import="net.emiva.crossfire.container.AdminConsolePlugin" %>
+<%@ page import="org.b5chat.crossfire.cluster.ClusterManager" %>
+<%@ page import="org.b5chat.crossfire.container.AdminConsolePlugin" %>
 <%@ page import="org.xmpp.packet.JID" %>
-<%@ page import="net.emiva.crossfire.auth.*" %>
+<%@ page import="org.b5chat.crossfire.auth.*" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="net.emiva.util.*" %>
-<%@ page import="net.emiva.admin.LoginLimitManager" %>
+<%@ page import="org.b5chat.util.*" %>
+<%@ page import="org.b5chat.admin.LoginLimitManager" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="admin" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <%!
@@ -48,7 +48,7 @@
 
     String password = ParamUtils.getParameter(request, "password");
     String url = ParamUtils.getParameter(request, "url");
-    url = net.emiva.util.StringUtils.escapeHTMLTags(url);
+    url = org.b5chat.util.StringUtils.escapeHTMLTags(url);
 
     // SSO between cluster nodes
     String secret = ParamUtils.getParameter(request, "secret");
@@ -115,7 +115,7 @@
 
     // Escape HTML tags in username to prevent cross-site scripting attacks. This
     // is necessary because we display the username in the page below.
-    username = net.emiva.util.StringUtils.escapeHTMLTags(username);
+    username = org.b5chat.util.StringUtils.escapeHTMLTags(username);
 
 %>
 

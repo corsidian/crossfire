@@ -6,19 +6,19 @@
   -	$Date: 2005-05-26 23:00:40 -0700 (Thu, 26 May 2005) $
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.util.Globals,
-                 net.emiva.database.EmbeddedConnectionProvider,
-                 net.emiva.database.DbConnectionManager,
-                 net.emiva.database.ConnectionProvider,
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.util.Globals,
+                 org.b5chat.database.EmbeddedConnectionProvider,
+                 org.b5chat.database.DbConnectionManager,
+                 org.b5chat.database.ConnectionProvider,
                  java.util.*" %>
 <%@ page import="java.io.File"%>
 <%@ page import="java.sql.Connection"%>
 <%@ page import="java.sql.Statement"%>
 <%@ page import="java.sql.SQLException"%>
-<%@ page import="net.emiva.util.LocaleUtils"%>
-<%@ page import="net.emiva.util.ClassUtils"%>
-<%@ page import="net.emiva.crossfire.XMPPServer"%>
+<%@ page import="org.b5chat.util.LocaleUtils"%>
+<%@ page import="org.b5chat.util.ClassUtils"%>
+<%@ page import="org.b5chat.crossfire.XMPPServer"%>
 
 <%
 	// Redirect if we've already run setup:
@@ -75,7 +75,7 @@
 <%
     boolean embeddedMode = false;
     try {
-        ClassUtils.forName("net.emiva.crossfire.starter.ServerStarter");
+        ClassUtils.forName("org.b5chat.crossfire.starter.ServerStarter");
         embeddedMode = true;
     }
     catch (Exception ignored) {}
@@ -100,7 +100,7 @@
         else if (EMBEDDED.equals(mode)) {
             // Set the classname of the provider in the config file:
             Globals.setXMLProperty("connectionProvider.className",
-                    "net.emiva.database.EmbeddedConnectionProvider");
+                    "org.b5chat.database.EmbeddedConnectionProvider");
             ConnectionProvider conProvider = new EmbeddedConnectionProvider();
             DbConnectionManager.setConnectionProvider(conProvider);
             if (testConnection(errors)) {

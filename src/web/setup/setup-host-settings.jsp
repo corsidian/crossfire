@@ -4,12 +4,12 @@
   -	$Date: 2005-07-18 10:16:48 -0700 (Mon, 18 Jul 2005) $
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.util.Globals,
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.util.Globals,
                  java.util.Map,
                  java.util.HashMap,
                  java.net.InetAddress,
-                 net.emiva.crossfire.XMPPServer"
+                 org.b5chat.crossfire.XMPPServer"
 %>
 <%@ page import="java.net.UnknownHostException" %>
 

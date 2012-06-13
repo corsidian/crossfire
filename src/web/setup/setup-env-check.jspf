@@ -6,8 +6,8 @@
 
 <%@ page import="java.lang.reflect.Method,
                  java.io.File,
-                 net.emiva.util.LocaleUtils" %>
-<%@ page import="net.emiva.util.ClassUtils"%>
+                 org.b5chat.util.LocaleUtils" %>
+<%@ page import="org.b5chat.util.ClassUtils"%>
 
 <%  // Check the user's environment for minimum requirements.
 
@@ -39,14 +39,14 @@
     catch (ClassNotFoundException cnfe) {}
     // Check that the crossfire jar are installed:
     try {
-        ClassUtils.forName("net.emiva.crossfire.XMPPServer");
+        ClassUtils.forName("org.b5chat.crossfire.XMPPServer");
         emivaJarsInstalled = true;
     }
     catch (ClassNotFoundException cnfe) {}
 
     // Try to determine what the emivaHome directory is:
     try {
-        Class GlobalsClass = ClassUtils.forName("net.emiva.util.Globals");
+        Class GlobalsClass = ClassUtils.forName("org.b5chat.util.Globals");
         Method getcrossfireHomeMethod = GlobalsClass.getMethod("getHomeDirectory", (Class[])null);
         String crossfireHomeProp = (String)getcrossfireHomeMethod.invoke(GlobalsClass, (Object[])null);
         if (crossfireHomeProp != null) {

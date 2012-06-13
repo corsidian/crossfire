@@ -20,7 +20,7 @@
 
     <filter>
         <filter-name>AuthCheck</filter-name>
-        <filter-class>net.emiva.admin.AuthCheckFilter</filter-class>
+        <filter-class>org.b5chat.admin.AuthCheckFilter</filter-class>
         <init-param>
             <param-name>excludes</param-name>
             <param-value>
@@ -31,17 +31,17 @@
 
     <filter>
         <filter-name>PluginFilter</filter-name>
-        <filter-class>net.emiva.admin.PluginFilter</filter-class>
+        <filter-class>org.b5chat.admin.PluginFilter</filter-class>
     </filter>
 
     <filter>
         <filter-name>Set Character Encoding</filter-name>
-        <filter-class>net.emiva.util.SetCharacterEncodingFilter</filter-class>
+        <filter-class>org.b5chat.util.SetCharacterEncodingFilter</filter-class>
     </filter>
 
     <filter>
         <filter-name>LocaleFilter</filter-name>
-        <filter-class>net.emiva.util.LocaleFilter</filter-class>
+        <filter-class>org.b5chat.util.LocaleFilter</filter-class>
     </filter>
 
     <filter>
@@ -91,18 +91,18 @@
 
 
     <listener>
-        <listener-class>net.emiva.crossfire.XMPPContextListener</listener-class>
+        <listener-class>org.b5chat.crossfire.XMPPContextListener</listener-class>
     </listener>
 
     <servlet>
         <servlet-name>PluginServlet</servlet-name>
-        <servlet-class>net.emiva.crossfire.container.PluginServlet</servlet-class>
+        <servlet-class>org.b5chat.crossfire.container.PluginServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet>
         <servlet-name>FaviconServlet</servlet-name>
-        <servlet-class>net.emiva.util.FaviconServlet</servlet-class>
+        <servlet-class>org.b5chat.util.FaviconServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -113,12 +113,12 @@
 
     <servlet>
         <servlet-name>PluginIconServlet</servlet-name>
-        <servlet-class>net.emiva.crossfire.container.PluginIconServlet</servlet-class>
+        <servlet-class>org.b5chat.crossfire.container.PluginIconServlet</servlet-class>
     </servlet>
 
     <!--<servlet>
         <servlet-name>WebDAVLiteServlet</servlet-name>
-        <servlet-class>net.emiva.crossfire.webdav.WebDAVLiteServlet</servlet-class>
+        <servlet-class>org.b5chat.crossfire.webdav.WebDAVLiteServlet</servlet-class>
     </servlet>-->
 
 

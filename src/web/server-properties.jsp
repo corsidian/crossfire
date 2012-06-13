@@ -18,15 +18,15 @@
 --%>
 
 <%@ page import="java.util.*,
-                 net.emiva.util.*,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.util.Globals"
+                 org.b5chat.util.*,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.util.Globals"
     errorPage="error.jsp"
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.admin.AdminPageBean" />
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%!

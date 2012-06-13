@@ -17,8 +17,8 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.*,
-                 net.emiva.crossfire.user.*,
+<%@ page import="org.b5chat.util.*,
+                 org.b5chat.crossfire.user.*,
                  java.net.URLEncoder,
                  gnu.inet.encoding.Stringprep,
                  gnu.inet.encoding.StringprepException"
@@ -26,13 +26,13 @@
 %>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.HashMap"%><%@ page import="org.xmpp.packet.JID"%>
-<%@ page import="net.emiva.crossfire.security.SecurityAuditManager" %>
-<%@ page import="net.emiva.crossfire.admin.AdminManager" %>
+<%@ page import="org.b5chat.crossfire.security.SecurityAuditManager" %>
+<%@ page import="org.b5chat.crossfire.admin.AdminManager" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters //

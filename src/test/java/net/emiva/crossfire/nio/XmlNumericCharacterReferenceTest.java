@@ -3,8 +3,8 @@ package net.emiva.crossfire.nio;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import net.emiva.crossfire.nio.XMLLightweightParser;
 
+import org.b5chat.crossfire.nio.XMLLightweightParser;
 import org.junit.Test;
 
 /**

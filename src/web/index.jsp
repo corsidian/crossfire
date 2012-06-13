@@ -18,13 +18,13 @@
 --%>
 
 <%@ page import="org.apache.mina.transport.socket.nio.SocketAcceptor"%>
-<%@ page import="net.emiva.admin.AdminConsole"%>
-<%@ page import="net.emiva.crossfire.*" %>
-<%@ page import="net.emiva.crossfire.container.AdminConsolePlugin" %>
-<%@ page import="net.emiva.crossfire.net.SSLConfig" %>
-<%@ page import="net.emiva.crossfire.session.LocalClientSession" %>
-<%@ page import="net.emiva.crossfire.spi.ConnectionManagerImpl" %>
-<%@ page import="net.emiva.util.*" %>
+<%@ page import="org.b5chat.admin.AdminConsole"%>
+<%@ page import="org.b5chat.crossfire.*" %>
+<%@ page import="org.b5chat.crossfire.container.AdminConsolePlugin" %>
+<%@ page import="org.b5chat.crossfire.net.SSLConfig" %>
+<%@ page import="org.b5chat.crossfire.session.LocalClientSession" %>
+<%@ page import="org.b5chat.crossfire.spi.ConnectionManagerImpl" %>
+<%@ page import="org.b5chat.util.*" %>
 <%@ page import="java.net.InetSocketAddress" %>
 <%@ page import="java.net.SocketAddress" %>
 <%@ page import="java.net.URL" %>
@@ -35,7 +35,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <%-- Define page bean for header and sidebar --%>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.admin.AdminPageBean" />
 
 <%  // Simple logout code
     if ("true".equals(request.getParameter("logout"))) {
@@ -46,7 +46,7 @@
 %>
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out); %>
 
 <% // Get parameters //
@@ -340,7 +340,7 @@
         <td><%= "0.0.0.0".equals(address.getHostName()) ? LocaleUtils.getLocalizedString("ports.all_ports") : address.getHostName() %></td>
         <td><%= address.getPort() %></td>
         <% try { %>
-        <% if (!CertificateManager.isRSACertificate(SSLConfig.getKeyStore(), XMPPServer.getInstance().getServerInfo().getXMPPDomain()) || LocalClientSession.getTLSPolicy() == net.emiva.crossfire.Connection.TLSPolicy.disabled) { %>
+        <% if (!CertificateManager.isRSACertificate(SSLConfig.getKeyStore(), XMPPServer.getInstance().getServerInfo().getXMPPDomain()) || LocalClientSession.getTLSPolicy() == org.b5chat.crossfire.Connection.TLSPolicy.disabled) { %>
             <td><img src="images/blank.gif" width="1" height="1" alt=""/></td>
         <% } else { %>
             <td><img src="images/lock.gif" width="16" height="16" border="0" alt=""/></td>

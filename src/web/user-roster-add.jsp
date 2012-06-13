@@ -17,22 +17,22 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.*,
+<%@ page import="org.b5chat.util.*,
                  java.net.URLEncoder"
     errorPage="error.jsp"
 %>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.HashMap"%><%@ page import="org.xmpp.packet.JID"%>
-<%@ page import="net.emiva.crossfire.roster.Roster" %>
+<%@ page import="org.b5chat.crossfire.roster.Roster" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="net.emiva.crossfire.user.UserAlreadyExistsException" %>
-<%@ page import="net.emiva.crossfire.SharedGroupException" %>
+<%@ page import="org.b5chat.crossfire.user.UserAlreadyExistsException" %>
+<%@ page import="org.b5chat.crossfire.SharedGroupException" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <% // Get parameters //

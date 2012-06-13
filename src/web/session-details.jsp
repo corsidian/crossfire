@@ -17,13 +17,13 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.PresenceManager,
-                 net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.session.ClientSession,
-                 net.emiva.crossfire.user.User,
-                 net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.PresenceManager,
+                 org.b5chat.crossfire.SessionManager,
+                 org.b5chat.crossfire.session.ClientSession,
+                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.user.UserManager,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
                  java.text.NumberFormat,
                  java.util.Collection"
     errorPage="error.jsp"
@@ -32,7 +32,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <% // Get parameters
@@ -47,7 +47,7 @@
     // Get the session & address objects
     SessionManager sessionManager = webManager.getSessionManager();
     JID address = new JID(jid);
-    net.emiva.crossfire.session.ClientSession currentSess = sessionManager.getSession(address);
+    org.b5chat.crossfire.session.ClientSession currentSess = sessionManager.getSession(address);
     boolean isAnonymous = webManager.getXMPPServer().isLocal(address) &&
             !UserManager.getInstance().isRegisteredUser(address.getNode());
 

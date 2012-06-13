@@ -3,8 +3,8 @@
   -	$Date: 2008-02-18 23:21:33 -0500 (Mon, 18 Feb 2008) $
 --%>
 
-<%@ page import="net.emiva.util.*,
-                 net.emiva.crossfire.user.*,
+<%@ page import="org.b5chat.util.*,
+                 org.b5chat.crossfire.user.*,
                  java.util.HashMap,
                  java.util.Map,
                  java.net.URLEncoder"
@@ -13,7 +13,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%-- Define Administration Bean --%>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"/>
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"/>
 <%   webManager.init(request, response, session, application, out ); %>
 <%  
     // Get parameters

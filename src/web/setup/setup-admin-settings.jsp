@@ -4,13 +4,13 @@
   -	$Date: 2005-05-26 23:00:40 -0700 (Thu, 26 May 2005) $
 --%>
 
-<%@ page import="net.emiva.crossfire.XMPPServer,
-                 net.emiva.crossfire.auth.AuthFactory,
-                 net.emiva.crossfire.user.User,
-                 net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils" %>
-<%@ page import="net.emiva.util.StringUtils"%>
+<%@ page import="org.b5chat.crossfire.XMPPServer,
+                 org.b5chat.crossfire.auth.AuthFactory,
+                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.user.UserManager,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils" %>
+<%@ page import="org.b5chat.util.StringUtils"%>
 <%@ page import="org.xmpp.packet.JID"%>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="java.net.URLEncoder" %>

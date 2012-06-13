@@ -4,8 +4,8 @@
   -	$Date: 2005-05-26 23:00:40 -0700 (Thu, 26 May 2005) $
 --%>
 
-<%@ page import="net.emiva.crossfire.XMPPServer"%>
-<%@ page import="net.emiva.util.Globals"%>
+<%@ page import="org.b5chat.crossfire.XMPPServer"%>
+<%@ page import="org.b5chat.util.Globals"%>
 <%@ page import="java.util.Map" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
@@ -30,17 +30,17 @@
             @SuppressWarnings("unchecked")
             Map<String,String> xmppSettings = (Map<String,String>)session.getAttribute("xmppSettings");
             xmppSettings.put("provider.auth.className",
-                    net.emiva.crossfire.auth.DefaultAuthProvider.class.getName());
+                    org.b5chat.crossfire.auth.DefaultAuthProvider.class.getName());
             xmppSettings.put("provider.user.className",
-                    net.emiva.crossfire.user.DefaultUserProvider.class.getName());
+                    org.b5chat.crossfire.user.DefaultUserProvider.class.getName());
             xmppSettings.put("provider.group.className",
-                    net.emiva.crossfire.group.DefaultGroupProvider.class.getName());
+                    org.b5chat.crossfire.group.DefaultGroupProvider.class.getName());
             xmppSettings.put("provider.lockout.className",
-                    net.emiva.crossfire.lockout.DefaultLockOutProvider.class.getName());
+                    org.b5chat.crossfire.lockout.DefaultLockOutProvider.class.getName());
             xmppSettings.put("provider.securityAudit.className",
-                    net.emiva.crossfire.security.DefaultSecurityAuditProvider.class.getName());
+                    org.b5chat.crossfire.security.DefaultSecurityAuditProvider.class.getName());
             xmppSettings.put("provider.admin.className",
-                    net.emiva.crossfire.admin.DefaultAdminProvider.class.getName());
+                    org.b5chat.crossfire.admin.DefaultAdminProvider.class.getName());
             // Redirect
             response.sendRedirect("setup-admin-settings.jsp");
             return;

@@ -80,7 +80,7 @@ static bool crossfireIsRunning()
 static void toggleStartcrossfireAtBoot()
 {
 	CFURLRef propFile = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
-													  CFSTR("/Library/LaunchDaemons/net.emiva.crossfire.plist"),
+													  CFSTR("/Library/LaunchDaemons/org.b5chat.crossfire.plist"),
 													  kCFURLPOSIXPathStyle,
 													  false);
 	CFDataRef xmlData;
@@ -116,7 +116,7 @@ static void togglecrossfire()
 		args[1] = "unload";
 	else
 		args[1] = "load";
-	args[2] = "/Library/LaunchDaemons/net.emiva.crossfire.plist";
+	args[2] = "/Library/LaunchDaemons/org.b5chat.crossfire.plist";
 	args[3] = NULL;
 	
 	execv("/bin/launchctl", args);

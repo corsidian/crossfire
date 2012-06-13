@@ -18,11 +18,11 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.session.ComponentSession,
-                 net.emiva.crossfire.session.Session,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.SessionManager,
+                 org.b5chat.crossfire.session.ComponentSession,
+                 org.b5chat.crossfire.session.Session,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
                  java.net.URLEncoder"
     errorPage="error.jsp"
 %>
@@ -38,7 +38,7 @@
     final int[] RANGE_PRESETS = {15, 25, 50, 75, 100};
 %>
 
-<jsp:useBean id="admin" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <% // Get parameters

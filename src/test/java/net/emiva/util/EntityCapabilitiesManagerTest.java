@@ -18,9 +18,9 @@ package net.emiva.util;
 
 import static org.junit.Assert.assertEquals;
 
-import net.emiva.crossfire.entitycaps.EntityCapabilitiesManager;
-import net.emiva.util.cache.CacheFactory;
 
+import org.b5chat.crossfire.entitycaps.EntityCapabilitiesManager;
+import org.b5chat.util.cache.CacheFactory;
 import org.dom4j.Element;
 import org.dom4j.QName;
 import org.junit.BeforeClass;

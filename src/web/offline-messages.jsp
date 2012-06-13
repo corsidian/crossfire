@@ -17,8 +17,8 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.*,
-                 net.emiva.crossfire.*,
+<%@ page import="org.b5chat.util.*,
+                 org.b5chat.crossfire.*,
                  java.util.HashMap,
                  java.util.Map,
                  java.text.DecimalFormat"
@@ -28,7 +28,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" scope="page" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" scope="page" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

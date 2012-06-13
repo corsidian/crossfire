@@ -17,16 +17,16 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.*,
-                 net.emiva.crossfire.user.*,
+<%@ page import="org.b5chat.util.*,
+                 org.b5chat.crossfire.user.*,
                  java.net.URLEncoder"
     errorPage="error.jsp"
 %><%@ page import="org.xmpp.packet.JID"%>
-<%@ page import="net.emiva.crossfire.security.SecurityAuditManager" %>
+<%@ page import="org.b5chat.crossfire.security.SecurityAuditManager" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="admin" class="net.emiva.util.WebManager" />
+<jsp:useBean id="admin" class="org.b5chat.util.WebManager" />
 <% admin.init(request, response, session, application, out ); %>
 
 <%  // Get parameters //

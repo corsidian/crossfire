@@ -14,8 +14,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.lang.reflect.Method;
 import junit.framework.TestCase;
-import net.emiva.admin.AdminConsole;
 
+import org.b5chat.admin.AdminConsole;
 import org.dom4j.Element;
 
 public class AdminConsoleTest extends TestCase {

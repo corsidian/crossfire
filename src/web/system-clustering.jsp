@@ -21,25 +21,25 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.database.DbConnectionManager"
+<%@ page import="org.b5chat.database.DbConnectionManager"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.crossfire.XMPPServer" %>
-<%@ page import="net.emiva.crossfire.cluster.ClusterManager" %>
-<%@ page import="net.emiva.crossfire.cluster.ClusterNodeInfo" %>
-<%@ page import="net.emiva.crossfire.cluster.GetBasicStatistics" %>
-<%@ page import="net.emiva.util.Globals" %>
-<%@ page import="net.emiva.util.Log" %>
-<%@ page import="net.emiva.util.ParamUtils" %>
-<%@ page import="net.emiva.util.cache.CacheFactory" %>
+<%@ page import="org.b5chat.crossfire.XMPPServer" %>
+<%@ page import="org.b5chat.crossfire.cluster.ClusterManager" %>
+<%@ page import="org.b5chat.crossfire.cluster.ClusterNodeInfo" %>
+<%@ page import="org.b5chat.crossfire.cluster.GetBasicStatistics" %>
+<%@ page import="org.b5chat.util.Globals" %>
+<%@ page import="org.b5chat.util.Log" %>
+<%@ page import="org.b5chat.util.ParamUtils" %>
+<%@ page import="org.b5chat.util.cache.CacheFactory" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="net.emiva.util.Base64" %>
+<%@ page import="org.b5chat.util.Base64" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

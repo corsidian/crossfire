@@ -17,8 +17,8 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.*,
-                 net.emiva.database.DbConnectionManager,
+<%@ page import="org.b5chat.util.*,
+                 org.b5chat.database.DbConnectionManager,
                  java.sql.*"
     errorPage="error.jsp"
 %>
@@ -30,7 +30,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.admin.AdminPageBean" />
 
 <html>
     <head>

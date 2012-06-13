@@ -1,6 +1,7 @@
 package net.emiva.admin;
 
-import net.emiva.admin.AuthCheckFilter;
+import org.b5chat.admin.AuthCheckFilter;
+
 import junit.framework.TestCase;
 
 /**

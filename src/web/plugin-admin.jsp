@@ -14,10 +14,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.XMPPServer,
-                 net.emiva.crossfire.container.Plugin,
-                 net.emiva.crossfire.container.PluginManager"
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.XMPPServer,
+                 org.b5chat.crossfire.container.Plugin,
+                 org.b5chat.crossfire.container.PluginManager"
         %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.ArrayList" %>
@@ -25,8 +25,8 @@
 <%@ page import="java.util.Comparator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.*" %>
-<%@ page import="net.emiva.util.Globals" %>
-<%@ page import="net.emiva.util.Log" %>
+<%@ page import="org.b5chat.util.Globals" %>
+<%@ page import="org.b5chat.util.Log" %>
 <%@ page import="org.apache.commons.fileupload.FileItemFactory" %>
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
 <%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
@@ -36,7 +36,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%

@@ -24,7 +24,8 @@ import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
 
-import net.emiva.util.XMLProperties;
+import org.b5chat.util.XMLProperties;
+
 
 public class XMLPropertiesTest extends TestCase {
 

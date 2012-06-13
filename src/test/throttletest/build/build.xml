@@ -46,7 +46,7 @@
             <zipfileset src="${merge.lib.dir}/smack.jar"/>
             <zipfileset src="${merge.lib.dir}/smackx.jar"/>
             <manifest>
-                <attribute name="Main-Class" value="net.emiva.crossfire.test.throttle.ThrottleTestReader" />
+                <attribute name="Main-Class" value="org.b5chat.crossfire.test.throttle.ThrottleTestReader" />
             </manifest>
        </jar>
         <jar destfile="${basedir}/target/throttlewriter.jar"
@@ -56,7 +56,7 @@
             <zipfileset src="${merge.lib.dir}/smack.jar"/>
             <zipfileset src="${merge.lib.dir}/smackx.jar"/>
             <manifest>
-                <attribute name="Main-Class" value="net.emiva.crossfire.test.throttle.ThrottleTestWriter" />
+                <attribute name="Main-Class" value="org.b5chat.crossfire.test.throttle.ThrottleTestWriter" />
             </manifest>
        </jar>
    </target>

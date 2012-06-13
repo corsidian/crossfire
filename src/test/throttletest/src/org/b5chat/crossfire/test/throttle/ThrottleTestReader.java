@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package net.emiva.crossfire.test.throttle;
+package org.b5chat.crossfire.test.throttle;
 
 import net.emiva.smack.*;
 import net.emiva.smack.filter.PacketTypeFilter;

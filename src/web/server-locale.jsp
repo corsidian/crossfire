@@ -17,10 +17,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.Globals,
-                 net.emiva.util.LocaleUtils,
-                 net.emiva.util.Log,
-                 net.emiva.util.ParamUtils"
+<%@ page import="org.b5chat.util.Globals,
+                 org.b5chat.util.LocaleUtils,
+                 org.b5chat.util.Log,
+                 org.b5chat.util.ParamUtils"
 %>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Locale"%>
@@ -30,7 +30,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters //

@@ -17,7 +17,7 @@
 char *pscmd = "/bin/ps auxww | fgrep -v 'fgrep' | fgrep crossfire/lib/startup.jar";
 
 // The path to the plist file
-NSString *plistPath = @"/Library/LaunchDaemons/net.emiva.crossfire.plist";
+NSString *plistPath = @"/Library/LaunchDaemons/org.b5chat.crossfire.plist";
 
 
 @interface crossfirePrefPane : NSPreferencePane 

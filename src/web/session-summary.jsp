@@ -17,11 +17,11 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.SessionResultFilter,
-                 net.emiva.crossfire.session.ClientSession,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.SessionManager,
+                 org.b5chat.crossfire.SessionResultFilter,
+                 org.b5chat.crossfire.session.ClientSession,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
                  java.util.Collection"
     errorPage="error.jsp"
 %>
@@ -38,7 +38,7 @@
     static final int[] REFRESHES = {0, 10, 30, 60, 90};
     static final String[] REFRESHES_LABELS = {NONE,"10","30","60","90"};
 %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters

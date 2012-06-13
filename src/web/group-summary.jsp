@@ -18,16 +18,16 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.*,
+<%@ page import="org.b5chat.util.*,
                  java.util.*,
-                 net.emiva.crossfire.group.*,
+                 org.b5chat.crossfire.group.*,
                  java.net.URLEncoder"
 %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

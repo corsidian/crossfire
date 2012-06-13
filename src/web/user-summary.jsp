@@ -18,14 +18,14 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.PresenceManager,
-                 net.emiva.crossfire.admin.AdminManager,
-                 net.emiva.crossfire.user.User,
-                 net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.Globals,
-                 net.emiva.util.LocaleUtils,
-                 net.emiva.util.ParamUtils"
-%><%@ page import="net.emiva.util.StringUtils"%>
+<%@ page import="org.b5chat.crossfire.PresenceManager,
+                 org.b5chat.crossfire.admin.AdminManager,
+                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.user.UserManager,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.LocaleUtils,
+                 org.b5chat.util.ParamUtils"
+%><%@ page import="org.b5chat.util.StringUtils"%>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="org.xmpp.packet.Presence" %>
 <%@ page import="java.net.URLEncoder" %>
@@ -39,7 +39,7 @@
     final int[] RANGE_PRESETS = {25, 50, 75, 100, 500, 1000, -1};
 %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

@@ -19,7 +19,8 @@
  */
 package net.emiva.util;
 
-import net.emiva.util.IntEnum;
+import org.b5chat.util.IntEnum;
+
 import junit.framework.TestCase;
 
 /**

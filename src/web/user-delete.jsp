@@ -17,13 +17,13 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.security.SecurityAuditManager,
-                 net.emiva.crossfire.session.ClientSession,
-                 net.emiva.crossfire.user.User"
+<%@ page import="org.b5chat.crossfire.security.SecurityAuditManager,
+                 org.b5chat.crossfire.session.ClientSession,
+                 org.b5chat.crossfire.user.User"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.crossfire.user.UserManager" %>
-<%@ page import="net.emiva.util.ParamUtils" %>
+<%@ page import="org.b5chat.crossfire.user.UserManager" %>
+<%@ page import="org.b5chat.util.ParamUtils" %>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="org.xmpp.packet.StreamError" %>
 <%@ page import="java.net.URLEncoder" %>
@@ -31,7 +31,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters //

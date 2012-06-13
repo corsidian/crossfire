@@ -17,19 +17,19 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.Connection,
-                 net.emiva.crossfire.ConnectionManager,
-                 net.emiva.crossfire.XMPPServer,
-                 net.emiva.crossfire.server.ServerDialback,
-                 net.emiva.crossfire.session.LocalClientSession,
-                 net.emiva.util.Globals"
+<%@ page import="org.b5chat.crossfire.Connection,
+                 org.b5chat.crossfire.ConnectionManager,
+                 org.b5chat.crossfire.XMPPServer,
+                 org.b5chat.crossfire.server.ServerDialback,
+                 org.b5chat.crossfire.session.LocalClientSession,
+                 org.b5chat.util.Globals"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.util.ParamUtils" %>
+<%@ page import="org.b5chat.util.ParamUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 <%  try { %>
 

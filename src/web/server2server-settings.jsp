@@ -20,16 +20,16 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.util.*,
+<%@ page import="org.b5chat.util.*,
                  java.util.Iterator,
-                 net.emiva.crossfire.*,
+                 org.b5chat.crossfire.*,
                  java.util.*,
-                 net.emiva.crossfire.server.RemoteServerManager,
-                 net.emiva.crossfire.server.RemoteServerConfiguration"
+                 org.b5chat.crossfire.server.RemoteServerManager,
+                 org.b5chat.crossfire.server.RemoteServerConfiguration"
     errorPage="error.jsp"
 %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters

@@ -62,16 +62,16 @@
     </ldap>
     <provider>
         <user>
-            <className>net.emiva.crossfire.ldap.LdapUserProvider</className>
+            <className>org.b5chat.crossfire.ldap.LdapUserProvider</className>
         </user>
         <auth>
-            <className>net.emiva.crossfire.ldap.LdapAuthenticationProvider</className>
+            <className>org.b5chat.crossfire.ldap.LdapAuthenticationProvider</className>
         </auth>
     </provider>
     -->  
   <!-- End example LDAP settings -->  
   <connectionProvider> 
-    <className>net.emiva.database.EmbeddedConnectionProvider</className> 
+    <className>org.b5chat.database.EmbeddedConnectionProvider</className> 
   </connectionProvider>  
   <setup>true</setup> 
 </emiva>

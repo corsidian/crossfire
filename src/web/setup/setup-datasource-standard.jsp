@@ -5,13 +5,13 @@
   -	$Date: 2005-08-11 12:56:15 -0700 (Thu, 11 Aug 2005) $
 --%>
 
-<%@ page import="net.emiva.database.DbConnectionManager,
-                 net.emiva.database.DefaultConnectionProvider,
-                 net.emiva.util.ClassUtils,
-                 net.emiva.util.Globals,
-                 net.emiva.util.Log,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.XMPPServer,
+<%@ page import="org.b5chat.database.DbConnectionManager,
+                 org.b5chat.database.DefaultConnectionProvider,
+                 org.b5chat.util.ClassUtils,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.Log,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.XMPPServer,
                  java.io.File,
                  java.lang.Double,
                  java.lang.Exception,
@@ -130,7 +130,7 @@
 
             // Force the standard emiva connection provider to be used by deleting the current setting:
             Globals.setXMLProperty("connectionProvider.className",
-                    "net.emiva.database.DefaultConnectionProvider");
+                    "org.b5chat.database.DefaultConnectionProvider");
             DefaultConnectionProvider conProvider = new DefaultConnectionProvider();
             try {
                 conProvider.setDriver(driver);

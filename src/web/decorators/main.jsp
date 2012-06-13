@@ -17,9 +17,9 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.StringUtils,
-                 net.emiva.admin.AdminConsole,
-                 net.emiva.util.LocaleUtils"
+<%@ page import="org.b5chat.util.StringUtils,
+                 org.b5chat.admin.AdminConsole,
+                 org.b5chat.util.LocaleUtils"
     errorPage="../error.jsp"
 %><%@ page import="org.xmpp.packet.JID"%>
 
@@ -28,9 +28,9 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
 
-<jsp:useBean id="info" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="info" scope="request" class="org.b5chat.admin.AdminPageBean" />
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out); %>
 
 <decorator:usePage id="decoratedPage" />

@@ -10,7 +10,7 @@
 		<string>/usr/local/crossfire</string>
 	</dict>
 	<key>Label</key>
-	<string>net.emiva.crossfire</string>
+	<string>org.b5chat.crossfire</string>
 	<key>OnDemand</key>
 	<false/>
 	<key>Program</key>

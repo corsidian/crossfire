@@ -1,7 +1,7 @@
-<%@ page import="net.emiva.util.CertificateManager,
-                net.emiva.util.ParamUtils,
-                net.emiva.crossfire.XMPPServer,
-                net.emiva.crossfire.net.SSLConfig,
+<%@ page import="org.b5chat.util.CertificateManager,
+                org.b5chat.util.ParamUtils,
+                org.b5chat.crossfire.XMPPServer,
+                org.b5chat.crossfire.net.SSLConfig,
                 java.io.ByteArrayInputStream,
                 java.util.HashMap,
                 java.util.Map"
@@ -10,7 +10,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%--

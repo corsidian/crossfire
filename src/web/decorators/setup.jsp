@@ -17,15 +17,15 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.LocaleUtils"%>
+<%@ page import="org.b5chat.util.LocaleUtils"%>
 <%@ page import="java.beans.PropertyDescriptor"%>
 <%@ page import="java.io.File"%>
-<%@ page import="net.emiva.database.DbConnectionManager"%>
+<%@ page import="org.b5chat.database.DbConnectionManager"%>
 <%@ page import="java.sql.Connection"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.sql.Statement"%>
 <%@ page import="java.sql.SQLException"%>
-<%@ page import="net.emiva.admin.AdminConsole" %>
+<%@ page import="org.b5chat.admin.AdminConsole" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 

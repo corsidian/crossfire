@@ -18,19 +18,19 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils"
+<%@ page import="org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils"
 %>
 <%@ page import="org.xmpp.packet.JID"%>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.Collection" %>
-<%@ page import="net.emiva.crossfire.security.SecurityAuditManager" %>
-<%@ page import="net.emiva.crossfire.security.SecurityAuditEvent" %>
+<%@ page import="org.b5chat.crossfire.security.SecurityAuditManager" %>
+<%@ page import="org.b5chat.crossfire.security.SecurityAuditEvent" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="net.emiva.crossfire.security.AuditWriteOnlyException" %>
+<%@ page import="org.b5chat.crossfire.security.AuditWriteOnlyException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.text.ParseException" %>
-<%@ page import="net.emiva.util.LocaleUtils" %>
+<%@ page import="org.b5chat.util.LocaleUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
@@ -42,7 +42,7 @@
     SimpleDateFormat shortDateFormat = new SimpleDateFormat("MM/dd/yy");
 %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

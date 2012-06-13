@@ -17,10 +17,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.ConnectionManager,
-                 net.emiva.crossfire.XMPPServer,
+<%@ page import="org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.ConnectionManager,
+                 org.b5chat.crossfire.XMPPServer,
                  java.net.InetAddress,
                  java.util.HashMap"
 %>
@@ -29,10 +29,10 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.admin.AdminPageBean" />
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%

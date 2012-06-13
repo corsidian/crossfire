@@ -5,14 +5,14 @@
   -	$Date: 2008-02-18 23:21:33 -0500 (Mon, 18 Feb 2008) $
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.PresenceManager,
-                 net.emiva.crossfire.user.*"
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.PresenceManager,
+                 org.b5chat.crossfire.user.*"
     
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%-- Define Administration Bean --%>
-<jsp:useBean id="ad" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="ad" class="org.b5chat.util.WebManager"  />
 <% ad.init(request, response, session, application, out ); %>
 
 

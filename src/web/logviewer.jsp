@@ -19,18 +19,18 @@
 --%>
 
 <%@ page import="java.io.*,
-                 net.emiva.util.*,
+                 org.b5chat.util.*,
                  java.text.*,
-                 net.emiva.util.Globals,
-                 net.emiva.crossfire.user.*,
+                 org.b5chat.util.Globals,
+                 org.b5chat.crossfire.user.*,
                  java.util.*"
 %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.admin.AdminPageBean" />
 
-<jsp:useBean id="admin" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <%!

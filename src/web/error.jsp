@@ -5,11 +5,11 @@
 --%>
 
 <%@ page import="java.io.*,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.util.Globals,
-                 net.emiva.crossfire.auth.UnauthorizedException,
-                 net.emiva.crossfire.user.UserNotFoundException,
-                 net.emiva.crossfire.group.GroupNotFoundException"
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.util.Globals,
+                 org.b5chat.crossfire.auth.UnauthorizedException,
+                 org.b5chat.crossfire.user.UserNotFoundException,
+                 org.b5chat.crossfire.group.GroupNotFoundException"
     isErrorPage="true"
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>

@@ -17,11 +17,11 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.session.IncomingServerSession,
-                 net.emiva.crossfire.session.OutgoingServerSession,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.SessionManager,
+                 org.b5chat.crossfire.session.IncomingServerSession,
+                 org.b5chat.crossfire.session.OutgoingServerSession,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
                 java.text.NumberFormat"
     errorPage="error.jsp"
 %>
@@ -32,7 +32,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <% // Get parameters

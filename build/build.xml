@@ -407,7 +407,7 @@
             <fileset dir="${lib.build.installer.dir}/images" includes="**/*.png"/>
             <manifest>
                 <attribute name="Main-Class"
-                           value="net.emiva.crossfire.starter.ServerStarter"/>
+                           value="org.b5chat.crossfire.starter.ServerStarter"/>
                 <attribute name="Built-By" value="EMIVA (www.emiva.net)"/>
             </manifest>
         </jar>
@@ -535,7 +535,7 @@
             </classpath>
             <arg line="-uriroot '${jspc.jsp.src.dir}'"/>
             <arg line="-d '${jspc.java.dest.dir}'"/>
-            <arg line="-p net.emiva.crossfire.admin"/>
+            <arg line="-p org.b5chat.crossfire.admin"/>
             <arg line="-webinc '${jspc.dest.dir}/web.partial.xml'"/>
         </java>
 
@@ -1453,7 +1453,7 @@
                                 validateXml="false"
                                 uriroot="${plugin.dev.dest.dir}/@{plugin}/target/web"
                                 outputDir="${plugin.dev.dest.dir}/@{plugin}/target/jspc/java"
-                                package="net.emiva.crossfire.plugin.@{plugin}"
+                                package="org.b5chat.crossfire.plugin.@{plugin}"
                                 webXml="${plugin.dev.dest.dir}/@{plugin}/target/jspc/web.xml"
                                 />
 
@@ -1700,7 +1700,7 @@
             </fileset>
         </copy>
         <mkdir dir="${mac.pkg.dir}/Library/LaunchDaemons"/>
-        <copy file="${basedir}/build/osx/net.emiva.crossfire.plist"
+        <copy file="${basedir}/build/osx/org.b5chat.crossfire.plist"
               todir="${mac.pkg.dir}/Library/LaunchDaemons"/>
         <mkdir dir="${mac.dmg.dir}"/>
         <mkdir dir="${mac.pkg.dir}/Library/PreferencePanes"/>
