@@ -30,7 +30,7 @@
 %>
 
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.web.admin.AdminPageBean" />
 
 <%!
     static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd kk:mm:ss");

@@ -32,22 +32,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * <li><b>contactUpdated</b> --> A contact has been updated of a roster.</li>
  * <li><b>contactDeleted</b> --> A contact has been deleted from a roster.</li>
  * </ul>
- * Use {@link #addListener(RosterEventListener)} and {@link #removeListener(RosterEventListener)}
- * to add or remove {@link RosterEventListener}.
+ * Use {@link #addListener(IRosterEventListener)} and {@link #removeListener(IRosterEventListener)}
+ * to add or remove {@link IRosterEventListener}.
  *
  * @author Gaston Dombiak
  */
 public class RosterEventDispatcher {
 
-    private List<RosterEventListener> listeners =
-            new CopyOnWriteArrayList<RosterEventListener>();
+    private List<IRosterEventListener> listeners =
+            new CopyOnWriteArrayList<IRosterEventListener>();
 
     /**
      * Registers a listener to receive events.
      *
      * @param listener the listener.
      */
-    public void addListener(RosterEventListener listener) {
+    public void addListener(IRosterEventListener listener) {
         if (listener == null) {
             throw new NullPointerException();
         }
@@ -59,7 +59,7 @@ public class RosterEventDispatcher {
      *
      * @param listener the listener.
      */
-    public void removeListener(RosterEventListener listener) {
+    public void removeListener(IRosterEventListener listener) {
         listeners.remove(listener);
     }
 
@@ -70,7 +70,7 @@ public class RosterEventDispatcher {
      */
     public void rosterLoaded(IRoster rosterImpl) {
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 listener.rosterLoaded(rosterImpl);
             }
         }
@@ -87,10 +87,10 @@ public class RosterEventDispatcher {
      * @param persistent true if the new contact is going to be saved to the database.
      * @return false if the contact should not be persisted to the database.
      */
-    public boolean addingContact(IRoster rosterImpl, RosterItem item, boolean persistent) {
+    public boolean addingContact(IRoster rosterImpl, IRosterItem item, boolean persistent) {
         boolean answer = persistent;
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 if (!listener.addingContact(rosterImpl, item, persistent)) {
                     answer = false;
                 }
@@ -105,9 +105,9 @@ public class RosterEventDispatcher {
      * @param roster the roster that was updated.
      * @param item   the new roster item.
      */
-    public void contactAdded(Roster roster, RosterItem item) {
+    public void contactAdded(Roster roster, IRosterItem item) {
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 listener.contactAdded(roster, item);
             }
         }
@@ -119,9 +119,9 @@ public class RosterEventDispatcher {
      * @param roster the roster that was updated.
      * @param item   the updated roster item.
      */
-    public void contactUpdated(Roster roster, RosterItem item) {
+    public void contactUpdated(Roster roster, IRosterItem item) {
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 listener.contactUpdated(roster, item);
             }
         }
@@ -133,9 +133,9 @@ public class RosterEventDispatcher {
      * @param roster the roster that was updated.
      * @param item   the roster item that was deleted.
      */
-    public void contactDeleted(Roster roster, RosterItem item) {
+    public void contactDeleted(Roster roster, IRosterItem item) {
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 listener.contactDeleted(roster, item);
             }
         }

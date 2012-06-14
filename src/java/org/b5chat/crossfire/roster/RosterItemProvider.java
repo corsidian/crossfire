@@ -106,7 +106,7 @@ public class RosterItemProvider {
      * @return the new roster item.
      * @throws UserAlreadyExistsException if a roster item with the username already exists. 
      */
-    public RosterItem createItem(String username, RosterItem item)
+    public IRosterItem createItem(String username, IRosterItem item)
             throws UserAlreadyExistsException
     {
         Connection con = null;
@@ -147,7 +147,7 @@ public class RosterItemProvider {
      * @param item   The roster item to update
      * @throws UserNotFoundException If no entry could be found to update
      */
-    public void updateItem(String username, RosterItem item) throws UserNotFoundException {
+    public void updateItem(String username, IRosterItem item) throws UserNotFoundException {
         Connection con = null;
         PreparedStatement pstmt = null;
         long rosterID = item.getID();
@@ -300,9 +300,9 @@ public class RosterItemProvider {
                 // Create a new RosterItem (ie. user contact) from the stored information
                 RosterItem item = new RosterItem(rs.getLong(2),
                         new JID(rs.getString(1)),
-                        RosterItem.SubType.getTypeFromInt(rs.getInt(3)),
-                        RosterItem.AskType.getTypeFromInt(rs.getInt(4)),
-                        RosterItem.RecvType.getTypeFromInt(rs.getInt(5)),
+                        SubType.getTypeFromInt(rs.getInt(3)),
+                        AskType.getTypeFromInt(rs.getInt(4)),
+                        RecvType.getTypeFromInt(rs.getInt(5)),
                         rs.getString(6),
                         null,
                         userNameManager,
@@ -323,7 +323,7 @@ public class RosterItemProvider {
             if (!itemList.isEmpty()) {
                 StringBuilder sb = new StringBuilder(100);
                 sb.append(LOAD_ROSTER_ITEM_GROUPS).append(" WHERE rosterID IN (");
-                for (RosterItem item : itemList) {
+                for (IRosterItem item : itemList) {
                     sb.append(item.getID()).append(",");
                 }
                 sb.setLength(sb.length()-1);

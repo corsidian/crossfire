@@ -1,6 +1,6 @@
 package org.b5chat.admin;
 
-import org.b5chat.admin.AuthCheckFilter;
+import org.b5chat.web.admin.AuthCheckFilter;
 
 import junit.framework.TestCase;
 

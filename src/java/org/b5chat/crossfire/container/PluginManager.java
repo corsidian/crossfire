@@ -54,11 +54,11 @@ import java.util.jar.Pack200;
 import java.util.zip.ZipFile;
 
 
-import org.b5chat.admin.AdminConsole;
 import org.b5chat.crossfire.XMPPServer;
 import org.b5chat.database.DbConnectionManager;
 import org.b5chat.util.LocaleUtils;
 import org.b5chat.util.Version;
+import org.b5chat.web.admin.AdminConsole;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;

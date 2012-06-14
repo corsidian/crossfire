@@ -24,7 +24,7 @@
     errorPage="error.jsp"
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.web.admin.AdminPageBean" />
 
 <jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>

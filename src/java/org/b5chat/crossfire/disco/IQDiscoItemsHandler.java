@@ -28,7 +28,7 @@ import org.b5chat.crossfire.cluster.ClusterEventListener;
 import org.b5chat.crossfire.cluster.ClusterManager;
 import org.b5chat.crossfire.cluster.NodeID;
 import org.b5chat.crossfire.handler.IQHandler;
-import org.b5chat.crossfire.roster.RosterItem;
+import org.b5chat.crossfire.roster.IRosterItem;
 import org.b5chat.crossfire.session.Session;
 import org.b5chat.crossfire.user.User;
 import org.b5chat.crossfire.user.UserManager;
@@ -557,11 +557,11 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
         List<Element> answer = new ArrayList<Element>();
         try {
             User user = UserManager.getInstance().getUser(name);
-            RosterItem item = user.getRoster().getRosterItem(senderJID);
+            IRosterItem item = user.getRoster().getRosterItem(senderJID);
             // If the requesting entity is subscribed to the account's presence then
             // answer the user's "available resources"
-            if (item.getSubStatus() == RosterItem.SUB_FROM ||
-                    item.getSubStatus() == RosterItem.SUB_BOTH) {
+            if (item.getSubStatus() == IRosterItem.SUB_FROM ||
+                    item.getSubStatus() == IRosterItem.SUB_BOTH) {
                 for (Session session : SessionManager.getInstance().getSessions(name)) {
                     Element element = DocumentHelper.createElement("item");
                     element.addAttribute("jid", session.getAddress().toString());

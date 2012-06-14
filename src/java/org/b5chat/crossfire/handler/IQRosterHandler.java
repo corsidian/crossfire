@@ -34,6 +34,7 @@ import org.b5chat.crossfire.XMPPServer;
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.disco.ServerFeaturesProvider;
 import org.b5chat.crossfire.roster.IRoster;
+import org.b5chat.crossfire.roster.IRosterItem;
 import org.b5chat.crossfire.roster.IRosterManager;
 import org.b5chat.crossfire.roster.RosterItem;
 import org.b5chat.crossfire.user.UserAlreadyExistsException;
@@ -168,10 +169,10 @@ public class IQRosterHandler extends IQHandler implements ServerFeaturesProvider
             for (org.xmpp.packet.Roster.Item packetItem : packet.getItems()) {
                 if (packetItem.getSubscription() == org.xmpp.packet.Roster.Subscription.remove) {
                     IRoster roster = userManager.getUser(recipientJID.getNode()).getRoster();
-                    RosterItem item = roster.getRosterItem(senderJID);
+                    IRosterItem item = roster.getRosterItem(senderJID);
                     roster.deleteRosterItem(senderJID, true);
-                    item.setSubStatus(RosterItem.SUB_REMOVE);
-                    item.setSubStatus(RosterItem.SUB_NONE);
+                    item.setSubStatus(IRosterItem.SUB_REMOVE);
+                    item.setSubStatus(IRosterItem.SUB_NONE);
 
                     Packet itemPacket = packet.createCopy();
                     sessionManager.userBroadcast(recipientJID.getNode(), itemPacket);
@@ -235,7 +236,7 @@ public class IQRosterHandler extends IQHandler implements ServerFeaturesProvider
                     else {
                         if (cachedRoster.isRosterItem(item.getJID())) {
                             // existing item
-                            RosterItem cachedItem = cachedRoster.getRosterItem(item.getJID());
+                            IRosterItem cachedItem = cachedRoster.getRosterItem(item.getJID());
                             cachedItem.setAsCopyOf(item);
                             cachedRoster.updateRosterItem(cachedItem);
                         }

@@ -21,24 +21,29 @@
 package org.b5chat.crossfire.roster;
 
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import org.b5chat.crossfire.SharedGroupException;
 import org.b5chat.crossfire.group.Group;
 import org.b5chat.crossfire.group.GroupManager;
 import org.b5chat.crossfire.group.GroupNotFoundException;
 import org.b5chat.crossfire.user.UserNameManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
-import org.b5chat.util.IntEnum;
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
 import org.b5chat.util.cache.CannotCalculateSizeException;
 import org.b5chat.util.cache.ExternalizableUtil;
 import org.xmpp.packet.JID;
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.*;
 
 /**
  * <p>Represents a single roster item for a User's Roster.</p>
@@ -55,89 +60,7 @@ import java.util.*;
  *
  * @author Gaston Dombiak
  */
-public class RosterItem implements Cacheable, Externalizable {
-
-    public static class SubType extends IntEnum {
-        protected SubType(String name, int value) {
-            super(name, value);
-            register(this);
-        }
-
-        public static SubType getTypeFromInt(int value) {
-            return (SubType)getEnumFromInt(SubType.class, value);
-        }
-    }
-
-    public static class AskType extends IntEnum {
-        protected AskType(String name, int value) {
-            super(name, value);
-            register(this);
-        }
-
-        public static AskType getTypeFromInt(int value) {
-            return (AskType)getEnumFromInt(AskType.class, value);
-        }
-    }
-
-    public static class RecvType extends IntEnum {
-        protected RecvType(String name, int value) {
-            super(name, value);
-            register(this);
-        }
-
-        public static RecvType getTypeFromInt(int value) {
-            return (RecvType)getEnumFromInt(RecvType.class, value);
-        }
-    }
-
-    /**
-     * <p>Indicates the roster item should be removed.</p>
-     */
-    public static final SubType SUB_REMOVE = new SubType("remove", -1);
-    /**
-     * <p>No subscription is established.</p>
-     */
-    public static final SubType SUB_NONE = new SubType("none", 0);
-    /**
-     * <p>The roster owner has a subscription to the roster item's presence.</p>
-     */
-    public static final SubType SUB_TO = new SubType("to", 1);
-    /**
-     * <p>The roster item has a subscription to the roster owner's presence.</p>
-     */
-    public static final SubType SUB_FROM = new SubType("from", 2);
-    /**
-     * <p>The roster item and owner have a mutual subscription.</p>
-     */
-    public static final SubType SUB_BOTH = new SubType("both", 3);
-
-    /**
-     * <p>The roster item has no pending subscription requests.</p>
-     */
-    public static final AskType ASK_NONE = new AskType("", -1);
-    /**
-     * <p>The roster item has been asked for permission to subscribe to their presence
-     * but no response has been received.</p>
-     */
-    public static final AskType ASK_SUBSCRIBE = new AskType("subscribe", 0);
-    /**
-     * <p>The roster owner has asked to the roster item to unsubscribe from it's
-     * presence but has not received confirmation.</p>
-     */
-    public static final AskType ASK_UNSUBSCRIBE = new AskType("unsubscribe", 1);
-
-    /**
-     * <p>There are no subscriptions that have been received but not presented to the user.</p>
-     */
-    public static final RecvType RECV_NONE = new RecvType("", -1);
-    /**
-     * <p>The server has received a subscribe request, but has not forwarded it to the user.</p>
-     */
-    public static final RecvType RECV_SUBSCRIBE = new RecvType("sub", 1);
-    /**
-     * <p>The server has received an unsubscribe request, but has not forwarded it to the user.</p>
-     */
-    public static final RecvType RECV_UNSUBSCRIBE = new RecvType("unsub", 2);
+public class RosterItem implements Cacheable, Externalizable, IRosterItem {
 
     protected RecvType recvStatus;
     protected JID jid;
@@ -209,56 +132,54 @@ public class RosterItem implements Cacheable, Externalizable {
         this(item.getJID(),
                 getSubType(item),
                 getAskStatus(item),
-                RosterItem.RECV_NONE,
+                IRosterItem.RECV_NONE,
                 item.getName(),
                 new LinkedList<String>(item.getGroups()), userNameManager, groupManager);
     }
 
-    private static RosterItem.AskType getAskStatus(org.xmpp.packet.Roster.Item item) {
+    private static AskType getAskStatus(org.xmpp.packet.Roster.Item item) {
         if (item.getAsk() == org.xmpp.packet.Roster.Ask.subscribe) {
-            return RosterItem.ASK_SUBSCRIBE;
+            return IRosterItem.ASK_SUBSCRIBE;
         }
         else if (item.getAsk() == org.xmpp.packet.Roster.Ask.unsubscribe) {
-            return RosterItem.ASK_UNSUBSCRIBE;
+            return IRosterItem.ASK_UNSUBSCRIBE;
         }
         else {
-            return RosterItem.ASK_NONE;
+            return IRosterItem.ASK_NONE;
         }
     }
 
-    private static RosterItem.SubType getSubType(org.xmpp.packet.Roster.Item item) {
+    private static SubType getSubType(org.xmpp.packet.Roster.Item item) {
         if (item.getSubscription() == org.xmpp.packet.Roster.Subscription.to) {
-            return RosterItem.SUB_TO;
+            return IRosterItem.SUB_TO;
         }
         else if (item.getSubscription() == org.xmpp.packet.Roster.Subscription.from) {
-            return RosterItem.SUB_FROM;
+            return IRosterItem.SUB_FROM;
         }
         else if (item.getSubscription() == org.xmpp.packet.Roster.Subscription.both) {
-            return RosterItem.SUB_BOTH;
+            return IRosterItem.SUB_BOTH;
         }
         else if (item.getSubscription() == org.xmpp.packet.Roster.Subscription.remove) {
-            return RosterItem.SUB_REMOVE;
+            return IRosterItem.SUB_REMOVE;
         }
         else {
-            return RosterItem.SUB_NONE;
+            return IRosterItem.SUB_NONE;
         }
     }
 
-    /**
-     * <p>Obtain the current subscription status of the item.</p>
-     *
-     * @return The subscription status of the item
-     */
-    public SubType getSubStatus() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getSubStatus()
+	 */
+    @Override
+	public SubType getSubStatus() {
         return subStatus;
     }
 
-    /**
-     * <p>Set the current subscription status of the item.</p>
-     *
-     * @param subStatus The subscription status of the item
-     */
-    public void setSubStatus(SubType subStatus) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#setSubStatus(org.b5chat.crossfire.roster.RosterItem.SubType)
+	 */
+    @Override
+	public void setSubStatus(SubType subStatus) {
         // Optimization: Load user only if we need to set the nickname of the roster item
         if ("".equals(nickname) && (subStatus == SUB_BOTH || subStatus == SUB_TO)) {
             try {
@@ -271,12 +192,11 @@ public class RosterItem implements Cacheable, Externalizable {
         this.subStatus = subStatus;
     }
 
-    /**
-     * <p>Obtain the current ask status of the item.</p>
-     *
-     * @return The ask status of the item
-     */
-    public AskType getAskStatus() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getAskStatus()
+	 */
+    @Override
+	public AskType getAskStatus() {
         if (isShared()) {
             // Redefine the ask status since the item belongs to a shared group
             return ASK_NONE;
@@ -286,76 +206,67 @@ public class RosterItem implements Cacheable, Externalizable {
         }
     }
 
-    /**
-     * <p>Set the current ask status of the item.</p>
-     *
-     * @param askStatus The ask status of the item
-     */
-    public void setAskStatus(AskType askStatus) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#setAskStatus(org.b5chat.crossfire.roster.RosterItem.AskType)
+	 */
+    @Override
+	public void setAskStatus(AskType askStatus) {
         this.askStatus = askStatus;
     }
 
-    /**
-     * <p>Obtain the current recv status of the item.</p>
-     *
-     * @return The recv status of the item
-     */
-    public RecvType getRecvStatus() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getRecvStatus()
+	 */
+    @Override
+	public RecvType getRecvStatus() {
         return recvStatus;
     }
 
-    /**
-     * <p>Set the current recv status of the item.</p>
-     *
-     * @param recvStatus The recv status of the item
-     */
-    public void setRecvStatus(RecvType recvStatus) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#setRecvStatus(org.b5chat.crossfire.roster.RosterItem.RecvType)
+	 */
+    @Override
+	public void setRecvStatus(RecvType recvStatus) {
         this.recvStatus = recvStatus;
     }
 
-    /**
-     * <p>Obtain the address of the item.</p>
-     *
-     * @return The address of the item
-     */
-    public JID getJid() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getJid()
+	 */
+    @Override
+	public JID getJid() {
         return jid;
     }
 
-    /**
-     * <p>Obtain the current nickname for the item.</p>
-     *
-     * @return The subscription status of the item
-     */
-    public String getNickname() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getNickname()
+	 */
+    @Override
+	public String getNickname() {
         return nickname;
     }
 
-    /**
-     * <p>Set the current nickname for the item.</p>
-     *
-     * @param nickname The subscription status of the item
-     */
-    public void setNickname(String nickname) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#setNickname(java.lang.String)
+	 */
+    @Override
+	public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
-    /**
-     * Returns the groups for the item. Shared groups won't be included in the answer.
-     *
-     * @return The groups for the item.
-     */
-    public List<String> getGroups() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getGroups()
+	 */
+    @Override
+	public List<String> getGroups() {
         return groups;
     }
 
-    /**
-     * Set the current groups for the item.
-     *
-     * @param groups The new lists of groups the item belongs to.
-     * @throws org.b5chat.crossfire.SharedGroupException if trying to remove shared group.
-     */
-    public void setGroups(List<String> groups) throws SharedGroupException {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#setGroups(java.util.List)
+	 */
+    @Override
+	public void setGroups(List<String> groups) throws SharedGroupException {
         if (groups == null) {
             this.groups = new LinkedList<String>();
         }
@@ -413,12 +324,11 @@ public class RosterItem implements Cacheable, Externalizable {
         }
     }
 
-    /**
-     * Returns the shared groups for the item.
-     *
-     * @return The shared groups this item belongs to.
-     */
-    public Collection<Group> getSharedGroups() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getSharedGroups()
+	 */
+    @Override
+	public Collection<Group> getSharedGroups() {
         Collection<Group> groups = new ArrayList<Group>(sharedGroups.size());
         for (String groupName : sharedGroups) {
             try {
@@ -431,14 +341,11 @@ public class RosterItem implements Cacheable, Externalizable {
         return groups;
     }
 
-    /**
-     * Returns the invisible shared groups for the item. These groups are for internal use
-     * and help track the reason why a roster item has a presence subscription of type FROM
-     * when using shared groups.
-     *
-     * @return The shared groups this item belongs to.
-     */
-    public Collection<Group> getInvisibleSharedGroups() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getInvisibleSharedGroups()
+	 */
+    @Override
+	public Collection<Group> getInvisibleSharedGroups() {
         Collection<Group> groups = new ArrayList<Group>(invisibleSharedGroups.size());
         for (String groupName : invisibleSharedGroups) {
             try {
@@ -451,7 +358,7 @@ public class RosterItem implements Cacheable, Externalizable {
         return groups;
     }
 
-    Set<String> getInvisibleSharedGroupsNames() {
+    public Set<String> getInvisibleSharedGroupsNames() {
         return invisibleSharedGroups;
     }
 
@@ -459,91 +366,69 @@ public class RosterItem implements Cacheable, Externalizable {
         invisibleSharedGroups = groupsNames;
     }
 
-    /**
-     * Adds a new group to the shared groups list.
-     *
-     * @param sharedGroup The shared group to add to the list of shared groups.
-     */
-    public void addSharedGroup(Group sharedGroup) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#addSharedGroup(org.b5chat.crossfire.group.Group)
+	 */
+    @Override
+	public void addSharedGroup(Group sharedGroup) {
         sharedGroups.add(sharedGroup.getName());
         invisibleSharedGroups.remove(sharedGroup.getName());
     }
 
-    /**
-     * Adds a new group to the list shared groups that won't be sent to the user. These groups
-     * are for internal use and help track the reason why a roster item has a presence
-     * subscription of type FROM when using shared groups.
-     *
-     * @param sharedGroup The shared group to add to the list of shared groups.
-     */
-    public void addInvisibleSharedGroup(Group sharedGroup) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#addInvisibleSharedGroup(org.b5chat.crossfire.group.Group)
+	 */
+    @Override
+	public void addInvisibleSharedGroup(Group sharedGroup) {
         invisibleSharedGroups.add(sharedGroup.getName());
     }
 
-    /**
-     * Removes a group from the shared groups list.
-     *
-     * @param sharedGroup The shared group to remove from the list of shared groups.
-     */
-    public void removeSharedGroup(Group sharedGroup) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#removeSharedGroup(org.b5chat.crossfire.group.Group)
+	 */
+    @Override
+	public void removeSharedGroup(Group sharedGroup) {
         sharedGroups.remove(sharedGroup.getName());
         invisibleSharedGroups.remove(sharedGroup.getName());
     }
 
-    /**
-     * Returns true if this item belongs to a shared group. Return true even if the item belongs
-     * to a personal group and a shared group.
-     *
-     * @return true if this item belongs to a shared group.
-     */
-    public boolean isShared() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#isShared()
+	 */
+    @Override
+	public boolean isShared() {
         return !sharedGroups.isEmpty() || !invisibleSharedGroups.isEmpty();
     }
 
-    /**
-     * Returns true if this item belongs ONLY to shared groups. This means that the the item is
-     * considered to be "only shared" if it doesn't belong to a personal group but only to shared
-     * groups.
-     *
-     * @return true if this item belongs ONLY to shared groups.
-     */
-    public boolean isOnlyShared() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#isOnlyShared()
+	 */
+    @Override
+	public boolean isOnlyShared() {
         return isShared() && groups.isEmpty();
     }
 
-    /**
-     * Returns the roster ID associated with this particular roster item. A value of zero
-     * means that the roster item is not being persisted in the backend store.<p>
-     *
-     * Databases can use the roster ID as the key in locating roster items.
-     *
-     * @return The roster ID
-     */
-    public long getID() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getID()
+	 */
+    @Override
+	public long getID() {
         return rosterID;
     }
 
-    /**
-     * Sets the roster ID associated with this particular roster item. A value of zero
-     * means that the roster item is not being persisted in the backend store.<p>
-     *
-     * Databases can use the roster ID as the key in locating roster items.
-     *
-     * @param rosterID The roster ID.
-     */
-    public void setID(long rosterID) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#setID(long)
+	 */
+    @Override
+	public void setID(long rosterID) {
         this.rosterID = rosterID;
     }
 
-    /**
-     * <p>Update the cached item as a copy of the given item.</p>
-     * <p/>
-     * <p>A convenience for getting the item and setting each attribute.</p>
-     *
-     * @param item The item who's settings will be copied into the cached copy
-     * @throws org.b5chat.crossfire.SharedGroupException if trying to remove shared group.
-     */
-    public void setAsCopyOf(org.xmpp.packet.Roster.Item item) throws SharedGroupException {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#setAsCopyOf(org.xmpp.packet.Roster.Item)
+	 */
+    @Override
+	public void setAsCopyOf(org.xmpp.packet.Roster.Item item) throws SharedGroupException {
         setGroups(new LinkedList<String>(item.getGroups()));
         setNickname(item.getName());
     }
@@ -553,7 +438,11 @@ public class RosterItem implements Cacheable, Externalizable {
 	 * 
 	 * @see org.b5chat.util.cache.Cacheable#getCachedSize()
 	 */
-    public int getCachedSize() throws CannotCalculateSizeException {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#getCachedSize()
+	 */
+    @Override
+	public int getCachedSize() throws CannotCalculateSizeException {
         int size = jid.toBareJID().length();
         size += CacheSizes.sizeOfString(nickname);
         size += CacheSizes.sizeOfCollection(groups);
@@ -566,7 +455,11 @@ public class RosterItem implements Cacheable, Externalizable {
         return size;
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#writeExternal(java.io.ObjectOutput)
+	 */
+    @Override
+	public void writeExternal(ObjectOutput out) throws IOException {
         ExternalizableUtil.getInstance().writeSafeUTF(out, jid.toString());
         ExternalizableUtil.getInstance().writeBoolean(out, nickname != null);
         if (nickname != null) {
@@ -581,7 +474,11 @@ public class RosterItem implements Cacheable, Externalizable {
         ExternalizableUtil.getInstance().writeLong(out, rosterID);
     }
 
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.roster.IRosterItem#readExternal(java.io.ObjectInput)
+	 */
+    @Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         jid = new JID(ExternalizableUtil.getInstance().readSafeUTF(in));
         if (ExternalizableUtil.getInstance().readBoolean(in)) {
             nickname = ExternalizableUtil.getInstance().readSafeUTF(in);

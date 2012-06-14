@@ -43,7 +43,7 @@ public interface IRoster {
 	 *
 	 * @return a collection of users in this roster.
 	 */
-	public abstract Collection<RosterItem> getRosterItems();
+	public abstract Collection<IRosterItem> getRosterItems();
 
 	/**
 	 * Returns the roster item that is associated with the specified JID. If no roster item
@@ -53,7 +53,7 @@ public interface IRoster {
 	 * @return The roster item associated with the user XMPPAddress.
 	 * @throws UserNotFoundException if no roster item was found for the specified JID.
 	 */
-	public abstract RosterItem getRosterItem(JID user)
+	public abstract IRosterItem getRosterItem(JID user)
 			throws UserNotFoundException;
 
 	/**
@@ -64,7 +64,7 @@ public interface IRoster {
 	 * @param push       True if the new item must be pushed to the user.
 	 * @param persistent True if the new roster item should be persisted to the DB.
 	 */
-	public abstract RosterItem createRosterItem(JID user, boolean push,
+	public abstract IRosterItem createRosterItem(JID user, boolean push,
 			boolean persistent) throws UserAlreadyExistsException,
 			SharedGroupException;
 
@@ -78,7 +78,7 @@ public interface IRoster {
 	 * @param persistent True if the new roster item should be persisted to the DB.
 	 * @param groups   The list of groups to assign this roster item to (can be null)
 	 */
-	public abstract RosterItem createRosterItem(JID user, String nickname,
+	public abstract IRosterItem createRosterItem(JID user, String nickname,
 			List<String> groups, boolean push, boolean persistent)
 			throws UserAlreadyExistsException, SharedGroupException;
 
@@ -98,7 +98,7 @@ public interface IRoster {
 	 * @param item the item to update in the roster.
 	 * @throws UserNotFoundException If the roster item for the given user doesn't already exist
 	 */
-	public abstract void updateRosterItem(RosterItem item)
+	public abstract void updateRosterItem(IRosterItem item)
 			throws UserNotFoundException;
 
 	/**
@@ -109,7 +109,7 @@ public interface IRoster {
 	 * @return The roster item being removed or null if none existed
 	 * @throws SharedGroupException if the user to remove belongs to a shared group
 	 */
-	public abstract RosterItem deleteRosterItem(JID user, boolean doChecking)
+	public abstract IRosterItem deleteRosterItem(JID user, boolean doChecking)
 			throws SharedGroupException;
 
 	/**
@@ -145,7 +145,7 @@ public interface IRoster {
 	 * @param optimize true indicates that items that exists only because of a shared
 	 *                 group with subscription status FROM will not be sent
 	 */
-	public abstract void broadcast(RosterItem item, boolean optimize);
+	public abstract void broadcast(IRosterItem item, boolean optimize);
 
 	public abstract int getCachedSize() throws CannotCalculateSizeException;
 

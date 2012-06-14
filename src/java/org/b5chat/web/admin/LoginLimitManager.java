@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.b5chat.admin;
+package org.b5chat.web.admin;
 
 import java.util.Map;
 import java.util.TimerTask;

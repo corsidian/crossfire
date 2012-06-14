@@ -4,7 +4,7 @@
   -	$Date: 2010-01-10 16:44:34 -0500 (Sun, 10 Jan 2010) $
 --%>
 
-<%@ page import="org.b5chat.admin.AdminConsole,
+<%@ page import="org.b5chat.web.admin.AdminConsole,
                  org.b5chat.crossfire.admin.AdminManager"
     errorPage="error.jsp"
 %>
@@ -15,7 +15,7 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="org.b5chat.util.*" %>
-<%@ page import="org.b5chat.admin.LoginLimitManager" %>
+<%@ page import="org.b5chat.web.admin.LoginLimitManager" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>

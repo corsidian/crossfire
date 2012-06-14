@@ -21,16 +21,22 @@
 package org.b5chat.crossfire.privacy;
 
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.b5chat.crossfire.roster.IRoster;
+import org.b5chat.crossfire.roster.IRosterItem;
 import org.b5chat.crossfire.roster.RosterItem;
+import org.b5chat.crossfire.roster.SubType;
 import org.b5chat.crossfire.user.UserNotFoundException;
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
 import org.dom4j.Element;
-import org.xmpp.packet.*;
-
-import java.util.Collection;
-import java.util.Collections;
+import org.xmpp.packet.IQ;
+import org.xmpp.packet.JID;
+import org.xmpp.packet.Message;
+import org.xmpp.packet.Packet;
+import org.xmpp.packet.Presence;
 
 /**
  * A privacy item acts a rule that when matched defines if a packet should be blocked or not. 
@@ -43,7 +49,7 @@ class PrivacyItem implements Cacheable, Comparable {
     private boolean allow;
     private Type type;
     private JID jidValue;
-    private RosterItem.SubType subscriptionValue;
+    private SubType subscriptionValue;
     private String groupValue;
     private boolean filterEverything;
     private boolean filterIQ;
@@ -70,16 +76,16 @@ class PrivacyItem implements Cacheable, Comparable {
             else if (type == Type.subscription) {
                 // Decode the specified subscription type
                 if ("both".equals(value)) {
-                    this.subscriptionValue = RosterItem.SUB_BOTH;
+                    this.subscriptionValue = IRosterItem.SUB_BOTH;
                 }
                 else if ("to".equals(value)) {
-                    this.subscriptionValue = RosterItem.SUB_TO;
+                    this.subscriptionValue = IRosterItem.SUB_TO;
                 }
                 else if ("from".equals(value)) {
-                    this.subscriptionValue = RosterItem.SUB_FROM;
+                    this.subscriptionValue = IRosterItem.SUB_FROM;
                 }
                 else {
-                    this.subscriptionValue = RosterItem.SUB_NONE;
+                    this.subscriptionValue = IRosterItem.SUB_NONE;
                 }
             }
             else {
@@ -188,7 +194,7 @@ class PrivacyItem implements Cacheable, Comparable {
             Collection<String> contactGroups;
             try {
                 // Get the groups where the contact belongs
-                RosterItem item = rosterImpl.getRosterItem(jid);
+                IRosterItem item = rosterImpl.getRosterItem(jid);
                 contactGroups = item.getGroups();
             }
             catch (UserNotFoundException e) {
@@ -199,10 +205,10 @@ class PrivacyItem implements Cacheable, Comparable {
             return contactGroups.contains(groupValue);
         }
         else {
-            RosterItem.SubType contactSubscription = RosterItem.SUB_NONE;
+            SubType contactSubscription = IRosterItem.SUB_NONE;
             try {
                 // Get the groups where the contact belongs
-                RosterItem item = rosterImpl.getRosterItem(jid);
+                IRosterItem item = rosterImpl.getRosterItem(jid);
                 contactSubscription = item.getSubStatus();
             }
             catch (UserNotFoundException e) {

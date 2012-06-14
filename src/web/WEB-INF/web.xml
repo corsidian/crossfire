@@ -20,7 +20,7 @@
 
     <filter>
         <filter-name>AuthCheck</filter-name>
-        <filter-class>org.b5chat.admin.AuthCheckFilter</filter-class>
+        <filter-class>org.b5chat.web.admin.AuthCheckFilter</filter-class>
         <init-param>
             <param-name>excludes</param-name>
             <param-value>
@@ -31,7 +31,7 @@
 
     <filter>
         <filter-name>PluginFilter</filter-name>
-        <filter-class>org.b5chat.admin.PluginFilter</filter-class>
+        <filter-class>org.b5chat.web.admin.PluginFilter</filter-class>
     </filter>
 
     <filter>

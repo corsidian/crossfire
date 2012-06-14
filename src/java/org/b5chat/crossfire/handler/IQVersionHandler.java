@@ -21,10 +21,10 @@
 package org.b5chat.crossfire.handler;
 
 
-import org.b5chat.admin.AdminConsole;
 import org.b5chat.crossfire.IQHandlerInfo;
 import org.b5chat.crossfire.PacketException;
 import org.b5chat.crossfire.disco.ServerFeaturesProvider;
+import org.b5chat.web.admin.AdminConsole;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.QName;

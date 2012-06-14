@@ -24,7 +24,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-
 import org.b5chat.crossfire.ChannelHandler;
 import org.b5chat.crossfire.PacketDeliverer;
 import org.b5chat.crossfire.PacketException;
@@ -33,9 +32,13 @@ import org.b5chat.crossfire.RoutingTable;
 import org.b5chat.crossfire.SharedGroupException;
 import org.b5chat.crossfire.XMPPServer;
 import org.b5chat.crossfire.container.BasicModule;
+import org.b5chat.crossfire.roster.AskType;
 import org.b5chat.crossfire.roster.IRoster;
+import org.b5chat.crossfire.roster.IRosterItem;
 import org.b5chat.crossfire.roster.IRosterManager;
+import org.b5chat.crossfire.roster.RecvType;
 import org.b5chat.crossfire.roster.RosterItem;
+import org.b5chat.crossfire.roster.SubType;
 import org.b5chat.crossfire.user.PresenceEventDispatcher;
 import org.b5chat.crossfire.user.UserAlreadyExistsException;
 import org.b5chat.crossfire.user.UserManager;
@@ -175,9 +178,9 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
                 	// See http://tools.ietf.org/html/rfc3921#section-7 and/or OF-38 
                     if (type == Presence.Type.subscribe && recipientRoster != null && !recipientSubChanged) {
                         try {
-                            RosterItem.SubType subType = recipientRoster.getRosterItem(senderJID)
+                            SubType subType = recipientRoster.getRosterItem(senderJID)
                                     .getSubStatus();
-                            if (subType == RosterItem.SUB_FROM || subType == RosterItem.SUB_BOTH) {
+                            if (subType == IRosterItem.SUB_FROM || subType == IRosterItem.SUB_BOTH) {
                                 return;
                             }
                         }
@@ -268,10 +271,10 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
     private boolean manageSub(JID target, boolean isSending, Presence.Type type, IRoster rosterImpl)
             throws UserAlreadyExistsException, SharedGroupException
     {
-        RosterItem item = null;
-        RosterItem.AskType oldAsk;
-        RosterItem.SubType oldSub = null;
-        RosterItem.RecvType oldRecv;
+        IRosterItem item = null;
+        AskType oldAsk;
+        SubType oldSub = null;
+        RecvType oldRecv;
         boolean newItem = false;
         try {
             if (rosterImpl.isRosterItem(target)) {
@@ -301,8 +304,8 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
             }
             else if (newItem) {
                 // Do not push items with a state of "None + Pending In"
-                if (item.getSubStatus() != RosterItem.SUB_NONE ||
-                        item.getRecvStatus() != RosterItem.RECV_SUBSCRIBE) {
+                if (item.getSubStatus() != IRosterItem.SUB_NONE ||
+                        item.getRecvStatus() != IRosterItem.RECV_SUBSCRIBE) {
                     rosterImpl.broadcast(item, false);
                 }
             }
@@ -316,7 +319,7 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
 
     /**
      * <p>The transition state table.</p>
-     * <p>The root 'old state' transition table is a Map of RosterItem.SubType keys to match
+     * <p>The root 'old state' transition table is a Map of SubType keys to match
      * to the old state of the item. Each key returns a Map containing the next
      * transition table. Transitions are defined as:</p>
      * <ul>
@@ -324,8 +327,8 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
      * <li>'new state' table: the changed item values</li>
      * </ul>
      */
-    private static Hashtable<RosterItem.SubType, Map<String, Map<Presence.Type, Change>>> stateTable =
-            new Hashtable<RosterItem.SubType, Map<String, Map<Presence.Type, Change>>>();
+    private static Hashtable<SubType, Map<String, Map<Presence.Type, Change>>> stateTable =
+            new Hashtable<SubType, Map<String, Map<Presence.Type, Change>>>();
 
     static {
         Hashtable<Presence.Type, Change> subrTable;
@@ -337,132 +340,132 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
         subsTable = new Hashtable<Presence.Type, Change>();
         sr.put("recv", subrTable);
         sr.put("send", subsTable);
-        stateTable.put(RosterItem.SUB_NONE, sr);
+        stateTable.put(IRosterItem.SUB_NONE, sr);
         // Item wishes to subscribe from owner
         // Set flag and update roster if this is a new state, this is the normal way to begin
         // a roster subscription negotiation.
-        subrTable.put(Presence.Type.subscribe, new Change(RosterItem.RECV_SUBSCRIBE, null, null)); // no transition
+        subrTable.put(Presence.Type.subscribe, new Change(IRosterItem.RECV_SUBSCRIBE, null, null)); // no transition
         // Item granted subscription to owner
         // The item's state immediately goes from NONE to TO and ask is reset
-        subrTable.put(Presence.Type.subscribed, new Change(null, RosterItem.SUB_TO, RosterItem.ASK_NONE));
+        subrTable.put(Presence.Type.subscribed, new Change(null, IRosterItem.SUB_TO, IRosterItem.ASK_NONE));
         // Item wishes to unsubscribe from owner
         // This makes no sense, there is no subscription to remove
         subrTable.put(Presence.Type.unsubscribe, new Change(null, null, null));
         // Owner has subscription to item revoked
         // Valid response if item requested subscription and we're denying request
-        subrTable.put(Presence.Type.unsubscribed, new Change(null, null, RosterItem.ASK_NONE));
+        subrTable.put(Presence.Type.unsubscribed, new Change(null, null, IRosterItem.ASK_NONE));
         // Owner asking to subscribe to item this is the normal way to begin
         // a roster subscription negotiation.
-        subsTable.put(Presence.Type.subscribe, new Change(null, null, RosterItem.ASK_SUBSCRIBE));
+        subsTable.put(Presence.Type.subscribe, new Change(null, null, IRosterItem.ASK_SUBSCRIBE));
         // Item granted a subscription from owner
-        subsTable.put(Presence.Type.subscribed, new Change(RosterItem.RECV_NONE, RosterItem.SUB_FROM, null));
+        subsTable.put(Presence.Type.subscribed, new Change(IRosterItem.RECV_NONE, IRosterItem.SUB_FROM, null));
         // Owner asking to unsubscribe to item
         // This makes no sense (there is no subscription to unsubscribe from)
         subsTable.put(Presence.Type.unsubscribe, new Change(null, null, null));
         // Item has subscription from owner revoked
         // Valid response if item requested subscription and we're denying request
-        subsTable.put(Presence.Type.unsubscribed, new Change(RosterItem.RECV_NONE, null, null));
+        subsTable.put(Presence.Type.unsubscribed, new Change(IRosterItem.RECV_NONE, null, null));
 
         sr = new Hashtable<String,Map<Presence.Type, Change>>();
         subrTable = new Hashtable<Presence.Type, Change>();
         subsTable = new Hashtable<Presence.Type, Change>();
         sr.put("recv", subrTable);
         sr.put("send", subsTable);
-        stateTable.put(RosterItem.SUB_FROM, sr);
+        stateTable.put(IRosterItem.SUB_FROM, sr);
         // Owner asking to subscribe to item
         // Set flag and update roster if this is a new state, this is the normal way to begin
         // a mutual roster subscription negotiation.
-        subsTable.put(Presence.Type.subscribe, new Change(null, null, RosterItem.ASK_SUBSCRIBE));
+        subsTable.put(Presence.Type.subscribe, new Change(null, null, IRosterItem.ASK_SUBSCRIBE));
         // Item granted a subscription from owner
         // This may be necessary if the recipient didn't get an earlier subscribed grant
         // or as a denial of an unsubscribe request
-        subsTable.put(Presence.Type.subscribed, new Change(RosterItem.RECV_NONE, null, null));
+        subsTable.put(Presence.Type.subscribed, new Change(IRosterItem.RECV_NONE, null, null));
         // Owner asking to unsubscribe to item
         // This makes no sense (there is no subscription to unsubscribe from)
-        subsTable.put(Presence.Type.unsubscribe, new Change(null, RosterItem.SUB_NONE, null));
+        subsTable.put(Presence.Type.unsubscribe, new Change(null, IRosterItem.SUB_NONE, null));
         // Item has subscription from owner revoked
         // Immediately transition to NONE state
-        subsTable.put(Presence.Type.unsubscribed, new Change(RosterItem.RECV_NONE, RosterItem.SUB_NONE, null));
+        subsTable.put(Presence.Type.unsubscribed, new Change(IRosterItem.RECV_NONE, IRosterItem.SUB_NONE, null));
         // Item wishes to subscribe from owner
         // Item already has a subscription so only interesting if item had requested unsubscribe
         // Set flag and update roster if this is a new state, this is the normal way to begin
         // a mutual roster subscription negotiation.
-        subrTable.put(Presence.Type.subscribe, new Change(RosterItem.RECV_NONE, null, null));
+        subrTable.put(Presence.Type.subscribe, new Change(IRosterItem.RECV_NONE, null, null));
         // Item granted subscription to owner
         // The item's state immediately goes from FROM to BOTH and ask is reset
-        subrTable.put(Presence.Type.subscribed, new Change(null, RosterItem.SUB_BOTH, RosterItem.ASK_NONE));
+        subrTable.put(Presence.Type.subscribed, new Change(null, IRosterItem.SUB_BOTH, IRosterItem.ASK_NONE));
         // Item wishes to unsubscribe from owner
         // This is the normal mechanism of removing subscription
-        subrTable.put(Presence.Type.unsubscribe, new Change(RosterItem.RECV_UNSUBSCRIBE, RosterItem.SUB_NONE, null));
+        subrTable.put(Presence.Type.unsubscribe, new Change(IRosterItem.RECV_UNSUBSCRIBE, IRosterItem.SUB_NONE, null));
         // Owner has subscription to item revoked
         // Valid response if owner requested subscription and item is denying request
-        subrTable.put(Presence.Type.unsubscribed, new Change(null, null, RosterItem.ASK_NONE));
+        subrTable.put(Presence.Type.unsubscribed, new Change(null, null, IRosterItem.ASK_NONE));
 
         sr = new Hashtable<String,Map<Presence.Type, Change>>();
         subrTable = new Hashtable<Presence.Type, Change>();
         subsTable = new Hashtable<Presence.Type, Change>();
         sr.put("recv", subrTable);
         sr.put("send", subsTable);
-        stateTable.put(RosterItem.SUB_TO, sr);
+        stateTable.put(IRosterItem.SUB_TO, sr);
         // Owner asking to subscribe to item
         // We're already subscribed, may be trying to unset a unsub request
-        subsTable.put(Presence.Type.subscribe, new Change(null, null, RosterItem.ASK_NONE));
+        subsTable.put(Presence.Type.subscribe, new Change(null, null, IRosterItem.ASK_NONE));
         // Item granted a subscription from owner
         // Sets mutual subscription
-        subsTable.put(Presence.Type.subscribed, new Change(RosterItem.RECV_NONE, RosterItem.SUB_BOTH, null));
+        subsTable.put(Presence.Type.subscribed, new Change(IRosterItem.RECV_NONE, IRosterItem.SUB_BOTH, null));
         // Owner asking to unsubscribe to item
         // Normal method of removing subscription
-        subsTable.put(Presence.Type.unsubscribe, new Change(null, RosterItem.SUB_NONE, RosterItem.ASK_UNSUBSCRIBE));
+        subsTable.put(Presence.Type.unsubscribe, new Change(null, IRosterItem.SUB_NONE, IRosterItem.ASK_UNSUBSCRIBE));
         // Item has subscription from owner revoked
         // No subscription to unsub, makes sense if denying subscription request or for
         // situations where the original unsubscribed got lost
-        subsTable.put(Presence.Type.unsubscribed, new Change(RosterItem.RECV_NONE, null, null));
+        subsTable.put(Presence.Type.unsubscribed, new Change(IRosterItem.RECV_NONE, null, null));
         // Item wishes to subscribe from owner
         // This is the normal way to negotiate a mutual subscription
-        subrTable.put(Presence.Type.subscribe, new Change(RosterItem.RECV_SUBSCRIBE, null, null));
+        subrTable.put(Presence.Type.subscribe, new Change(IRosterItem.RECV_SUBSCRIBE, null, null));
         // Item granted subscription to owner
         // Owner already subscribed to item, could be a unsub denial or a lost packet
-        subrTable.put(Presence.Type.subscribed, new Change(null, null, RosterItem.ASK_NONE));
+        subrTable.put(Presence.Type.subscribed, new Change(null, null, IRosterItem.ASK_NONE));
         // Item wishes to unsubscribe from owner
         // There is no subscription. May be trying to cancel earlier subscribe request.
-        subrTable.put(Presence.Type.unsubscribe, new Change(RosterItem.RECV_NONE, RosterItem.SUB_NONE, null));
+        subrTable.put(Presence.Type.unsubscribe, new Change(IRosterItem.RECV_NONE, IRosterItem.SUB_NONE, null));
         // Owner has subscription to item revoked
         // Setting subscription to none
-        subrTable.put(Presence.Type.unsubscribed, new Change(null, RosterItem.SUB_NONE, RosterItem.ASK_NONE));
+        subrTable.put(Presence.Type.unsubscribed, new Change(null, IRosterItem.SUB_NONE, IRosterItem.ASK_NONE));
 
         sr = new Hashtable<String,Map<Presence.Type, Change>>();
         subrTable = new Hashtable<Presence.Type, Change>();
         subsTable = new Hashtable<Presence.Type, Change>();
         sr.put("recv", subrTable);
         sr.put("send", subsTable);
-        stateTable.put(RosterItem.SUB_BOTH, sr);
+        stateTable.put(IRosterItem.SUB_BOTH, sr);
         // Owner asking to subscribe to item
         // Makes sense if trying to cancel previous unsub request
-        subsTable.put(Presence.Type.subscribe, new Change(null, null, RosterItem.ASK_NONE));
+        subsTable.put(Presence.Type.subscribe, new Change(null, null, IRosterItem.ASK_NONE));
         // Item granted a subscription from owner
         // This may be necessary if the recipient didn't get an earlier subscribed grant
         // or as a denial of an unsubscribe request
-        subsTable.put(Presence.Type.subscribed, new Change(RosterItem.RECV_NONE, null, null));
+        subsTable.put(Presence.Type.subscribed, new Change(IRosterItem.RECV_NONE, null, null));
         // Owner asking to unsubscribe to item
         // Set flags
-        subsTable.put(Presence.Type.unsubscribe, new Change(null, RosterItem.SUB_FROM, RosterItem.ASK_UNSUBSCRIBE));
+        subsTable.put(Presence.Type.unsubscribe, new Change(null, IRosterItem.SUB_FROM, IRosterItem.ASK_UNSUBSCRIBE));
         // Item has subscription from owner revoked
         // Immediately transition them to TO state
-        subsTable.put(Presence.Type.unsubscribed, new Change(RosterItem.RECV_NONE, RosterItem.SUB_TO, null));
+        subsTable.put(Presence.Type.unsubscribed, new Change(IRosterItem.RECV_NONE, IRosterItem.SUB_TO, null));
         // Item wishes to subscribe to owner
         // Item already has a subscription so only interesting if item had requested unsubscribe
         // Set flag and update roster if this is a new state, this is the normal way to begin
         // a mutual roster subscription negotiation.
-        subrTable.put(Presence.Type.subscribe, new Change(RosterItem.RECV_NONE, null, null));
+        subrTable.put(Presence.Type.subscribe, new Change(IRosterItem.RECV_NONE, null, null));
         // Item granted subscription to owner
         // Redundant unless denying unsub request
-        subrTable.put(Presence.Type.subscribed, new Change(null, null, RosterItem.ASK_NONE));
+        subrTable.put(Presence.Type.subscribed, new Change(null, null, IRosterItem.ASK_NONE));
         // Item wishes to unsubscribe from owner
         // This is the normal mechanism of removing subscription
-        subrTable.put(Presence.Type.unsubscribe, new Change(RosterItem.RECV_UNSUBSCRIBE, RosterItem.SUB_TO, null));
+        subrTable.put(Presence.Type.unsubscribe, new Change(IRosterItem.RECV_UNSUBSCRIBE, IRosterItem.SUB_TO, null));
         // Owner has subscription to item revoked
         // Immediately downgrade state to FROM
-        subrTable.put(Presence.Type.unsubscribed, new Change(RosterItem.RECV_NONE, RosterItem.SUB_FROM, RosterItem.ASK_NONE));
+        subrTable.put(Presence.Type.unsubscribed, new Change(IRosterItem.RECV_NONE, IRosterItem.SUB_FROM, IRosterItem.ASK_NONE));
     }
 
     /**
@@ -470,15 +473,15 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
      * <p>Use nulls to indicate fields that should not be changed.</p>
      */
     private static class Change {
-        public Change(RosterItem.RecvType recv, RosterItem.SubType sub, RosterItem.AskType ask) {
+        public Change(RecvType recv, SubType sub, AskType ask) {
             newRecv = recv;
             newSub = sub;
             newAsk = ask;
         }
 
-        public RosterItem.RecvType newRecv;
-        public RosterItem.SubType newSub;
-        public RosterItem.AskType newAsk;
+        public RecvType newRecv;
+        public SubType newSub;
+        public AskType newAsk;
     }
 
     /**
@@ -496,7 +499,7 @@ public class PresenceSubscribeHandler extends BasicModule implements ChannelHand
      * @param action    The new state change request
      * @param isSending True if the roster owner of the item is sending the new state change request
      */
-    private static void updateState(RosterItem item, Presence.Type action, boolean isSending) {
+    private static void updateState(IRosterItem item, Presence.Type action, boolean isSending) {
         Map<String, Map<Presence.Type, Change>> srTable = stateTable.get(item.getSubStatus());
         Map<Presence.Type, Change> changeTable = srTable.get(isSending ? "send" : "recv");
         Change change = changeTable.get(action);

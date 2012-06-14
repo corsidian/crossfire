@@ -47,8 +47,8 @@ import org.b5chat.crossfire.handler.PresenceUpdateHandler;
 import org.b5chat.crossfire.privacy.PrivacyList;
 import org.b5chat.crossfire.privacy.PrivacyListManager;
 import org.b5chat.crossfire.roster.IRoster;
+import org.b5chat.crossfire.roster.IRosterItem;
 import org.b5chat.crossfire.roster.IRosterManager;
-import org.b5chat.crossfire.roster.RosterItem;
 import org.b5chat.crossfire.session.ClientSession;
 import org.b5chat.crossfire.user.User;
 import org.b5chat.crossfire.user.UserManager;
@@ -306,17 +306,17 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
         String username = packet.getTo().getNode();
         try {
             IRoster rosterImpl = rosterManagerImpl.getRoster(username);
-            RosterItem item = rosterImpl.getRosterItem(packet.getFrom());
-            if (item.getSubStatus() == RosterItem.SUB_FROM
-                    || item.getSubStatus() == RosterItem.SUB_BOTH) {
+            IRosterItem item = rosterImpl.getRosterItem(packet.getFrom());
+            if (item.getSubStatus() == IRosterItem.SUB_FROM
+                    || item.getSubStatus() == IRosterItem.SUB_BOTH) {
                 probePresence(packet.getFrom(),  packet.getTo());
             }
             else {
                 PacketError.Condition error = PacketError.Condition.not_authorized;
-                if ((item.getSubStatus() == RosterItem.SUB_NONE &&
-                        item.getRecvStatus() != RosterItem.RECV_SUBSCRIBE) ||
-                        (item.getSubStatus() == RosterItem.SUB_TO &&
-                        item.getRecvStatus() != RosterItem.RECV_SUBSCRIBE)) {
+                if ((item.getSubStatus() == IRosterItem.SUB_NONE &&
+                        item.getRecvStatus() != IRosterItem.RECV_SUBSCRIBE) ||
+                        (item.getSubStatus() == IRosterItem.SUB_TO &&
+                        item.getRecvStatus() != IRosterItem.RECV_SUBSCRIBE)) {
                     error = PacketError.Condition.forbidden;
                 }
                 Presence presenceToSend = new Presence();
@@ -336,9 +336,9 @@ public class PresenceManagerImpl extends BasicModule implements PresenceManager,
     }
 
     public boolean canProbePresence(JID prober, String probee) throws UserNotFoundException {
-        RosterItem item = rosterManagerImpl.getRoster(probee).getRosterItem(prober);
-        return item.getSubStatus() == RosterItem.SUB_FROM
-                || item.getSubStatus() == RosterItem.SUB_BOTH;
+        IRosterItem item = rosterManagerImpl.getRoster(probee).getRosterItem(prober);
+        return item.getSubStatus() == IRosterItem.SUB_FROM
+                || item.getSubStatus() == IRosterItem.SUB_BOTH;
     }
 
     public void probePresence(JID prober, JID probee) {

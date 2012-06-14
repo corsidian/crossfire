@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 import org.b5chat.crossfire.JIDFactory;
 import org.b5chat.crossfire.PacketRouter;
 import org.b5chat.crossfire.PresenceManager;
@@ -81,7 +80,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
     /**
      * Roster item cache - table: key jabberid string; value roster item.
      */
-    protected ConcurrentHashMap<String, RosterItem> rosterItems = new ConcurrentHashMap<String, RosterItem>();
+    protected ConcurrentHashMap<String, IRosterItem> rosterItems = new ConcurrentHashMap<String, IRosterItem>();
     /**
      * Contacts with subscription FROM that only exist due to shared groups
      * key: jabberid string; value: groups why the implicit roster item exists (aka invisibleSharedGroups).
@@ -158,7 +157,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                 if (group.isUser(item.getJid())) {
                     // TODO Group name conflicts are not being considered (do we need this?)
                     item.addSharedGroup(group);
-                    item.setSubStatus(RosterItem.SUB_BOTH);
+                    item.setSubStatus(IRosterItem.SUB_BOTH);
                 }
             }
             rosterItems.put(item.getJid().toBareJID(), item);
@@ -171,8 +170,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
             try {
                 Collection<Group> itemGroups = new ArrayList<Group>();
                 String nickname = "";
-                RosterItem item = new RosterItem(jid, RosterItem.SUB_TO, RosterItem.ASK_NONE,
-                        RosterItem.RECV_NONE, nickname , null, userNameManager, groupManager);
+                RosterItem item = new RosterItem(jid, IRosterItem.SUB_TO, IRosterItem.ASK_NONE,
+                        IRosterItem.RECV_NONE, nickname , null, userNameManager, groupManager);
                 // Add the shared groups to the new roster item
                 for (Group group : groups) {
                     if (group.isUser(jid)) {
@@ -186,7 +185,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                 // Set subscription type to BOTH if the roster user belongs to a shared group
                 // that is mutually visible with a shared group of the new roster item
                 if (rosterManager.hasMutualVisibility(username, sharedGroups, jid, itemGroups)) {
-                    item.setSubStatus(RosterItem.SUB_BOTH);
+                    item.setSubStatus(IRosterItem.SUB_BOTH);
                 }
                 else {
                     // Set subscription type to FROM if the contact does not belong to any of
@@ -198,7 +197,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                         }
                     }
                     if (!belongsToGroup) {
-                        item.setSubStatus(RosterItem.SUB_FROM);
+                        item.setSubStatus(IRosterItem.SUB_FROM);
                     }
                 }
                 // Set nickname and store in memory only if subscription type is not FROM.
@@ -207,7 +206,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                 // but will never be stored in memory nor in the database. This is an important
                 // optimization to reduce objects in memory and avoid loading users in memory
                 // to get their nicknames that will never be shown
-                if (item.getSubStatus() != RosterItem.SUB_FROM) {
+                if (item.getSubStatus() != IRosterItem.SUB_FROM) {
                     item.setNickname(userNameManager.getUserName(jid));
                     rosterItems.put(item.getJid().toBareJID(), item);
                 }
@@ -241,7 +240,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
 	 * @see org.b5chat.crossfire.roster.IRoster#getRosterItems()
 	 */
     @Override
-	public Collection<RosterItem> getRosterItems() {
+	public Collection<IRosterItem> getRosterItems() {
         return Collections.unmodifiableCollection(rosterItems.values());
     }
 
@@ -249,8 +248,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
 	 * @see org.b5chat.crossfire.roster.IRoster#getRosterItem(org.xmpp.packet.JID)
 	 */
     @Override
-	public RosterItem getRosterItem(JID user) throws UserNotFoundException {
-        RosterItem item = rosterItems.get(user.toBareJID());
+	public IRosterItem getRosterItem(JID user) throws UserNotFoundException {
+        IRosterItem item = rosterItems.get(user.toBareJID());
         if (item == null) {
             // Optimization: Check if the contact has a FROM subscription due to shared groups
             item = getImplicitRosterItem(user);
@@ -275,8 +274,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
     private RosterItem getImplicitRosterItem(JID user) {
         Set<String> invisibleSharedGroups = implicitFrom.get(user.toBareJID());
         if (invisibleSharedGroups != null) {
-            RosterItem rosterItem = new RosterItem(user, RosterItem.SUB_FROM, RosterItem.ASK_NONE,
-                    RosterItem.RECV_NONE, "", null, userNameManager, groupManager);
+            RosterItem rosterItem = new RosterItem(user, IRosterItem.SUB_FROM, IRosterItem.ASK_NONE,
+                    IRosterItem.RECV_NONE, "", null, userNameManager, groupManager);
             rosterItem.setInvisibleSharedGroupsNames(invisibleSharedGroups);
             return rosterItem;
         }
@@ -366,7 +365,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
 	 * @see org.b5chat.crossfire.roster.IRoster#updateRosterItem(org.b5chat.crossfire.roster.RosterItem)
 	 */
     @Override
-	public void updateRosterItem(RosterItem item) throws UserNotFoundException {
+	public void updateRosterItem(IRosterItem item) throws UserNotFoundException {
         // Check if we need to convert an implicit roster item into an explicit one
         if (implicitFrom.remove(item.getJid().toBareJID()) != null) {
             // Ensure that the item is an explicit roster item
@@ -376,7 +375,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         }
         if (rosterItems.putIfAbsent(item.getJid().toBareJID(), item) == null) {
             rosterItems.remove(item.getJid().toBareJID());
-            if (item.getSubStatus() != RosterItem.SUB_NONE) {
+            if (item.getSubStatus() != IRosterItem.SUB_NONE) {
                 throw new UserNotFoundException(item.getJid().toBareJID());
             }
             return;
@@ -416,8 +415,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         }
         // broadcast roster update
         // Do not push items with a state of "None + Pending In"
-        if (item.getSubStatus() != RosterItem.SUB_NONE ||
-                item.getRecvStatus() != RosterItem.RECV_SUBSCRIBE) {
+        if (item.getSubStatus() != IRosterItem.SUB_NONE ||
+                item.getRecvStatus() != IRosterItem.RECV_SUBSCRIBE) {
             broadcast(item, true);
         }
         /*if (item.getSubStatus() == RosterItem.SUB_BOTH || item.getSubStatus() == RosterItem.SUB_TO) {
@@ -431,18 +430,18 @@ public class Roster implements Cacheable, Externalizable, IRoster {
 	 * @see org.b5chat.crossfire.roster.IRoster#deleteRosterItem(org.xmpp.packet.JID, boolean)
 	 */
     @Override
-	public RosterItem deleteRosterItem(JID user, boolean doChecking) throws SharedGroupException {
+	public IRosterItem deleteRosterItem(JID user, boolean doChecking) throws SharedGroupException {
         // Answer an error if user (i.e. contact) to delete belongs to a shared group
-        RosterItem itemToRemove = rosterItems.get(user.toBareJID());
+        IRosterItem itemToRemove = rosterItems.get(user.toBareJID());
         if (doChecking && itemToRemove != null && !itemToRemove.getSharedGroups().isEmpty()) {
             throw new SharedGroupException("Cannot remove contact that belongs to a shared group");
         }
 
         if (itemToRemove != null) {
-            RosterItem.SubType subType = itemToRemove.getSubStatus();
+            SubType subType = itemToRemove.getSubStatus();
 
             // Cancel any existing presence subscription between the user and the contact
-            if (subType == RosterItem.SUB_TO || subType == RosterItem.SUB_BOTH) {
+            if (subType == IRosterItem.SUB_TO || subType == IRosterItem.SUB_BOTH) {
                 Presence presence = new Presence();
                 presence.setFrom(jidFactory.createJID(username, null));
                 presence.setTo(itemToRemove.getJid());
@@ -451,7 +450,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
             }
 
             // cancel any existing presence subscription between the contact and the user
-            if (subType == RosterItem.SUB_FROM || subType == RosterItem.SUB_BOTH) {
+            if (subType == IRosterItem.SUB_FROM || subType == IRosterItem.SUB_BOTH) {
                 Presence presence = new Presence();
                 presence.setFrom(jidFactory.createJID(username, null));
                 presence.setTo(itemToRemove.getJid());
@@ -460,7 +459,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
             }
 
             // If removing the user was successful, remove the user from the subscriber list:
-            RosterItem item = rosterItems.remove(user.toBareJID());
+            IRosterItem item = rosterItems.remove(user.toBareJID());
 
             if (item != null) {
                 // Delete the item from the provider if the item is persistent. RosteItems that only
@@ -484,7 +483,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         else {
             // Verify if the item being removed is an implicit roster item
             // that only exists due to some shared group
-            RosterItem item = getImplicitRosterItem(user);
+            IRosterItem item = getImplicitRosterItem(user);
             if (item != null) {
                 implicitFrom.remove(user.toBareJID());
                 // If the contact being removed is not a local user then ACK unsubscription
@@ -519,9 +518,9 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         org.xmpp.packet.Roster roster = new org.xmpp.packet.Roster();
 
         // Add the roster items (includes the personal roster and shared groups) to the answer
-        for (RosterItem item : rosterItems.values()) {
+        for (IRosterItem item : rosterItems.values()) {
             // Do not include items with status FROM that exist only because of shared groups
-            if (item.isOnlyShared() && item.getSubStatus() == RosterItem.SUB_FROM) {
+            if (item.isOnlyShared() && item.getSubStatus() == IRosterItem.SUB_FROM) {
                 continue;
             }
             org.xmpp.packet.Roster.Ask ask = getAskStatus(item.getAskStatus());
@@ -545,15 +544,15 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                 }
             }
             // Do not push items with a state of "None + Pending In"
-            if (item.getSubStatus() != RosterItem.SUB_NONE ||
-                    item.getRecvStatus() != RosterItem.RECV_SUBSCRIBE) {
+            if (item.getSubStatus() != IRosterItem.SUB_NONE ||
+                    item.getRecvStatus() != IRosterItem.RECV_SUBSCRIBE) {
                 roster.addItem(item.getJid(), item.getNickname(), ask, sub, groups);
             }
         }
         return roster;
     }
 
-    private org.xmpp.packet.Roster.Ask getAskStatus(RosterItem.AskType askType) {
+    private org.xmpp.packet.Roster.Ask getAskStatus(AskType askType) {
         if (askType == null || "".equals(askType.getName())) {
             return null;
         }
@@ -585,8 +584,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
             list = PrivacyListManager.getInstance().getDefaultPrivacyList(username);
         }
         // Broadcast presence to subscribed entities
-        for (RosterItem item : rosterItems.values()) {
-            if (item.getSubStatus() == RosterItem.SUB_BOTH || item.getSubStatus() == RosterItem.SUB_FROM) {
+        for (IRosterItem item : rosterItems.values()) {
+            if (item.getSubStatus() == IRosterItem.SUB_BOTH || item.getSubStatus() == IRosterItem.SUB_FROM) {
                 packet.setTo(item.getJid());
                 if (list != null && list.shouldBlockPacket(packet)) {
                     // Outgoing presence notifications are blocked for this contact
@@ -677,9 +676,9 @@ public class Roster implements Cacheable, Externalizable, IRoster {
 	 * @see org.b5chat.crossfire.roster.IRoster#broadcast(org.b5chat.crossfire.roster.RosterItem, boolean)
 	 */
     @Override
-	public void broadcast(RosterItem item, boolean optimize) {
+	public void broadcast(IRosterItem item, boolean optimize) {
         // Do not broadcast items with status FROM that exist only because of shared groups
-        if (optimize && item.isOnlyShared() && item.getSubStatus() == RosterItem.SUB_FROM) {
+        if (optimize && item.isOnlyShared() && item.getSubStatus() == IRosterItem.SUB_FROM) {
             return;
         }
         // Set the groups to broadcast (include personal and shared groups)
@@ -744,7 +743,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
      */
     public void addSharedUser(Group group, JID addedUser) {
         boolean newItem = false;
-        RosterItem item = null;
+        IRosterItem item = null;
         try {
             // Get the RosterItem for the *local* user to add
             item = getRosterItem(addedUser);
@@ -759,8 +758,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                 // Create a new RosterItem for this new user
                 String nickname = userNameManager.getUserName(addedUser);
                 item =
-                        new RosterItem(addedUser, RosterItem.SUB_BOTH, RosterItem.ASK_NONE,
-                                RosterItem.RECV_NONE, nickname, null, userNameManager, groupManager);
+                        new RosterItem(addedUser, IRosterItem.SUB_BOTH, IRosterItem.ASK_NONE,
+                                IRosterItem.RECV_NONE, nickname, null, userNameManager, groupManager);
                 // Add the new item to the list of items
                 rosterItems.put(item.getJid().toBareJID(), item);
                 newItem = true;
@@ -773,7 +772,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         }
 
         // If an item already exists then take note of the old subscription status
-        RosterItem.SubType prevSubscription = null;
+        SubType prevSubscription = null;
         if (!newItem) {
             prevSubscription = item.getSubStatus();
         }
@@ -787,19 +786,19 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         // Set subscription type to BOTH if the roster user belongs to a shared group
         // that is mutually visible with a shared group of the new roster item
         if (rosterManager.hasMutualVisibility(getUsername(), userGroups, addedUser, sharedGroups)) {
-            item.setSubStatus(RosterItem.SUB_BOTH);
+            item.setSubStatus(IRosterItem.SUB_BOTH);
         }
         // Update the subscription status depending on the group membership of the new
         // user and this user
         else if (group.isUser(addedUser) && !group.isUser(getUsername())) {
-            item.setSubStatus(RosterItem.SUB_TO);
+            item.setSubStatus(IRosterItem.SUB_TO);
         }
         else if (!group.isUser(addedUser) && group.isUser(getUsername())) {
-            item.setSubStatus(RosterItem.SUB_FROM);
+            item.setSubStatus(IRosterItem.SUB_FROM);
         }
 
         // Add the shared group to the list of shared groups
-        if (item.getSubStatus() != RosterItem.SUB_FROM) {
+        if (item.getSubStatus() != IRosterItem.SUB_FROM) {
             item.addSharedGroup(group);
         }
         else {
@@ -809,18 +808,18 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         // If the item already exists then check if the subscription status should be
         // changed to BOTH based on the old and new subscription status
         if (prevSubscription != null) {
-            if (prevSubscription == RosterItem.SUB_TO &&
-                    item.getSubStatus() == RosterItem.SUB_FROM) {
-                item.setSubStatus(RosterItem.SUB_BOTH);
+            if (prevSubscription == IRosterItem.SUB_TO &&
+                    item.getSubStatus() == IRosterItem.SUB_FROM) {
+                item.setSubStatus(IRosterItem.SUB_BOTH);
             }
-            else if (prevSubscription == RosterItem.SUB_FROM &&
-                    item.getSubStatus() == RosterItem.SUB_TO) {
-                item.setSubStatus(RosterItem.SUB_BOTH);
+            else if (prevSubscription == IRosterItem.SUB_FROM &&
+                    item.getSubStatus() == IRosterItem.SUB_TO) {
+                item.setSubStatus(IRosterItem.SUB_BOTH);
             }
         }
 
         // Optimization: Check if we do not need to keep the item in memory
-        if (item.isOnlyShared() && item.getSubStatus() == RosterItem.SUB_FROM) {
+        if (item.isOnlyShared() && item.getSubStatus() == IRosterItem.SUB_FROM) {
             // Remove from memory and do nothing else
             rosterItems.remove(item.getJid().toBareJID());
             // Cache information about shared contacts with subscription status FROM
@@ -834,8 +833,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
             // Brodcast to all the user resources of the updated roster item
             broadcast(item, true);
             // Probe the presence of the new group user
-            if (item.getSubStatus() == RosterItem.SUB_BOTH ||
-                    item.getSubStatus() == RosterItem.SUB_TO) {
+            if (item.getSubStatus() == IRosterItem.SUB_BOTH ||
+                    item.getSubStatus() == IRosterItem.SUB_TO) {
                 probePresence(item.getJid());
             }
         }
@@ -859,7 +858,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
      */
     public void addSharedUser(JID addedUser, Collection<Group> groups, Group addedGroup) {
         boolean newItem = false;
-        RosterItem item = null;
+        IRosterItem item = null;
         try {
             // Get the RosterItem for the *local* user to add
             item = getRosterItem(addedUser);
@@ -870,8 +869,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                 // Create a new RosterItem for this new user
                 String nickname = userNameManager.getUserName(addedUser);
                 item =
-                        new RosterItem(addedUser, RosterItem.SUB_BOTH, RosterItem.ASK_NONE,
-                                RosterItem.RECV_NONE, nickname, null, userNameManager, groupManager);
+                        new RosterItem(addedUser, IRosterItem.SUB_BOTH, IRosterItem.ASK_NONE,
+                                IRosterItem.RECV_NONE, nickname, null, userNameManager, groupManager);
                 // Add the new item to the list of items
                 rosterItems.put(item.getJid().toBareJID(), item);
                 newItem = true;
@@ -885,7 +884,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         // Set subscription type to BOTH if the roster user belongs to a shared group
         // that is mutually visible with a shared group of the new roster item
         if (rosterManager.hasMutualVisibility(getUsername(), userGroups, addedUser, groups)) {
-            item.setSubStatus(RosterItem.SUB_BOTH);
+            item.setSubStatus(IRosterItem.SUB_BOTH);
             for (Group group : groups) {
                 if (rosterManager.isGroupVisible(group, getUserJID())) {
                     // Add the shared group to the list of shared groups
@@ -905,41 +904,41 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         }
         else {
             // If an item already exists then take note of the old subscription status
-            RosterItem.SubType prevSubscription = null;
+            SubType prevSubscription = null;
             if (!newItem) {
                 prevSubscription = item.getSubStatus();
             }
 
             // Assume by default that the contact has subscribed from the presence of
             // this user
-            item.setSubStatus(RosterItem.SUB_FROM);
+            item.setSubStatus(IRosterItem.SUB_FROM);
             // Check if the user may see the new contact in a shared group
             for (Group group : groups) {
                 if (rosterManager.isGroupVisible(group, getUserJID())) {
                     // Add the shared group to the list of shared groups
                     item.addSharedGroup(group);
-                    item.setSubStatus(RosterItem.SUB_TO);
+                    item.setSubStatus(IRosterItem.SUB_TO);
                 }
             }
-            if (item.getSubStatus() == RosterItem.SUB_FROM) {
+            if (item.getSubStatus() == IRosterItem.SUB_FROM) {
                 item.addInvisibleSharedGroup(addedGroup);
             }
 
             // If the item already exists then check if the subscription status should be
             // changed to BOTH based on the old and new subscription status
             if (prevSubscription != null) {
-                if (prevSubscription == RosterItem.SUB_TO &&
-                        item.getSubStatus() == RosterItem.SUB_FROM) {
-                    item.setSubStatus(RosterItem.SUB_BOTH);
+                if (prevSubscription == IRosterItem.SUB_TO &&
+                        item.getSubStatus() == IRosterItem.SUB_FROM) {
+                    item.setSubStatus(IRosterItem.SUB_BOTH);
                 }
-                else if (prevSubscription == RosterItem.SUB_FROM &&
-                        item.getSubStatus() == RosterItem.SUB_TO) {
-                    item.setSubStatus(RosterItem.SUB_BOTH);
+                else if (prevSubscription == IRosterItem.SUB_FROM &&
+                        item.getSubStatus() == IRosterItem.SUB_TO) {
+                    item.setSubStatus(IRosterItem.SUB_BOTH);
                 }
             }
         }
         // Optimization: Check if we do not need to keep the item in memory
-        if (item.isOnlyShared() && item.getSubStatus() == RosterItem.SUB_FROM) {
+        if (item.isOnlyShared() && item.getSubStatus() == IRosterItem.SUB_FROM) {
             // Remove from memory and do nothing else
             rosterItems.remove(item.getJid().toBareJID());
             // Cache information about shared contacts with subscription status FROM
@@ -953,8 +952,8 @@ public class Roster implements Cacheable, Externalizable, IRoster {
             // Brodcast to all the user resources of the updated roster item
             broadcast(item, true);
             // Probe the presence of the new group user
-            if (item.getSubStatus() == RosterItem.SUB_BOTH ||
-                    item.getSubStatus() == RosterItem.SUB_TO) {
+            if (item.getSubStatus() == IRosterItem.SUB_BOTH ||
+                    item.getSubStatus() == IRosterItem.SUB_TO) {
                 probePresence(item.getJid());
             }
         }
@@ -981,7 +980,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
     public void deleteSharedUser(Group sharedGroup, JID deletedUser) {
         try {
             // Get the RosterItem for the *local* user to remove
-            RosterItem item = getRosterItem(deletedUser);
+            IRosterItem item = getRosterItem(deletedUser);
             int groupSize = item.getSharedGroups().size() + item.getInvisibleSharedGroups().size();
             if (item.isOnlyShared() && groupSize == 1) {
                 // Do nothing if the existing shared group is not the sharedGroup to remove
@@ -1006,14 +1005,14 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                     // that is mutually visible with a shared group of the new roster item
                     if (rosterManager.hasMutualVisibility(getUsername(), userGroups, deletedUser,
                             sharedGroups)) {
-                        item.setSubStatus(RosterItem.SUB_BOTH);
+                        item.setSubStatus(IRosterItem.SUB_BOTH);
                     }
                     else if (item.getSharedGroups().isEmpty() &&
                             !item.getInvisibleSharedGroups().isEmpty()) {
-                        item.setSubStatus(RosterItem.SUB_FROM);
+                        item.setSubStatus(IRosterItem.SUB_FROM);
                     }
                     else {
-                        item.setSubStatus(RosterItem.SUB_TO);
+                        item.setSubStatus(IRosterItem.SUB_TO);
                     }
                 }
                 // Brodcast to all the user resources of the updated roster item
@@ -1031,7 +1030,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
     public void deleteSharedUser(JID deletedUser, Group deletedGroup) {
         try {
             // Get the RosterItem for the *local* user to remove
-            RosterItem item = getRosterItem(deletedUser);
+            IRosterItem item = getRosterItem(deletedUser);
             int groupSize = item.getSharedGroups().size() + item.getInvisibleSharedGroups().size();
             if (item.isOnlyShared() && groupSize == 1 &&
                     // Do not delete the item if deletedUser belongs to a public group since the
@@ -1067,16 +1066,16 @@ public class Roster implements Cacheable, Externalizable, IRoster {
                     // that is mutually visible with a shared group of the new roster item
                     if (rosterManager
                             .hasMutualVisibility(getUsername(), userGroups, deletedUser, groups)) {
-                        item.setSubStatus(RosterItem.SUB_BOTH);
+                        item.setSubStatus(IRosterItem.SUB_BOTH);
                     }
                     else {
                         // Assume by default that the contact has subscribed from the presence of
                         // this user
-                        item.setSubStatus(RosterItem.SUB_FROM);
+                        item.setSubStatus(IRosterItem.SUB_FROM);
                         // Check if the user may see the new contact in a shared group
                         for (Group group : groups) {
                             if (rosterManager.isGroupVisible(group, getUserJID())) {
-                                item.setSubStatus(RosterItem.SUB_TO);
+                                item.setSubStatus(IRosterItem.SUB_TO);
                             }
                         }
                     }
@@ -1105,7 +1104,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
             if (userJID.equals(user)) {
                 continue;
             }
-            RosterItem item;
+            IRosterItem item;
             try {
                 // Get the RosterItem for the *local* user to add
                 item = getRosterItem(user);
@@ -1128,7 +1127,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
     @Override
 	public void writeExternal(ObjectOutput out) throws IOException {
         ExternalizableUtil.getInstance().writeSafeUTF(out, username);
-        ExternalizableUtil.getInstance().writeExternalizableMap(out, rosterItems);
+        // should also be writing out roster items
         ExternalizableUtil.getInstance().writeStringsMap(out, implicitFrom);
     }
 
@@ -1147,7 +1146,7 @@ public class Roster implements Cacheable, Externalizable, IRoster {
         packetRouter = XMPPServer.getInstance().getPacketRouter();
         
         username = ExternalizableUtil.getInstance().readSafeUTF(in);
-        ExternalizableUtil.getInstance().readExternalizableMap(in, rosterItems, getClass().getClassLoader());
+        // should also be reading in roster items
         ExternalizableUtil.getInstance().readStringsMap(in, implicitFrom);
     }
 }

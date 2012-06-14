@@ -42,8 +42,8 @@ import org.b5chat.crossfire.cluster.ClusterEventListener;
 import org.b5chat.crossfire.cluster.ClusterManager;
 import org.b5chat.crossfire.container.BasicModule;
 import org.b5chat.crossfire.roster.IRoster;
+import org.b5chat.crossfire.roster.IRosterItem;
 import org.b5chat.crossfire.roster.IRosterManager;
-import org.b5chat.crossfire.roster.RosterItem;
 import org.b5chat.crossfire.session.ClientSession;
 import org.b5chat.crossfire.session.LocalSession;
 import org.b5chat.crossfire.session.Session;
@@ -241,16 +241,16 @@ public class PresenceUpdateHandler extends BasicModule implements ChannelHandler
             // Send pending subscription requests to user if roster service is enabled
             if (XMPPServer.getInstance().getRosterModule().isRosterServiceEnabled()) {
                 IRoster rosterImpl = rosterManager.getRoster(username);
-                for (RosterItem item : rosterImpl.getRosterItems()) {
-                    if (item.getRecvStatus() == RosterItem.RECV_SUBSCRIBE) {
+                for (IRosterItem item : rosterImpl.getRosterItems()) {
+                    if (item.getRecvStatus() == IRosterItem.RECV_SUBSCRIBE) {
                         session.process(createSubscribePresence(item.getJid(),
                                 new JID(session.getAddress().toBareJID()), true));
-                    } else if (item.getRecvStatus() == RosterItem.RECV_UNSUBSCRIBE) {
+                    } else if (item.getRecvStatus() == IRosterItem.RECV_UNSUBSCRIBE) {
                         session.process(createSubscribePresence(item.getJid(),
                                 new JID(session.getAddress().toBareJID()), false));
                     }
-                    if (item.getSubStatus() == RosterItem.SUB_TO
-                            || item.getSubStatus() == RosterItem.SUB_BOTH) {
+                    if (item.getSubStatus() == IRosterItem.SUB_TO
+                            || item.getSubStatus() == IRosterItem.SUB_BOTH) {
                         presenceManager.probePresence(session.getAddress(), item.getJid());
                     }
                 }
@@ -348,7 +348,7 @@ public class PresenceUpdateHandler extends BasicModule implements ChannelHandler
                         // If the directed presence was sent to an entity that is not in the user's
                         // roster, keep a registry of this so that when the user goes offline we
                         // will be able to send the unavailable presence to the entity
-                        RosterItem rosterItem = null;
+                        IRosterItem rosterItem = null;
                         try {
                             rosterItem = rosterImpl.getRosterItem(update.getTo());
                         }
@@ -356,8 +356,8 @@ public class PresenceUpdateHandler extends BasicModule implements ChannelHandler
                             // Ignore
                         }
                         if (rosterItem == null ||
-                                RosterItem.SUB_NONE == rosterItem.getSubStatus() ||
-                                RosterItem.SUB_TO == rosterItem.getSubStatus()) {
+                                IRosterItem.SUB_NONE == rosterItem.getSubStatus() ||
+                                IRosterItem.SUB_TO == rosterItem.getSubStatus()) {
                             keepTrack = true;
                         }
                     }

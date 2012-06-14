@@ -22,8 +22,8 @@ import org.b5chat.crossfire.PresenceManager;
 import org.b5chat.crossfire.XMPPServer;
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.disco.ServerFeaturesProvider;
+import org.b5chat.crossfire.roster.IRosterItem;
 import org.b5chat.crossfire.roster.IRosterManager;
-import org.b5chat.crossfire.roster.RosterItem;
 import org.b5chat.crossfire.user.User;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
@@ -67,10 +67,10 @@ public class IQLastActivityHandler extends IQHandler implements ServerFeaturesPr
         }
 
         try {
-            RosterItem item = rosterManager.getRoster(username).getRosterItem(packet.getFrom());
+            IRosterItem item = rosterManager.getRoster(username).getRosterItem(packet.getFrom());
             // Check that the user requesting this information is subscribed to the user's presence
-            if (item.getSubStatus() == RosterItem.SUB_FROM ||
-                    item.getSubStatus() == RosterItem.SUB_BOTH) {
+            if (item.getSubStatus() == IRosterItem.SUB_FROM ||
+                    item.getSubStatus() == IRosterItem.SUB_BOTH) {
                 if (sessionManager.getSessions(username).isEmpty()) {
                     User user = UserManager.getInstance().getUser(username);
                     // The user is offline so answer the user's "last available time and the

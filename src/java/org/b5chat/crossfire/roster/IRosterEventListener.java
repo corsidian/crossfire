@@ -23,12 +23,12 @@ package org.b5chat.crossfire.roster;
 
 /**
  * Interface to listen for roster events. Use the
- * {@link RosterEventDispatcher#addListener(RosterEventListener)}
+ * {@link RosterEventDispatcher#addListener(IRosterEventListener)}
  * method to register for events.
  *
  * @author Gaston Dombiak
  */
-public interface RosterEventListener {
+public interface IRosterEventListener {
 
     /**
      * Notification message indicating that a roster has just been loaded.
@@ -48,7 +48,7 @@ public interface RosterEventListener {
      * @param persistent true if the new contact is going to be saved to the database.
      * @return false if the contact should not be persisted to the database.
      */
-    public boolean addingContact(IRoster roster, RosterItem item, boolean persistent);
+    public boolean addingContact(IRoster roster, IRosterItem item, boolean persistent);
 
     /**
      * Notification message indicating that a contact has been added to a roster.
@@ -56,7 +56,7 @@ public interface RosterEventListener {
      * @param roster the roster that was updated.
      * @param item the new roster item.
      */
-    public void contactAdded(IRoster roster, RosterItem item);
+    public void contactAdded(IRoster roster, IRosterItem item);
 
     /**
      * Notification message indicating that a contact has been updated.
@@ -64,7 +64,7 @@ public interface RosterEventListener {
      * @param roster the roster that was updated.
      * @param item the updated roster item.
      */
-    public void contactUpdated(IRoster roster, RosterItem item);
+    public void contactUpdated(IRoster roster, IRosterItem item);
 
     /**
      * Notification message indicating that a contact has been deleted from a roster.
@@ -72,5 +72,5 @@ public interface RosterEventListener {
      * @param roster the roster that was updated.
      * @param item the roster item that was deleted.
      */
-    public void contactDeleted(IRoster roster, RosterItem item);
+    public void contactDeleted(IRoster roster, IRosterItem item);
 }

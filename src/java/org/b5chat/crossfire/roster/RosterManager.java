@@ -146,7 +146,7 @@ public class RosterManager implements IRosterManager {
             // Get the roster of the deleted user
             IRoster rosterImpl = getRoster(username);
             // Remove each roster item from the user's roster
-            for (RosterItem item : rosterImpl.getRosterItems()) {
+            for (IRosterItem item : rosterImpl.getRosterItems()) {
                 try {
                     rosterImpl.deleteRosterItem(item.getJid(), false);
                 }

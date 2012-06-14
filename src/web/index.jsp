@@ -18,7 +18,7 @@
 --%>
 
 <%@ page import="org.apache.mina.transport.socket.nio.SocketAcceptor"%>
-<%@ page import="org.b5chat.admin.AdminConsole"%>
+<%@ page import="org.b5chat.web.admin.AdminConsole"%>
 <%@ page import="org.b5chat.crossfire.*" %>
 <%@ page import="org.b5chat.crossfire.container.AdminConsolePlugin" %>
 <%@ page import="org.b5chat.crossfire.net.SSLConfig" %>
@@ -35,7 +35,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <%-- Define page bean for header and sidebar --%>
-<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.web.admin.AdminPageBean" />
 
 <%  // Simple logout code
     if ("true".equals(request.getParameter("logout"))) {
