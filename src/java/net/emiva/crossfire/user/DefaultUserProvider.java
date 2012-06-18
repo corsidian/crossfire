@@ -34,8 +34,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.auth.AuthFactory;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;
 
 /**
- * Default implementation of the UserProvider interface, which reads and writes data
+ * Default implementation of the IUserProvider interface, which reads and writes data
  * from the <tt>ofUser</tt> database table.<p>
  *
  * Passwords can be stored as plain text, or encrypted using Blowfish. The
@@ -58,7 +58,7 @@ import org.xmpp.packet.JID;
  *
  * @author Matt Tucker
  */
-public class DefaultUserProvider implements UserProvider {
+public class DefaultUserProvider implements IUserProvider {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultUserProvider.class);
 
@@ -87,7 +87,7 @@ public class DefaultUserProvider implements UserProvider {
 
     public User loadUser(String username) throws UserNotFoundException {
         if(username.contains("@")) {
-            if (!XMPPServer.getInstance().isLocal(new JID(username))) {
+            if (!XmppServer.getInstance().isLocal(new JID(username))) {
                 throw new UserNotFoundException("Cannot load user of remote server: " + username);
             }
             username = username.substring(0,username.lastIndexOf("@"));

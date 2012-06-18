@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.net.MXParser;
+import net.emiva.crossfire.core.net.MXParser;
 import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.cache.CacheSizes;
 import net.emiva.util.cache.Cacheable;
@@ -102,7 +102,7 @@ public class PrivacyList implements Cacheable, Externalizable {
     }
 
     public PrivacyList(String username, String name, boolean isDefault, Element listElement) {
-        this.userJID = XMPPServer.getInstance().createJID(username, null, true);
+        this.userJID = XmppServer.getInstance().createJID(username, null, true);
         this.name = name;
         this.isDefault = isDefault;
         // Set the new list items
@@ -242,7 +242,7 @@ public class PrivacyList implements Cacheable, Externalizable {
 
     private Roster getRoster() {
         try {
-            return XMPPServer.getInstance().getRosterManager().getRoster(userJID.getNode());
+            return XmppServer.getInstance().getRosterManager().getRoster(userJID.getNode());
         } catch (UserNotFoundException e) {
             Log.warn("Roster not found for user: " + userJID);
         }

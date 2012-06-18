@@ -33,7 +33,7 @@ public class StatisticsManager {
         return instance;
     }
 
-    private final Map<String, Statistic> statistics = new ConcurrentHashMap<String, Statistic>();
+    private final Map<String, IStatistic> statistics = new ConcurrentHashMap<String, IStatistic>();
     private final Map<String, List<String>> multiStatGroups = new ConcurrentHashMap<String, List<String>>();
     private final Map<String, String> keyToGroupMap = new ConcurrentHashMap<String, String>();
 
@@ -47,7 +47,7 @@ public class StatisticsManager {
      * @param statKey the statistic key.
      * @param definition the statistic to be tracked.
      */
-    public void addStatistic(String statKey, Statistic definition) {
+    public void addStatistic(String statKey, IStatistic definition) {
         statistics.put(statKey, definition);
     }
 
@@ -57,11 +57,11 @@ public class StatisticsManager {
      * @param statKey The key of the definition.
      * @return Returns the related stat.
      */
-    public Statistic getStatistic(String statKey) {
+    public IStatistic getStatistic(String statKey) {
         return statistics.get(statKey);
     }
 
-    public void addMultiStatistic(String statKey, String groupName, Statistic statistic) {
+    public void addMultiStatistic(String statKey, String groupName, IStatistic statistic) {
         addStatistic(statKey, statistic);
         List<String> group = multiStatGroups.get(groupName);
         if(group == null) {
@@ -84,7 +84,7 @@ public class StatisticsManager {
      * Returns all statistics that the StatManager is tracking.
      * @return Returns all statistics that the StatManager is tracking.
      */
-    public Set<Map.Entry<String, Statistic>> getAllStatistics() {
+    public Set<Map.Entry<String, IStatistic>> getAllStatistics() {
         return statistics.entrySet();
     }
 

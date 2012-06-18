@@ -22,7 +22,7 @@
 %>
 <%@ page import="net.emiva.crossfire.lockout.LockOutManager" %>
 <%@ page import="net.emiva.crossfire.security.SecurityAuditManager" %>
-<%@ page import="net.emiva.crossfire.session.ClientSession" %>
+<%@ page import="net.emiva.crossfire.session.IClientSession" %>
 <%@ page import="net.emiva.util.ParamUtils" %>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="org.xmpp.packet.StreamError" %>

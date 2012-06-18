@@ -30,22 +30,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * <li><b>accountUnlocked</b> --> An account has been enabled/unlocked.</li>
  * <li><b>lockedAccountDenied</b> --> A locked out account has been denied login.</li>
  * </ul>
- * Use {@link #addListener(LockOutEventListener)} and {@link #removeListener(LockOutEventListener)}
- * to add or remove {@link LockOutEventListener}.
+ * Use {@link #addListener(ILockOutEventListener)} and {@link #removeListener(ILockOutEventListener)}
+ * to add or remove {@link ILockOutEventListener}.
  *
  * @author Daniel Henninger
  */
 public class LockOutEventDispatcher {
 
-    private static List<LockOutEventListener> listeners =
-            new CopyOnWriteArrayList<LockOutEventListener>();
+    private static List<ILockOutEventListener> listeners =
+            new CopyOnWriteArrayList<ILockOutEventListener>();
 
     /**
      * Registers a listener to receive events.
      *
      * @param listener the listener.
      */
-    public static void addListener(LockOutEventListener listener) {
+    public static void addListener(ILockOutEventListener listener) {
         if (listener == null) {
             throw new NullPointerException();
         }
@@ -57,7 +57,7 @@ public class LockOutEventDispatcher {
      *
      * @param listener the listener.
      */
-    public static void removeListener(LockOutEventListener listener) {
+    public static void removeListener(ILockOutEventListener listener) {
         listeners.remove(listener);
     }
 
@@ -68,7 +68,7 @@ public class LockOutEventDispatcher {
      */
     public static void accountLocked(LockOutFlag flag) {
         if (!listeners.isEmpty()) {
-            for (LockOutEventListener listener : listeners) {
+            for (ILockOutEventListener listener : listeners) {
                 listener.accountLocked(flag);
             }
         }
@@ -81,7 +81,7 @@ public class LockOutEventDispatcher {
      */
     public static void accountUnlocked(String username) {
         if (!listeners.isEmpty()) {
-            for (LockOutEventListener listener : listeners) {
+            for (ILockOutEventListener listener : listeners) {
                 listener.accountUnlocked(username);
             }
         }
@@ -94,7 +94,7 @@ public class LockOutEventDispatcher {
      */
     public static void lockedAccountDenied(String username) {
         if (!listeners.isEmpty()) {
-            for (LockOutEventListener listener : listeners) {
+            for (ILockOutEventListener listener : listeners) {
                 listener.lockedAccountDenied(username);
             }
         }

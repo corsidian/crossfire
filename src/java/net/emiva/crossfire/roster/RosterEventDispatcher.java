@@ -31,22 +31,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * <li><b>contactUpdated</b> --> A contact has been updated of a roster.</li>
  * <li><b>contactDeleted</b> --> A contact has been deleted from a roster.</li>
  * </ul>
- * Use {@link #addListener(RosterEventListener)} and {@link #removeListener(RosterEventListener)}
- * to add or remove {@link RosterEventListener}.
+ * Use {@link #addListener(IRosterEventListener)} and {@link #removeListener(IRosterEventListener)}
+ * to add or remove {@link IRosterEventListener}.
  *
  * @author Gaston Dombiak
  */
 public class RosterEventDispatcher {
 
-    private static List<RosterEventListener> listeners =
-            new CopyOnWriteArrayList<RosterEventListener>();
+    private static List<IRosterEventListener> listeners =
+            new CopyOnWriteArrayList<IRosterEventListener>();
 
     /**
      * Registers a listener to receive events.
      *
      * @param listener the listener.
      */
-    public static void addListener(RosterEventListener listener) {
+    public static void addListener(IRosterEventListener listener) {
         if (listener == null) {
             throw new NullPointerException();
         }
@@ -58,7 +58,7 @@ public class RosterEventDispatcher {
      *
      * @param listener the listener.
      */
-    public static void removeListener(RosterEventListener listener) {
+    public static void removeListener(IRosterEventListener listener) {
         listeners.remove(listener);
     }
 
@@ -69,7 +69,7 @@ public class RosterEventDispatcher {
      */
     public static void rosterLoaded(Roster roster) {
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 listener.rosterLoaded(roster);
             }
         }
@@ -89,7 +89,7 @@ public class RosterEventDispatcher {
     public static boolean addingContact(Roster roster, RosterItem item, boolean persistent) {
         boolean answer = persistent;
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 if (!listener.addingContact(roster, item, persistent)) {
                     answer = false;
                 }
@@ -106,7 +106,7 @@ public class RosterEventDispatcher {
      */
     public static void contactAdded(Roster roster, RosterItem item) {
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 listener.contactAdded(roster, item);
             }
         }
@@ -120,7 +120,7 @@ public class RosterEventDispatcher {
      */
     public static void contactUpdated(Roster roster, RosterItem item) {
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 listener.contactUpdated(roster, item);
             }
         }
@@ -134,7 +134,7 @@ public class RosterEventDispatcher {
      */
     public static void contactDeleted(Roster roster, RosterItem item) {
         if (!listeners.isEmpty()) {
-            for (RosterEventListener listener : listeners) {
+            for (IRosterEventListener listener : listeners) {
                 listener.contactDeleted(roster, item);
             }
         }

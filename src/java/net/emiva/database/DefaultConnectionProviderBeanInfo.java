@@ -20,7 +20,7 @@
 
 package net.emiva.database;
 
-import net.emiva.util.GlobalBeanInfo;
+import net.emiva.crossfire.web.GlobalBeanInfo;
 
 /**
  * BeanInfo class for the DefaultConnectionProvider class.

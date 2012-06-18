@@ -34,16 +34,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.emiva.crossfire.PresenceManager;
-import net.emiva.crossfire.RoutingTable;
-import net.emiva.crossfire.SessionManager;
-import net.emiva.crossfire.SharedGroupException;
-import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.group.Group;
 import net.emiva.crossfire.group.GroupManager;
+import net.emiva.crossfire.group.SharedGroupException;
+import net.emiva.crossfire.presence.IPresenceManager;
 import net.emiva.crossfire.privacy.PrivacyList;
 import net.emiva.crossfire.privacy.PrivacyListManager;
-import net.emiva.crossfire.session.ClientSession;
+import net.emiva.crossfire.route.IRoutingTable;
+import net.emiva.crossfire.server.XmppServer;
+import net.emiva.crossfire.session.IClientSession;
+import net.emiva.crossfire.session.SessionManager;
 import net.emiva.crossfire.user.UserAlreadyExistsException;
 import net.emiva.crossfire.user.UserNameManager;
 import net.emiva.crossfire.user.UserNotFoundException;
@@ -89,9 +89,9 @@ public class Roster implements Cacheable, Externalizable {
     private RosterItemProvider rosterItemProvider;
     private String username;
     private SessionManager sessionManager;
-    private XMPPServer server = XMPPServer.getInstance();
-    private RoutingTable routingTable;
-    private PresenceManager presenceManager;
+    private XmppServer server = XmppServer.getInstance();
+    private IRoutingTable routingTable;
+    private IPresenceManager presenceManager;
     /**
      * Note: Used only for shared groups logic.
      */
@@ -119,10 +119,10 @@ public class Roster implements Cacheable, Externalizable {
      * @param username The username of the user that owns this roster
      */
     Roster(String username) {
-        presenceManager = XMPPServer.getInstance().getPresenceManager();
-        rosterManager = XMPPServer.getInstance().getRosterManager();
+        presenceManager = XmppServer.getInstance().getPresenceManager();
+        rosterManager = XmppServer.getInstance().getRosterManager();
         sessionManager = SessionManager.getInstance();
-        routingTable = XMPPServer.getInstance().getRoutingTable();
+        routingTable = XmppServer.getInstance().getRoutingTable();
         this.username = username;
 
         // Get the shared groups of this user
@@ -590,7 +590,7 @@ public class Roster implements Cacheable, Externalizable {
         if (from != null) {
             // Try to use the active list of the session. If none was found then try to use
             // the default privacy list of the session
-            ClientSession session = sessionManager.getSession(from);
+            IClientSession session = sessionManager.getSession(from);
             if (session != null) {
                 list = session.getActiveList();
                 list = list == null ? session.getDefaultList() : list;
@@ -729,7 +729,7 @@ public class Roster implements Cacheable, Externalizable {
      * Sends a presence probe to the probee for each connected resource of this user.
      */
     private void probePresence(JID probee) {
-        for (ClientSession session : sessionManager.getSessions(username)) {
+        for (IClientSession session : sessionManager.getSessions(username)) {
             presenceManager.probePresence(session.getAddress(), probee);
         }
     }
@@ -1140,7 +1140,7 @@ public class Roster implements Cacheable, Externalizable {
     }
 
     private JID getUserJID() {
-        return XMPPServer.getInstance().createJID(getUsername(), null, true);
+        return XmppServer.getInstance().createJID(getUsername(), null, true);
     }
 
     public void writeExternal(ObjectOutput out) throws IOException {
@@ -1150,11 +1150,11 @@ public class Roster implements Cacheable, Externalizable {
     }
 
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        presenceManager = XMPPServer.getInstance().getPresenceManager();
-        rosterManager = XMPPServer.getInstance().getRosterManager();
+        presenceManager = XmppServer.getInstance().getPresenceManager();
+        rosterManager = XmppServer.getInstance().getRosterManager();
         sessionManager = SessionManager.getInstance();
         rosterItemProvider =  RosterItemProvider.getInstance();
-        routingTable = XMPPServer.getInstance().getRoutingTable();
+        routingTable = XmppServer.getInstance().getRoutingTable();
 
         username = ExternalizableUtil.getInstance().readSafeUTF(in);
         ExternalizableUtil.getInstance().readExternalizableMap(in, rosterItems, getClass().getClassLoader());

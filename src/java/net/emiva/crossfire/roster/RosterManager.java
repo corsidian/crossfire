@@ -20,18 +20,18 @@
 
 package net.emiva.crossfire.roster;
 
-import net.emiva.crossfire.RoutingTable;
-import net.emiva.crossfire.SharedGroupException;
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.container.BasicModule;
-import net.emiva.crossfire.event.GroupEventDispatcher;
-import net.emiva.crossfire.event.GroupEventListener;
-import net.emiva.crossfire.event.UserEventDispatcher;
-import net.emiva.crossfire.event.UserEventListener;
+import net.emiva.crossfire.core.container.BasicModule;
 import net.emiva.crossfire.group.Group;
+import net.emiva.crossfire.group.GroupEventDispatcher;
+import net.emiva.crossfire.group.IGroupEventListener;
 import net.emiva.crossfire.group.GroupManager;
 import net.emiva.crossfire.group.GroupNotFoundException;
+import net.emiva.crossfire.group.SharedGroupException;
+import net.emiva.crossfire.route.IRoutingTable;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.crossfire.user.User;
+import net.emiva.crossfire.user.UserEventDispatcher;
+import net.emiva.crossfire.user.IUserEventListener;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.Globals;
@@ -54,11 +54,11 @@ import java.util.*;
  *
  * @author Iain Shigeoka
  */
-public class RosterManager extends BasicModule implements GroupEventListener, UserEventListener {
+public class RosterManager extends BasicModule implements IGroupEventListener, IUserEventListener {
 
     private Cache<String, Roster> rosterCache = null;
-    private XMPPServer server;
-    private RoutingTable routingTable;
+    private XmppServer server;
+    private IRoutingTable routingTable;
 
     /**
      * Returns true if the roster service is enabled. When disabled it is not possible to
@@ -350,12 +350,12 @@ public class RosterManager extends BasicModule implements GroupEventListener, Us
     }
 
     @Override
-	public void initialize(XMPPServer server) {
+	public void initialize(XmppServer server) {
         super.initialize(server);
         this.server = server;
         this.routingTable = server.getRoutingTable();
 
-        RosterEventDispatcher.addListener(new RosterEventListener() {
+        RosterEventDispatcher.addListener(new IRosterEventListener() {
             public void rosterLoaded(Roster roster) {
                 // Do nothing
             }

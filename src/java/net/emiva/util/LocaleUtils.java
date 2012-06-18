@@ -36,9 +36,9 @@ import java.util.StringTokenizer;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.container.Plugin;
-import net.emiva.crossfire.container.PluginManager;
+import net.emiva.crossfire.core.plugin.IPlugin;
+import net.emiva.crossfire.core.plugin.PluginManager;
+import net.emiva.crossfire.server.XmppServer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -478,11 +478,11 @@ public class LocaleUtils {
         String i18nFile = pluginName + "_i18n";
 
         // Retrieve classloader from pluginName.
-        final XMPPServer xmppServer = XMPPServer.getInstance();
+        final XmppServer xmppServer = XmppServer.getInstance();
         PluginManager pluginManager = xmppServer.getPluginManager();
-        Plugin plugin = pluginManager.getPlugin(pluginName);
+        IPlugin plugin = pluginManager.getPlugin(pluginName);
         if (plugin == null) {
-            throw new NullPointerException("Plugin could not be located: " + pluginName);
+            throw new NullPointerException("IPlugin could not be located: " + pluginName);
         }
 
         ClassLoader pluginClassLoader = pluginManager.getPluginClassloader(plugin);
@@ -515,11 +515,11 @@ public class LocaleUtils {
         String i18nFile = pluginName + "_i18n";
 
         // Retrieve classloader from pluginName.
-        final XMPPServer xmppServer = XMPPServer.getInstance();
+        final XmppServer xmppServer = XmppServer.getInstance();
         PluginManager pluginManager = xmppServer.getPluginManager();
-        Plugin plugin = pluginManager.getPlugin(pluginName);
+        IPlugin plugin = pluginManager.getPlugin(pluginName);
         if (plugin == null) {
-            throw new NullPointerException("Plugin could not be located.");
+            throw new NullPointerException("IPlugin could not be located.");
         }
 
         ClassLoader pluginClassLoader = pluginManager.getPluginClassloader(plugin);

@@ -20,10 +20,10 @@
 
 package net.emiva.crossfire.roster;
 
-import net.emiva.crossfire.SharedGroupException;
 import net.emiva.crossfire.group.Group;
 import net.emiva.crossfire.group.GroupManager;
 import net.emiva.crossfire.group.GroupNotFoundException;
+import net.emiva.crossfire.group.SharedGroupException;
 import net.emiva.crossfire.user.UserNameManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.IntEnum;
@@ -342,7 +342,7 @@ public class RosterItem implements Cacheable, Externalizable {
      * Set the current groups for the item.
      *
      * @param groups The new lists of groups the item belongs to.
-     * @throws net.emiva.crossfire.SharedGroupException if trying to remove shared group.
+     * @throws net.emiva.crossfire.group.SharedGroupException if trying to remove shared group.
      */
     public void setGroups(List<String> groups) throws SharedGroupException {
         if (groups == null) {
@@ -530,7 +530,7 @@ public class RosterItem implements Cacheable, Externalizable {
      * <p>A convenience for getting the item and setting each attribute.</p>
      *
      * @param item The item who's settings will be copied into the cached copy
-     * @throws net.emiva.crossfire.SharedGroupException if trying to remove shared group.
+     * @throws net.emiva.crossfire.group.SharedGroupException if trying to remove shared group.
      */
     public void setAsCopyOf(org.xmpp.packet.Roster.Item item) throws SharedGroupException {
         setGroups(new LinkedList<String>(item.getGroups()));

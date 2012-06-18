@@ -98,7 +98,7 @@ public class CertificateManager {
      */
     private static final int CERT_REQ_LINE_LENGTH = 76;
 
-    private static List<CertificateEventListener> listeners = new CopyOnWriteArrayList<CertificateEventListener>();
+    private static List<ICertificateEventListener> listeners = new CopyOnWriteArrayList<ICertificateEventListener>();
     
     static {
         // Add the BC provider to the list of security providers
@@ -131,7 +131,7 @@ public class CertificateManager {
         // Store new certificate and private key in the keystore
         ksKeys.setKeyEntry(alias, keyPair.getPrivate(), keyPassword.toCharArray(), new X509Certificate[]{cert});
         // Notify listeners that a new certificate has been created
-        for (CertificateEventListener listener : listeners) {
+        for (ICertificateEventListener listener : listeners) {
             try {
                 listener.certificateCreated(ksKeys, alias, cert);
             }
@@ -169,7 +169,7 @@ public class CertificateManager {
         // Store new certificate and private key in the keystore
         ksKeys.setKeyEntry(alias, keyPair.getPrivate(), keyPassword.toCharArray(), new X509Certificate[]{cert});
         // Notify listeners that a new certificate has been created
-        for (CertificateEventListener listener : listeners) {
+        for (ICertificateEventListener listener : listeners) {
             try {
                 listener.certificateCreated(ksKeys, alias, cert);
             }
@@ -192,7 +192,7 @@ public class CertificateManager {
     public static void deleteCertificate(KeyStore ksKeys, String alias) throws GeneralSecurityException, IOException {
         ksKeys.deleteEntry(alias);
         // Notify listeners that a new certificate has been created
-        for (CertificateEventListener listener : listeners) {
+        for (ICertificateEventListener listener : listeners) {
             try {
                 listener.certificateDeleted(ksKeys, alias);
             }
@@ -533,7 +533,7 @@ public class CertificateManager {
                     newCerts.toArray(new X509Certificate[newCerts.size()]));
 
             // Notify listeners that a new certificate has been created
-            for (CertificateEventListener listener : listeners) {
+            for (ICertificateEventListener listener : listeners) {
                 try {
                     listener.certificateSigned(keyStore, alias, newCerts);
                 }
@@ -606,7 +606,7 @@ public class CertificateManager {
                     newCerts.toArray(new X509Certificate[newCerts.size()]));
 
             // Notify listeners that a new certificate has been created (and signed)
-            for (CertificateEventListener listener : listeners) {
+            for (ICertificateEventListener listener : listeners) {
                 try {
                     listener.certificateCreated(keyStore, alias, certs.get(0));
                     if (newCerts.size() > 1) {
@@ -629,7 +629,7 @@ public class CertificateManager {
      *
      * @param listener the listener.
      */
-    public static void addListener(CertificateEventListener listener) {
+    public static void addListener(ICertificateEventListener listener) {
         if (listener == null) {
             throw new NullPointerException();
         }
@@ -641,7 +641,7 @@ public class CertificateManager {
      *
      * @param listener the listener.
      */
-    public static void removeListener(CertificateEventListener listener) {
+    public static void removeListener(ICertificateEventListener listener) {
         listeners.remove(listener);
     }
 

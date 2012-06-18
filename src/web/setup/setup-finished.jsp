@@ -8,7 +8,7 @@
 
 <%@ page import="net.emiva.util.Globals,
                  java.util.Map,
-                 net.emiva.crossfire.XMPPServer"
+                 net.emiva.crossfire.XmppServer"
 %>
 <%@ page import="net.emiva.util.LocaleUtils"%>
 <%@ page import="net.emiva.crossfire.admin.AdminManager" %>

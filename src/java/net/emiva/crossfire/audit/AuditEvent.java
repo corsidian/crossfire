@@ -20,7 +20,7 @@
 
 package net.emiva.crossfire.audit;
 
-import net.emiva.crossfire.session.Session;
+import net.emiva.crossfire.session.ISession;
 
 import java.util.Date;
 
@@ -38,7 +38,7 @@ public class AuditEvent {
      */
     public static final int USER_CODES = 100;
 
-    private Session session;
+    private ISession session;
     private Date time;
     private int code;
     private int reason;
@@ -54,7 +54,7 @@ public class AuditEvent {
      * @param eventReason a second code indicating more details about the event type.
      * @param eventData arbitrary string data associated with the event or null.
      */
-    public AuditEvent(Session eventSession, Date timestamp, int eventCode, int eventReason,
+    public AuditEvent(ISession eventSession, Date timestamp, int eventCode, int eventReason,
             String eventData)
     {
         this.session = eventSession;
@@ -123,7 +123,7 @@ public class AuditEvent {
      *
      * @return the session associated with the event.
      */
-    public Session getSession() {
+    public ISession getSession() {
         return session;
     }
 
@@ -132,7 +132,7 @@ public class AuditEvent {
      *
      * @param session the session associated with the event.
      */
-    public void setSession(Session session) {
+    public void setSession(ISession session) {
         this.session = session;
     }
 

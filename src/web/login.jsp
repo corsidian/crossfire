@@ -4,18 +4,18 @@
   -	$Date: 2010-01-10 16:44:34 -0500 (Sun, 10 Jan 2010) $
 --%>
 
-<%@ page import="net.emiva.admin.AdminConsole,
+<%@ page import="net.emiva.plugin.admin.AdminConsole,
                  net.emiva.crossfire.admin.AdminManager"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.crossfire.cluster.ClusterManager" %>
-<%@ page import="net.emiva.crossfire.container.AdminConsolePlugin" %>
+<%@ page import="net.emiva.crossfire.core.cluster.ClusterManager" %>
+<%@ page import="net.emiva.crossfire.core.container.AdminConsolePlugin" %>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="net.emiva.crossfire.auth.*" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="net.emiva.util.*" %>
-<%@ page import="net.emiva.admin.LoginLimitManager" %>
+<%@ page import="net.emiva.plugin.admin.LoginLimitManager" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>

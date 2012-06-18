@@ -15,9 +15,9 @@
 --%>
 
 <%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.XMPPServer,
-                 net.emiva.crossfire.container.Plugin,
-                 net.emiva.crossfire.container.PluginManager"
+                 net.emiva.crossfire.XmppServer,
+                 net.emiva.crossfire.core.container.Plugin,
+                 net.emiva.crossfire.core.container.PluginManager"
         %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.ArrayList" %>

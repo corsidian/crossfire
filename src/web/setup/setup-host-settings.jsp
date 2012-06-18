@@ -9,7 +9,7 @@
                  java.util.Map,
                  java.util.HashMap,
                  java.net.InetAddress,
-                 net.emiva.crossfire.XMPPServer"
+                 net.emiva.crossfire.XmppServer"
 %>
 <%@ page import="java.net.UnknownHostException" %>
 

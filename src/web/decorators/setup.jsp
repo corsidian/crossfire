@@ -25,7 +25,7 @@
 <%@ page import="java.util.Map"%>
 <%@ page import="java.sql.Statement"%>
 <%@ page import="java.sql.SQLException"%>
-<%@ page import="net.emiva.admin.AdminConsole" %>
+<%@ page import="net.emiva.plugin.admin.AdminConsole" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 

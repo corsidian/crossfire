@@ -20,7 +20,7 @@
 
 package net.emiva.crossfire.audit;
 
-import net.emiva.crossfire.session.Session;
+import net.emiva.crossfire.session.ISession;
 
 import java.util.Date;
 
@@ -33,11 +33,11 @@ import java.util.Date;
 public class SessionEvent extends AuditEvent {
 
     /**
-     * Session events use the code 1
+     * ISession events use the code 1
      */
     public static final int SESSION_CODE = 1;
 
-    // Session reasons
+    // ISession reasons
     public static final int SESSION_CONNECT = 1;
     public static final int SESSION_STREAM = 2;
     public static final int SESSION_AUTH_FAILURE = 3;
@@ -45,13 +45,13 @@ public class SessionEvent extends AuditEvent {
     public static final int SESSION_DISCONNECT = 10;
 
     /**
-     * Session events can only be created using static factory methods.
+     * ISession events can only be created using static factory methods.
      *
      * @param eventSession the session that this event is recording.
      * @param eventReason the reason the event is called.
      * @param data the data to associate with the event.
      */
-    private SessionEvent(Session eventSession, int eventReason, String data) {
+    private SessionEvent(ISession eventSession, int eventReason, String data) {
         super(eventSession, new Date(), SESSION_CODE, eventReason, data);
     }
 
@@ -62,7 +62,7 @@ public class SessionEvent extends AuditEvent {
      * @param session the session that was connected.
      * @return an event representing the connection event.
      */
-    public static SessionEvent createConnectEvent(Session session) {
+    public static SessionEvent createConnectEvent(ISession session) {
         return new SessionEvent(session, SESSION_CONNECT, null);
     }
 
@@ -74,7 +74,7 @@ public class SessionEvent extends AuditEvent {
      * @param session the session that began streaming.
      * @return an event representing the connection event.
      */
-    public static SessionEvent createStreamEvent(Session session) {
+    public static SessionEvent createStreamEvent(ISession session) {
         return new SessionEvent(session, SESSION_STREAM, null);
     }
 
@@ -86,7 +86,7 @@ public class SessionEvent extends AuditEvent {
      * @param resource the resource used for the attempt
      * @return an event representing the connection event
      */
-    public static SessionEvent createAuthFailureEvent(Session session, String user,
+    public static SessionEvent createAuthFailureEvent(ISession session, String user,
             String resource)
     {
         return new SessionEvent(session, SESSION_AUTH_FAILURE,
@@ -99,7 +99,7 @@ public class SessionEvent extends AuditEvent {
      * @param session the session that authenticated.
      * @return an event representing the connection event.
      */
-    public static SessionEvent createAuthSuccessEvent(Session session) {
+    public static SessionEvent createAuthSuccessEvent(ISession session) {
         return new SessionEvent(session, SESSION_AUTH_SUCCESS, null);
     }
 
@@ -109,7 +109,7 @@ public class SessionEvent extends AuditEvent {
      * @param session the session that was disconnected.
      * @return an event representing the connection event.
      */
-    public static SessionEvent createDisconnectEvent(Session session) {
+    public static SessionEvent createDisconnectEvent(ISession session) {
         return new SessionEvent(session, SESSION_DISCONNECT, null);
     }
     

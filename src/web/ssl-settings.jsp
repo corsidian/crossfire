@@ -17,9 +17,9 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.Connection,
-                 net.emiva.crossfire.ConnectionManager,
-                 net.emiva.crossfire.XMPPServer,
+<%@ page import="net.emiva.crossfire.IConnection,
+                 net.emiva.crossfire.IConnectionManager,
+                 net.emiva.crossfire.XmppServer,
                  net.emiva.crossfire.server.ServerDialback,
                  net.emiva.crossfire.session.LocalClientSession,
                  net.emiva.util.Globals"

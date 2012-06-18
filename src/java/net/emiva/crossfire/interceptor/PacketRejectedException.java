@@ -24,11 +24,11 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * Thrown by a PacketInterceptor when a packet is prevented from being processed. If the packet was
+ * Thrown by a IPacketInterceptor when a packet is prevented from being processed. If the packet was
  * received then it will not be processed and a not_allowed error will be sent back to the sender
  * of the packet. If the packet was going to be sent then the sending will be aborted.
  *
- * @see PacketInterceptor
+ * @see IPacketInterceptor
  * @author Gaston Dombiak
  */
 public class PacketRejectedException extends Exception {

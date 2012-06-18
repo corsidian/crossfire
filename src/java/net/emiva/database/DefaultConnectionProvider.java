@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author EMIVA Community
  */
-public class DefaultConnectionProvider implements ConnectionProvider {
+public class DefaultConnectionProvider implements IConnectionProvider {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultConnectionProvider.class);
 
@@ -390,7 +390,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
                     +poolStats.getAvailableConnectionCount()+","+poolStats.getActiveConnectionCount();
         }
         catch (ProxoolException e) {
-            return "Default Connection Provider";
+            return "Default IConnection Provider";
         }
     }
 }

@@ -37,10 +37,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.emiva.crossfire.XMPPServer;
 import net.emiva.crossfire.auth.AuthFactory;
-import net.emiva.crossfire.event.UserEventDispatcher;
 import net.emiva.crossfire.roster.Roster;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.util.StringUtils;
 import net.emiva.util.cache.CacheSizes;
@@ -56,9 +55,9 @@ import org.xmpp.resultsetmanagement.Result;
  * Encapsulates information about a user. New users are created using
  * {@link UserManager#createUser(String, String, String, String)}. All user
  * properties are loaded on demand and are read from the <tt>ofUserProp</tt>
- * database table. The currently-installed {@link UserProvider} is used for
+ * database table. The currently-installed {@link IUserProvider} is used for
  * setting all other user data and some operations may not be supported
- * depending on the capabilities of the {@link UserProvider}.
+ * depending on the capabilities of the {@link IUserProvider}.
  *
  * @author Matt Tucker
  */
@@ -130,8 +129,8 @@ public class User implements Cacheable, Externalizable, Result {
 
     /**
      * Constructs a new user. Normally, all arguments can be <tt>null</tt> except the username.
-     * However, a UserProvider -may- require a name or email address.  In those cases, the
-     * isNameRequired or isEmailRequired UserProvider tests indicate whether <tt>null</tt> is allowed.
+     * However, a IUserProvider -may- require a name or email address.  In those cases, the
+     * isNameRequired or isEmailRequired IUserProvider tests indicate whether <tt>null</tt> is allowed.
      * Typically, User objects should not be constructed by end-users of the API.
      * Instead, user objects should be retrieved using {@link UserManager#getUser(String)}.
      *
@@ -381,7 +380,7 @@ public class User implements Cacheable, Externalizable, Result {
      */
     public Roster getRoster() {
         try {
-            return XMPPServer.getInstance().getRosterManager().getRoster(username);
+            return XmppServer.getInstance().getRosterManager().getRoster(username);
         }
         catch (UserNotFoundException unfe) {
             Log.error(unfe.getMessage(), unfe);

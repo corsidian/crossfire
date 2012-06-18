@@ -19,7 +19,7 @@
  */
 package net.emiva.util.cache;
 
-import net.emiva.crossfire.cluster.ClusterNodeInfo;
+import net.emiva.crossfire.core.cluster.IClusterNodeInfo;
 
 import java.util.Collection;
 import java.util.Map;
@@ -81,7 +81,7 @@ public interface CacheFactoryStrategy {
      * @return information about the current members of the cluster or an empty
      *         collection if not running in a cluster.
      */
-    Collection<ClusterNodeInfo> getClusterNodesInfo();
+    Collection<IClusterNodeInfo> getClusterNodesInfo();
 
     /**
      * Returns the maximum number of cluster members allowed. A value of 0 will

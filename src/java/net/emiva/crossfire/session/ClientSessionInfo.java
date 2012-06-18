@@ -38,7 +38,7 @@ import java.io.ObjectOutput;
  * This optimization should give an important boost to the application specifically
  * while users are logging in.<p>
  *
- * Session information is stored after a user authenticated and bound a resource.
+ * ISession information is stored after a user authenticated and bound a resource.
  *
  * @author Gaston Dombiak
  */

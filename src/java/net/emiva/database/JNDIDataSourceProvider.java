@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of ConnectionProvider that utilizes a JDBC 2.0 DataSource
+ * An implementation of IConnectionProvider that utilizes a JDBC 2.0 DataSource
  * made available via JNDI. This is useful for application servers where a pooled
  * data connection is already provided so emiva can share the pool with the
  * other applications.<p>
@@ -43,9 +43,9 @@ import org.slf4j.LoggerFactory;
  * the provider's <code>name</code> property if required.
  *
  * @author <a href="mailto:joe@truemesh.com">Joe Walnes</a>
- * @see ConnectionProvider
+ * @see IConnectionProvider
  */
-public class JNDIDataSourceProvider implements ConnectionProvider {
+public class JNDIDataSourceProvider implements IConnectionProvider {
 
 	private static final Logger Log = LoggerFactory.getLogger(JNDIDataSourceProvider.class);
 

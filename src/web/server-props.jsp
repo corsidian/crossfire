@@ -19,8 +19,8 @@
 
 <%@ page import="net.emiva.util.Globals,
                  net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.ConnectionManager,
-                 net.emiva.crossfire.XMPPServer,
+                 net.emiva.crossfire.IConnectionManager,
+                 net.emiva.crossfire.XmppServer,
                  java.net.InetAddress,
                  java.util.HashMap"
 %>
@@ -29,7 +29,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
 
 <%-- Define Administration Bean --%>
 <jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />

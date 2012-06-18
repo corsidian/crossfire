@@ -18,10 +18,10 @@
 --%>
 
 <%@ page import="org.apache.mina.transport.socket.nio.SocketAcceptor"%>
-<%@ page import="net.emiva.admin.AdminConsole"%>
+<%@ page import="net.emiva.plugin.admin.AdminConsole"%>
 <%@ page import="net.emiva.crossfire.*" %>
-<%@ page import="net.emiva.crossfire.container.AdminConsolePlugin" %>
-<%@ page import="net.emiva.crossfire.net.SSLConfig" %>
+<%@ page import="net.emiva.crossfire.core.container.AdminConsolePlugin" %>
+<%@ page import="net.emiva.crossfire.core.net.SSLConfig" %>
 <%@ page import="net.emiva.crossfire.session.LocalClientSession" %>
 <%@ page import="net.emiva.crossfire.spi.ConnectionManagerImpl" %>
 <%@ page import="net.emiva.util.*" %>
@@ -35,7 +35,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <%-- Define page bean for header and sidebar --%>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
 
 <%  // Simple logout code
     if ("true".equals(request.getParameter("logout"))) {
@@ -340,7 +340,7 @@
         <td><%= "0.0.0.0".equals(address.getHostName()) ? LocaleUtils.getLocalizedString("ports.all_ports") : address.getHostName() %></td>
         <td><%= address.getPort() %></td>
         <% try { %>
-        <% if (!CertificateManager.isRSACertificate(SSLConfig.getKeyStore(), XMPPServer.getInstance().getServerInfo().getXMPPDomain()) || LocalClientSession.getTLSPolicy() == net.emiva.crossfire.Connection.TLSPolicy.disabled) { %>
+        <% if (!CertificateManager.isRSACertificate(SSLConfig.getKeyStore(), XMPPServer.getInstance().getServerInfo().getXMPPDomain()) || LocalClientSession.getTLSPolicy() == net.emiva.crossfire.IConnection.TLSPolicy.disabled) { %>
             <td><img src="images/blank.gif" width="1" height="1" alt=""/></td>
         <% } else { %>
             <td><img src="images/lock.gif" width="16" height="16" border="0" alt=""/></td>

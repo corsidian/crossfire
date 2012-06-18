@@ -20,9 +20,9 @@
 
 package net.emiva.crossfire.audit;
 
-import net.emiva.crossfire.StreamID;
-import net.emiva.crossfire.StreamIDFactory;
-import net.emiva.crossfire.spi.BasicStreamIDFactory;
+import net.emiva.crossfire.BasicStreamIDFactory;
+import net.emiva.crossfire.IStreamId;
+import net.emiva.crossfire.IStreamIdFactory;
 
 /**
  * Factory for producing audit stream IDs. We use a factory so that
@@ -31,14 +31,14 @@ import net.emiva.crossfire.spi.BasicStreamIDFactory;
  *
  * @author Iain Shigeoka
  */
-public class AuditStreamIDFactory implements StreamIDFactory {
+public class AuditStreamIDFactory implements IStreamIdFactory {
 
     private BasicStreamIDFactory factory = new BasicStreamIDFactory();
 
     public AuditStreamIDFactory() {
     }
 
-    public StreamID createStreamID() {
+    public IStreamId createStreamID() {
         return factory.createStreamID();
     }
 }

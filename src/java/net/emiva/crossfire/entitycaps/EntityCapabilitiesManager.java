@@ -27,10 +27,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.emiva.crossfire.IQRouter;
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.event.UserEventListener;
+import net.emiva.crossfire.route.IQRouter;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.crossfire.user.User;
+import net.emiva.crossfire.user.IUserEventListener;
 import net.emiva.util.StringUtils;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
@@ -60,7 +60,7 @@ import org.xmpp.packet.Presence;
  * @author Armando Jagucki
  *
  */
-public class EntityCapabilitiesManager implements IQResultListener, UserEventListener {
+public class EntityCapabilitiesManager implements IQResultListener, IUserEventListener {
 
     private static final EntityCapabilitiesManager instance = new EntityCapabilitiesManager();
 
@@ -167,7 +167,7 @@ public class EntityCapabilitiesManager implements IQResultListener, UserEventLis
             IQ iq = new IQ(IQ.Type.get);
             iq.setTo(packet.getFrom());
 
-            String serverName = XMPPServer.getInstance().getServerInfo().getXMPPDomain();
+            String serverName = XmppServer.getInstance().getServerInfo().getXMPPDomain();
             iq.setFrom(serverName);
 
             iq.setChildElement("query", "http://jabber.org/protocol/disco#info");
@@ -179,7 +179,7 @@ public class EntityCapabilitiesManager implements IQResultListener, UserEventLis
             caps.setVerAttribute(newVerAttribute);
             verAttributes.put(packetId, caps);
 
-            final IQRouter iqRouter = XMPPServer.getInstance().getIQRouter();
+            final IQRouter iqRouter = XmppServer.getInstance().getIQRouter();
             iqRouter.addIQResultListener(packetId, this);
             iqRouter.route(iq);
         }
@@ -451,7 +451,7 @@ public class EntityCapabilitiesManager implements IQResultListener, UserEventLis
     
     public void userDeleting(User user, Map<String, Object> params) {
         // Delete this user's association in entityCapabilitiesUserMap.
-        JID jid = XMPPServer.getInstance().createJID(user.getUsername(), null, true);
+        JID jid = XmppServer.getInstance().createJID(user.getUsername(), null, true);
         String verHashOfUser = entityCapabilitiesUserMap.remove(jid);
 
         // If there are no other references to the deleted user's 'ver' hash,

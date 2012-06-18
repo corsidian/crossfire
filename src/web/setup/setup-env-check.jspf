@@ -39,7 +39,7 @@
     catch (ClassNotFoundException cnfe) {}
     // Check that the crossfire jar are installed:
     try {
-        ClassUtils.forName("net.emiva.crossfire.XMPPServer");
+        ClassUtils.forName("net.emiva.crossfire.XmppServer");
         emivaJarsInstalled = true;
     }
     catch (ClassNotFoundException cnfe) {}

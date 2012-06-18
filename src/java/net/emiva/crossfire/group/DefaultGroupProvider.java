@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.emiva.crossfire.XMPPServer;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.database.DbConnectionManager;
 
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ import org.xmpp.packet.JID;
  *
  * @author Matt Tucker
  */
-public class DefaultGroupProvider implements GroupProvider {
+public class DefaultGroupProvider implements IGroupProvider {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultGroupProvider.class);
 
@@ -79,7 +79,7 @@ public class DefaultGroupProvider implements GroupProvider {
     private static final String ALL_GROUPS = "SELECT groupName FROM ofGroup ORDER BY groupName";
     private static final String SEARCH_GROUP_NAME = "SELECT groupName FROM ofGroup WHERE groupName LIKE ? ORDER BY groupName";
 
-    private XMPPServer server = XMPPServer.getInstance();
+    private XmppServer server = XmppServer.getInstance();
 
     public Group createGroup(String name) throws GroupAlreadyExistsException {
         Connection con = null;
@@ -452,10 +452,7 @@ public class DefaultGroupProvider implements GroupProvider {
                 String user = rs.getString(1);
                 JID userJID = null;
                 if (user.indexOf('@') == -1) {
-                    // Create JID of local user if JID does not match a component's JID
-                    if (!server.matchesComponent(userJID)) {
-                        userJID = server.createJID(user, null);
-                    }
+                    userJID = server.createJID(user, null);
                 }
                 else {
                     userJID = new JID(user);

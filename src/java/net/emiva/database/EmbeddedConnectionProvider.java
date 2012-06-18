@@ -20,17 +20,18 @@
 
 package net.emiva.database;
 
-import net.emiva.util.Globals;
-import net.emiva.util.Log;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.DriverManager;
 import java.util.Properties;
+
+import net.emiva.util.Globals;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A connection provider for the embedded hsqlDB database. The database file is stored at
@@ -40,8 +41,9 @@ import java.util.Properties;
  *
  * @author Matt Tucker
  */
-public class EmbeddedConnectionProvider implements ConnectionProvider {
-
+public class EmbeddedConnectionProvider implements IConnectionProvider {
+	private final static Logger logger = LoggerFactory.getLogger(EmbeddedConnectionProvider.class);
+	
     private Properties settings;
     private String serverURL;
     private String driver = "org.hsqldb.jdbcDriver";
@@ -76,7 +78,7 @@ public class EmbeddedConnectionProvider implements ConnectionProvider {
             serverURL = "jdbc:hsqldb:" + databaseDir.getCanonicalPath() + File.separator + "crossfire";
         }
         catch (IOException ioe) {
-            Log.error("EmbeddedConnectionProvider: Error starting connection pool: ", ioe);
+            logger.error("EmbeddedConnectionProvider: Error starting connection pool: ", ioe);
         }
         proxoolURL = "proxool.crossfire:"+driver+":"+serverURL;
         settings = new Properties();
@@ -104,7 +106,7 @@ public class EmbeddedConnectionProvider implements ConnectionProvider {
             pstmt.execute();
         }
         catch (SQLException sqle) {
-            Log.error(sqle.getMessage(), sqle);
+            logger.error(sqle.getMessage(), sqle);
         }
         finally {
             DbConnectionManager.closeConnection(pstmt, con);

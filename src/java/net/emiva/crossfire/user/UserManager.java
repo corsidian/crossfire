@@ -29,13 +29,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.event.UserEventDispatcher;
-import net.emiva.crossfire.event.UserEventListener;
+import net.emiva.crossfire.core.property.PropertyEventDispatcher;
+import net.emiva.crossfire.core.property.PropertyEventListener;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
-import net.emiva.util.PropertyEventDispatcher;
-import net.emiva.util.PropertyEventListener;
 import net.emiva.util.StringUtils;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
@@ -63,14 +61,14 @@ public class UserManager implements IQResultListener {
     }
 
     /**
-     * Returns the currently-installed UserProvider. <b>Warning:</b> in virtually all
+     * Returns the currently-installed IUserProvider. <b>Warning:</b> in virtually all
      * cases the user provider should not be used directly. Instead, the appropriate
      * methods in UserManager should be called. Direct access to the user provider is
      * only provided for special-case logic.
      *
-     * @return the current UserProvider.
+     * @return the current IUserProvider.
      */
-    public static UserProvider getUserProvider() {
+    public static IUserProvider getUserProvider() {
         return UserManagerContainer.instance.provider;
     }
 
@@ -87,7 +85,7 @@ public class UserManager implements IQResultListener {
     private Cache<String, User> userCache;
     /** Cache if a local or remote user exists. */
     private Cache<String, Boolean> remoteUsersCache;
-    private UserProvider provider;
+    private IUserProvider provider;
 
     private UserManager() {
         // Initialize caches.
@@ -119,7 +117,7 @@ public class UserManager implements IQResultListener {
         };
         PropertyEventDispatcher.addListener(propListener);
 
-        UserEventListener userListener = new UserEventListener() {
+        IUserEventListener userListener = new IUserEventListener() {
             public void userCreated(User user, Map<String, Object> params) {
                 // Since the user could be created by the provider, add it possible again
                 userCache.put(user.getUsername(), user);
@@ -141,15 +139,15 @@ public class UserManager implements IQResultListener {
 
     /**
      * Creates a new User. Required values are username and password. The email address
-     * and name can optionally be <tt>null</tt>, unless the UserProvider deems that
+     * and name can optionally be <tt>null</tt>, unless the IUserProvider deems that
      * either of them are required.
      *
      * @param username the new and unique username for the account.
      * @param password the password for the account (plain text).
-     * @param name the name of the user, which can be <tt>null</tt> unless the UserProvider
+     * @param name the name of the user, which can be <tt>null</tt> unless the IUserProvider
      *      deems that it's required.
      * @param email the email address to associate with the new account, which can
-     *      be <tt>null</tt>, unless the UserProvider deems that it's required.
+     *      be <tt>null</tt>, unless the IUserProvider deems that it's required.
      * @return a new User.
      * @throws UserAlreadyExistsException if the username already exists in the system.
      * @throws UnsupportedOperationException if the provider does not support the
@@ -380,7 +378,7 @@ public class UserManager implements IQResultListener {
      * @return true if the specified JID belongs to a local or remote registered user.
      */
     public boolean isRegisteredUser(JID user) {
-        XMPPServer server = XMPPServer.getInstance();
+        XmppServer server = XmppServer.getInstance();
         if (server.isLocal(user)) {
             try {
                 getUser(user.getNode());
@@ -472,7 +470,7 @@ public class UserManager implements IQResultListener {
         if (provider == null || !className.equals(provider.getClass().getName())) {
             try {
                 Class c = ClassUtils.forName(className);
-                provider = (UserProvider) c.newInstance();
+                provider = (IUserProvider) c.newInstance();
             }
             catch (Exception e) {
                 Log.error("Error loading user provider: " + className, e);

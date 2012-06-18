@@ -2,8 +2,8 @@
                 net.emiva.util.Globals,
                 net.emiva.util.ParamUtils,
                 net.emiva.util.StringUtils,
-                net.emiva.crossfire.XMPPServer,
-                net.emiva.crossfire.net.SSLConfig,
+                net.emiva.crossfire.XmppServer,
+                net.emiva.crossfire.core.net.SSLConfig,
                 java.io.ByteArrayInputStream,
                 java.security.KeyStore,
                 java.security.PrivateKey,
@@ -14,8 +14,8 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="net.emiva.crossfire.container.PluginManager" %>
-<%@ page import="net.emiva.crossfire.container.AdminConsolePlugin" %>
+<%@ page import="net.emiva.crossfire.core.container.PluginManager" %>
+<%@ page import="net.emiva.crossfire.core.container.AdminConsolePlugin" %>
 <%@ page import="java.io.IOException" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>

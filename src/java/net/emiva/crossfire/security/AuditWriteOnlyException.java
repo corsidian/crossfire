@@ -21,7 +21,7 @@
 package net.emiva.crossfire.security;
 
 /**
- * Thrown if a reading is not permitted with the configured SecurityAuditProvider.
+ * Thrown if a reading is not permitted with the configured ISecurityAuditProvider.
  *
  * @author Daniel Henninger
  */

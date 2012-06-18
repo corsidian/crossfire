@@ -27,14 +27,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.XMPPServerListener;
-import net.emiva.crossfire.cluster.ClusterEventListener;
-import net.emiva.crossfire.cluster.ClusterManager;
-import net.emiva.crossfire.cluster.ClusterNodeInfo;
-import net.emiva.crossfire.container.Plugin;
-import net.emiva.crossfire.container.PluginClassLoader;
-import net.emiva.crossfire.container.PluginManager;
+import net.emiva.crossfire.core.cluster.IClusterEventListener;
+import net.emiva.crossfire.core.cluster.ClusterManager;
+import net.emiva.crossfire.core.cluster.IClusterNodeInfo;
+import net.emiva.crossfire.core.plugin.IPlugin;
+import net.emiva.crossfire.core.plugin.PluginClassLoader;
+import net.emiva.crossfire.core.plugin.PluginManager;
+import net.emiva.crossfire.server.IXmppServerListener;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.util.GlobalConstants;
 import net.emiva.util.Globals;
 import net.emiva.util.InitializationException;
@@ -116,7 +116,7 @@ public class CacheFactory {
         cacheNames.put("Routing AnonymousUsers Cache", "routeAnonymousUser");
         cacheNames.put("Routing User Sessions", "routeUserSessions");
         cacheNames.put("Components Sessions", "componentsSessions");
-        cacheNames.put("Connection Managers Sessions", "connManagerSessions");
+        cacheNames.put("IConnection Managers Sessions", "connManagerSessions");
         cacheNames.put("Incoming Server Sessions", "incServerSessions");
         cacheNames.put("Sessions by Hostname", "sessionsHostname");
         cacheNames.put("Secret Keys Cache", "secretKeys");
@@ -466,7 +466,7 @@ public class CacheFactory {
      * @return information about the current members of the cluster or an empty
      *         collection if not running in a cluster.
      */
-    public static Collection<ClusterNodeInfo> getClusterNodesInfo() {
+    public static Collection<IClusterNodeInfo> getClusterNodesInfo() {
         return cacheFactoryStrategy.getClusterNodesInfo();
     }
 
@@ -556,8 +556,8 @@ public class CacheFactory {
     }
 
     private static ClassLoader getClusteredCacheStrategyClassLoader() {
-        PluginManager pluginManager = XMPPServer.getInstance().getPluginManager();
-        Plugin plugin = pluginManager.getPlugin("clustering");
+        PluginManager pluginManager = XmppServer.getInstance().getPluginManager();
+        IPlugin plugin = pluginManager.getPlugin("clustering");
         if (plugin == null) {
             plugin = pluginManager.getPlugin("enterprise");
         }
@@ -566,7 +566,7 @@ public class CacheFactory {
             return pluginLoader;
         }
         else {
-            Log.debug("CacheFactory - Unable to find a Plugin that provides clustering support.");
+            Log.debug("CacheFactory - Unable to find a IPlugin that provides clustering support.");
             return Thread.currentThread().getContextClassLoader();
         }
     }
@@ -599,14 +599,14 @@ public class CacheFactory {
 
                     @Override
 					public void run() {
-                        XMPPServer.getInstance().addServerListener(new XMPPServerListener() {
+                        XmppServer.getInstance().addServerListener(new IXmppServerListener() {
                             public void serverStarted() {}
 
                             public void serverStopping() {
                                 destroyed = true;
                             }
                         });
-                        ClusterManager.addListener(new ClusterEventListener() {
+                        ClusterManager.addListener(new IClusterEventListener() {
                             public void joinedCluster() {}
 
                             public void joinedCluster(byte[] nodeID) {}

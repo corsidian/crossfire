@@ -17,9 +17,9 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.XMPPServer,
+<%@ page import="net.emiva.crossfire.XmppServer,
                  net.emiva.crossfire.handler.IQAuthHandler,
-                 net.emiva.crossfire.handler.IQRegisterHandler,
+                 net.emiva.crossfire.handler.IqRegisterHandler,
                  net.emiva.crossfire.session.LocalClientSession,
                  net.emiva.util.ParamUtils"
     errorPage="error.jsp"

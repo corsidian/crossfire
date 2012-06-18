@@ -1,6 +1,6 @@
 <%@ page import="net.emiva.util.ParamUtils"
          errorPage="error.jsp"%>
-<%@ page import="net.emiva.crossfire.XMPPServer" %>
+<%@ page import="net.emiva.crossfire.XmppServer" %>
 <%--
   Created by IntelliJ IDEA.
   User: gato

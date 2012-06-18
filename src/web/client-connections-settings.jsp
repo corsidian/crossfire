@@ -22,9 +22,9 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <%@ page import="net.emiva.util.Globals,
-				 net.emiva.crossfire.XMPPServer,
+				 net.emiva.crossfire.XmppServer,
                  net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.ConnectionManager,
+                 net.emiva.crossfire.IConnectionManager,
                  java.util.Collection"
     errorPage="error.jsp"
 %>

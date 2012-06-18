@@ -10,7 +10,7 @@
                  net.emiva.util.Globals,
                  net.emiva.database.EmbeddedConnectionProvider,
                  net.emiva.database.DbConnectionManager,
-                 net.emiva.database.ConnectionProvider,
+                 net.emiva.database.IConnectionProvider,
                  java.util.*" %>
 <%@ page import="java.io.File"%>
 <%@ page import="java.sql.Connection"%>
@@ -18,7 +18,7 @@
 <%@ page import="java.sql.SQLException"%>
 <%@ page import="net.emiva.util.LocaleUtils"%>
 <%@ page import="net.emiva.util.ClassUtils"%>
-<%@ page import="net.emiva.crossfire.XMPPServer"%>
+<%@ page import="net.emiva.crossfire.XmppServer"%>
 
 <%
 	// Redirect if we've already run setup:
@@ -75,7 +75,7 @@
 <%
     boolean embeddedMode = false;
     try {
-        ClassUtils.forName("net.emiva.crossfire.starter.ServerStarter");
+        ClassUtils.forName("net.emiva.crossfire.core.starter.ServerStarter");
         embeddedMode = true;
     }
     catch (Exception ignored) {}

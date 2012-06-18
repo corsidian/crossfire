@@ -24,7 +24,7 @@
     errorPage="error.jsp"
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
 
 <jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>

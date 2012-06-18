@@ -32,9 +32,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.container.Plugin;
-import net.emiva.crossfire.container.PluginManager;
+import net.emiva.crossfire.core.plugin.IPlugin;
+import net.emiva.crossfire.core.plugin.PluginManager;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
 
@@ -121,8 +121,8 @@ public class SchemaManager {
      *      or updated successfully, or if it isn't needed. False will only be returned
      *      if there is an error.
      */
-    public boolean checkPluginSchema(final Plugin plugin) {
-        final PluginManager pluginManager = XMPPServer.getInstance().getPluginManager();
+    public boolean checkPluginSchema(final IPlugin plugin) {
+        final PluginManager pluginManager = XmppServer.getInstance().getPluginManager();
         String schemaKey = pluginManager.getDatabaseKey(plugin);
         int schemaVersion = pluginManager.getDatabaseVersion(plugin);
         // If the schema key or database version aren't defined, then the plugin doesn't

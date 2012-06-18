@@ -22,18 +22,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.emiva.crossfire.XMPPServer;
+import net.emiva.crossfire.core.property.PropertyEventDispatcher;
+import net.emiva.crossfire.core.property.PropertyEventListener;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
-import net.emiva.util.PropertyEventDispatcher;
-import net.emiva.util.PropertyEventListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;
 
 /**
- * The AdminManager manages the AdminProvider configured for this server, caches knowledge of
+ * The AdminManager manages the IAdminProvider configured for this server, caches knowledge of
  * accounts with admin permissions, and provides a single point of entry for handling
  * getting and setting administrative accounts.
  *
@@ -55,14 +55,14 @@ public class AdminManager {
     }
 
     /**
-     * Returns the currently-installed AdminProvider. <b>Warning:</b> in virtually all
+     * Returns the currently-installed IAdminProvider. <b>Warning:</b> in virtually all
      * cases the admin provider should not be used directly. Instead, the appropriate
      * methods in AdminManager should be called. Direct access to the admin provider is
      * only provided for special-case logic.
      *
-     * @return the current AdminProvider.
+     * @return the current IAdminProvider.
      */
-    public static AdminProvider getAdminProvider() {
+    public static IAdminProvider getAdminProvider() {
         return AdminManagerContainer.instance.provider;
     }
 
@@ -77,7 +77,7 @@ public class AdminManager {
 
     /* Cache of admin accounts */
     private List<JID> adminList;
-    private AdminProvider provider;
+    private IAdminProvider provider;
 
     /**
      * Constructs a AdminManager, propery listener, and setting up the provider.
@@ -87,25 +87,7 @@ public class AdminManager {
         initProvider();
 
         // Detect when a new admin provider class is set
-        PropertyEventListener propListener = new PropertyEventListener() {
-            public void propertySet(String property, Map<String, Object> params) {
-                if ("provider.admin.className".equals(property)) {
-                    initProvider();
-                }
-            }
-
-            public void propertyDeleted(String property, Map<String, Object> params) {
-                //Ignore
-            }
-
-            public void xmlPropertySet(String property, Map<String, Object> params) {
-                //Ignore
-            }
-
-            public void xmlPropertyDeleted(String property, Map<String, Object> params) {
-                //Ignore
-            }
-        };
+        PropertyEventListener propListener = new AdminManagerPropertyEventListener(this);
         PropertyEventDispatcher.addListener(propListener);
     }
 
@@ -113,7 +95,7 @@ public class AdminManager {
      * Initializes the server's admin provider, based on configuration and defaults to
      * DefaultAdminProvider if the specified provider is not valid or not specified.
      */
-    private void initProvider() {
+    protected void initProvider() {
         // Convert XML based provider setup to Database based
         Globals.migrateProperty("provider.admin.className");
 
@@ -123,7 +105,7 @@ public class AdminManager {
         if (provider == null || !className.equals(provider.getClass().getName())) {
             try {
                 Class c = ClassUtils.forName(className);
-                provider = (AdminProvider) c.newInstance();
+                provider = (IAdminProvider) c.newInstance();
             }
             catch (Exception e) {
                 Log.error("Error loading admin provider: " + className, e);
@@ -168,7 +150,7 @@ public class AdminManager {
         if (adminList == null) {
             loadAdminList();
         }
-        JID userJID = XMPPServer.getInstance().createJID(username, null);
+        JID userJID = XmppServer.getInstance().createJID(username, null);
         if (adminList.contains(userJID)) {
             // Already have them.
             return;
@@ -209,7 +191,7 @@ public class AdminManager {
         if (adminList == null) {
             loadAdminList();
         }
-        JID userJID = XMPPServer.getInstance().createJID(username, null);
+        JID userJID = XmppServer.getInstance().createJID(username, null);
         if (!adminList.contains(userJID)) {
             return;
         }
@@ -253,7 +235,7 @@ public class AdminManager {
         if (allowAdminIfEmpty && adminList.isEmpty()) {
             return "admin".equals(username);
         }
-        JID userJID = XMPPServer.getInstance().createJID(username, null);
+        JID userJID = XmppServer.getInstance().createJID(username, null);
         return adminList.contains(userJID);
     }
 
@@ -304,7 +286,7 @@ public class AdminManager {
         }
         List<JID> admins = new ArrayList<JID>();
         for (String username : usernames) {
-            admins.add(XMPPServer.getInstance().createJID(username, null));
+            admins.add(XmppServer.getInstance().createJID(username, null));
         }
         adminList.addAll(admins);
         provider.setAdmins(admins);

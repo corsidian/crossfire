@@ -1,6 +1,6 @@
 package net.emiva.admin;
 
-import net.emiva.admin.AuthCheckFilter;
+import net.emiva.plugin.admin.AuthCheckFilter;
 import junit.framework.TestCase;
 
 /**

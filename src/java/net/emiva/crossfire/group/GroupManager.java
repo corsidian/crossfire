@@ -24,18 +24,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.event.GroupEventDispatcher;
-import net.emiva.crossfire.event.GroupEventListener;
-import net.emiva.crossfire.event.UserEventDispatcher;
-import net.emiva.crossfire.event.UserEventListener;
+import net.emiva.crossfire.core.property.PropertyEventDispatcher;
+import net.emiva.crossfire.core.property.PropertyEventListener;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.crossfire.user.User;
+import net.emiva.crossfire.user.UserEventDispatcher;
+import net.emiva.crossfire.user.IUserEventListener;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
-import net.emiva.util.PropertyEventDispatcher;
-import net.emiva.util.PropertyEventListener;
 import net.emiva.util.TaskEngine;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
@@ -73,7 +71,7 @@ public class GroupManager {
 
     Cache<String, Group> groupCache;
     Cache<String, Object> groupMetaCache;
-    private GroupProvider provider;
+    private IGroupProvider provider;
 
     private GroupManager() {
         // Initialize caches.
@@ -85,7 +83,7 @@ public class GroupManager {
 
         initProvider();
 
-        GroupEventDispatcher.addListener(new GroupEventListener() {
+        GroupEventDispatcher.addListener(new IGroupEventListener() {
             public void groupCreated(Group group, Map params) {
 
                 // Adds default properties if they don't exists, since the creator of
@@ -156,7 +154,7 @@ public class GroupManager {
 
         });
 
-        UserEventDispatcher.addListener(new UserEventListener() {
+        UserEventDispatcher.addListener(new IUserEventListener() {
             public void userCreated(User user, Map<String, Object> params) {
                 // ignore
             }
@@ -202,7 +200,7 @@ public class GroupManager {
                     // Load each user in the group into cache.
                     for (JID jid : group.getMembers()) {
                         try {
-                            if (XMPPServer.getInstance().isLocal(jid)) {
+                            if (XmppServer.getInstance().isLocal(jid)) {
                                 UserManager.getInstance().getUser(jid.getNode());
                             }
                         }
@@ -225,7 +223,7 @@ public class GroupManager {
                 "net.emiva.crossfire.group.DefaultGroupProvider");
         try {
             Class c = ClassUtils.forName(className);
-            provider = (GroupProvider) c.newInstance();
+            provider = (IGroupProvider) c.newInstance();
         }
         catch (Exception e) {
             Log.error("Error loading group provider: " + className, e);
@@ -323,7 +321,7 @@ public class GroupManager {
      * @param user the deleted user from the system.
      */
     public void deleteUser(User user) {
-        JID userJID = XMPPServer.getInstance().createJID(user.getUsername(), null);
+        JID userJID = XmppServer.getInstance().createJID(user.getUsername(), null);
         for (Group group : getGroups(userJID)) {
             if (group.getAdmins().contains(userJID)) {
                 if (group.getAdmins().remove(userJID)) {
@@ -431,7 +429,7 @@ public class GroupManager {
      * @return all groups the user belongs to.
      */
     public Collection<Group> getGroups(User user) {
-        return getGroups(XMPPServer.getInstance().createJID(user.getUsername(), null, true));
+        return getGroups(XmppServer.getInstance().createJID(user.getUsername(), null, true));
     }
 
     /**
@@ -525,7 +523,7 @@ public class GroupManager {
      *
      * @return the group provider.
      */
-    public GroupProvider getProvider() {
+    public IGroupProvider getProvider() {
         return provider;
     }
 }

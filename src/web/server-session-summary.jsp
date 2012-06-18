@@ -19,7 +19,7 @@
 
 <%@ page import="net.emiva.crossfire.SessionManager,
                  net.emiva.crossfire.session.OutgoingServerSession,
-                 net.emiva.crossfire.session.Session,
+                 net.emiva.crossfire.session.ISession,
                  net.emiva.util.ParamUtils,
                  java.util.*"
     errorPage="error.jsp"

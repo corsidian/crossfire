@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import net.emiva.crossfire.XMPPServer;
+import net.emiva.crossfire.core.property.PropertyEventDispatcher;
+import net.emiva.crossfire.core.property.PropertyEventListener;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.util.Globals;
-import net.emiva.util.PropertyEventDispatcher;
-import net.emiva.util.PropertyEventListener;
 import net.emiva.util.StringUtils;
 
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ import org.xmpp.packet.JID;
  *
  * @author Daniel Henninger
  */
-public class DefaultAdminProvider implements AdminProvider {
+public class DefaultAdminProvider implements IAdminProvider {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultAdminProvider.class);
 
@@ -51,41 +51,12 @@ public class DefaultAdminProvider implements AdminProvider {
         // Convert old crossfire.xml style to new provider style, if necessary.
         Log.debug("DefaultAdminProvider: Convert XML to provider.");
         convertXMLToProvider();
-
-        // Detect when the list of admin users is changed.
-        PropertyEventListener propListener = new PropertyEventListener() {
-            public void propertySet(String property, Map params) {
-                Log.debug("DefaultAdminProvider: Property was set: "+property);
-                if ("admin.authorizedJIDs".equals(property)) {
-                    AdminManager.getInstance().refreshAdminAccounts();
-                }
-            }
-
-            public void propertyDeleted(String property, Map params) {
-                Log.debug("DefaultAdminProvider: Property was deleted: "+property);
-                if ("admin.authorizedJIDs".equals(property)) {
-                    AdminManager.getInstance().refreshAdminAccounts();
-                }
-            }
-
-            public void xmlPropertySet(String property, Map params) {
-                Log.debug("DefaultAdminProvider: XML Property was set: "+property);
-                //Ignore
-            }
-
-            public void xmlPropertyDeleted(String property, Map params) {
-                Log.debug("DefaultAdminProvider: XML Property was deleted: "+property);
-                //Ignore
-            }
-        };
-        PropertyEventDispatcher.addListener(propListener);
-
     }
 
     /**
      * The default provider retrieves the comma separated list from the system property
      * <tt>admin.authorizedJIDs</tt>
-     * @see net.emiva.crossfire.admin.AdminProvider#getAdmins()
+     * @see net.emiva.crossfire.admin.IAdminProvider#getAdmins()
      */
     public List<JID> getAdmins() {
         List<JID> adminList = new ArrayList<JID>();
@@ -106,7 +77,7 @@ public class DefaultAdminProvider implements AdminProvider {
 
         if (adminList.isEmpty()) {
             // Add default admin account when none was specified
-            adminList.add(new JID("admin", XMPPServer.getInstance().getServerInfo().getXMPPDomain(), null, true));
+            adminList.add(new JID("admin", XmppServer.getInstance().getServerInfo().getXMPPDomain(), null, true));
         }
 
         return adminList;
@@ -115,7 +86,7 @@ public class DefaultAdminProvider implements AdminProvider {
     /**
      * The default provider sets a comma separated list as the system property
      * <tt>admin.authorizedJIDs</tt>
-     * @see net.emiva.crossfire.admin.AdminProvider#setAdmins(java.util.List)
+     * @see net.emiva.crossfire.admin.IAdminProvider#setAdmins(java.util.List)
      */
     public void setAdmins(List<JID> admins) {
         Collection<String> adminList = new ArrayList<String>();
@@ -127,7 +98,7 @@ public class DefaultAdminProvider implements AdminProvider {
 
     /**
      * The default provider is not read only
-     * @see net.emiva.crossfire.admin.AdminProvider#isReadOnly()
+     * @see net.emiva.crossfire.admin.IAdminProvider#isReadOnly()
      */
     public boolean isReadOnly() {
         return false;
@@ -172,7 +143,7 @@ public class DefaultAdminProvider implements AdminProvider {
         while (tokenizer.hasMoreTokens()) {
             String username = tokenizer.nextToken();
             try {
-                adminList.add(XMPPServer.getInstance().createJID(username.toLowerCase().trim(), null));
+                adminList.add(XmppServer.getInstance().createJID(username.toLowerCase().trim(), null));
             }
             catch (IllegalArgumentException e) {
                 // Ignore usernames that when appended @server.com result in an invalid JID

@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * @see AuthorizationManager
  * @author Jay Kline
  */
-public class DefaultAuthorizationPolicy implements AuthorizationPolicy {
+public class DefaultAuthorizationPolicy implements IAuthorizationPolicy {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultAuthorizationPolicy.class);
 

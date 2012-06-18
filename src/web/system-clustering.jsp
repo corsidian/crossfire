@@ -24,10 +24,10 @@
 <%@ page import="net.emiva.database.DbConnectionManager"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.crossfire.XMPPServer" %>
-<%@ page import="net.emiva.crossfire.cluster.ClusterManager" %>
-<%@ page import="net.emiva.crossfire.cluster.ClusterNodeInfo" %>
-<%@ page import="net.emiva.crossfire.cluster.GetBasicStatistics" %>
+<%@ page import="net.emiva.crossfire.XmppServer" %>
+<%@ page import="net.emiva.crossfire.core.cluster.ClusterManager" %>
+<%@ page import="net.emiva.crossfire.core.cluster.IClusterNodeInfo" %>
+<%@ page import="net.emiva.crossfire.core.cluster.GetBasicStatistics" %>
 <%@ page import="net.emiva.util.Globals" %>
 <%@ page import="net.emiva.util.Log" %>
 <%@ page import="net.emiva.util.ParamUtils" %>

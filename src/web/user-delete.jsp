@@ -18,7 +18,7 @@
 --%>
 
 <%@ page import="net.emiva.crossfire.security.SecurityAuditManager,
-                 net.emiva.crossfire.session.ClientSession,
+                 net.emiva.crossfire.session.IClientSession,
                  net.emiva.crossfire.user.User"
     errorPage="error.jsp"
 %>

@@ -19,7 +19,6 @@
  */
 package net.emiva.crossfire.session;
 
-import net.emiva.crossfire.SessionManager;
 import net.emiva.util.cache.ClusterTask;
 import net.emiva.util.cache.ExternalizableUtil;
 

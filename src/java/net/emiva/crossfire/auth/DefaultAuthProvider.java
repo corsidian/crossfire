@@ -26,7 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import net.emiva.crossfire.XMPPServer;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.util.Globals;
@@ -35,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Default AuthProvider implementation. It authenticates against the <tt>ofUser</tt>
+ * Default IAuthProvider implementation. It authenticates against the <tt>ofUser</tt>
  * database table and supports plain text and digest authentication.
  *
  * Because each call to authenticate() makes a database connection, the
@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matt Tucker
  */
-public class DefaultAuthProvider implements AuthProvider {
+public class DefaultAuthProvider implements IAuthProvider {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultAuthProvider.class);
 
@@ -68,7 +68,7 @@ public class DefaultAuthProvider implements AuthProvider {
             // Check that the specified domain matches the server's domain
             int index = username.indexOf("@");
             String domain = username.substring(index + 1);
-            if (domain.equals(XMPPServer.getInstance().getServerInfo().getXMPPDomain())) {
+            if (domain.equals(XmppServer.getInstance().getServerInfo().getXMPPDomain())) {
                 username = username.substring(0, index);
             } else {
                 // Unknown domain. Return authentication failed.
@@ -95,7 +95,7 @@ public class DefaultAuthProvider implements AuthProvider {
             // Check that the specified domain matches the server's domain
             int index = username.indexOf("@");
             String domain = username.substring(index + 1);
-            if (domain.equals(XMPPServer.getInstance().getServerInfo().getXMPPDomain())) {
+            if (domain.equals(XmppServer.getInstance().getServerInfo().getXMPPDomain())) {
                 username = username.substring(0, index);
             } else {
                 // Unknown domain. Return authentication failed.
@@ -135,7 +135,7 @@ public class DefaultAuthProvider implements AuthProvider {
             // Check that the specified domain matches the server's domain
             int index = username.indexOf("@");
             String domain = username.substring(index + 1);
-            if (domain.equals(XMPPServer.getInstance().getServerInfo().getXMPPDomain())) {
+            if (domain.equals(XmppServer.getInstance().getServerInfo().getXMPPDomain())) {
                 username = username.substring(0, index);
             } else {
                 // Unknown domain.
@@ -178,7 +178,7 @@ public class DefaultAuthProvider implements AuthProvider {
             // Check that the specified domain matches the server's domain
             int index = username.indexOf("@");
             String domain = username.substring(index + 1);
-            if (domain.equals(XMPPServer.getInstance().getServerInfo().getXMPPDomain())) {
+            if (domain.equals(XmppServer.getInstance().getServerInfo().getXMPPDomain())) {
                 username = username.substring(0, index);
             } else {
                 // Unknown domain.

@@ -27,8 +27,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.session.Session;
+import net.emiva.crossfire.server.XmppServer;
+import net.emiva.crossfire.session.ISession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ import org.xmpp.packet.Packet;
  * then the sender of the packet receive a
  * {@link org.xmpp.packet.PacketError.Condition#not_allowed not_allowed} error.
  *
- * @see PacketInterceptor
+ * @see IPacketInterceptor
  * @author Gaston Dombiak
  */
 public class InterceptorManager {
@@ -55,11 +55,11 @@ public class InterceptorManager {
 
     private static InterceptorManager instance = new InterceptorManager();
 
-    private XMPPServer server = XMPPServer.getInstance();
-    private List<PacketInterceptor> globalInterceptors =
-            new CopyOnWriteArrayList<PacketInterceptor>();
-    private Map<String, List<PacketInterceptor>> usersInterceptors =
-            new ConcurrentHashMap<String, List<PacketInterceptor>>();
+    private XmppServer server = XmppServer.getInstance();
+    private List<IPacketInterceptor> globalInterceptors =
+            new CopyOnWriteArrayList<IPacketInterceptor>();
+    private Map<String, List<IPacketInterceptor>> usersInterceptors =
+            new ConcurrentHashMap<String, List<IPacketInterceptor>>();
 
     /**
      * Returns a singleton instance of InterceptorManager.
@@ -76,7 +76,7 @@ public class InterceptorManager {
      *
      * @return an unmodifiable list of the global packet interceptors.
      */
-    public List<PacketInterceptor> getInterceptors() {
+    public List<IPacketInterceptor> getInterceptors() {
         return Collections.unmodifiableList(globalInterceptors);
     }
 
@@ -86,7 +86,7 @@ public class InterceptorManager {
      *
      * @param interceptor the interceptor to add.
      */
-    public void addInterceptor(PacketInterceptor interceptor) {
+    public void addInterceptor(IPacketInterceptor interceptor) {
         if (interceptor == null) {
             throw new NullPointerException("Parameter interceptor was null.");
         }
@@ -104,7 +104,7 @@ public class InterceptorManager {
      * @param index the index in the list to insert the new interceptor at.
      * @param interceptor the interceptor to add.
      */
-    public void addInterceptor(int index, PacketInterceptor interceptor) {
+    public void addInterceptor(int index, IPacketInterceptor interceptor) {
         if (index < 0 || (index > globalInterceptors.size())) {
             throw new IndexOutOfBoundsException("Index " + index + " invalid.");
         }
@@ -129,7 +129,7 @@ public class InterceptorManager {
      * @param interceptor the interceptor to remove.
      * @return true if the item was present in the list
      */
-    public boolean removeInterceptor(PacketInterceptor interceptor) {
+    public boolean removeInterceptor(IPacketInterceptor interceptor) {
         return globalInterceptors.remove(interceptor);
     }
 
@@ -141,8 +141,8 @@ public class InterceptorManager {
      * @return an unmodifiable list of packet interceptors that are related to
      *      the specified username.
      */
-    public List<PacketInterceptor> getUserInterceptors(String username) {
-        List<PacketInterceptor> userInterceptors = usersInterceptors.get(username);
+    public List<IPacketInterceptor> getUserInterceptors(String username) {
+        List<IPacketInterceptor> userInterceptors = usersInterceptors.get(username);
         if (userInterceptors == null) {
             return Collections.emptyList();
         }
@@ -160,10 +160,10 @@ public class InterceptorManager {
      * @param index the index in the list to insert the new interceptor at.
      * @param interceptor the interceptor to add.
      */
-    public void addUserInterceptor(String username, int index, PacketInterceptor interceptor) {
-        List<PacketInterceptor> userInterceptors = usersInterceptors.get(username);
+    public void addUserInterceptor(String username, int index, IPacketInterceptor interceptor) {
+        List<IPacketInterceptor> userInterceptors = usersInterceptors.get(username);
         if (userInterceptors == null) {
-            userInterceptors = new CopyOnWriteArrayList<PacketInterceptor>();
+            userInterceptors = new CopyOnWriteArrayList<IPacketInterceptor>();
             usersInterceptors.put(username, userInterceptors);
         }
         else {
@@ -194,9 +194,9 @@ public class InterceptorManager {
      * @param interceptor the interceptor to remove.
      * @return true if the item was present in the list
      */
-    public boolean removeUserInterceptor(String username, PacketInterceptor interceptor) {
+    public boolean removeUserInterceptor(String username, IPacketInterceptor interceptor) {
         boolean answer = false;
-        List<PacketInterceptor> userInterceptors = usersInterceptors.get(username);
+        List<IPacketInterceptor> userInterceptors = usersInterceptors.get(username);
         if (userInterceptors != null) {
             answer = userInterceptors.remove(interceptor);
             // Remove the entry for this username if the list is now empty
@@ -228,14 +228,14 @@ public class InterceptorManager {
      *      If the packet hasn't already been processed, this flag will be false.
      * @throws PacketRejectedException if the packet should be prevented from being processed.
      */
-    public void invokeInterceptors(Packet packet, Session session, boolean read, boolean processed)
+    public void invokeInterceptors(Packet packet, ISession session, boolean read, boolean processed)
             throws PacketRejectedException
     {
         // Invoke the global interceptors for this packet
         // Checking if collection is empty to prevent creating an iterator of
         // a CopyOnWriteArrayList that is an expensive operation
         if (!globalInterceptors.isEmpty()) {
-            for (PacketInterceptor interceptor : globalInterceptors) {
+            for (IPacketInterceptor interceptor : globalInterceptors) {
                 try {
                     interceptor.interceptPacket(packet, session, read, processed);
                 }
@@ -260,9 +260,9 @@ public class InterceptorManager {
         }
         String username = session.getAddress().getNode();
         if (username != null && server.isLocal(session.getAddress())) {
-            Collection<PacketInterceptor> userInterceptors = usersInterceptors.get(username);
+            Collection<IPacketInterceptor> userInterceptors = usersInterceptors.get(username);
             if (userInterceptors != null && !userInterceptors.isEmpty()) {
-                for (PacketInterceptor interceptor : userInterceptors) {
+                for (IPacketInterceptor interceptor : userInterceptors) {
                     try {
                         interceptor.interceptPacket(packet, session, read, processed);
                     }

@@ -33,11 +33,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * The DefaultLockOutProvider works with the ofUserFlag table to maintain a list of disabled/locked out
- * accounts., and as the name implies, is the default LockOutProvider implementation.
+ * accounts., and as the name implies, is the default ILockOutProvider implementation.
  *
  * @author Daniel Henninger
  */
-public class DefaultLockOutProvider implements LockOutProvider {
+public class DefaultLockOutProvider implements ILockOutProvider {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultLockOutProvider.class);
 
@@ -58,7 +58,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
 
     /**
      * Default provider retrieves disabled status from ofUserFlag table.
-     * @see net.emiva.crossfire.lockout.LockOutProvider#getDisabledStatus(String)
+     * @see net.emiva.crossfire.lockout.ILockOutProvider#getDisabledStatus(String)
      */
     public LockOutFlag getDisabledStatus(String username) {
         Connection con = null;
@@ -97,7 +97,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
 
     /**
      * Default provider deletes existing flag, if it exists, and adds new described flag in ofUserFlag table.
-     * @see net.emiva.crossfire.lockout.LockOutProvider#setDisabledStatus(LockOutFlag)
+     * @see net.emiva.crossfire.lockout.ILockOutProvider#setDisabledStatus(LockOutFlag)
      */
     public void setDisabledStatus(LockOutFlag flag) {
         Connection con = null;
@@ -142,7 +142,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
 
     /**
      * Default provider deletes existing flag from ofUserFlag table.
-     * @see net.emiva.crossfire.lockout.LockOutProvider#unsetDisabledStatus(String)
+     * @see net.emiva.crossfire.lockout.ILockOutProvider#unsetDisabledStatus(String)
      */
     public void unsetDisabledStatus(String username) {
         Connection con = null;
@@ -163,7 +163,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
 
     /**
      * Default provider allows editing of disabled status.
-     * @see net.emiva.crossfire.lockout.LockOutProvider#isReadOnly()
+     * @see net.emiva.crossfire.lockout.ILockOutProvider#isReadOnly()
      */
     public boolean isReadOnly() {
         return false;
@@ -171,7 +171,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
 
     /**
      * Default provider allows delayed start to disabled status.
-     * @see net.emiva.crossfire.lockout.LockOutProvider#isDelayedStartSupported()
+     * @see net.emiva.crossfire.lockout.ILockOutProvider#isDelayedStartSupported()
      */
     public boolean isDelayedStartSupported() {
         return true;
@@ -179,7 +179,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
 
     /**
      * Default provider allows timeout of disabled status.
-     * @see net.emiva.crossfire.lockout.LockOutProvider#isTimeoutSupported()
+     * @see net.emiva.crossfire.lockout.ILockOutProvider#isTimeoutSupported()
      */
     public boolean isTimeoutSupported() {
         return true;
@@ -187,7 +187,7 @@ public class DefaultLockOutProvider implements LockOutProvider {
 
     /**
      * Default provider should be cached.
-     * @see net.emiva.crossfire.lockout.LockOutProvider#shouldNotBeCached()
+     * @see net.emiva.crossfire.lockout.ILockOutProvider#shouldNotBeCached()
      */
     public boolean shouldNotBeCached() {
         return false;

@@ -3,7 +3,7 @@
   -	$Date: 2008-02-18 23:21:33 -0500 (Mon, 18 Feb 2008) $
 --%>
 
-<%@ page import="net.emiva.crossfire.session.Session,
+<%@ page import="net.emiva.crossfire.session.ISession,
                  net.emiva.util.LocaleUtils,
                  net.emiva.util.StringUtils,
                  org.xmpp.packet.JID,
@@ -50,7 +50,7 @@
 
             <fmt:message key="session.details.connect" />
 
-        <% } else if (_status == net.emiva.crossfire.session.Session.STATUS_AUTHENTICATED) { %>
+        <% } else if (_status == net.emiva.crossfire.session.ISession.STATUS_AUTHENTICATED) { %>
 
             <fmt:message key="session.details.authenticated" />
 

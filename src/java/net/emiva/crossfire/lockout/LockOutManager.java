@@ -21,10 +21,10 @@ package net.emiva.crossfire.lockout;
 import java.util.Date;
 import java.util.Map;
 
+import net.emiva.crossfire.core.property.PropertyEventDispatcher;
+import net.emiva.crossfire.core.property.PropertyEventListener;
 import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
-import net.emiva.util.PropertyEventDispatcher;
-import net.emiva.util.PropertyEventListener;
 import net.emiva.util.cache.Cache;
 import net.emiva.util.cache.CacheFactory;
 
@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The LockOutManager manages the LockOutProvider configured for this server, caches knowledge of
+ * The LockOutManager manages the ILockOutProvider configured for this server, caches knowledge of
  * whether accounts are disabled or enabled, and provides a single point of entry for handling
  * locked/disabled accounts.
  *
@@ -54,14 +54,14 @@ public class LockOutManager {
     }
 
     /**
-     * Returns the currently-installed LockOutProvider. <b>Warning:</b> in virtually all
+     * Returns the currently-installed ILockOutProvider. <b>Warning:</b> in virtually all
      * cases the lockout provider should not be used directly. Instead, the appropriate
      * methods in LockOutManager should be called. Direct access to the lockout provider is
      * only provided for special-case logic.
      *
-     * @return the current LockOutProvider.
+     * @return the current ILockOutProvider.
      */
-    public static LockOutProvider getLockOutProvider() {
+    public static ILockOutProvider getLockOutProvider() {
         return LockOutManagerContainer.instance.provider;
     }
 
@@ -76,7 +76,7 @@ public class LockOutManager {
 
     /* Cache of locked out accounts */
     private Cache<String,LockOutFlag> lockOutCache;
-    private LockOutProvider provider;
+    private ILockOutProvider provider;
 
     /**
      * Constructs a LockOutManager, setting up it's cache, propery listener, and setting up the provider.
@@ -125,7 +125,7 @@ public class LockOutManager {
         if (provider == null || !className.equals(provider.getClass().getName())) {
             try {
                 Class c = ClassUtils.forName(className);
-                provider = (LockOutProvider) c.newInstance();
+                provider = (ILockOutProvider) c.newInstance();
             }
             catch (Exception e) {
                 Log.error("Error loading lockout provider: " + className, e);

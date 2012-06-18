@@ -19,7 +19,7 @@
 
 <%@ page import="net.emiva.crossfire.PresenceManager,
                  net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.session.ClientSession,
+                 net.emiva.crossfire.session.IClientSession,
                  net.emiva.crossfire.user.User,
                  net.emiva.crossfire.user.UserManager,
                  net.emiva.util.Globals,
@@ -47,7 +47,7 @@
     // Get the session & address objects
     SessionManager sessionManager = webManager.getSessionManager();
     JID address = new JID(jid);
-    net.emiva.crossfire.session.ClientSession currentSess = sessionManager.getSession(address);
+    net.emiva.crossfire.session.IClientSession currentSess = sessionManager.getSession(address);
     boolean isAnonymous = webManager.getXMPPServer().isLocal(address) &&
             !UserManager.getInstance().isRegisteredUser(address.getNode());
 

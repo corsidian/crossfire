@@ -20,16 +20,17 @@
 
 package net.emiva.crossfire.disco;
 
-import net.emiva.crossfire.IQHandlerInfo;
-import net.emiva.crossfire.SessionManager;
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.cluster.ClusterEventListener;
-import net.emiva.crossfire.cluster.ClusterManager;
-import net.emiva.crossfire.cluster.NodeID;
-import net.emiva.crossfire.handler.IQHandler;
+import net.emiva.crossfire.core.cluster.IClusterEventListener;
+import net.emiva.crossfire.core.cluster.ClusterManager;
+import net.emiva.crossfire.core.cluster.NodeID;
+import net.emiva.crossfire.handler.IqHandler;
+import net.emiva.crossfire.handler.IqHandlerInfo;
 import net.emiva.crossfire.roster.RosterItem;
-import net.emiva.crossfire.session.Session;
+import net.emiva.crossfire.server.XmppServer;
+import net.emiva.crossfire.session.ISession;
+import net.emiva.crossfire.session.SessionManager;
 import net.emiva.crossfire.user.User;
+import net.emiva.crossfire.user.IUserItemsProvider;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.cache.Cache;
@@ -56,14 +57,14 @@ import java.util.concurrent.locks.Lock;
 
 /**
  * IQDiscoItemsHandler is responsible for handling disco#items requests. This class holds a map with
- * the main entities and the associated DiscoItemsProvider. We are considering the host of the
- * recipient JIDs as main entities. It's the DiscoItemsProvider responsibility to provide the items
+ * the main entities and the associated IDiscoItemsProvider. We are considering the host of the
+ * recipient JIDs as main entities. It's the IDiscoItemsProvider responsibility to provide the items
  * associated with the JID's name together with any possible requested node.<p>
  * <p/>
  * For example, let's have in the entities map the following entries: "localhost" and
- * "conference.localhost". Associated with each entry we have different DiscoItemsProvider. Now we
+ * "conference.localhost". Associated with each entry we have different IDiscoItemsProvider. Now we
  * receive a disco#items request for the following JID: "room@conference.localhost" which is a disco
- * request for a MUC room. So IQDiscoItemsHandler will look for the DiscoItemsProvider associated
+ * request for a MUC room. So IQDiscoItemsHandler will look for the IDiscoItemsProvider associated
  * with the JID's host which in this case is "conference.localhost". Once we have located the
  * provider we will delegate to the provider the responsibility to provide the items specific to
  * the JID's name which in this case is "room". Depending on the implementation, the items could be
@@ -76,24 +77,24 @@ import java.util.concurrent.locks.Lock;
  *
  * @author Gaston Dombiak
  */
-public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProvider, ClusterEventListener,
-        UserItemsProvider {
+public class IQDiscoItemsHandler extends IqHandler implements IServerFeaturesProvider, IClusterEventListener,
+        IUserItemsProvider {
 
     public static final String NAMESPACE_DISCO_ITEMS = "http://jabber.org/protocol/disco#items";
-    private Map<String,DiscoItemsProvider> entities = new HashMap<String,DiscoItemsProvider>();
+    private Map<String,IDiscoItemsProvider> entities = new HashMap<String,IDiscoItemsProvider>();
     private Map<String, Element> localServerItems = new HashMap<String, Element>();
     private Cache<String, ClusteredServerItem> serverItems;
-    private Map<String, DiscoItemsProvider> serverNodeProviders = new ConcurrentHashMap<String, DiscoItemsProvider>();
-    private IQHandlerInfo info;
+    private Map<String, IDiscoItemsProvider> serverNodeProviders = new ConcurrentHashMap<String, IDiscoItemsProvider>();
+    private IqHandlerInfo info;
     private IQDiscoInfoHandler infoHandler;
 
     public IQDiscoItemsHandler() {
         super("XMPP Disco Items Handler");
-        info = new IQHandlerInfo("query", NAMESPACE_DISCO_ITEMS);
+        info = new IqHandlerInfo("query", NAMESPACE_DISCO_ITEMS);
     }
 
     @Override
-	public IQHandlerInfo getInfo() {
+	public IqHandlerInfo getInfo() {
         return info;
     }
 
@@ -111,12 +112,12 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
             return reply;
         }
 
-        // Look for a DiscoItemsProvider associated with the requested entity.
+        // Look for a IDiscoItemsProvider associated with the requested entity.
         // We consider the host of the recipient JID of the packet as the entity. It's the 
-        // DiscoItemsProvider responsibility to provide the items associated with the JID's name  
+        // IDiscoItemsProvider responsibility to provide the items associated with the JID's name  
         // together with any possible requested node.
-        DiscoItemsProvider itemsProvider = getProvider(packet.getTo() == null ?
-                XMPPServer.getInstance().getServerInfo().getXMPPDomain() : packet.getTo().getDomain());
+        IDiscoItemsProvider itemsProvider = getProvider(packet.getTo() == null ?
+                XmppServer.getInstance().getServerInfo().getXMPPDomain() : packet.getTo().getDomain());
         if (itemsProvider != null) {
             // Get the JID's name
             String name = packet.getTo() == null ? null : packet.getTo().getNode();
@@ -182,7 +183,7 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
 					queryElement.add(rs.generateSetElementFromResults(rsmResults));
 				} else {
 					// don't apply RSM:
-	                // Add to the reply all the items provided by the DiscoItemsProvider
+	                // Add to the reply all the items provided by the IDiscoItemsProvider
 	                Element item;
 	                while (itemsItr.hasNext()) {
 	                    item = itemsItr.next().getElement();
@@ -192,14 +193,14 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
 	             }
             }
             else {
-                // If the DiscoItemsProvider has no items for the requested name and node 
+                // If the IDiscoItemsProvider has no items for the requested name and node 
                 // then answer a not found error
                 reply.setChildElement(packet.getChildElement().createCopy());
                 reply.setError(PacketError.Condition.item_not_found);
             }
         }
         else {
-            // If we didn't find a DiscoItemsProvider then answer a not found error
+            // If we didn't find a IDiscoItemsProvider then answer a not found error
             reply.setChildElement(packet.getChildElement().createCopy());
             reply.setError(PacketError.Condition.item_not_found);
         }
@@ -208,31 +209,31 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
     }
 
     /**
-     * Returns the DiscoItemsProvider responsible for providing the items related to a given entity
+     * Returns the IDiscoItemsProvider responsible for providing the items related to a given entity
      * or null if none was found.
      *
      * @param name the name of the identity.
-     * @return the DiscoItemsProvider responsible for providing the items related to a given entity
+     * @return the IDiscoItemsProvider responsible for providing the items related to a given entity
      *         or null if none was found.
      */
-    private DiscoItemsProvider getProvider(String name) {
+    private IDiscoItemsProvider getProvider(String name) {
         return entities.get(name);
     }
 
     /**
-     * Sets that a given DiscoItemsProvider will provide the items related to a given entity. This
+     * Sets that a given IDiscoItemsProvider will provide the items related to a given entity. This
      * message must be used when new modules (e.g. MUC) are implemented and need to provide
      * the items related to them.
      *
      * @param name     the name of the entity.
-     * @param provider the DiscoItemsProvider that will provide the entity's items.
+     * @param provider the IDiscoItemsProvider that will provide the entity's items.
      */
-    protected void setProvider(String name, DiscoItemsProvider provider) {
+    protected void setProvider(String name, IDiscoItemsProvider provider) {
         entities.put(name, provider);
     }
 
     /**
-     * Removes the DiscoItemsProvider related to a given entity.
+     * Removes the IDiscoItemsProvider related to a given entity.
      *
      * @param name the name of the entity.
      */
@@ -241,14 +242,14 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
     }
 
     /**
-     * Adds the items provided by the new service that implements the ServerItemsProvider
+     * Adds the items provided by the new service that implements the IServerItemsProvider
      * interface. This information will be used whenever a disco for items is made against
      * the server (i.e. the packet's target is the server).
      * Example of item is: &lt;item jid='conference.localhost' name='Public chatrooms'/&gt;
      *
-     * @param provider the ServerItemsProvider that provides new server items.
+     * @param provider the IServerItemsProvider that provides new server items.
      */
-    public void addServerItemsProvider(ServerItemsProvider provider) {
+    public void addServerItemsProvider(IServerItemsProvider provider) {
         DiscoServerItem discoItem;
         Iterator<DiscoServerItem> items = provider.getItems();
         if (items == null) {
@@ -272,7 +273,7 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
      *
      * @param provider The provider that is being removed.
      */
-    public void removeServerItemsProvider(ServerItemsProvider provider) {
+    public void removeServerItemsProvider(IServerItemsProvider provider) {
         DiscoServerItem discoItem;
         Iterator<DiscoServerItem> items = provider.getItems();
         if (items == null) {
@@ -293,20 +294,20 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
     }
 
     /**
-     * Sets the DiscoItemsProvider to use when a disco#items packet is sent to the server itself
+     * Sets the IDiscoItemsProvider to use when a disco#items packet is sent to the server itself
      * and the specified node. For instance, if node matches "http://jabber.org/protocol/offline"
-     * then a special DiscoItemsProvider should be use to return information about offline messages.
+     * then a special IDiscoItemsProvider should be use to return information about offline messages.
      *
      * @param node the node that the provider will handle.
-     * @param provider the DiscoItemsProvider that will handle disco#items packets sent with the
+     * @param provider the IDiscoItemsProvider that will handle disco#items packets sent with the
      *        specified node.
      */
-    public void setServerNodeInfoProvider(String node, DiscoItemsProvider provider) {
+    public void setServerNodeInfoProvider(String node, IDiscoItemsProvider provider) {
         serverNodeProviders.put(node, provider);
     }
 
     /**
-     * Removes the DiscoItemsProvider to use when a disco#items packet is sent to the server itself
+     * Removes the IDiscoItemsProvider to use when a disco#items packet is sent to the server itself
      * and the specified node.
      *
      * @param node the node that the provider was handling.
@@ -349,7 +350,7 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
                 element.addAttribute("name", name);
                 item.element = element;
             }
-            if (item.nodes.add(XMPPServer.getInstance().getNodeID())) {
+            if (item.nodes.add(XmppServer.getInstance().getNodeID())) {
                 // Update the cache with latest info
                 serverItems.put(jid, item);
             }
@@ -375,7 +376,7 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
         try {
             lock.lock();
             ClusteredServerItem item = serverItems.get(jid);
-            if (item != null && item.nodes.remove(XMPPServer.getInstance().getNodeID())) {
+            if (item != null && item.nodes.remove(XmppServer.getInstance().getNodeID())) {
                 // Update the cache with latest info
                 if (item.nodes.isEmpty()) {
                     serverItems.remove(jid);
@@ -393,10 +394,10 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
     }
 
     @Override
-	public void initialize(XMPPServer server) {
+	public void initialize(XmppServer server) {
         super.initialize(server);
         serverItems = CacheFactory.createCache("Disco Server Items");
-        // Track the implementors of ServerItemsProvider so that we can collect the items
+        // Track the implementors of IServerItemsProvider so that we can collect the items
         // provided by the server
         infoHandler = server.getIQDiscoInfoHandler();
         setProvider(server.getServerInfo().getXMPPDomain(), getServerItemsProvider());
@@ -407,7 +408,7 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
     @Override
 	public void start() throws IllegalStateException {
         super.start();
-        for (ServerItemsProvider provider : XMPPServer.getInstance().getServerItemsProviders()) {
+        for (IServerItemsProvider provider : XmppServer.getInstance().getServerItemsProviders()) {
             addServerItemsProvider(provider);
         }
     }
@@ -429,7 +430,7 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
     }
 
     public void leftCluster() {
-        if (!XMPPServer.getInstance().isShuttingDown()) {
+        if (!XmppServer.getInstance().isShuttingDown()) {
             restoreCacheContent();
         }
     }
@@ -476,7 +477,7 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
                     item = new ClusteredServerItem();
                     item.element = element;
                 }
-                if (item.nodes.add(XMPPServer.getInstance().getNodeID())) {
+                if (item.nodes.add(XmppServer.getInstance().getNodeID())) {
                     // Update the cache with latest info
                     serverItems.put(jid, item);
                 }
@@ -487,8 +488,8 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
         }
     }
 
-    private DiscoItemsProvider getServerItemsProvider() {
-        return new DiscoItemsProvider() {
+    private IDiscoItemsProvider getServerItemsProvider() {
+        return new IDiscoItemsProvider() {
             public Iterator<DiscoItem> getItems(String name, String node, JID senderJID) {
                 if (node != null) {
                     // Check if there is a provider for the requested node
@@ -507,17 +508,17 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
                 else {
                     // If addressed to user@domain, add items from UserItemsProviders to
                     // the reply.
-                    List<UserItemsProvider> itemsProviders = XMPPServer.getInstance().getUserItemsProviders();
+                    List<IUserItemsProvider> itemsProviders = XmppServer.getInstance().getUserItemsProviders();
                     if (itemsProviders.isEmpty()) {
                         // If we didn't find any UserItemsProviders, then answer a not found error
                         return null;
                     }
                     List<DiscoItem> answer = new ArrayList<DiscoItem>();
-                    for (UserItemsProvider itemsProvider : itemsProviders) {
+                    for (IUserItemsProvider itemsProvider : itemsProviders) {
                         // Check if we have items associated with the requested name
                         Iterator<Element> itemsItr = itemsProvider.getUserItems(name, senderJID);
                         if (itemsItr != null) {
-                            // Add to the reply all the items provided by the UserItemsProvider
+                            // Add to the reply all the items provided by the IUserItemsProvider
                             Element item;
                             while (itemsItr.hasNext()) {
                                 item = itemsItr.next();
@@ -562,7 +563,7 @@ public class IQDiscoItemsHandler extends IQHandler implements ServerFeaturesProv
             // answer the user's "available resources"
             if (item.getSubStatus() == RosterItem.SUB_FROM ||
                     item.getSubStatus() == RosterItem.SUB_BOTH) {
-                for (Session session : SessionManager.getInstance().getSessions(name)) {
+                for (ISession session : SessionManager.getInstance().getSessions(name)) {
                     Element element = DocumentHelper.createElement("item");
                     element.addAttribute("jid", session.getAddress().toString());
                     answer.add(element);

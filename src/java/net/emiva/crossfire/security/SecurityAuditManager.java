@@ -22,16 +22,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import net.emiva.crossfire.core.property.PropertyEventDispatcher;
+import net.emiva.crossfire.core.property.PropertyEventListener;
 import net.emiva.util.Globals;
 import net.emiva.util.ClassUtils;
-import net.emiva.util.PropertyEventDispatcher;
-import net.emiva.util.PropertyEventListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The SecurityAuditManager manages the SecurityAuditProvider configured for this server, and provides
+ * The SecurityAuditManager manages the ISecurityAuditProvider configured for this server, and provides
  * a proper conduit for making security log entries and looking them up.  Ideally there is no reason
  * for outside classes to interact directly with a provider.
  *
@@ -53,14 +53,14 @@ public class SecurityAuditManager {
     }
 
     /**
-     * Returns the currently-installed SecurityAuditProvider. <b>Warning:</b> in virtually all
+     * Returns the currently-installed ISecurityAuditProvider. <b>Warning:</b> in virtually all
      * cases the security audit provider should not be used directly. Instead, the appropriate
      * methods in SecurityAuditManager should be called. Direct access to the security audit
      * provider is only provided for special-case logic.
      *
-     * @return the current SecurityAuditProvider.
+     * @return the current ISecurityAuditProvider.
      */
-    public static SecurityAuditProvider getSecurityAuditProvider() {
+    public static ISecurityAuditProvider getSecurityAuditProvider() {
         return SecurityAuditManagerContainer.instance.provider;
     }
 
@@ -73,7 +73,7 @@ public class SecurityAuditManager {
         return SecurityAuditManagerContainer.instance;
     }
 
-    private SecurityAuditProvider provider;
+    private ISecurityAuditProvider provider;
 
     /**
      * Constructs a SecurityAuditManager, setting up the provider, and a listener.
@@ -119,7 +119,7 @@ public class SecurityAuditManager {
         if (provider == null || !className.equals(provider.getClass().getName())) {
             try {
                 Class c = ClassUtils.forName(className);
-                provider = (SecurityAuditProvider) c.newInstance();
+                provider = (ISecurityAuditProvider) c.newInstance();
             }
             catch (Exception e) {
                 Log.error("Error loading security audit provider: " + className, e);

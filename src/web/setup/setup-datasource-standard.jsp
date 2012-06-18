@@ -11,7 +11,7 @@
                  net.emiva.util.Globals,
                  net.emiva.util.Log,
                  net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.XMPPServer,
+                 net.emiva.crossfire.XmppServer,
                  java.io.File,
                  java.lang.Double,
                  java.lang.Exception,

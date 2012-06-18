@@ -20,7 +20,7 @@
 
 package net.emiva.crossfire.user;
 
-import net.emiva.crossfire.XMPPServer;
+import net.emiva.crossfire.server.XmppServer;
 
 import org.xmpp.packet.JID;
 
@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * entities (i.e. users) the {@link User} name is used. For remote entities the following logic
  * is used:
  * <ol>
- * <li>Check if a {@link UserNameProvider} is registered for the entity's domain. If a provider
+ * <li>Check if a {@link IUserNameProvider} is registered for the entity's domain. If a provider
  * was found then use it to get the entity's name</li>
  * <li>If no provider was found then retrieve the vCard of the entity and return the name as
  * defined in the vCard. <i>This is not implemented yet.</i></li>
@@ -43,30 +43,30 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class UserNameManager {
 
-    private static XMPPServer server = XMPPServer.getInstance();
+    private static XmppServer server = XmppServer.getInstance();
     /**
-     * Map that keeps the UserNameProvider to use for each specific domain.
+     * Map that keeps the IUserNameProvider to use for each specific domain.
      */
-    private static Map<String, UserNameProvider> providersByDomain =
-            new ConcurrentHashMap<String, UserNameProvider>();
+    private static Map<String, IUserNameProvider> providersByDomain =
+            new ConcurrentHashMap<String, IUserNameProvider>();
 
     private UserNameManager() {
     }
 
     /**
-     * Adds the specified {@link UserNameProvider} as the provider of users of the specified domain.
+     * Adds the specified {@link IUserNameProvider} as the provider of users of the specified domain.
      *
-     * @param domain   the domain hosted by the UserNameProvider.
+     * @param domain   the domain hosted by the IUserNameProvider.
      * @param provider the provider that will provide the name of users in the specified domain.
      */
-    public static void addUserNameProvider(String domain, UserNameProvider provider) {
+    public static void addUserNameProvider(String domain, IUserNameProvider provider) {
         providersByDomain.put(domain, provider);
     }
 
     /**
-     * Removes any {@link UserNameProvider} that was associated with the specified domain.
+     * Removes any {@link IUserNameProvider} that was associated with the specified domain.
      *
-     * @param domain the domain hosted by a UserNameProvider.
+     * @param domain the domain hosted by a IUserNameProvider.
      */
     public static void removeUserNameProvider(String domain) {
         providersByDomain.remove(domain);
@@ -75,7 +75,7 @@ public class UserNameManager {
     /**
      * Returns the name of the XMPP entity. If the entity is a local user then the User's name
      * will be returned. However, if the user is not a local user then check if there exists a
-     * UserNameProvider that provides name for the specified domain. If none was found then
+     * IUserNameProvider that provides name for the specified domain. If none was found then
      * the vCard of the entity might be requested and if none was found then a string
      * representation of the entity's JID will be returned.
      *
@@ -91,7 +91,7 @@ public class UserNameManager {
     /**
      * Returns the name of the XMPP entity. If the entity is a local user then the User's name
      * will be returned. However, if the user is not a local user then check if there exists a
-     * UserNameProvider that provides name for the specified domain. If none was found then
+     * IUserNameProvider that provides name for the specified domain. If none was found then
      * the vCard of the entity might be requested and if none was found then a string
      * representation of the entity's JID will be returned.
      *
@@ -107,7 +107,7 @@ public class UserNameManager {
             User localUser = UserManager.getInstance().getUser(entity.getNode());
             return !localUser.isNameVisible() || "".equals(localUser.getName()) ? entity.getNode() : localUser.getName();
         } else {
-            UserNameProvider provider = providersByDomain.get(entity.getDomain());
+            IUserNameProvider provider = providersByDomain.get(entity.getDomain());
             if (provider != null) {
                 return provider.getUserName(entity);
             }

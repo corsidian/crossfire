@@ -39,8 +39,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.event.GroupEventDispatcher;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.util.cache.CacheSizes;
 import net.emiva.util.cache.Cacheable;
@@ -54,7 +53,7 @@ import org.xmpp.packet.JID;
 /**
  * Groups organize users into a single entity for easier management.<p>
  *
- * The actual group implementation is controlled by the {@link GroupProvider}, which
+ * The actual group implementation is controlled by the {@link IGroupProvider}, which
  * includes things like the group name, the members, and adminstrators. Each group
  * also has properties, which are always stored in the crossfire database.
  *
@@ -78,7 +77,7 @@ public class Group implements Cacheable, Externalizable {
         "SELECT groupName FROM ofGroupProp WHERE name='sharedRoster.showInRoster' " +
         "AND propValue IS NOT NULL AND propValue <> 'nobody'";
 
-    private transient GroupProvider provider;
+    private transient IGroupProvider provider;
     private transient GroupManager groupManager;
 
     private String name;
@@ -122,7 +121,7 @@ public class Group implements Cacheable, Externalizable {
 
     /**
      * Constructs a new group. Note: this constructor is intended for implementors of the
-     * {@link GroupProvider} interface. To create a new group, use the
+     * {@link IGroupProvider} interface. To create a new group, use the
      * {@link GroupManager#createGroup(String)} method. 
      *
      * @param name the name.
@@ -143,7 +142,7 @@ public class Group implements Cacheable, Externalizable {
 
     /**
      * Constructs a new group. Note: this constructor is intended for implementors of the
-     * {@link GroupProvider} interface. To create a new group, use the
+     * {@link IGroupProvider} interface. To create a new group, use the
      * {@link GroupManager#createGroup(String)} method.
      *
      * @param name the name.
@@ -342,7 +341,7 @@ public class Group implements Cacheable, Externalizable {
      */
     public boolean isUser(String username) {
         if  (username != null) {
-            return isUser(XMPPServer.getInstance().createJID(username, null, true));
+            return isUser(XmppServer.getInstance().createJID(username, null, true));
         }
         else {
             return false;
@@ -387,7 +386,7 @@ public class Group implements Cacheable, Externalizable {
         }
     }
     /**
-     * Collection implementation that notifies the GroupProvider of any
+     * Collection implementation that notifies the IGroupProvider of any
      * changes to the collection.
      */
     private class MemberCollection extends AbstractCollection {

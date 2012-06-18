@@ -45,13 +45,13 @@ import org.slf4j.LoggerFactory;
  * or rows that a query should return.
  *
  * @author EMIVA Community
- * @see ConnectionProvider
+ * @see IConnectionProvider
  */
 public class DbConnectionManager {
 
 	private static final Logger Log = LoggerFactory.getLogger(DbConnectionManager.class);
 
-    private static ConnectionProvider connectionProvider;
+    private static IConnectionProvider connectionProvider;
     private static final Object providerLock = new Object();
 
     // True if connection profiling is turned on. Always false by default.
@@ -98,7 +98,7 @@ public class DbConnectionManager {
                         // Attempt to load the class.
                         try {
                             Class conClass = ClassUtils.forName(className);
-                            setConnectionProvider((ConnectionProvider)conClass.newInstance());
+                            setConnectionProvider((IConnectionProvider)conClass.newInstance());
                         }
                         catch (Exception e) {
                             Log.warn("Failed to create the " +
@@ -144,13 +144,13 @@ public class DbConnectionManager {
             }
             retryCnt++;
         } while (retryCnt <= retryMax);
-        throw new SQLException("ConnectionManager.getConnection() " +
+        throw new SQLException("IConnectionManager.getConnection() " +
                 "failed to obtain a connection after " + retryCnt +" retries. " +
                 "The exception from the last attempt is as follows: "+lastException);
     }
 
     /**
-     * Returns a Connection from the currently active connection provider that
+     * Returns a IConnection from the currently active connection provider that
      * is ready to participate in transactions (auto commit is set to false).
      *
      * @return a connection with transactions enabled.
@@ -165,7 +165,7 @@ public class DbConnectionManager {
     }
 
     /**
-     * Closes a PreparedStatement and Connection. However, it first rolls back the transaction or
+     * Closes a PreparedStatement and IConnection. However, it first rolls back the transaction or
      * commits it depending on the value of <code>abortTransaction</code>.
      *
      * @param pstmt the prepared statement to close.
@@ -180,7 +180,7 @@ public class DbConnectionManager {
     }
 
     /**
-     * Closes a Connection. However, it first rolls back the transaction or
+     * Closes a IConnection. However, it first rolls back the transaction or
      * commits it depending on the value of <code>abortTransaction</code>.
      *
      * @param con the connection to close.
@@ -216,7 +216,7 @@ public class DbConnectionManager {
      * your database logic, as in the following example:
      *
      * <pre>
-     *  public void doSomething(Connection con) {
+     *  public void doSomething(IConnection con) {
      *      ResultSet rs = null;
      *      PreparedStatement pstmt = null;
      *      try {
@@ -228,8 +228,8 @@ public class DbConnectionManager {
      *          Log.error(sqle.getMessage(), sqle);
      *      }
      *      finally {
-     *          ConnectionManager.closeResultSet(rs);
-     *          ConnectionManager.closePreparedStatement(pstmt);
+     *          IConnectionManager.closeResultSet(rs);
+     *          IConnectionManager.closePreparedStatement(pstmt);
      *      }
      * } </pre>
      *
@@ -251,7 +251,7 @@ public class DbConnectionManager {
      * your database logic, as in the following example:
      *
      * <pre>
-     *  public void doSomething(Connection con) {
+     *  public void doSomething(IConnection con) {
      *      PreparedStatement pstmt = null;
      *      try {
      *          pstmt = con.prepareStatement("select * from blah");
@@ -261,7 +261,7 @@ public class DbConnectionManager {
      *          Log.error(sqle.getMessage(), sqle);
      *      }
      *      finally {
-     *          ConnectionManager.closeStatement(pstmt);
+     *          IConnectionManager.closeStatement(pstmt);
      *      }
      * } </pre>
      *
@@ -283,7 +283,7 @@ public class DbConnectionManager {
      * your database logic, as in the following example:
      *
      * <pre>
-     *  public void doSomething(Connection con) {
+     *  public void doSomething(IConnection con) {
      *      PreparedStatement pstmt = null;
      *      ResultSet rs = null;
      *      try {
@@ -295,7 +295,7 @@ public class DbConnectionManager {
      *          Log.error(sqle.getMessage(), sqle);
      *      }
      *      finally {
-     *          ConnectionManager.closeStatement(rs, pstmt);
+     *          IConnectionManager.closeStatement(rs, pstmt);
      *      }
      * } </pre>
      *
@@ -312,13 +312,13 @@ public class DbConnectionManager {
      * Example:
      *
      * <pre>
-     *  public void doSomething(Connection con) {
+     *  public void doSomething(IConnection con) {
      *      PreparedStatement pstmt = null;
      *      try {
      *          pstmt = con.prepareStatement("select * from dual");
      *          pstmt.executeUpdate();
      *          ...
-     *          <b>ConnectionManager.fastcloseStmt(pstmt);</b>
+     *          <b>IConnectionManager.fastcloseStmt(pstmt);</b>
      *          pstmt = con.prepareStatement("select * from blah");
      *          ...
      *      }
@@ -340,13 +340,13 @@ public class DbConnectionManager {
      * Example:
      *
      * <pre>
-     *  public void doSomething(Connection con) {
+     *  public void doSomething(IConnection con) {
      *      PreparedStatement pstmt = null;
      *      try {
      *          pstmt = con.prepareStatement("select * from blah");
      *          rs = pstmt.executeQuery();
      *          ...
-     *          ConnectionManager.fastcloseStmt(rs, pstmt);
+     *          IConnectionManager.fastcloseStmt(rs, pstmt);
      *          pstmt = con.prepareStatement("select * from blah");
      *          ...
      *      }
@@ -368,11 +368,11 @@ public class DbConnectionManager {
      * your database logic, as in the following example:
      *
      * <pre>
-     * Connection con = null;
+     * IConnection con = null;
      * PrepatedStatment pstmt = null;
      * ResultSet rs = null;
      * try {
-     *     con = ConnectionManager.getConnection();
+     *     con = IConnectionManager.getConnection();
      *     pstmt = con.prepareStatement("select * from blah");
      *     rs = psmt.executeQuery();
      *     ....
@@ -381,7 +381,7 @@ public class DbConnectionManager {
      *     Log.error(sqle.getMessage(), sqle);
      * }
      * finally {
-     *     ConnectionManager.closeConnection(rs, pstmt, con);
+     *     IConnectionManager.closeConnection(rs, pstmt, con);
      * }</pre>
      *
      * @param rs the result set.
@@ -400,10 +400,10 @@ public class DbConnectionManager {
      * your database logic, as in the following example:
      * <p/>
      * <pre>
-     * Connection con = null;
+     * IConnection con = null;
      * PrepatedStatment pstmt = null;
      * try {
-     *     con = ConnectionManager.getConnection();
+     *     con = IConnectionManager.getConnection();
      *     pstmt = con.prepareStatement("select * from blah");
      *     ....
      * }
@@ -429,9 +429,9 @@ public class DbConnectionManager {
      * in the following example:
      * <p/>
      * <pre>
-     * Connection con = null;
+     * IConnection con = null;
      * try {
-     *     con = ConnectionManager.getConnection();
+     *     con = IConnectionManager.getConnection();
      *     ....
      * }
      * catch (SQLException sqle) {
@@ -589,7 +589,7 @@ public class DbConnectionManager {
      *
      * @return the connection provider.
      */
-    public static ConnectionProvider getConnectionProvider() {
+    public static IConnectionProvider getConnectionProvider() {
         return connectionProvider;
     }
 
@@ -599,10 +599,10 @@ public class DbConnectionManager {
      * not</b> be started before being passed to the connection manager
      * because the manager will call the start() method automatically.
      *
-     * @param provider the ConnectionProvider that the manager should obtain
+     * @param provider the IConnectionProvider that the manager should obtain
      *                 connections from.
      */
-    public static void setConnectionProvider(ConnectionProvider provider) {
+    public static void setConnectionProvider(IConnectionProvider provider) {
         synchronized (providerLock) {
             if (connectionProvider != null) {
                 connectionProvider.destroy();
@@ -633,7 +633,7 @@ public class DbConnectionManager {
     /**
      * Destroys the currennt connection provider. Future calls to
      * {@link #getConnectionProvider()} will return <tt>null</tt> until a new
-     * ConnectionProvider is set, or one is automatically loaded by a call to
+     * IConnectionProvider is set, or one is automatically loaded by a call to
      * {@link #getConnection()}.
      */
     public static void destroyConnectionProvider() {

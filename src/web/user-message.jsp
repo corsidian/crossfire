@@ -20,7 +20,7 @@
 
 <%@ page import="net.emiva.util.ParamUtils,
                  net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.session.ClientSession,
+                 net.emiva.crossfire.session.IClientSession,
                  net.emiva.crossfire.user.User,
                  org.xmpp.packet.JID,
                  java.net.URLEncoder,

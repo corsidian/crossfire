@@ -24,25 +24,25 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
+import net.emiva.crossfire.core.property.PropertyEventDispatcher;
+import net.emiva.crossfire.core.property.PropertyEventListener;
 import net.emiva.crossfire.lockout.LockOutManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.Globals;
 import net.emiva.util.Blowfish;
 import net.emiva.util.ClassUtils;
 import net.emiva.util.LocaleUtils;
-import net.emiva.util.PropertyEventDispatcher;
-import net.emiva.util.PropertyEventListener;
 import net.emiva.util.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Pluggable authentication service. Users of crossfire that wish to change the AuthProvider
- * implementation used to authenticate users can set the <code>AuthProvider.className</code>
+ * Pluggable authentication service. Users of crossfire that wish to change the IAuthProvider
+ * implementation used to authenticate users can set the <code>IAuthProvider.className</code>
  * system property. For example, if you have configured crossfire to use LDAP for user information,
  * you'd want to send a custom implementation of AuthFactory to make LDAP auth queries.
- * After changing the <code>AuthProvider.className</code> system property, you must restart your
+ * After changing the <code>IAuthProvider.className</code> system property, you must restart your
  * application server.
  *
  * @author Matt Tucker
@@ -51,7 +51,7 @@ public class AuthFactory {
 
 	private static final Logger Log = LoggerFactory.getLogger(AuthFactory.class);
 
-    private static AuthProvider authProvider = null;
+    private static IAuthProvider authProvider = null;
     private static MessageDigest digest;
     private static final Object DIGEST_LOCK = new Object();
     private static Blowfish cipher = null;
@@ -68,29 +68,11 @@ public class AuthFactory {
         initProvider();
 
         // Detect when a new auth provider class is set 
-        PropertyEventListener propListener = new PropertyEventListener() {
-            public void propertySet(String property, Map params) {
-                if ("provider.auth.className".equals(property)) {
-                    initProvider();
-                }
-            }
-
-            public void propertyDeleted(String property, Map params) {
-                //Ignore
-            }
-
-            public void xmlPropertySet(String property, Map params) {
-                //Ignore
-            }
-
-            public void xmlPropertyDeleted(String property, Map params) {
-                //Ignore
-            }
-        };
+        PropertyEventListener propListener = new AuthFactoryPropertyEventListener();
         PropertyEventDispatcher.addListener(propListener);
     }
 
-    private static void initProvider() {
+    protected static void initProvider() {
         // Convert XML based provider setup to Database based
         Globals.migrateProperty("provider.auth.className");
 
@@ -100,7 +82,7 @@ public class AuthFactory {
         if (authProvider == null || !className.equals(authProvider.getClass().getName())) {
             try {
                 Class c = ClassUtils.forName(className);
-                authProvider = (AuthProvider)c.newInstance();
+                authProvider = (IAuthProvider)c.newInstance();
             }
             catch (Exception e) {
                 Log.error("Error loading auth provider: " + className, e);
@@ -110,19 +92,19 @@ public class AuthFactory {
     }
 
     /**
-     * Returns the currently-installed AuthProvider. <b>Warning:</b> in virtually all
+     * Returns the currently-installed IAuthProvider. <b>Warning:</b> in virtually all
      * cases the auth provider should not be used directly. Instead, the appropriate
      * methods in AuthFactory should be called. Direct access to the auth provider is
      * only provided for special-case logic.
      *
-     * @return the current UserProvider.
+     * @return the current IUserProvider.
      */
-    public static AuthProvider getAuthProvider() {
+    public static IAuthProvider getAuthProvider() {
         return authProvider;
     }
 
     /**
-     * Returns true if the currently installed {@link AuthProvider} supports authentication
+     * Returns true if the currently installed {@link IAuthProvider} supports authentication
      * using plain-text passwords according to JEP-0078. Plain-text authentication is
      * not secure and should generally only be used over a TLS/SSL connection.
      *
@@ -133,7 +115,7 @@ public class AuthFactory {
     }
 
     /**
-     * Returns true if the currently installed {@link AuthProvider} supports
+     * Returns true if the currently installed {@link IAuthProvider} supports
      * digest authentication according to JEP-0078.
      *
      * @return true if digest authentication is supported.

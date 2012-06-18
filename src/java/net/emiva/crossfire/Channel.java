@@ -24,9 +24,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import net.emiva.crossfire.session.Session;
-import net.emiva.util.LocaleUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.Packet;
@@ -34,7 +31,7 @@ import org.xmpp.packet.Packet;
 /**
  * A channel provides a mechanism to queue work units for processing. Each work unit is
  * encapsulated as a ChannelMessage, and processing of each message is performed by a
- * ChannelHandler.<p>
+ * IChannelHandler.<p>
  *
  * As a request is handled by the system, it will travel through a sequence of channels.
  * This architecture has a number of advantages:
@@ -52,10 +49,10 @@ import org.xmpp.packet.Packet;
  */
 public class Channel<T extends Packet> {
 
-	private static final Logger Log = LoggerFactory.getLogger(Channel.class);
+	private static final Logger logger = LoggerFactory.getLogger(Channel.class);
 
     private String name;
-    private ChannelHandler channelHandler;
+    private IChannelHandler<T> channelHandler;
 
     ThreadPoolExecutor executor;
 
@@ -65,11 +62,11 @@ public class Channel<T extends Packet> {
      * @param name the name of the channel.
      * @param channelHandler the handler for this channel.
      */
-    public Channel(String name, ChannelHandler<T> channelHandler) {
+    public Channel(String name, IChannelHandler<T> channelHandler) {
         this.name = name;
         this.channelHandler = channelHandler;
 
-        executor = new ThreadPoolExecutor(1, 8, 15, TimeUnit.SECONDS, new LinkedBlockingQueue());
+        executor = new ThreadPoolExecutor(1, 8, 15, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
     }
 
     /**
@@ -82,31 +79,14 @@ public class Channel<T extends Packet> {
     }
 
     /**
-     * Enqueus a message to be handled by this channel. After the ChannelHandler is done
+     * Enqueus a message to be handled by this channel. After the IChannelHandler is done
      * processing the message, it will be sent to the next channel. Messages with a higher
      * priority will be handled first.
      *
      * @param packet an XMPP packet to add to the channel for processing.
      */
     public void add(final T packet) {
-        Runnable r = new Runnable() {
-            public void run() {
-                try {
-                    channelHandler.process(packet);
-                }
-                catch (Exception e) {
-                    Log.error(LocaleUtils.getLocalizedString("admin.error"), e);
-                   
-                        try {
-                            Session session = SessionManager.getInstance().getSession(packet.getFrom());
-                            session.close();
-                        }
-                        catch (Exception e1) {
-                           Log.error(e1.getMessage(), e1);
-                        }
-                }
-            }
-        };
+        Runnable r = new ChannelProcessTask<T>(channelHandler, packet);
         executor.execute(r);
     }
 

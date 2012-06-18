@@ -4,7 +4,7 @@
   -	$Date: 2005-05-26 23:00:40 -0700 (Thu, 26 May 2005) $
 --%>
 
-<%@ page import="net.emiva.crossfire.XMPPServer,
+<%@ page import="net.emiva.crossfire.XmppServer,
                  net.emiva.crossfire.auth.AuthFactory,
                  net.emiva.crossfire.user.User,
                  net.emiva.crossfire.user.UserManager,

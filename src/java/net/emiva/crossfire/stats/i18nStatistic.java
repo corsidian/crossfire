@@ -27,17 +27,17 @@ import net.emiva.util.LocaleUtils;
  *
  * @author Alexander Wenckus
  */
-public abstract class i18nStatistic implements Statistic {
+public abstract class i18nStatistic implements IStatistic {
 
     private String resourceKey;
     private String pluginName;
     private Type statisticType;
 
-    public i18nStatistic(String resourceKey, Statistic.Type statisticType) {
+    public i18nStatistic(String resourceKey, IStatistic.Type statisticType) {
         this(resourceKey, null, statisticType);
     }
 
-    public i18nStatistic(String resourceKey, String pluginName, Statistic.Type statisticType) {
+    public i18nStatistic(String resourceKey, String pluginName, IStatistic.Type statisticType) {
         this.resourceKey = resourceKey;
         this.pluginName = pluginName;
         this.statisticType = statisticType;

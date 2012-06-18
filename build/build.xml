@@ -407,7 +407,7 @@
             <fileset dir="${lib.build.installer.dir}/images" includes="**/*.png"/>
             <manifest>
                 <attribute name="Main-Class"
-                           value="net.emiva.crossfire.starter.ServerStarter"/>
+                           value="net.emiva.crossfire.core.starter.ServerStarter"/>
                 <attribute name="Built-By" value="EMIVA (www.emiva.net)"/>
             </manifest>
         </jar>
@@ -1453,7 +1453,7 @@
                                 validateXml="false"
                                 uriroot="${plugin.dev.dest.dir}/@{plugin}/target/web"
                                 outputDir="${plugin.dev.dest.dir}/@{plugin}/target/jspc/java"
-                                package="net.emiva.crossfire.plugin.@{plugin}"
+                                package="net.emiva.crossfire.core.plugin.@{plugin}"
                                 webXml="${plugin.dev.dest.dir}/@{plugin}/target/jspc/web.xml"
                                 />
 

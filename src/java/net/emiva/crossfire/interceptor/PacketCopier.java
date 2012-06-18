@@ -30,13 +30,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import net.emiva.crossfire.RoutingTable;
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.component.ComponentEventListener;
-import net.emiva.crossfire.component.InternalComponentManager;
-import net.emiva.crossfire.session.Session;
-import net.emiva.util.GlobalConstants;
+import net.emiva.crossfire.route.IRoutingTable;
+import net.emiva.crossfire.server.XmppServer;
+import net.emiva.crossfire.session.ISession;
 import net.emiva.util.FastDateFormat;
+import net.emiva.util.GlobalConstants;
 import net.emiva.util.LocaleUtils;
 
 import org.dom4j.Element;
@@ -57,7 +55,7 @@ import org.xmpp.packet.Presence;
  *
  * @author Gaston Dombiak
  */
-public class PacketCopier implements PacketInterceptor, ComponentEventListener {
+public class PacketCopier implements IPacketInterceptor {
 
 	private static final Logger Log = LoggerFactory.getLogger(PacketCopier.class);
 
@@ -67,7 +65,7 @@ public class PacketCopier implements PacketInterceptor, ComponentEventListener {
 
     private Map<String, Subscription> subscribers = new ConcurrentHashMap<String, Subscription>();
     private String serverName;
-    private RoutingTable routingTable;
+    private IRoutingTable routingTable;
 
     /**
      * Timer to save queued logs to the XML file.
@@ -93,8 +91,7 @@ public class PacketCopier implements PacketInterceptor, ComponentEventListener {
     private PacketCopier() {
         // Add the new instance as a listener of component events. We need to react when
         // a component is no longer valid
-        InternalComponentManager.getInstance().addListener(this);
-        XMPPServer server = XMPPServer.getInstance();
+        XmppServer server = XmppServer.getInstance();
         serverName = server.getServerInfo().getXMPPDomain();
         routingTable = server.getRoutingTable();
 
@@ -131,7 +128,7 @@ public class PacketCopier implements PacketInterceptor, ComponentEventListener {
         subscribers.remove(componentJID.toString());
     }
 
-    public void interceptPacket(Packet packet, Session session, boolean incoming, boolean processed)
+    public void interceptPacket(Packet packet, ISession session, boolean incoming, boolean processed)
             throws PacketRejectedException {
         // Queue intercepted packet only if there are subscribers interested
         if (!subscribers.isEmpty()) {

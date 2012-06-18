@@ -18,7 +18,7 @@
 --%>
 
 <%@ page import="net.emiva.util.StringUtils,
-                 net.emiva.admin.AdminConsole,
+                 net.emiva.plugin.admin.AdminConsole,
                  net.emiva.util.LocaleUtils"
     errorPage="../error.jsp"
 %><%@ page import="org.xmpp.packet.JID"%>
@@ -28,7 +28,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
 
-<jsp:useBean id="info" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="info" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
 
 <jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
 <% webManager.init(request, response, session, application, out); %>

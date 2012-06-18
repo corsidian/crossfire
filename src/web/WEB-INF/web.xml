@@ -20,7 +20,7 @@
 
     <filter>
         <filter-name>AuthCheck</filter-name>
-        <filter-class>net.emiva.admin.AuthCheckFilter</filter-class>
+        <filter-class>net.emiva.plugin.admin.AuthCheckFilter</filter-class>
         <init-param>
             <param-name>excludes</param-name>
             <param-value>
@@ -31,7 +31,7 @@
 
     <filter>
         <filter-name>PluginFilter</filter-name>
-        <filter-class>net.emiva.admin.PluginFilter</filter-class>
+        <filter-class>net.emiva.plugin.admin.PluginFilter</filter-class>
     </filter>
 
     <filter>
@@ -91,12 +91,12 @@
 
 
     <listener>
-        <listener-class>net.emiva.crossfire.XMPPContextListener</listener-class>
+        <listener-class>net.emiva.crossfire.XmppContextListener</listener-class>
     </listener>
 
     <servlet>
         <servlet-name>PluginServlet</servlet-name>
-        <servlet-class>net.emiva.crossfire.container.PluginServlet</servlet-class>
+        <servlet-class>net.emiva.crossfire.core.container.PluginServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -113,7 +113,7 @@
 
     <servlet>
         <servlet-name>PluginIconServlet</servlet-name>
-        <servlet-class>net.emiva.crossfire.container.PluginIconServlet</servlet-class>
+        <servlet-class>net.emiva.crossfire.core.container.PluginIconServlet</servlet-class>
     </servlet>
 
     <!--<servlet>

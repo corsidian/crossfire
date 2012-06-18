@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.emiva.crossfire.XMPPServer;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.database.DbConnectionManager;
 import net.emiva.database.SequenceManager;
 import net.emiva.util.GlobalConstants;
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Henninger
  */
-public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
+public class DefaultSecurityAuditProvider implements ISecurityAuditProvider {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultSecurityAuditProvider.class);
 
@@ -62,7 +62,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
 
     /**
      * The default provider logs events into a ofSecurityAuditLog table in the database.
-     * @see net.emiva.crossfire.security.SecurityAuditProvider#logEvent(String, String, String)
+     * @see net.emiva.crossfire.security.ISecurityAuditProvider#logEvent(String, String, String)
      */
     public void logEvent(String username, String summary, String details) {
         Connection con = null;
@@ -75,7 +75,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
             pstmt.setString(2, username);
             pstmt.setLong(3, new Date().getTime());
             pstmt.setString(4, StringUtils.abbreviate(summary, 250));
-            pstmt.setString(5, XMPPServer.getInstance().getServerInfo().getHostname());
+            pstmt.setString(5, XmppServer.getInstance().getServerInfo().getHostname());
             pstmt.setString(6, details);
             pstmt.executeUpdate();
         }
@@ -89,7 +89,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
 
     /**
      * The default provider retrieves events from a ofSecurityAuditLog table in the database.
-     * @see net.emiva.crossfire.security.SecurityAuditProvider#getEvents(String, Integer, Integer, java.util.Date, java.util.Date)
+     * @see net.emiva.crossfire.security.ISecurityAuditProvider#getEvents(String, Integer, Integer, java.util.Date, java.util.Date)
      */
     public List<SecurityAuditEvent> getEvents(String username, Integer skipEvents, Integer numEvents, Date startTime, Date endTime) {
         List<SecurityAuditEvent> events = new ArrayList<SecurityAuditEvent>();
@@ -171,7 +171,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
 
     /**
      * The default provider retrieves events from a ofSecurityAuditLog table in the database.
-     * @see net.emiva.crossfire.security.SecurityAuditProvider#getEvent(Integer)
+     * @see net.emiva.crossfire.security.ISecurityAuditProvider#getEvent(Integer)
      */
     public SecurityAuditEvent getEvent(Integer msgID) throws EventNotFoundException {
         Connection con = null;
@@ -206,7 +206,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
 
     /**
      * The default provider counts the number of entries in the ofSecurityAuditLog table.
-     * @see net.emiva.crossfire.security.SecurityAuditProvider#getEventCount()
+     * @see net.emiva.crossfire.security.ISecurityAuditProvider#getEventCount()
      */
     public Integer getEventCount() {
         Connection con = null;
@@ -232,7 +232,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
 
     /**
      * The default provider writes logs into a local crossfire database.
-     * @see net.emiva.crossfire.security.SecurityAuditProvider#isWriteOnly()
+     * @see net.emiva.crossfire.security.ISecurityAuditProvider#isWriteOnly()
      */
     public boolean isWriteOnly() {
         return false;
@@ -240,7 +240,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
 
     /**
      * The default provider uses crossfire's own audit log viewer.
-     * @see net.emiva.crossfire.security.SecurityAuditProvider#getAuditURL()
+     * @see net.emiva.crossfire.security.ISecurityAuditProvider#getAuditURL()
      */
     public String getAuditURL() {
         return null;
@@ -248,7 +248,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
 
     /**
      * The default provider logs user events.
-     * @see net.emiva.crossfire.security.SecurityAuditProvider#blockUserEvents()
+     * @see net.emiva.crossfire.security.ISecurityAuditProvider#blockUserEvents()
      */
     public boolean blockUserEvents() {
         return false;
@@ -256,7 +256,7 @@ public class DefaultSecurityAuditProvider implements SecurityAuditProvider {
 
     /**
      * The default provider logs group events.
-     * @see net.emiva.crossfire.security.SecurityAuditProvider#blockGroupEvents()
+     * @see net.emiva.crossfire.security.ISecurityAuditProvider#blockGroupEvents()
      */
     public boolean blockGroupEvents() {
         return false;

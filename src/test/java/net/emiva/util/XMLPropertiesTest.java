@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
 
-import net.emiva.util.XMLProperties;
+import net.emiva.crossfire.core.property.XMLProperties;
 
 public class XMLPropertiesTest extends TestCase {
 

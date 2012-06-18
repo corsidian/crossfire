@@ -1,7 +1,7 @@
 <%@ page import="net.emiva.util.CertificateManager,
                 net.emiva.util.ParamUtils,
-                net.emiva.crossfire.XMPPServer,
-                net.emiva.crossfire.net.SSLConfig,
+                net.emiva.crossfire.XmppServer,
+                net.emiva.crossfire.core.net.SSLConfig,
                 java.io.ByteArrayInputStream,
                 java.util.HashMap,
                 java.util.Map"

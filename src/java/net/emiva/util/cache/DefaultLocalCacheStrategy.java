@@ -20,7 +20,7 @@
 
 package net.emiva.util.cache;
 
-import net.emiva.crossfire.cluster.ClusterNodeInfo;
+import net.emiva.crossfire.core.cluster.IClusterNodeInfo;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -71,7 +71,7 @@ public class DefaultLocalCacheStrategy implements CacheFactoryStrategy {
         return true;
     }
 
-    public Collection<ClusterNodeInfo> getClusterNodesInfo() {
+    public Collection<IClusterNodeInfo> getClusterNodesInfo() {
         return Collections.emptyList();
     }
 

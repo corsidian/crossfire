@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Jay Kline
  */
-public class DefaultAuthorizationMapping implements AuthorizationMapping {
+public class DefaultAuthorizationMapping implements IAuthorizationMapping {
 
 	private static final Logger Log = LoggerFactory.getLogger(DefaultAuthorizationMapping.class);
 

@@ -11,7 +11,7 @@
 	<info>Tab Library for crossfire Admin Console</info>
 	<tag>
 		<name>tabs</name>
-		<tagclass>net.emiva.admin.TabsTag</tagclass>
+		<tagclass>net.emiva.plugin.admin.TabsTag</tagclass>
         <bodycontent>JSP</bodycontent>
 		<info />
         <attribute>
@@ -42,7 +42,7 @@
     </tag>
     <tag>
         <name>subnavbar</name>
-        <tagclass>net.emiva.admin.SubnavTag</tagclass>
+        <tagclass>net.emiva.plugin.admin.SubnavTag</tagclass>
         <bodycontent>JSP</bodycontent>
         <info />
         <attribute>
@@ -68,7 +68,7 @@
     </tag>
     <tag>
 		<name>sidebar</name>
-		<tagclass>net.emiva.admin.SidebarTag</tagclass>
+		<tagclass>net.emiva.plugin.admin.SidebarTag</tagclass>
         <bodycontent>JSP</bodycontent>
 		<info />
         <attribute>
@@ -99,7 +99,7 @@
 	</tag>
 	<tag>
 		<name>subsidebar</name>
-		<tagclass>net.emiva.admin.SubSidebarTag</tagclass>
+		<tagclass>net.emiva.plugin.admin.SubSidebarTag</tagclass>
         <bodycontent>JSP</bodycontent>
 		<info />
         <attribute>

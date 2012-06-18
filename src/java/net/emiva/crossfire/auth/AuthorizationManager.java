@@ -59,8 +59,8 @@ public class AuthorizationManager {
 
 	private static final Logger Log = LoggerFactory.getLogger(AuthorizationManager.class);
 
-    private static ArrayList<AuthorizationPolicy> authorizationPolicies = new ArrayList<AuthorizationPolicy>();
-    private static ArrayList<AuthorizationMapping> authorizationMapping = new ArrayList<AuthorizationMapping>();
+    private static ArrayList<IAuthorizationPolicy> authorizationPolicies = new ArrayList<IAuthorizationPolicy>();
+    private static ArrayList<IAuthorizationMapping> authorizationMapping = new ArrayList<IAuthorizationMapping>();
     private static AuthorizationManager instance = new AuthorizationManager();
 
     static {
@@ -77,8 +77,8 @@ public class AuthorizationManager {
                 String s_provider = st.nextToken();
                 try {
                     Class c_provider = ClassUtils.forName(s_provider);
-                    AuthorizationPolicy provider =
-                            (AuthorizationPolicy)(c_provider.newInstance());
+                    IAuthorizationPolicy provider =
+                            (IAuthorizationPolicy)(c_provider.newInstance());
                     Log.debug("AuthorizationManager: Loaded " + s_provider);
                     authorizationPolicies.add(provider);
                 }
@@ -100,20 +100,20 @@ public class AuthorizationManager {
                 try {
                     Class c_provider = ClassUtils.forName(s_provider);
                     Object o_provider = c_provider.newInstance();
-                    if(o_provider instanceof AuthorizationMapping) {
-                        AuthorizationMapping provider = (AuthorizationMapping)(o_provider);
+                    if(o_provider instanceof IAuthorizationMapping) {
+                        IAuthorizationMapping provider = (IAuthorizationMapping)(o_provider);
                         Log.debug("AuthorizationManager: Loaded " + s_provider);
                         authorizationMapping.add(provider);
                     } else {
                         Log.debug("AuthorizationManager: Unknown class type.");
                     }
                 } catch (Exception e) {
-                    Log.error("AuthorizationManager: Error loading AuthorizationMapping: " + s_provider + "\n" + e);
+                    Log.error("AuthorizationManager: Error loading IAuthorizationMapping: " + s_provider + "\n" + e);
                 }
             }
         }
         if (authorizationMapping.isEmpty()) {
-            Log.debug("AuthorizationManager: No AuthorizationMapping's found. Loading DefaultAuthorizationMapping");
+            Log.debug("AuthorizationManager: No IAuthorizationMapping's found. Loading DefaultAuthorizationMapping");
             authorizationMapping.add(new DefaultAuthorizationMapping());
         }
     }
@@ -130,7 +130,7 @@ public class AuthorizationManager {
      *
      * @return the current AuthorizationProvider.
      */
-    public static Collection<AuthorizationPolicy> getAuthorizationPolicies() {
+    public static Collection<IAuthorizationPolicy> getAuthorizationPolicies() {
         return authorizationPolicies;
     }
 
@@ -153,7 +153,7 @@ public class AuthorizationManager {
      */
 
     public static boolean authorize(String username, String principal) {
-        for (AuthorizationPolicy ap : authorizationPolicies) {
+        for (IAuthorizationPolicy ap : authorizationPolicies) {
             if (Log.isDebugEnabled()) {
                 Log.debug("AuthorizationManager: Trying "+ap.name()+".authorize("+username+" , "+principal+")");
             }
@@ -212,7 +212,7 @@ public class AuthorizationManager {
      */
 
     public static String map(String principal) {
-        for (AuthorizationMapping am : authorizationMapping) {
+        for (IAuthorizationMapping am : authorizationMapping) {
             if (Log.isDebugEnabled()) {
                 Log.debug("AuthorizationManager: Trying " + am.name() + ".map(" + principal + ")");
             }

@@ -26,19 +26,18 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import net.emiva.crossfire.Connection;
-import net.emiva.crossfire.SessionManager;
-import net.emiva.crossfire.StreamID;
-import net.emiva.crossfire.XMPPServer;
+import net.emiva.crossfire.IConnection;
+import net.emiva.crossfire.IStreamId;
 import net.emiva.crossfire.auth.AuthToken;
 import net.emiva.crossfire.auth.UnauthorizedException;
-import net.emiva.crossfire.cluster.ClusterManager;
-import net.emiva.crossfire.net.SASLAuthentication;
-import net.emiva.crossfire.net.SSLConfig;
-import net.emiva.crossfire.net.SocketConnection;
+import net.emiva.crossfire.core.cluster.ClusterManager;
+import net.emiva.crossfire.core.net.SocketConnection;
+import net.emiva.crossfire.core.net.sasl.SASLAuthentication;
+import net.emiva.crossfire.core.net.ssl.SSLConfig;
+import net.emiva.crossfire.presence.PresenceEventDispatcher;
 import net.emiva.crossfire.privacy.PrivacyList;
 import net.emiva.crossfire.privacy.PrivacyListManager;
-import net.emiva.crossfire.user.PresenceEventDispatcher;
+import net.emiva.crossfire.server.XmppServer;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.Globals;
 import net.emiva.util.LocaleUtils;
@@ -58,7 +57,7 @@ import org.xmpp.packet.StreamError;
  *
  * @author Gaston Dombiak
  */
-public class LocalClientSession extends LocalSession implements ClientSession {
+public class LocalClientSession extends LocalSession implements IClientSession {
 
 	private static final Logger Log = LoggerFactory.getLogger(LocalClientSession.class);
 
@@ -165,7 +164,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
      * @return a newly created session between the server and a client.
      * @throws org.xmlpull.v1.XmlPullParserException if an error occurs while parsing incoming data.
      */
-    public static LocalClientSession createSession(String serverName, XmlPullParser xpp, Connection connection)
+    public static LocalClientSession createSession(String serverName, XmlPullParser xpp, IConnection connection)
             throws XmlPullParserException {
         boolean isFlashClient = xpp.getPrefix().equals("flash");
         connection.setFlashClient(isFlashClient);
@@ -257,23 +256,23 @@ public class LocalClientSession extends LocalSession implements ClientSession {
             catch (Exception e) {
                 Log.error(e.getMessage(), e);
             }
-            Connection.TLSPolicy tlsPolicy = getTLSPolicy();
-            if (Connection.TLSPolicy.required == tlsPolicy && !hasCertificates) {
+            IConnection.TLSPolicy tlsPolicy = getTLSPolicy();
+            if (IConnection.TLSPolicy.required == tlsPolicy && !hasCertificates) {
                 Log.error("Client session rejected. TLS is required but no certificates " +
                         "were created.");
                 return null;
             }
             // Set default TLS policy
-            connection.setTlsPolicy(hasCertificates ? tlsPolicy : Connection.TLSPolicy.disabled);
+            connection.setTlsPolicy(hasCertificates ? tlsPolicy : IConnection.TLSPolicy.disabled);
         } else {
             // Set default TLS policy
-            connection.setTlsPolicy(Connection.TLSPolicy.disabled);
+            connection.setTlsPolicy(IConnection.TLSPolicy.disabled);
         }
 
         // Indicate the compression policy to use for this connection
         connection.setCompressionPolicy(getCompressionPolicy());
 
-        // Create a ClientSession for this user.
+        // Create a IClientSession for this user.
         LocalClientSession session = SessionManager.getInstance().createClientSession(connection);
 
         // Build the start packet response
@@ -310,9 +309,9 @@ public class LocalClientSession extends LocalSession implements ClientSession {
 
         sb = new StringBuilder(490);
         sb.append("<stream:features>");
-        if (connection.getTlsPolicy() != Connection.TLSPolicy.disabled) {
+        if (connection.getTlsPolicy() != IConnection.TLSPolicy.disabled) {
             sb.append("<starttls xmlns=\"urn:ietf:params:xml:ns:xmpp-tls\">");
-            if (connection.getTlsPolicy() == Connection.TLSPolicy.required) {
+            if (connection.getTlsPolicy() == IConnection.TLSPolicy.required) {
                 sb.append("<required/>");
             }
             sb.append("</starttls>");
@@ -330,7 +329,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
         return session;
     }
 
-    public static boolean isAllowed(Connection connection) {
+    public static boolean isAllowed(IConnection connection) {
         if (!allowedIPs.isEmpty()) {
             // The server is using a whitelist so check that the IP address of the client
             // is authorized to connect to the server
@@ -419,13 +418,13 @@ public class LocalClientSession extends LocalSession implements ClientSession {
      */
     public static SocketConnection.TLSPolicy getTLSPolicy() {
         // Set the TLS policy stored as a system property
-        String policyName = Globals.getProperty("xmpp.client.tls.policy", Connection.TLSPolicy.optional.toString());
+        String policyName = Globals.getProperty("xmpp.client.tls.policy", IConnection.TLSPolicy.optional.toString());
         SocketConnection.TLSPolicy tlsPolicy;
         try {
-            tlsPolicy = Connection.TLSPolicy.valueOf(policyName);
+            tlsPolicy = IConnection.TLSPolicy.valueOf(policyName);
         } catch (IllegalArgumentException e) {
             Log.error("Error parsing xmpp.client.tls.policy: " + policyName, e);
-            tlsPolicy = Connection.TLSPolicy.optional;
+            tlsPolicy = IConnection.TLSPolicy.optional;
         }
         return tlsPolicy;
     }
@@ -451,13 +450,13 @@ public class LocalClientSession extends LocalSession implements ClientSession {
     public static SocketConnection.CompressionPolicy getCompressionPolicy() {
         // Set the Compression policy stored as a system property
         String policyName = Globals
-                .getProperty("xmpp.client.compression.policy", Connection.CompressionPolicy.optional.toString());
+                .getProperty("xmpp.client.compression.policy", IConnection.CompressionPolicy.optional.toString());
         SocketConnection.CompressionPolicy compressionPolicy;
         try {
-            compressionPolicy = Connection.CompressionPolicy.valueOf(policyName);
+            compressionPolicy = IConnection.CompressionPolicy.valueOf(policyName);
         } catch (IllegalArgumentException e) {
             Log.error("Error parsing xmpp.client.compression.policy: " + policyName, e);
-            compressionPolicy = Connection.CompressionPolicy.optional;
+            compressionPolicy = IConnection.CompressionPolicy.optional;
         }
         return compressionPolicy;
     }
@@ -547,7 +546,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
      * @param connection The connection we are proxying.
      * @param streamID unique identifier of this session.
      */
-    public LocalClientSession(String serverName, Connection connection, StreamID streamID) {
+    public LocalClientSession(String serverName, IConnection connection, IStreamId streamID) {
         super(serverName, connection, streamID);
         // Set an unavailable initial presence
         presence = new Presence();
@@ -593,7 +592,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
     public void setAuthToken(AuthToken auth, String resource) {
         setAddress(new JID(auth.getUsername(), getServerName(), resource));
         authToken = auth;
-        setStatus(Session.STATUS_AUTHENTICATED);
+        setStatus(ISession.STATUS_AUTHENTICATED);
 
         // Set default privacy list for this session
         setDefaultList(PrivacyListManager.getInstance().getDefaultPrivacyList(auth.getUsername()));
@@ -610,7 +609,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
         // Anonymous users have a full JID. Use the random resource as the JID's node
         String resource = getAddress().getResource();
         setAddress(new JID(resource, getServerName(), resource, true));
-        setStatus(Session.STATUS_AUTHENTICATED);
+        setStatus(ISession.STATUS_AUTHENTICATED);
         if (authToken == null) {
             authToken = new AuthToken(resource, true);
         }
@@ -633,7 +632,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
 
     /**
      * Flag indicating if this session has been initialized once coming
-     * online. Session initialization occurs after the session receives
+     * online. ISession initialization occurs after the session receives
      * the first "available" presence update from the client. Initialization
      * actions include pushing offline messages, presence subscription requests,
      * and presence statuses to the client. Initialization occurs only once
@@ -679,7 +678,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
             return false;
         }
         String username = getAddress().getNode();
-        for (ClientSession session : sessionManager.getSessions(username)) {
+        for (IClientSession session : sessionManager.getSessions(username)) {
             if (session.isOfflineFloodStopped()) {
                 return false;
             }
@@ -776,14 +775,14 @@ public class LocalClientSession extends LocalSession implements ClientSession {
 	public String getAvailableStreamFeatures() {
         // Offer authenticate and registration only if TLS was not required or if required
         // then the connection is already secured
-        if (conn.getTlsPolicy() == Connection.TLSPolicy.required && !conn.isSecure()) {
+        if (conn.getTlsPolicy() == IConnection.TLSPolicy.required && !conn.isSecure()) {
             return null;
         }
 
         StringBuilder sb = new StringBuilder(200);
 
         // Include Stream Compression Mechanism
-        if (conn.getCompressionPolicy() != Connection.CompressionPolicy.disabled &&
+        if (conn.getCompressionPolicy() != IConnection.CompressionPolicy.disabled &&
                 !conn.isCompressed()) {
             sb.append(
                     "<compression xmlns=\"http://jabber.org/features/compress\"><method>zlib</method></compression>");
@@ -793,7 +792,7 @@ public class LocalClientSession extends LocalSession implements ClientSession {
             // Advertise that the server supports Non-SASL Authentication
             sb.append("<auth xmlns=\"http://jabber.org/features/iq-auth\"/>");
             // Advertise that the server supports In-Band Registration
-            if (XMPPServer.getInstance().getIQRegisterHandler().isInbandRegEnabled()) {
+            if (XmppServer.getInstance().getIQRegisterHandler().isInbandRegEnabled()) {
                 sb.append("<register xmlns=\"http://jabber.org/features/iq-register\"/>");
             }
         }

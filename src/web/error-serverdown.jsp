@@ -3,13 +3,13 @@
   -	$Revision: 7860 $
   -	$Date: 2007-04-02 19:26:20 -0400 (Mon, 02 Apr 2007) $
 --%>
-<%@ page import="net.emiva.admin.AdminConsole,
+<%@ page import="net.emiva.plugin.admin.AdminConsole,
                  net.emiva.util.LocaleUtils"%>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
 
 <%-- Define Administration Bean --%>
 <jsp:useBean id="admin" class="net.emiva.util.WebManager"  />

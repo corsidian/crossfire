@@ -21,7 +21,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.crossfire.XMPPServer,
+<%@ page import="net.emiva.crossfire.XmppServer,
                  net.emiva.crossfire.component.ExternalComponentConfiguration,
                  net.emiva.crossfire.component.ExternalComponentManager,
                  net.emiva.util.ModificationNotAllowedException,

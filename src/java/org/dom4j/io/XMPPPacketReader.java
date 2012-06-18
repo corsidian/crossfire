@@ -9,7 +9,7 @@
 
 package org.dom4j.io;
 
-import net.emiva.crossfire.net.MXParser;
+import net.emiva.crossfire.core.net.MXParser;
 
 import org.dom4j.*;
 import org.xmlpull.v1.XmlPullParser;

@@ -9,7 +9,7 @@
 
 <%@ page import="net.emiva.util.Globals,
                  net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.XMPPServer" %>
+                 net.emiva.crossfire.XmppServer" %>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.Map"%>

@@ -17,8 +17,8 @@
 --%>
 
 <%@ page import="net.emiva.util.ParamUtils,
-                   net.emiva.crossfire.XMPPServer,
-                   net.emiva.crossfire.audit.AuditManager,
+                   net.emiva.crossfire.XmppServer,
+                   net.emiva.crossfire.audit.IAuditManager,
                  net.emiva.crossfire.user.UserNotFoundException,
                  org.xmpp.packet.JID,
                  java.io.File"

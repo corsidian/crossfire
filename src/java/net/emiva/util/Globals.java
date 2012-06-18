@@ -35,6 +35,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import net.emiva.crossfire.core.property.GlobalProperties;
+import net.emiva.crossfire.core.property.XMLProperties;
 import net.emiva.database.DbConnectionManager;
 
 import org.slf4j.Logger;

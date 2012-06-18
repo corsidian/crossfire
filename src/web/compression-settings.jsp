@@ -18,7 +18,7 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.Connection,
+<%@ page import="net.emiva.crossfire.IConnection,
                  net.emiva.crossfire.session.LocalClientSession,
                  net.emiva.util.Globals"
     errorPage="error.jsp"

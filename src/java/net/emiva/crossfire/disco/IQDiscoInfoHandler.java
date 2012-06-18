@@ -20,13 +20,14 @@
 
 package net.emiva.crossfire.disco;
 
-import net.emiva.crossfire.IQHandlerInfo;
-import net.emiva.crossfire.SessionManager;
-import net.emiva.crossfire.XMPPServer;
-import net.emiva.crossfire.cluster.ClusterEventListener;
-import net.emiva.crossfire.cluster.ClusterManager;
-import net.emiva.crossfire.cluster.NodeID;
-import net.emiva.crossfire.handler.IQHandler;
+import net.emiva.crossfire.core.cluster.IClusterEventListener;
+import net.emiva.crossfire.core.cluster.ClusterManager;
+import net.emiva.crossfire.core.cluster.NodeID;
+import net.emiva.crossfire.handler.IqHandler;
+import net.emiva.crossfire.handler.IqHandlerInfo;
+import net.emiva.crossfire.server.XmppServer;
+import net.emiva.crossfire.session.SessionManager;
+import net.emiva.crossfire.user.IUserIdentitiesProvider;
 import net.emiva.crossfire.user.UserManager;
 import net.emiva.crossfire.user.UserNotFoundException;
 import net.emiva.util.Globals;
@@ -49,14 +50,14 @@ import java.util.concurrent.locks.Lock;
 
 /**
  * IQDiscoInfoHandler is responsible for handling disco#info requests. This class holds a map with
- * the main entities and the associated DiscoInfoProvider. We are considering the host of the
- * recipient JIDs as main entities. It's the DiscoInfoProvider responsibility to provide information
+ * the main entities and the associated IDiscoInfoProvider. We are considering the host of the
+ * recipient JIDs as main entities. It's the IDiscoInfoProvider responsibility to provide information
  * about the JID's name together with any possible requested node.<p>
  * <p/>
  * For example, let's have in the entities map the following entries: "localhost" and
  * "conference.localhost". Associated with each entry we have different DiscoInfoProviders. Now we
  * receive a disco#info request for the following JID: "room@conference.localhost" which is a disco
- * request for a MUC room. So IQDiscoInfoHandler will look for the DiscoInfoProvider associated
+ * request for a MUC room. So IQDiscoInfoHandler will look for the IDiscoInfoProvider associated
  * with the JID's host which in this case is "conference.localhost". Once we have located the
  * provider we will delegate to the provider the responsibility to provide the info specific to
  * the JID's name which in this case is "room". Among the information that a room could provide we
@@ -67,15 +68,15 @@ import java.util.concurrent.locks.Lock;
  *
  * @author Gaston Dombiak
  */
-public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListener {
+public class IQDiscoInfoHandler extends IqHandler implements IClusterEventListener {
 
     public static final String NAMESPACE_DISCO_INFO = "http://jabber.org/protocol/disco#info";
-	private Map<String, DiscoInfoProvider> entities = new HashMap<String, DiscoInfoProvider>();
+	private Map<String, IDiscoInfoProvider> entities = new HashMap<String, IDiscoInfoProvider>();
     private Set<String> localServerFeatures = new CopyOnWriteArraySet<String>();
     private Cache<String, Set<NodeID>> serverFeatures;
     private List<Element> serverIdentities = new ArrayList<Element>();
-    private Map<String, DiscoInfoProvider> serverNodeProviders = new ConcurrentHashMap<String, DiscoInfoProvider>();
-    private IQHandlerInfo info;
+    private Map<String, IDiscoInfoProvider> serverNodeProviders = new ConcurrentHashMap<String, IDiscoInfoProvider>();
+    private IqHandlerInfo info;
 
     private List<Element> anonymousUserIdentities = new ArrayList<Element>();
     private List<Element> registeredUserIdentities = new ArrayList<Element>();
@@ -83,7 +84,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
 
     public IQDiscoInfoHandler() {
         super("XMPP Disco Info Handler");
-        info = new IQHandlerInfo("query", NAMESPACE_DISCO_INFO);
+        info = new IqHandlerInfo("query", NAMESPACE_DISCO_INFO);
         // Initialize the user identity and features collections (optimization to avoid creating
         // the same objects for each response)
         Element userIdentity = DocumentHelper.createElement("identity");
@@ -98,7 +99,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
     }
 
     @Override
-	public IQHandlerInfo getInfo() {
+	public IqHandlerInfo getInfo() {
         return info;
     }
 
@@ -109,12 +110,12 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
         // a not found error
         IQ reply = IQ.createResultIQ(packet);
 
-        // Look for a DiscoInfoProvider associated with the requested entity.
+        // Look for a IDiscoInfoProvider associated with the requested entity.
         // We consider the host of the recipient JID of the packet as the entity. It's the 
-        // DiscoInfoProvider responsibility to provide information about the JID's name together 
+        // IDiscoInfoProvider responsibility to provide information about the JID's name together 
         // with any possible requested node.  
-        DiscoInfoProvider infoProvider = getProvider(packet.getTo() == null ?
-                XMPPServer.getInstance().getServerInfo().getXMPPDomain() : packet.getTo().getDomain());
+        IDiscoInfoProvider infoProvider = getProvider(packet.getTo() == null ?
+                XmppServer.getInstance().getServerInfo().getXMPPDomain() : packet.getTo().getDomain());
         if (infoProvider != null) {
             // Get the JID's name
             String name = packet.getTo() == null ? null : packet.getTo().getNode();
@@ -131,7 +132,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
                 reply.setChildElement(iq.createCopy());
                 Element queryElement = reply.getChildElement();
 
-                // Add to the reply all the identities provided by the DiscoInfoProvider
+                // Add to the reply all the identities provided by the IDiscoInfoProvider
                 Element identity;
                 Iterator<Element> identities = infoProvider.getIdentities(name, node, packet.getFrom());
                 while (identities.hasNext()) {
@@ -140,7 +141,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
                     queryElement.add((Element)identity.clone());
                 }
 
-                // Add to the reply all the features provided by the DiscoInfoProvider
+                // Add to the reply all the features provided by the IDiscoInfoProvider
                 Iterator<String> features = infoProvider.getFeatures(name, node, packet.getFrom());
                 boolean hasDiscoInfoFeature = false;
                 boolean hasDiscoItemsFeature = false;
@@ -171,21 +172,21 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
 					queryElement.addElement("feature").addAttribute("var", NAMESPACE_DISCO_INFO);
 				}
                 
-                // Add to the reply the extended info (XDataForm) provided by the DiscoInfoProvider
+                // Add to the reply the extended info (XDataForm) provided by the IDiscoInfoProvider
                 DataForm dataForm = infoProvider.getExtendedInfo(name, node, packet.getFrom());
                 if (dataForm != null) {
                     queryElement.add(dataForm.getElement());
                 }
             }
             else {
-                // If the DiscoInfoProvider has no information for the requested name and node 
+                // If the IDiscoInfoProvider has no information for the requested name and node 
                 // then answer a not found error
                 reply.setChildElement(packet.getChildElement().createCopy());
                 reply.setError(PacketError.Condition.item_not_found);
             }
         }
         else {
-            // If we didn't find a DiscoInfoProvider then answer a not found error
+            // If we didn't find a IDiscoInfoProvider then answer a not found error
             reply.setChildElement(packet.getChildElement().createCopy());
             reply.setError(PacketError.Condition.item_not_found);
         }
@@ -194,20 +195,20 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
     }
 
     /**
-     * Sets the DiscoInfoProvider to use when a disco#info packet is sent to the server itself
+     * Sets the IDiscoInfoProvider to use when a disco#info packet is sent to the server itself
      * and the specified node. For instance, if node matches "http://jabber.org/protocol/offline"
-     * then a special DiscoInfoProvider should be use to return information about offline messages.
+     * then a special IDiscoInfoProvider should be use to return information about offline messages.
      *
      * @param node the node that the provider will handle.
-     * @param provider the DiscoInfoProvider that will handle disco#info packets sent with the
+     * @param provider the IDiscoInfoProvider that will handle disco#info packets sent with the
      *        specified node.
      */
-    public void setServerNodeInfoProvider(String node, DiscoInfoProvider provider) {
+    public void setServerNodeInfoProvider(String node, IDiscoInfoProvider provider) {
         serverNodeProviders.put(node, provider);
     }
 
     /**
-     * Removes the DiscoInfoProvider to use when a disco#info packet is sent to the server itself
+     * Removes the IDiscoInfoProvider to use when a disco#info packet is sent to the server itself
      * and the specified node.
      *
      * @param node the node that the provider was handling.
@@ -217,31 +218,31 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
     }
 
     /**
-     * Returns the DiscoInfoProvider responsible for providing information about a given entity or
+     * Returns the IDiscoInfoProvider responsible for providing information about a given entity or
      * null if none was found.
      *
      * @param name the name of the identity.
-     * @return the DiscoInfoProvider responsible for providing information about a given entity or
+     * @return the IDiscoInfoProvider responsible for providing information about a given entity or
      *         null if none was found.
      */
-    private DiscoInfoProvider getProvider(String name) {
+    private IDiscoInfoProvider getProvider(String name) {
         return entities.get(name);
     }
 
     /**
-     * Sets that a given DiscoInfoProvider will provide information about a given entity. This
+     * Sets that a given IDiscoInfoProvider will provide information about a given entity. This
      * message must be used when new modules (e.g. MUC) are implemented and need to provide
      * information about them.
      *
      * @param name     the name of the entity.
-     * @param provider the DiscoInfoProvider that will provide the entity's information.
+     * @param provider the IDiscoInfoProvider that will provide the entity's information.
      */
-    protected void setProvider(String name, DiscoInfoProvider provider) {
+    protected void setProvider(String name, IDiscoInfoProvider provider) {
         entities.put(name, provider);
     }
 
     /**
-     * Removes the DiscoInfoProvider related to a given entity.
+     * Removes the IDiscoInfoProvider related to a given entity.
      *
      * @param name the name of the entity.
      */
@@ -250,14 +251,14 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
     }
 
     /**
-     * Adds the features provided by the new service that implements the ServerFeaturesProvider
+     * Adds the features provided by the new service that implements the IServerFeaturesProvider
      * interface. This information will be used whenever a disco for information is made against
      * the server (i.e. the packet's target is the server).
      * Example of features are: jabber:iq:agents, jabber:iq:time, etc.
      *
-     * @param provider the ServerFeaturesProvider that provides new server features.
+     * @param provider the IServerFeaturesProvider that provides new server features.
      */
-    private void addServerFeaturesProvider(ServerFeaturesProvider provider) {
+    private void addServerFeaturesProvider(IServerFeaturesProvider provider) {
         for (Iterator<String> it = provider.getFeatures(); it.hasNext();) {
             addServerFeature(it.next());
         }
@@ -278,7 +279,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
                 if (nodeIDs == null) {
                     nodeIDs = new HashSet<NodeID>();
                 }
-                nodeIDs.add(XMPPServer.getInstance().getNodeID());
+                nodeIDs.add(XmppServer.getInstance().getNodeID());
                 serverFeatures.put(namespace, nodeIDs);
             }
             finally {
@@ -300,7 +301,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
                 lock.lock();
                 Set<NodeID> nodeIDs = serverFeatures.get(namespace);
                 if (nodeIDs != null) {
-                    nodeIDs.remove(XMPPServer.getInstance().getNodeID());
+                    nodeIDs.remove(XmppServer.getInstance().getNodeID());
                     if (nodeIDs.isEmpty()) {
                         serverFeatures.remove(namespace);
                     }
@@ -316,25 +317,25 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
     }
 
     @Override
-	public void initialize(XMPPServer server) {
+	public void initialize(XmppServer server) {
         super.initialize(server);
         serverFeatures = CacheFactory.createCache("Disco Server Features");
         addServerFeature(NAMESPACE_DISCO_INFO);
-        // Track the implementors of ServerFeaturesProvider so that we can collect the features
+        // Track the implementors of IServerFeaturesProvider so that we can collect the features
         // provided by the server
-        for (ServerFeaturesProvider provider : server.getServerFeaturesProviders()) {
+        for (IServerFeaturesProvider provider : server.getServerFeaturesProviders()) {
             addServerFeaturesProvider(provider);
         }
-        // Collect the implementors of ServerIdentitiesProvider so that we can collect the identities
+        // Collect the implementors of IServerIdentitiesProvider so that we can collect the identities
         // for protocols supported by the server
-        for (ServerIdentitiesProvider provider : server.getServerIdentitiesProviders()) {
+        for (IServerIdentitiesProvider provider : server.getServerIdentitiesProviders()) {
             for (Iterator<Element> it = provider.getIdentities(); it.hasNext();) {
                 serverIdentities.add(it.next());
             }
         }
-        // Collect the implementors of UserIdentitiesProvider so that we can collect identities
+        // Collect the implementors of IUserIdentitiesProvider so that we can collect identities
         // for registered users.
-        for (UserIdentitiesProvider provider : server.getUserIdentitiesProviders()) {
+        for (IUserIdentitiesProvider provider : server.getUserIdentitiesProviders()) {
             for (Iterator<Element> it = provider.getIdentities(); it.hasNext();) {
                 registeredUserIdentities.add(it.next());
             }
@@ -354,7 +355,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
     }
 
     public void leftCluster() {
-        if (!XMPPServer.getInstance().isShuttingDown()) {
+        if (!XmppServer.getInstance().isShuttingDown()) {
             restoreCacheContent();
         }
     }
@@ -398,7 +399,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
                 if (nodeIDs == null) {
                     nodeIDs = new HashSet<NodeID>();
                 }
-                nodeIDs.add(XMPPServer.getInstance().getNodeID());
+                nodeIDs.add(XmppServer.getInstance().getNodeID());
                 serverFeatures.put(feature, nodeIDs);
             }
             finally {
@@ -408,14 +409,14 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
     }
 
     /**
-     * Returns the DiscoInfoProvider responsible for providing information at the server level. This
-     * means that this DiscoInfoProvider will provide information whenever a disco request whose
+     * Returns the IDiscoInfoProvider responsible for providing information at the server level. This
+     * means that this IDiscoInfoProvider will provide information whenever a disco request whose
      * recipient JID is the server (e.g. localhost) is made.
      *
-     * @return the DiscoInfoProvider responsible for providing information at the server level.
+     * @return the IDiscoInfoProvider responsible for providing information at the server level.
      */
-    private DiscoInfoProvider getServerInfoProvider() {
-        return new DiscoInfoProvider() {
+    private IDiscoInfoProvider getServerInfoProvider() {
+        return new IDiscoInfoProvider() {
             final ArrayList<Element> identities = new ArrayList<Element>();
 
             public Iterator<Element> getIdentities(String name, String node, JID senderJID) {
@@ -435,7 +436,7 @@ public class IQDiscoInfoHandler extends IQHandler implements ClusterEventListene
 
                             identities.add(identity);
                             
-                            // Include identities from modules that implement ServerIdentitiesProvider
+                            // Include identities from modules that implement IServerIdentitiesProvider
                             for (Element identityElement : serverIdentities) {
                                 identities.add(identityElement);
                             }

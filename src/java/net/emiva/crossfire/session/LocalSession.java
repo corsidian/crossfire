@@ -21,9 +21,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.emiva.crossfire.Connection;
-import net.emiva.crossfire.SessionManager;
-import net.emiva.crossfire.StreamID;
+import net.emiva.crossfire.IConnection;
+import net.emiva.crossfire.IStreamId;
 import net.emiva.crossfire.auth.UnauthorizedException;
 import net.emiva.crossfire.interceptor.InterceptorManager;
 import net.emiva.crossfire.interceptor.PacketRejectedException;
@@ -44,7 +43,7 @@ import org.xmpp.packet.Packet;
  *
  * @author Gaston Dombiak
  */
-public abstract class LocalSession implements Session {
+public abstract class LocalSession implements ISession {
 
 	private static final Logger Log = LoggerFactory.getLogger(LocalSession.class);
 
@@ -61,7 +60,7 @@ public abstract class LocalSession implements Session {
     /**
      * The stream id for this session (random and unique).
      */
-    private StreamID streamID;
+    private IStreamId streamID;
 
     /**
      * The current session status.
@@ -71,7 +70,7 @@ public abstract class LocalSession implements Session {
     /**
      * The connection that this session represents.
      */
-    protected Connection conn;
+    protected IConnection conn;
 
     protected SessionManager sessionManager;
 
@@ -84,7 +83,7 @@ public abstract class LocalSession implements Session {
     private long serverPacketCount = 0;
 
     /**
-	 * Session temporary data. All data stored in this <code>Map</code> disapear when session
+	 * ISession temporary data. All data stored in this <code>Map</code> disapear when session
 	 * finishes.
 	 */
 	private final Map<String, Object> sessionData = new HashMap<String, Object>();
@@ -96,7 +95,7 @@ public abstract class LocalSession implements Session {
      * @param connection The connection we are proxying.
      * @param streamID unique identifier for this session.
      */
-    public LocalSession(String serverName, Connection connection, StreamID streamID) {
+    public LocalSession(String serverName, IConnection connection, IStreamId streamID) {
         conn = connection;
         this.streamID = streamID;
         this.serverName = serverName;
@@ -130,11 +129,11 @@ public abstract class LocalSession implements Session {
     }
 
     /**
-     * Returns the connection associated with this Session.
+     * Returns the connection associated with this ISession.
      *
      * @return The connection for this session
      */
-    public Connection getConnection() {
+    public IConnection getConnection() {
         return conn;
     }
 
@@ -164,7 +163,7 @@ public abstract class LocalSession implements Session {
      *
      * @return This session's assigned stream ID
      */
-    public StreamID getStreamID() {
+    public IStreamId getStreamID() {
         return streamID;
     }
 

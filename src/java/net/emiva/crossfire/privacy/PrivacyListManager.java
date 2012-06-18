@@ -37,10 +37,10 @@ public class PrivacyListManager {
 
     private PrivacyListProvider provider = new PrivacyListProvider();
 
-    private List<PrivacyListEventListener> listeners = new CopyOnWriteArrayList<PrivacyListEventListener>();
+    private List<IPrivacyListEventListener> listeners = new CopyOnWriteArrayList<IPrivacyListEventListener>();
 
     static {
-        PrivacyListEventListener eventListener = new PrivacyListEventListener() {
+        IPrivacyListEventListener eventListener = new IPrivacyListEventListener() {
             public void privacyListCreated(PrivacyList list) {
                 // Do nothing
             }
@@ -89,7 +89,7 @@ public class PrivacyListManager {
         // Save new  list to database
         provider.createPrivacyList(username, list);
         // Trigger event that a new privacy list has been created
-        for (PrivacyListEventListener listener : listeners) {
+        for (IPrivacyListEventListener listener : listeners) {
             listener.privacyListCreated(list);
         }
         return list;
@@ -105,7 +105,7 @@ public class PrivacyListManager {
      */
     public void deletePrivacyList(String username, String listName) {
         // Trigger event that a privacy list is being deleted
-        for (PrivacyListEventListener listener : listeners) {
+        for (IPrivacyListEventListener listener : listeners) {
             listener.privacyListDeleting(listName);
         }
         // Remove the list from the cache
@@ -130,7 +130,7 @@ public class PrivacyListManager {
             // Remove the list from the cache
             listsCache.remove(getCacheKey(username, listName));
             // Trigger event that a privacy list is being deleted
-            for (PrivacyListEventListener listener : listeners) {
+            for (IPrivacyListEventListener listener : listeners) {
                 listener.privacyListDeleting(listName);
             }
         }
@@ -215,7 +215,7 @@ public class PrivacyListManager {
      *
      * @param listener the listener.
      */
-    public void addListener(PrivacyListEventListener listener) {
+    public void addListener(IPrivacyListEventListener listener) {
         if (listener == null) {
             throw new NullPointerException();
         }
@@ -227,7 +227,7 @@ public class PrivacyListManager {
      *
      * @param listener the listener.
      */
-    public void removeListener(PrivacyListEventListener listener) {
+    public void removeListener(IPrivacyListEventListener listener) {
         listeners.remove(listener);
     }
 
@@ -247,7 +247,7 @@ public class PrivacyListManager {
 
     void dispatchModifiedEvent(PrivacyList privacyList) {
         // Trigger event that a privacy list has been modified
-        for (PrivacyListEventListener listener : listeners) {
+        for (IPrivacyListEventListener listener : listeners) {
             listener.privacyListModified(privacyList);
         }
     }
