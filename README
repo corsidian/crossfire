@@ -4,11 +4,11 @@ Crossfire
 
 Crossfire is a fork of Openfire aimed at being secure, reliable, and easily configurable.
 
+Release 0.6
+
+- Continue to strip Openfire down to its minimum. Removed clustering, SSL, and S2S 
+- Refactoring to minimize singletons, static classes, and inner classes (to all more easily unit test in future)
+
 Release 0.5
-
-- Replace mina with netty to improve performance
-- Finish rebranding as Crossfire
-- Strip out all non-core functionality (will be reintroduced as plugins after its been reviewed)
-- Refactor the core to be easier to understand and maintain
-- Add additional unit tests 
-
+- Rebranded as Crossfire
+- Stripped out all plugins

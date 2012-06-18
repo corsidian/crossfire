@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.IConnectionManager,
-                 net.emiva.crossfire.XmppServer,
+<%@ page import="org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.IConnectionManager,
+                 org.b5chat.crossfire.XmppServer,
                  java.net.InetAddress,
                  java.util.HashMap"
 %>
@@ -29,10 +29,10 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%
@@ -171,11 +171,11 @@
 
 <%  if ("true".equals(request.getParameter("success"))) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <%  if ("true".equals(request.getParameter("restart"))) { %>
             <fmt:message key="server.props.update" /> <b><fmt:message key="global.restart" /></b> <fmt:message key="server.props.update2" /> <a href="index.jsp"><fmt:message key="global.server_status" /></a>).
         <%  } else { %>
@@ -190,7 +190,7 @@
 
 <form action="server-props.jsp" name="editform" method="post">
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -209,7 +209,7 @@
              size="30" maxlength="150">
             <%  if (errors.containsKey("serverName")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.valid_hostname" />
                 <a href="#" onclick="document.editform.serverName.value='<%= InetAddress.getLocalHost().getHostName() %>';"
                  ><fmt:message key="server.props.valid_hostname1" /></a>.
@@ -226,7 +226,7 @@
              size="5" maxlength="5">
             <%  if (errors.containsKey("serverPort")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.valid_port" />
                 <a href="#" onclick="document.editform.serverPort.value='<%=ConnectionManager.DEFAULT_SERVER_PORT%>';"
                  ><fmt:message key="server.props.valid_port1" /></a>.
@@ -243,7 +243,7 @@
              size="5" maxlength="5">
             <%  if (errors.containsKey("componentPort")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.valid_port" />
                 <a href="#" onclick="document.editform.componentPort.value='<%=ConnectionManager.DEFAULT_COMPONENT_PORT%>';"
                  ><fmt:message key="server.props.valid_port1" /></a>.
@@ -260,14 +260,14 @@
              size="5" maxlength="5">
             <%  if (errors.containsKey("port")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.valid_port" />
                 <a href="#" onclick="document.editform.port.value='<%=ConnectionManager.DEFAULT_PORT%>';"
                  ><fmt:message key="server.props.valid_port1" /></a>.
                 </span>
             <%  } else if (errors.containsKey("portsEqual")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.error_port" />
                 </span>
             <%  } %>
@@ -307,7 +307,7 @@
              size="5" maxlength="5">
             <%  if (errors.containsKey("sslPort")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.ssl_valid" />
                 <a href="#" onclick="document.editform.sslPort.value='<%=ConnectionManager.DEFAULT_SSL_PORT%>';"
                  ><fmt:message key="server.props.ssl_valid1" /></a>.
@@ -325,14 +325,14 @@
              size="5" maxlength="5">
             <%  if (errors.containsKey("embeddedPort")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.valid_port" />
                 <a href="#" onclick="document.editform.embeddedPort.value='9090';"
                  ><fmt:message key="server.props.valid_port1" /></a>.
                 </span>
             <%  } else if (errors.containsKey("embeddedPortsEqual")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.error_port" />
                 </span>
             <%  } %>
@@ -347,7 +347,7 @@
              size="5" maxlength="5">
             <%  if (errors.containsKey("embeddedSecurePort")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.valid_port" />
                 <a href="#" onclick="document.editform.embeddedSecurePort.value='9091';"
                  ><fmt:message key="server.props.valid_port1" /></a>.

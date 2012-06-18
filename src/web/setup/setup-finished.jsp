@@ -6,12 +6,12 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.util.Globals,
+<%@ page import="org.b5chat.util.Globals,
                  java.util.Map,
-                 net.emiva.crossfire.XmppServer"
+                 org.b5chat.crossfire.XmppServer"
 %>
-<%@ page import="net.emiva.util.LocaleUtils"%>
-<%@ page import="net.emiva.crossfire.admin.AdminManager" %>
+<%@ page import="org.b5chat.util.LocaleUtils"%>
+<%@ page import="org.b5chat.crossfire.admin.AdminManager" %>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="java.util.List" %>
 
@@ -110,11 +110,11 @@
 %>
 
 <br><br>
-	<div id="loginlink" style="display:none;" class="emiva_setup_launchAdmin">
+	<div id="loginlink" style="display:none;" class="b5chat_setup_launchAdmin">
 		<a href="<%= url %>"><fmt:message key="setup.finished.login" /></a>
 	</div>
 
-	<div id="logintext" class="emiva_setup_launchAdmin">
+	<div id="logintext" class="b5chat_setup_launchAdmin">
 		<fmt:message key="setup.finished.wait" /> <img src="../images/working-16x16.gif" alt="<fmt:message key="setup.finished.wait" />" width="16" height="16">
 	</div>
 

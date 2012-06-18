@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.util.*,
-                 net.emiva.crossfire.*,
+<%@ page import="org.b5chat.util.*,
+                 org.b5chat.crossfire.*,
                  java.util.HashMap,
                  java.util.Map"
     errorPage="error.jsp"
 %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>
@@ -66,11 +66,11 @@
             }
             %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="session.conflict.update" />
         </td></tr>
     </tbody>
@@ -93,10 +93,10 @@
 
 <!-- BEGIN 'Set Conflict Policy' -->
 <form action="session-conflict.jsp" method="post">
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="session.conflict.policy" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
 			<tr valign="middle">
@@ -153,7 +153,7 @@
 				</td>
 				<td width="99%">
 					<%  if (errors.get("kickValue") != null) { %>
-						<span class="emiva-error-text">
+						<span class="b5chat-error-text">
 						<fmt:message key="session.conflict.enter_value" />
 						</span><br>
 					<%  } %>

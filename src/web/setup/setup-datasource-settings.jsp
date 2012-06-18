@@ -6,19 +6,19 @@
   -	$Date: 2005-05-26 23:00:40 -0700 (Thu, 26 May 2005) $
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.util.Globals,
-                 net.emiva.database.EmbeddedConnectionProvider,
-                 net.emiva.database.DbConnectionManager,
-                 net.emiva.database.IConnectionProvider,
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.util.Globals,
+                 org.b5chat.database.EmbeddedConnectionProvider,
+                 org.b5chat.database.DbConnectionManager,
+                 org.b5chat.database.IConnectionProvider,
                  java.util.*" %>
 <%@ page import="java.io.File"%>
 <%@ page import="java.sql.Connection"%>
 <%@ page import="java.sql.Statement"%>
 <%@ page import="java.sql.SQLException"%>
-<%@ page import="net.emiva.util.LocaleUtils"%>
-<%@ page import="net.emiva.util.ClassUtils"%>
-<%@ page import="net.emiva.crossfire.XmppServer"%>
+<%@ page import="org.b5chat.util.LocaleUtils"%>
+<%@ page import="org.b5chat.util.ClassUtils"%>
+<%@ page import="org.b5chat.crossfire.XmppServer"%>
 
 <%
 	// Redirect if we've already run setup:
@@ -47,7 +47,7 @@
                     + "file, then go back to fix the problem.");
             }
             else {
-            	// See if the emiva db schema is installed.
+            	// See if the b5chat db schema is installed.
             	try {
             		Statement stmt = con.createStatement();
             		// Pick an arbitrary table to see if it's there.
@@ -75,7 +75,7 @@
 <%
     boolean embeddedMode = false;
     try {
-        ClassUtils.forName("net.emiva.crossfire.core.starter.ServerStarter");
+        ClassUtils.forName("org.b5chat.crossfire.core.starter.ServerStarter");
         embeddedMode = true;
     }
     catch (Exception ignored) {}
@@ -100,7 +100,7 @@
         else if (EMBEDDED.equals(mode)) {
             // Set the classname of the provider in the config file:
             Globals.setXMLProperty("connectionProvider.className",
-                    "net.emiva.database.EmbeddedConnectionProvider");
+                    "org.b5chat.database.EmbeddedConnectionProvider");
             ConnectionProvider conProvider = new EmbeddedConnectionProvider();
             DbConnectionManager.setConnectionProvider(conProvider);
             if (testConnection(errors)) {
@@ -143,14 +143,14 @@
 
 <%  if (errors.size() > 0) { %>
 
-    <p class="emiva-error-text">
+    <p class="b5chat-error-text">
     <%= errors.get("general") %>
     </p>
 
 <%  } %>
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN b5chat-contentBox -->
+	<div class="b5chat-contentBox">
 
 		<form action="setup-datasource-settings.jsp">
 
@@ -199,12 +199,12 @@
 
 
 		<div align="right">
-			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="b5chat-setup-save" border="0">
 		</div>
 	</form>
 
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END b5chat-contentBox -->
 
 
 </body>

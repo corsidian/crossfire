@@ -1,17 +1,17 @@
-#emiva-loginBox {
+#b5chat-loginBox {
     display: block;
     position: relative;
     width: 500px;
     text-align: left;
     top: 148px;
 }
-#emiva-loginHeader {
+#b5chat-loginHeader {
     font-size: 14pt;
     font-weight: bold;
     color: #555555;
     margin: 0;
 }
-#emiva-loginTable {
+#b5chat-loginTable {
     display: block;
     position: relative;
     clear: both;
@@ -19,37 +19,37 @@
     margin: 10px 0 0 0;
     padding: 0;
 }
-#emiva-loginTable table {
+#b5chat-loginTable table {
     clear: both;
     margin-top: 20px;
 }
-#emiva-loginTable td.loginFormTable {
+#b5chat-loginTable td.loginFormTable {
     padding: 17px 17px 7px 55px;
-    background: #e0e0e0 url(../images/emiva-login-form-bg-gray.gif) repeat-x top;
+    background: #e0e0e0 url(../images/b5chat-login-form-bg-gray.gif) repeat-x top;
     border: 1px solid #bbbbbb;
     -moz-border-radius: 5px;
 }
 .loginFormTable TD {
     text-align : left;
 }
-#emiva-loginTable td.loginFormTable table {
+#b5chat-loginTable td.loginFormTable table {
     margin-top: 0;
 }
-#emiva-loginVersion {
+#b5chat-loginVersion {
     color: #999999;
     font-weight: normal;
     font-size: 10px;
     padding-top: 4px;
 }
 
-.emiva-login-label {
+.b5chat-login-label {
     font-size: 11px;
     font-weight: bold;
     color: #515151;
     text-align : left;
 }
 
-#emiva-login-header {
+#b5chat-login-header {
     font-size: 14pt;
     font-weight: bold;
     color: #555555;
@@ -57,7 +57,7 @@
 }
 
 BODY {
-    background: #b6b6b6 url(../images/emiva-login-bg.gif) repeat-x top;
+    background: #b6b6b6 url(../images/b5chat-login-bg.gif) repeat-x top;
     padding: 0;
     margin: 0;
 }

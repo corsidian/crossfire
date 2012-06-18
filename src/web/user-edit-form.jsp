@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,20 +17,20 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.user.*,
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.user.*,
                  java.net.URLEncoder"
     errorPage="error.jsp"
 %><%@ page import="org.xmpp.packet.JID"%>
-<%@ page import="net.emiva.crossfire.security.SecurityAuditManager" %>
-<%@ page import="net.emiva.util.StringUtils" %>
+<%@ page import="org.b5chat.crossfire.security.SecurityAuditManager" %>
+<%@ page import="org.b5chat.util.StringUtils" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="net.emiva.crossfire.admin.AdminManager" %>
+<%@ page import="org.b5chat.crossfire.admin.AdminManager" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters
@@ -101,12 +101,12 @@
     <body>
 <%  if (!errors.isEmpty()) { %>
 
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
-            <td class="emiva-icon-label">
+            <td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
+            <td class="b5chat-icon-label">
 
             <% if (errors.get("name") != null) { %>
                 <fmt:message key="user.create.invalid_name" />
@@ -122,11 +122,11 @@
 
 <%  } else if (success) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="user.edit.form.update" />
         </td></tr>
     </tbody>
@@ -201,7 +201,7 @@
 
 <br/>
 
-<span class="emiva-description">
+<span class="b5chat-description">
 * <fmt:message key="user.create.requied" />
 </span>
 

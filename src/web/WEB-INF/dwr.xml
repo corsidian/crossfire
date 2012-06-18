@@ -8,10 +8,10 @@
             <param name="class" value="java.util.Date"/>
         </create>
         <create creator="new" javascript="downloader">
-            <param name="class" value="net.emiva.crossfire.update.PluginDownloadManager"/>
+            <param name="class" value="org.b5chat.crossfire.update.PluginDownloadManager"/>
         </create>
-        <convert converter="bean" match="net.emiva.crossfire.update.Update"/>
-        <convert converter="bean" match="net.emiva.crossfire.update.AvailablePlugin"/>
-        <convert converter="bean" match="net.emiva.crossfire.update.DownloadStatus"/>
+        <convert converter="bean" match="org.b5chat.crossfire.update.Update"/>
+        <convert converter="bean" match="org.b5chat.crossfire.update.AvailablePlugin"/>
+        <convert converter="bean" match="org.b5chat.crossfire.update.DownloadStatus"/>
     </allow>
 </dwr>

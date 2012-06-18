@@ -23,6 +23,6 @@ rm /private/tmp/crossfiregid
 sudo chown -R crossfire $crossfire_HOME
 sudo chgrp -R $crossfire_GID $crossfire_HOME
 sudo chmod o-rwx $crossfire_HOME
-sudo chown root:wheel /Library/LaunchDaemons/net.emiva.crossfire.plist
+sudo chown root:wheel /Library/LaunchDaemons/org.b5chat.crossfire.plist
 
-/bin/launchctl load /Library/LaunchDaemons/net.emiva.crossfire.plist
+/bin/launchctl load /Library/LaunchDaemons/org.b5chat.crossfire.plist

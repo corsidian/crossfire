@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@
 --%>
 
 <%@ page import="org.apache.mina.transport.socket.nio.SocketAcceptor"%>
-<%@ page import="net.emiva.plugin.admin.AdminConsole"%>
-<%@ page import="net.emiva.crossfire.*" %>
-<%@ page import="net.emiva.crossfire.core.container.AdminConsolePlugin" %>
-<%@ page import="net.emiva.crossfire.core.net.SSLConfig" %>
-<%@ page import="net.emiva.crossfire.session.LocalClientSession" %>
-<%@ page import="net.emiva.crossfire.spi.ConnectionManagerImpl" %>
-<%@ page import="net.emiva.util.*" %>
+<%@ page import="org.b5chat.plugin.admin.AdminConsole"%>
+<%@ page import="org.b5chat.crossfire.*" %>
+<%@ page import="org.b5chat.crossfire.core.container.AdminConsolePlugin" %>
+<%@ page import="org.b5chat.crossfire.core.net.SSLConfig" %>
+<%@ page import="org.b5chat.crossfire.session.LocalClientSession" %>
+<%@ page import="org.b5chat.crossfire.spi.ConnectionManagerImpl" %>
+<%@ page import="org.b5chat.util.*" %>
 <%@ page import="java.net.InetSocketAddress" %>
 <%@ page import="java.net.SocketAddress" %>
 <%@ page import="java.net.URL" %>
@@ -35,18 +35,18 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <%-- Define page bean for header and sidebar --%>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
 
 <%  // Simple logout code
     if ("true".equals(request.getParameter("logout"))) {
-        session.removeAttribute("emiva.admin.authToken");
+        session.removeAttribute("b5chat.admin.authToken");
         response.sendRedirect("index.jsp");
         return;
     }
 %>
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out); %>
 
 <% // Get parameters //
@@ -84,11 +84,11 @@
 .bar TD {
     padding : 0;
 }
-#emiva-latest-activity .emiva-bottom-line {
+#b5chat-latest-activity .b5chat-bottom-line {
 	padding-top: 10px;
     border-bottom : 1px #e8a400 solid;
 	}
-#emiva-latest-activity {
+#b5chat-latest-activity {
     border: 1px #E8A400 solid;
     background-color: #FFFBE2;
 	font-family: Lucida Grande, Arial, Helvetica, sans-serif;
@@ -100,21 +100,21 @@
     width: 95%;
     margin-right: 20px;
 	}
-#emiva-latest-activity h4 {
+#b5chat-latest-activity h4 {
 	font-size: 13pt;
 	margin: 15px 0 4px 0;
 	}
-#emiva-latest-activity h5 {
+#b5chat-latest-activity h5 {
 	font-size: 9pt;
 	font-weight: normal;
     margin: 15px 0 5px 5px;
 	padding: 0;
 	}
-#emiva-latest-activity .emiva-blog-date {
+#b5chat-latest-activity .b5chat-blog-date {
     font-size: 8pt;
     white-space: nowrap;
 	}
-#emiva-latest-activity .emiva-feed-icon {
+#b5chat-latest-activity .b5chat-feed-icon {
     float: right;
     padding-top: 10px;
 	}
@@ -145,7 +145,7 @@
 <table border="0" width="100%">
     <td valign="top">
 
-        <!-- <div class="emiva-table"> -->
+        <!-- <div class="b5chat-table"> -->
         <table border="0" cellpadding="2" cellspacing="2" width="100%" class="info-table">
         <thead>
             <tr>
@@ -319,8 +319,8 @@
 
 <br>
 
-<div id="emiva-title"><fmt:message key="index.server_port" /></div>
-<div class="emiva-table">
+<div id="b5chat-title"><fmt:message key="index.server_port" /></div>
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -340,7 +340,7 @@
         <td><%= "0.0.0.0".equals(address.getHostName()) ? LocaleUtils.getLocalizedString("ports.all_ports") : address.getHostName() %></td>
         <td><%= address.getPort() %></td>
         <% try { %>
-        <% if (!CertificateManager.isRSACertificate(SSLConfig.getKeyStore(), XMPPServer.getInstance().getServerInfo().getXMPPDomain()) || LocalClientSession.getTLSPolicy() == net.emiva.crossfire.IConnection.TLSPolicy.disabled) { %>
+        <% if (!CertificateManager.isRSACertificate(SSLConfig.getKeyStore(), XMPPServer.getInstance().getServerInfo().getXMPPDomain()) || LocalClientSession.getTLSPolicy() == org.b5chat.crossfire.IConnection.TLSPolicy.disabled) { %>
             <td><img src="images/blank.gif" width="1" height="1" alt=""/></td>
         <% } else { %>
             <td><img src="images/lock.gif" width="16" height="16" border="0" alt=""/></td>

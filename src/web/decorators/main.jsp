@@ -2,7 +2,7 @@
   -	$Revision: 2701 $
   -	$Date: 2005-08-19 16:48:22 -0700 (Fri, 19 Aug 2005) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.StringUtils,
-                 net.emiva.plugin.admin.AdminConsole,
-                 net.emiva.util.LocaleUtils"
+<%@ page import="org.b5chat.util.StringUtils,
+                 org.b5chat.plugin.admin.AdminConsole,
+                 org.b5chat.util.LocaleUtils"
     errorPage="../error.jsp"
 %><%@ page import="org.xmpp.packet.JID"%>
 
@@ -28,9 +28,9 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
 
-<jsp:useBean id="info" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
+<jsp:useBean id="info" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out); %>
 
 <decorator:usePage id="decoratedPage" />
@@ -64,11 +64,11 @@
     </script>
     <script type="text/javascript" src="<%= path %>/js/behaviour.js"></script>
     <script type="text/javascript">
-    // Add a nice little rollover effect to any row in a emiva-table object. This will help
+    // Add a nice little rollover effect to any row in a b5chat-table object. This will help
     // visually link left and right columns.
     /*
     var myrules = {
-        '.emiva-table TBODY TR' : function(el) {
+        '.b5chat-table TBODY TR' : function(el) {
             el.onmouseover = function() {
                 this.style.backgroundColor = '#ffffee';
             }
@@ -83,27 +83,27 @@
     <decorator:head />
 </head>
 
-<body id="emiva-body">
+<body id="b5chat-body">
 
 <!-- BEGIN main -->
 <div id="main">
 
-    <div id="emiva-header">
-        <div id="emiva-logo">
+    <div id="b5chat-header">
+        <div id="b5chat-logo">
             <a href="/index.jsp"><img src="/images/login_logo.gif" alt="crossfire" width="179" height="53" /></a>
         </div>
-        <div id="emiva-userstatus">
+        <div id="b5chat-userstatus">
             <%= AdminConsole.getAppName() %> <%= AdminConsole.getVersionString() %><br/>
             <fmt:message key="admin.logged_in_as"><fmt:param value="<%= "<strong>"+StringUtils.escapeHTMLTags(JID.unescapeNode(webManager.getUser().getUsername()))+"</strong>" %>"/></fmt:message> - <a href="<%= path %>/index.jsp?logout=true"><%= LocaleUtils.getLocalizedString("global.logout") %></a>
         </div>
-        <div id="emiva-nav">
-            <div id="emiva-nav-left"></div>
+        <div id="b5chat-nav">
+            <div id="b5chat-nav-left"></div>
             <admin:tabs css="" currentcss="currentlink">
             <a href="[url]" title="[description]" onmouseover="self.status='[description]';return true;" onmouseout="self.status='';return true;">[name]</a>
             </admin:tabs>
-            <div id="emiva-nav-right"></div>
+            <div id="b5chat-nav-right"></div>
         </div>
-        <div id="emiva-subnav">
+        <div id="b5chat-subnav">
             <admin:subnavbar css="" currentcss="current">
                 <a href="[url]" title="[description]"
                   onmouseover="self.status='[description]';return true;" onmouseout="self.status='';return true;"
@@ -112,14 +112,14 @@
         </div>
     </div>
 
-    <div id="emiva-main">
+    <div id="b5chat-main">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
     <tbody>
         <tr valign="top">
             <td width="1%">
-                <div id="emiva-sidebar-container">
-                    <div id="emiva-sidebar-box">
-                        <div id="emiva-sidebar">
+                <div id="b5chat-sidebar-container">
+                    <div id="b5chat-sidebar-box">
+                        <div id="b5chat-sidebar">
                             <admin:sidebar css="" currentcss="currentlink" headercss="category">
                                 <a href="[url]" title="[description]"
                                   onmouseover="self.status='[description]';return true;" onmouseout="self.status='';return true;"
@@ -136,7 +136,7 @@
                     </div>
                 </div>
             </td>
-            <td width="99%" id="emiva-content">
+            <td width="99%" id="b5chat-content">
 
 
                 <%  if (message != null) { %>
@@ -149,7 +149,7 @@
                     <decorator:title default="&nbsp;"/>
                 </h1>
 
-                <div id="emiva-main-content">
+                <div id="b5chat-main-content">
                     <decorator:body/>
                 </div>
             </td>
@@ -162,14 +162,14 @@
 <!-- END main -->
 
 <!-- BEGIN footer -->
-	<div id="emiva-footer">
-        <div class="emiva-footer-nav">
+	<div id="b5chat-footer">
+        <div class="b5chat-footer-nav">
             <admin:tabs css="" currentcss="currentlink" justlinks="true">
             <a href="[url]" title="[description]" onmouseover="self.status='[description]';return true;" onmouseout="self.status='';return true;">[name]</a>
             </admin:tabs>
         </div>
-        <div class="emiva-footer-copyright">
-            Built by the <a href="http://www.emiva.net">EMIVA</a> community
+        <div class="b5chat-footer-copyright">
+            Built by the <a href="http://www.b5chat.org">B5Chat</a> community
         </div>
     </div>
 <!-- END footer -->

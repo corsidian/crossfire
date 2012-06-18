@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -20,16 +20,16 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.util.*,
+<%@ page import="org.b5chat.util.*,
                  java.util.Iterator,
-                 net.emiva.crossfire.*,
+                 org.b5chat.crossfire.*,
                  java.util.*,
-                 net.emiva.crossfire.server.RemoteServerManager,
-                 net.emiva.crossfire.server.RemoteServerConfiguration"
+                 org.b5chat.crossfire.server.RemoteServerManager,
+                 org.b5chat.crossfire.server.RemoteServerConfiguration"
     errorPage="error.jsp"
 %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters
@@ -215,12 +215,12 @@
 
 <%  if (!errors.isEmpty()) { %>
 
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
-            <td class="emiva-icon-label">
+            <td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
+            <td class="b5chat-icon-label">
 
             <% if (errors.get("idletime") != null) { %>
                 <fmt:message key="server2server.settings.valid.idle_minutes" />
@@ -237,11 +237,11 @@
 
 <%  } else if (closeSettingsSuccess || updateSucess || allowSuccess || blockSuccess || deleteSuccess) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <% if (updateSucess) { %>
             <fmt:message key="server2server.settings.confirm.updated" />
         <% } else if (allowSuccess) { %>
@@ -264,10 +264,10 @@
 
 <!-- BEGIN 'Service Enabled' -->
 <form action="server2server-settings.jsp" method="post">
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="server2server.settings.enabled.legend" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
 			<tr valign="middle">
@@ -303,10 +303,10 @@
 
 <!-- BEGIN 'Idle Connection Settings' -->
 <form action="server2server-settings.jsp?closeSettings" method="post">
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="server2server.settings.close_settings" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
 			<tr valign="middle">
@@ -340,10 +340,10 @@
 <!-- END 'Idle Connection Settings' -->
 
 <!-- BEGIN 'Allowed to Connect' -->
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="server2server.settings.allowed" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<form action="server2server-settings.jsp" method="post">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
@@ -377,7 +377,7 @@
 		<br><br>
 		</form>
 
-		<table class="emiva-table" cellpadding="0" cellspacing="0" border="0" >
+		<table class="b5chat-table" cellpadding="0" cellspacing="0" border="0" >
 		<thead>
 			<tr>
 				<th width="1%">&nbsp;</th>
@@ -398,7 +398,7 @@
 			for (Iterator<RemoteServerConfiguration> it=configs.iterator(); it.hasNext(); count++) {
 				RemoteServerConfiguration configuration = it.next();
 		   %>
-			<tr class="emiva-<%= (((count%2)==0) ? "even" : "odd") %>">
+			<tr class="b5chat-<%= (((count%2)==0) ? "even" : "odd") %>">
 				<td>
 					<%= count %>
 				</td>
@@ -438,15 +438,15 @@
 <!-- END 'Allowed to Connect' -->
 
 <!-- BEGIN 'Not Allowed to Connect' -->
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="server2server.settings.disallowed" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="1" border="0" width="100%"><tr><td>
 		<fmt:message key="server2server.settings.disallowed.info" />
 		</td></tr></table>
 		<p>
-		<table class="emiva-table" cellpadding="3" cellspacing="0" border="0" width="100%">
+		<table class="b5chat-table" cellpadding="3" cellspacing="0" border="0" width="100%">
 		<thead>
 			<tr>
 				<th width="1%">&nbsp;</th>
@@ -466,7 +466,7 @@
 			for (Iterator<RemoteServerConfiguration> it=blockedComponents.iterator(); it.hasNext(); count++) {
 				RemoteServerConfiguration configuration = it.next();
 		   %>
-			<tr class="emiva-<%= (((count%2)==0) ? "even" : "odd") %>">
+			<tr class="b5chat-<%= (((count%2)==0) ? "even" : "odd") %>">
 				<td>
 					<%= count %>
 				</td>

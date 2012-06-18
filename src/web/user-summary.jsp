@@ -3,7 +3,7 @@
   -	$Revision: 11767 $
   -	$Date: 2010-07-14 12:04:28 -0400 (Wed, 14 Jul 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -18,14 +18,14 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.PresenceManager,
-                 net.emiva.crossfire.admin.AdminManager,
-                 net.emiva.crossfire.user.User,
-                 net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.Globals,
-                 net.emiva.util.LocaleUtils,
-                 net.emiva.util.ParamUtils"
-%><%@ page import="net.emiva.util.StringUtils"%>
+<%@ page import="org.b5chat.crossfire.PresenceManager,
+                 org.b5chat.crossfire.admin.AdminManager,
+                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.user.UserManager,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.LocaleUtils,
+                 org.b5chat.util.ParamUtils"
+%><%@ page import="org.b5chat.util.StringUtils"%>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="org.xmpp.packet.Presence" %>
 <%@ page import="java.net.URLEncoder" %>
@@ -39,7 +39,7 @@
     final int[] RANGE_PRESETS = {25, 50, 75, 100, 500, 1000, -1};
 %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>
@@ -71,11 +71,11 @@
 
 <%  if (request.getParameter("deletesuccess") != null) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="user.summary.deleted" />
         </td></tr>
     </tbody>
@@ -135,7 +135,7 @@
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="user-summary.jsp?start=<%= (i*range) %>&range=<%= range %>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "b5chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>
@@ -152,7 +152,7 @@
 
 <%  } %>
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -199,7 +199,7 @@
         }
         Boolean isAdmin = AdminManager.getInstance().isUserAdmin(user.getUsername(), false);
 %>
-    <tr class="emiva-<%= (((i%2)==0) ? "even" : "odd") %>">
+    <tr class="b5chat-<%= (((i%2)==0) ? "even" : "odd") %>">
         <td width="1%">
             <%= i %>
         </td>
@@ -296,7 +296,7 @@
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="user-summary.jsp?start=<%= (i*range) %>&range=<%= range %>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "b5chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>

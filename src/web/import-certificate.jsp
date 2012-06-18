@@ -1,7 +1,7 @@
-<%@ page import="net.emiva.util.CertificateManager,
-                net.emiva.util.ParamUtils,
-                net.emiva.crossfire.XmppServer,
-                net.emiva.crossfire.core.net.SSLConfig,
+<%@ page import="org.b5chat.util.CertificateManager,
+                org.b5chat.util.ParamUtils,
+                org.b5chat.crossfire.XmppServer,
+                org.b5chat.crossfire.core.net.SSLConfig,
                 java.io.ByteArrayInputStream,
                 java.util.HashMap,
                 java.util.Map"
@@ -10,7 +10,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%--
@@ -79,11 +79,11 @@
 
   <%  if (errors.containsKey("privateKey")) { %>
 
-      <div class="emiva-error">
+      <div class="b5chat-error">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.import.certificate.error.private-key" />
           </td></tr>
       </tbody>
@@ -92,11 +92,11 @@
 
   <%  } else if (errors.containsKey("certificate")) { %>
 
-      <div class="emiva-error">
+      <div class="b5chat-error">
   <table cellpadding="0" cellspacing="0" border="0">
   <tbody>
-      <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-      <td class="emiva-icon-label">
+      <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+      <td class="b5chat-icon-label">
       <fmt:message key="ssl.import.certificate.error.certificate" />
       </td></tr>
   </tbody>
@@ -107,11 +107,11 @@
           Exception e = (Exception)errors.get("import");
   %>
 
-      <div class="emiva-error">
+      <div class="b5chat-error">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.import.certificate.error.import" />
           <%  if (e != null && e.getMessage() != null) { %>
               <fmt:message key="ssl.certificates.error_messenge" />: <%= e.getMessage() %>
@@ -131,10 +131,10 @@
 
   <!-- BEGIN 'Import Private Key and Certificate' -->
   <form action="import-certificate.jsp" method="post" name="f">
-      <div class="emiva-contentBoxHeader">
+      <div class="b5chat-contentBoxHeader">
           <fmt:message key="ssl.import.certificate.boxtitle" />
       </div>
-      <div class="emiva-contentBox">
+      <div class="b5chat-contentBox">
           <table cellpadding="3" cellspacing="0" border="0">
           <tbody>
               <tr valign="top">

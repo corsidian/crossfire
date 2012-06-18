@@ -9,8 +9,8 @@
 
 package org.dom4j.io;
 
-import net.emiva.crossfire.core.net.MXParser;
 
+import org.b5chat.crossfire.core.net.MXParser;
 import org.dom4j.*;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

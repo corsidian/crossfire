@@ -5,13 +5,13 @@
   -	$Date: 2005-08-11 12:56:15 -0700 (Thu, 11 Aug 2005) $
 --%>
 
-<%@ page import="net.emiva.database.DbConnectionManager,
-                 net.emiva.database.DefaultConnectionProvider,
-                 net.emiva.util.ClassUtils,
-                 net.emiva.util.Globals,
-                 net.emiva.util.Log,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.XmppServer,
+<%@ page import="org.b5chat.database.DbConnectionManager,
+                 org.b5chat.database.DefaultConnectionProvider,
+                 org.b5chat.util.ClassUtils,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.Log,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.XmppServer,
                  java.io.File,
                  java.lang.Double,
                  java.lang.Exception,
@@ -46,7 +46,7 @@
             if (con == null) {
             }
             else {
-            	// See if the emiva db schema is installed.
+            	// See if the b5chat db schema is installed.
             	try {
             		Statement stmt = con.createStatement();
             		// Pick an arbitrary table to see if it's there.
@@ -128,9 +128,9 @@
         if (errors.size() == 0) {
             // set properties, test connection, etc
 
-            // Force the standard emiva connection provider to be used by deleting the current setting:
+            // Force the standard b5chat connection provider to be used by deleting the current setting:
             Globals.setXMLProperty("connectionProvider.className",
-                    "net.emiva.database.DefaultConnectionProvider");
+                    "org.b5chat.database.DefaultConnectionProvider");
             DefaultConnectionProvider conProvider = new DefaultConnectionProvider();
             try {
                 conProvider.setDriver(driver);
@@ -235,15 +235,15 @@
 
 
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN b5chat-contentBox -->
+	<div class="b5chat-contentBox">
 
 
 <%  // DB preset data
     List<String[]> presets = new ArrayList<String []>();
     presets.add(new String[]{"MySQL","com.mysql.jdbc.Driver","jdbc:mysql://[host-name]:3306/[database-name]"});
     presets.add(new String[]{"Oracle","oracle.jdbc.driver.OracleDriver","jdbc:oracle:thin:@[host-name]:1521:[SID]"});
-    presets.add(new String[]{"Microsoft SQLServer","net.sourceforge.jtds.jdbc.Driver","jdbc:jtds:sqlserver://[host-name]/[database-name];appName=emiva"});
+    presets.add(new String[]{"Microsoft SQLServer","net.sourceforge.jtds.jdbc.Driver","jdbc:jtds:sqlserver://[host-name]/[database-name];appName=b5chat"});
     presets.add(new String[]{"PostgreSQL","org.postgresql.Driver","jdbc:postgresql://[host-name]:5432/[database-name]"});
     presets.add(new String[]{"IBM DB2","com.ibm.db2.jcc.DB2Driver","jdbc:db2://[host]:50000/[database-name]"});
 %>
@@ -291,9 +291,9 @@ function checkSubmit() {
     <td>
         <input type="text" name="driver" size="50" maxlength="150"
          value="<%= ((driver != null) ? driver : "") %>">
-        <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.jdbc_info" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+        <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.jdbc_info" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("driver") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <%= errors.get("driver") %>
             </span>
         <%  } %>
@@ -306,9 +306,9 @@ function checkSubmit() {
     <td>
         <input type="text" name="serverURL" size="50" maxlength="250"
          value="<%= ((serverURL != null) ? serverURL : "") %>">
-	    <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.valid_url" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+	    <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.valid_url" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("serverURL") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <%= errors.get("serverURL") %>
             </span>
         <%  } %>
@@ -322,9 +322,9 @@ function checkSubmit() {
     <td>
         <input type="text" name="username" size="20" maxlength="50"
          value="<%= ((username != null) ? username : "") %>">
-        <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.username_info" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+        <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.username_info" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("username") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <%= errors.get("username") %>
             </span>
         <%  } %>
@@ -337,9 +337,9 @@ function checkSubmit() {
     <td>
         <input type="password" name="password" size="20" maxlength="50"
          value="<%= ((password != null) ? password : "") %>">
-        <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.password_info" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+        <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.password_info" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("password") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <%= errors.get("password") %>
             </span>
         <%  } %>
@@ -353,9 +353,9 @@ function checkSubmit() {
     </td>
     <td>
 	    <input type="text" name="minConnections" size="5" maxlength="5" value="<%= ((minConnections != -1) ? ""+minConnections : "") %>">
-        <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.pool" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+        <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.pool" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("minConnections") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <%= errors.get("minConnections") %>
             </span>
         <%  } %>
@@ -368,9 +368,9 @@ function checkSubmit() {
     </td>
     <td>
 	    <input type="text" name="maxConnections" size="5" maxlength="5" value="<%= ((maxConnections != -1) ? ""+maxConnections : "") %>">
-        <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.pool" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+        <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.pool" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("maxConnections") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <%= errors.get("maxConnections") %>
             </span>
         <%  } %>
@@ -383,9 +383,9 @@ function checkSubmit() {
     <td>
         <input type="text" name="connectionTimeout" size="5" maxlength="5"
          value="<%= connectionTimeout %>"> <span style="display: block; float: left; padding: 2px 5px 0px 2px;">Days</span>
-        <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.timeout_info" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+        <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.datasource.standard.timeout_info" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("connectionTimeout") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <%= errors.get("connectionTimeout") %>
             </span>
         <%  } %>
@@ -395,14 +395,14 @@ function checkSubmit() {
 
 <br>
 
-		<div align="right"><div class="emiva-description" style="padding-bottom:10px;">
+		<div align="right"><div class="b5chat-description" style="padding-bottom:10px;">
 			<fmt:message key="setup.datasource.standard.note" /></div>
-			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="b5chat-setup-save" border="0">
 		</div>
 	</form>
 
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END b5chat-contentBox -->
 
 
 </body>

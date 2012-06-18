@@ -1,7 +1,7 @@
-<%@ page import="net.emiva.util.CertificateManager" %>
-<%@ page import="net.emiva.util.ParamUtils" %>
-<%@ page import="net.emiva.crossfire.XmppServer" %>
-<%@ page import="net.emiva.crossfire.core.net.SSLConfig" %>
+<%@ page import="org.b5chat.util.CertificateManager" %>
+<%@ page import="org.b5chat.util.ParamUtils" %>
+<%@ page import="org.b5chat.crossfire.XmppServer" %>
+<%@ page import="org.b5chat.crossfire.core.net.SSLConfig" %>
 <%@ page import="java.security.KeyStore" %>
 <%@ page import="java.security.cert.X509Certificate" %>
 <%@ page import="java.util.Enumeration" %>
@@ -10,7 +10,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%--
@@ -117,66 +117,66 @@
 </head>
 <body>
 <%  if (errors.containsKey("name")) { %>
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_name" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("organizationalUnit")) { %>
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_ou" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("organization")) { %>
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_o" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("city")) { %>
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_city" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("state")) { %>
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_state" />
         </td></tr>
     </tbody>
     </table>
     </div><br>
 <%  } else if (errors.containsKey("countryCode")) { %>
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="ssl.signing-request.enter_country" />
         </td></tr>
     </tbody>
@@ -187,10 +187,10 @@
 <!-- BEGIN 'Issuer information form' -->
 <form action="ssl-signing-request.jsp" method="post">
     <input type="hidden" name="save" value="true">
-    <div class="emiva-contentBoxHeader">
+    <div class="b5chat-contentBoxHeader">
         <fmt:message key="ssl.signing-request.issuer_information"/>
     </div>
-    <div class="emiva-contentBox">
+    <div class="b5chat-contentBox">
         <p>
             <fmt:message key="ssl.signing-request.issuer_information_info"/>
         </p>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Smack Build Script ========================================== -->
-<!-- EMIVA Community      ============================================== -->
+<!-- B5Chat Community      ============================================== -->
 
 <!--
     $RCSfile$
@@ -41,22 +41,22 @@
    <target name="jar" depends="compile" unless="jar.uptodate" description="Produces throttletest.jar">
        <jar destfile="${basedir}/target/throttlereader.jar"
            basedir="${compile.dir}"
-           includes="net/emiva/crossfire/test/throttle/ThrottleTestReader.class"
+           includes="net/b5chat/crossfire/test/throttle/ThrottleTestReader.class"
         >
             <zipfileset src="${merge.lib.dir}/smack.jar"/>
             <zipfileset src="${merge.lib.dir}/smackx.jar"/>
             <manifest>
-                <attribute name="Main-Class" value="net.emiva.crossfire.test.throttle.ThrottleTestReader" />
+                <attribute name="Main-Class" value="org.b5chat.crossfire.test.throttle.ThrottleTestReader" />
             </manifest>
        </jar>
         <jar destfile="${basedir}/target/throttlewriter.jar"
            basedir="${compile.dir}"
-           includes="net/emiva/crossfire/test/throttle/ThrottleTestWriter.class"
+           includes="net/b5chat/crossfire/test/throttle/ThrottleTestWriter.class"
         >
             <zipfileset src="${merge.lib.dir}/smack.jar"/>
             <zipfileset src="${merge.lib.dir}/smackx.jar"/>
             <manifest>
-                <attribute name="Main-Class" value="net.emiva.crossfire.test.throttle.ThrottleTestWriter" />
+                <attribute name="Main-Class" value="org.b5chat.crossfire.test.throttle.ThrottleTestWriter" />
             </manifest>
        </jar>
    </target>

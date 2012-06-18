@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.SessionResultFilter,
-                 net.emiva.crossfire.session.IClientSession,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.SessionManager,
+                 org.b5chat.crossfire.SessionResultFilter,
+                 org.b5chat.crossfire.session.IClientSession,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
                  java.util.Collection"
     errorPage="error.jsp"
 %>
@@ -38,7 +38,7 @@
     static final int[] REFRESHES = {0, 10, 30, 60, 90};
     static final String[] REFRESHES_LABELS = {NONE,"10","30","60","90"};
 %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters
@@ -107,7 +107,7 @@
 
 <%  if ("success".equals(request.getParameter("close"))) { %>
 
-    <p class="emiva-success-text">
+    <p class="b5chat-success-text">
     <fmt:message key="session.summary.close" />
     </p>
 
@@ -140,7 +140,7 @@
                         boolean isCurrent = (i+1) == curPage;
                 %>
                     <a href="session-summary.jsp?start=<%= (i*range) %>"
-                     class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+                     class="<%= ((isCurrent) ? "b5chat-current" : "") %>"
                      ><%= (i+1) %></a><%= sep %>
 
                 <%  } %>
@@ -186,7 +186,7 @@
      Collection<ClientSession> sessions = sessionManager.getSessions(filter);
  %>
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -269,7 +269,7 @@
             boolean isCurrent = (i+1) == curPage;
     %>
         <a href="session-summary.jsp?start=<%= (i*range) %>"
-         class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+         class="<%= ((isCurrent) ? "b5chat-current" : "") %>"
          ><%= (i+1) %></a><%= sep %>
 
     <%  } %>

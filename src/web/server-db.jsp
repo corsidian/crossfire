@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.*,
-                 net.emiva.database.DbConnectionManager,
+<%@ page import="org.b5chat.util.*,
+                 org.b5chat.database.DbConnectionManager,
                  java.sql.*"
     errorPage="error.jsp"
 %>
@@ -30,7 +30,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
 
 <html>
     <head>
@@ -51,7 +51,7 @@
 <fmt:message key="server.db.info" />
 </p>
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -178,7 +178,7 @@
 
 <br/><br/>
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>

@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,19 +17,19 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.IConnection,
-                 net.emiva.crossfire.IConnectionManager,
-                 net.emiva.crossfire.XmppServer,
-                 net.emiva.crossfire.server.ServerDialback,
-                 net.emiva.crossfire.session.LocalClientSession,
-                 net.emiva.util.Globals"
+<%@ page import="org.b5chat.crossfire.IConnection,
+                 org.b5chat.crossfire.IConnectionManager,
+                 org.b5chat.crossfire.XmppServer,
+                 org.b5chat.crossfire.server.ServerDialback,
+                 org.b5chat.crossfire.session.LocalClientSession,
+                 org.b5chat.util.Globals"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.util.ParamUtils" %>
+<%@ page import="org.b5chat.util.ParamUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 <%  try { %>
 
@@ -209,11 +209,11 @@
 
 <%  if (success) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="ssl.settings.update" />
         </td></tr>
     </tbody>
@@ -222,11 +222,11 @@
 
 <%  } else if (ParamUtils.getBooleanParameter(request,"deletesuccess")) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="ssl.settings.uninstalled" />
         </td></tr>
     </tbody>
@@ -242,7 +242,7 @@
 
 <!-- BEGIN 'Client Connection Security' -->
 <form action="ssl-settings.jsp" method="post">
-	<div class="emiva-contentBox" style="-moz-border-radius: 3px;">
+	<div class="b5chat-contentBox" style="-moz-border-radius: 3px;">
 	<h4><fmt:message key="ssl.settings.client.legend" /></h4>
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>

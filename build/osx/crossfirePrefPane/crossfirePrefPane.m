@@ -3,7 +3,7 @@
 //  Preference panel for crossfire
 //
 //  Created by Daniel Henninger on 7/7/06.
-//  Copyright (c) 2006 EMIVA Community. All rights reserved.
+//  Copyright (c) 2006 B5Chat Community. All rights reserved.
 //
 //  Concept taken from MySQL preference panel, as well as some borrowed code.
 //

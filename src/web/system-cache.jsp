@@ -1,12 +1,12 @@
-<%@ page import="net.emiva.util.cache.Cache"%>
-<%@ page import="net.emiva.util.ParamUtils"%>
+<%@ page import="org.b5chat.util.cache.Cache"%>
+<%@ page import="org.b5chat.util.ParamUtils"%>
 <%@ page import="java.text.DecimalFormat"%>
 <%--
   -	$RCSfile$
   -	$Revision: $
   -	$Date: $
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>
@@ -88,10 +88,10 @@
             }
             if (r) {
                 if (el.checked) {
-                    r.className = "emiva-row-sel";
+                    r.className = "b5chat-row-sel";
                 }
                 else {
-                    r.className = "emiva-row";
+                    r.className = "b5chat-row";
                 }
             }
         }
@@ -122,11 +122,11 @@
 
 <%  if (doClearCache) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="system.cache.cleared" />
         </td></tr>
     </tbody>
@@ -152,7 +152,7 @@
 
 <form action="system-cache.jsp" method="post" name="cacheForm">
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -188,7 +188,7 @@
             lowEffec = (hits > 500 && hitValue < 85.0 && freeMem < 20.0);
         }
 %>
-    <tr class="<%= (lowEffec ? "emiva-error" : "") %>">
+    <tr class="<%= (lowEffec ? "b5chat-error" : "") %>">
         <td class="c1">
             <table cellpadding="0" cellspacing="0" border="0">
             <tr>
@@ -238,7 +238,7 @@
 </table>
 </div>
 
-<p class="emiva-description">
+<p class="b5chat-description">
 <fmt:message key="system.cache.desc.effectiveness" />
 </p>
 

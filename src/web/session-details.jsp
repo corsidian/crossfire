@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.PresenceManager,
-                 net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.session.IClientSession,
-                 net.emiva.crossfire.user.User,
-                 net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.PresenceManager,
+                 org.b5chat.crossfire.SessionManager,
+                 org.b5chat.crossfire.session.IClientSession,
+                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.user.UserManager,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
                  java.text.NumberFormat,
                  java.util.Collection"
     errorPage="error.jsp"
@@ -32,7 +32,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <% // Get parameters
@@ -47,7 +47,7 @@
     // Get the session & address objects
     SessionManager sessionManager = webManager.getSessionManager();
     JID address = new JID(jid);
-    net.emiva.crossfire.session.IClientSession currentSess = sessionManager.getSession(address);
+    org.b5chat.crossfire.session.IClientSession currentSess = sessionManager.getSession(address);
     boolean isAnonymous = webManager.getXMPPServer().isLocal(address) &&
             !UserManager.getInstance().isRegisteredUser(address.getNode());
 
@@ -98,7 +98,7 @@
 
 </p>
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -283,7 +283,7 @@
     <b><fmt:message key="session.details.multiple_session" /></b>
     </p>
 
-    <div class="emiva-table">
+    <div class="b5chat-table">
     <table cellpadding="3" cellspacing="1" border="0" width="100%">
     <tr>
         <th>&nbsp;</th>
@@ -315,9 +315,9 @@
     <tr>
         <td width="1%" nowrap>
 
-            <div class="emiva-table">
+            <div class="b5chat-table">
             <table cellpadding="0" cellspacing="0" border="0">
-            <tr class="emiva-current"><td><img src="images/blank.gif" width="12" height="12" border="0" alt=""></td></tr>
+            <tr class="b5chat-current"><td><img src="images/blank.gif" width="12" height="12" border="0" alt=""></td></tr>
             </table>
             </div>
 

@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.XmppServer,
-                 net.emiva.crossfire.handler.IQAuthHandler,
-                 net.emiva.crossfire.handler.IqRegisterHandler,
-                 net.emiva.crossfire.session.LocalClientSession,
-                 net.emiva.util.ParamUtils"
+<%@ page import="org.b5chat.crossfire.XmppServer,
+                 org.b5chat.crossfire.handler.IQAuthHandler,
+                 org.b5chat.crossfire.handler.IqRegisterHandler,
+                 org.b5chat.crossfire.session.LocalClientSession,
+                 org.b5chat.util.ParamUtils"
     errorPage="error.jsp"
 %>
 <%@ page import="java.util.HashMap"%>
@@ -33,7 +33,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>
@@ -95,7 +95,7 @@
     anonLogin = authHandler.isAnonymousAllowed();
     // Encode the allowed IP addresses
     StringBuilder buf = new StringBuilder();
-    Iterator<String> iter = net.emiva.crossfire.session.LocalClientSession.getAllowedIPs().keySet().iterator();
+    Iterator<String> iter = org.b5chat.crossfire.session.LocalClientSession.getAllowedIPs().keySet().iterator();
     if (iter.hasNext()) {
         buf.append(iter.next());
     }
@@ -105,7 +105,7 @@
     allowedIPs = buf.toString();
 
     StringBuilder buf1 = new StringBuilder();
-    Iterator<String> iter1 = net.emiva.crossfire.session.LocalClientSession.getAllowedAnonymIPs().keySet().iterator();
+    Iterator<String> iter1 = org.b5chat.crossfire.session.LocalClientSession.getAllowedAnonymIPs().keySet().iterator();
     if (iter1.hasNext()) {
         buf1.append(iter1.next());
     }
@@ -123,11 +123,11 @@
 
 <% if (save) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="reg.settings.update" />
         </td></tr>
     </tbody>
@@ -137,10 +137,10 @@
 <% } %>
 
 <!-- BEGIN registration settings -->
-	<!--<div class="emiva-contentBoxHeader">
+	<!--<div class="b5chat-contentBoxHeader">
 
 	</div>-->
-	<div class="emiva-contentBox" style="-moz-border-radius: 3px;">
+	<div class="b5chat-contentBox" style="-moz-border-radius: 3px;">
 
 	<h4><fmt:message key="reg.settings.inband_account" /></h4>
 	<p>

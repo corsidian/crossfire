@@ -2,7 +2,7 @@
   -	$Revision$
   -	$Date$
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.lockout.LockOutFlag"
+<%@ page import="org.b5chat.crossfire.lockout.LockOutFlag"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.crossfire.lockout.LockOutManager" %>
-<%@ page import="net.emiva.crossfire.security.SecurityAuditManager" %>
-<%@ page import="net.emiva.crossfire.session.IClientSession" %>
-<%@ page import="net.emiva.util.ParamUtils" %>
+<%@ page import="org.b5chat.crossfire.lockout.LockOutManager" %>
+<%@ page import="org.b5chat.crossfire.security.SecurityAuditManager" %>
+<%@ page import="org.b5chat.crossfire.session.IClientSession" %>
+<%@ page import="org.b5chat.util.ParamUtils" %>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="org.xmpp.packet.StreamError" %>
 <%@ page import="java.net.URLEncoder" %>
@@ -32,7 +32,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters //
@@ -86,7 +86,7 @@
             }
             // Disabled your own user account, force login
             if (username.equals(webManager.getAuthToken().getUsername())){
-                session.removeAttribute("emiva.admin.authToken");
+                session.removeAttribute("b5chat.admin.authToken");
                 response.sendRedirect("login.jsp");
                 return;
             }
@@ -159,7 +159,7 @@
 </p>
 
 <c:if test="${webManager.user.username == param.username}">
-    <p class="emiva-warning-text">
+    <p class="b5chat-warning-text">
     <fmt:message key="user.lockout.warning" /> <b><fmt:message key="user.lockout.warning2" /></b> <fmt:message key="user.lockout.warning3" />
     </p>
 </c:if>

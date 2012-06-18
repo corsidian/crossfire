@@ -3,7 +3,7 @@
 if [ -d /usr/local/crossfire ]; then
 
 	# stop crossfire
-	/bin/launchctl unload /Library/LaunchDaemons/net.emiva.crossfire.plist
+	/bin/launchctl unload /Library/LaunchDaemons/org.b5chat.crossfire.plist
 
 	# remove existing tmp storage
 	/bin/rm -rf /tmp/crossfireInstallBackup

@@ -3,7 +3,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -23,14 +23,14 @@
                  java.text.SimpleDateFormat,
                  java.util.Date,
                  java.text.ParseException,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.util.Log,
-                 net.emiva.util.StringUtils"
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.util.Log,
+                 org.b5chat.util.StringUtils"
     errorPage="error.jsp"
 %>
 
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
 
 <%!
     static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd kk:mm:ss");
@@ -64,7 +64,7 @@
         if (input == null || "".equals(input)) {
             return input;
         }
-        if (input.indexOf("net.emiva.") > -1) {
+        if (input.indexOf("net.b5chat.") > -1) {
             StringBuffer buf = new StringBuffer();
             buf.append("<span class=\"hilite\">").append(input).append("</span>");
             return buf.toString();

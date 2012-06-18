@@ -2,7 +2,7 @@
   -	$Revision$
   -	$Date$
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,16 +17,16 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.user.UserNotFoundException"
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.user.UserNotFoundException"
     errorPage="error.jsp"
 %>
 <%@ page import="java.net.URLEncoder"%>
-<%@ page import="net.emiva.crossfire.roster.Roster" %>
-<%@ page import="net.emiva.crossfire.roster.RosterItem" %>
-<%@ page import="net.emiva.util.LocaleUtils" %>
+<%@ page import="org.b5chat.crossfire.roster.Roster" %>
+<%@ page import="org.b5chat.crossfire.roster.RosterItem" %>
+<%@ page import="org.b5chat.util.LocaleUtils" %>
 <%@ page import="java.util.*" %>
-<%@ page import="net.emiva.crossfire.group.Group" %>
+<%@ page import="org.b5chat.crossfire.group.Group" %>
 <%@ page import="org.xmpp.packet.JID" %>
 
 <%!
@@ -36,7 +36,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 
 <%
     class RosterItemComparator implements Comparator<RosterItem> {
@@ -103,11 +103,11 @@
 
     <%  if (request.getParameter("addsuccess") != null) { %>
 
-        <div class="emiva-success">
+        <div class="b5chat-success">
         <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-            <tr><td class="emiva-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
-            <td class="emiva-icon-label">
+            <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
+            <td class="b5chat-icon-label">
             <fmt:message key="user.roster.added" />
             </td></tr>
         </tbody>
@@ -118,11 +118,11 @@
 
     <%  if (request.getParameter("editsuccess") != null) { %>
 
-        <div class="emiva-success">
+        <div class="b5chat-success">
         <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-            <tr><td class="emiva-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
-            <td class="emiva-icon-label">
+            <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
+            <td class="b5chat-icon-label">
             <fmt:message key="user.roster.edited" />
             </td></tr>
         </tbody>
@@ -133,11 +133,11 @@
 
     <%  if (request.getParameter("deletesuccess") != null) { %>
 
-        <div class="emiva-success">
+        <div class="b5chat-success">
         <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-            <tr><td class="emiva-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
-            <td class="emiva-icon-label">
+            <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" alt="" width="16" height="16" border="0"></td>
+            <td class="b5chat-icon-label">
             <fmt:message key="user.roster.deleted" />
             </td></tr>
         </tbody>
@@ -190,7 +190,7 @@
             boolean isCurrent = (i + 1) == curPage;
     %>
         <a href="user-roster.jsp?username=<%= URLEncoder.encode(username, "UTF-8") %>&start=<%= (i*range) %>&range=<%= range %>&filter=<%= filter %>"
-        class="<%= ((isCurrent) ? "emiva-current" : "") %>"
+        class="<%= ((isCurrent) ? "b5chat-current" : "") %>"
         ><%= (i+1) %></a><%= sep %>
 
     <%  } %>
@@ -236,7 +236,7 @@
 </select>
 </p>
 
-<div class="emiva-table" style="clear: both">
+<div class="b5chat-table" style="clear: both">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -286,7 +286,7 @@
                     break;
                 }
     %>
-    <tr class="emiva-<%= (((i%2)==0) ? "even" : "odd") %>">
+    <tr class="b5chat-<%= (((i%2)==0) ? "even" : "odd") %>">
 
         <td width="1%">
             <%= i %>

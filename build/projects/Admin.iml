@@ -43,7 +43,7 @@
           <containerElement type="library" level="module">
             <attribute name="method" value="0" />
             <attribute name="URI" value="/WEB-INF/lib" />
-            <url>jar://$MODULE_DIR$/../lib/ant-emiva-edition.jar!/</url>
+            <url>jar://$MODULE_DIR$/../lib/ant-b5chat-edition.jar!/</url>
           </containerElement>
           <containerElement type="library" level="module">
             <attribute name="method" value="0" />

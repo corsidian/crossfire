@@ -7,9 +7,9 @@
   -	$Date: 2005-09-23 10:54:57 -0700 (Fri, 23 Sep 2005) $
 --%>
 
-<%@ page import="net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.XmppServer" %>
+<%@ page import="org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.XmppServer" %>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.Map"%>
@@ -18,11 +18,11 @@
 
 <%! // Global vars, methods, etc
 
-    static final String emiva_HOME = "emiva_home";
-    static final String emiva_LICENSE = "emiva_license_file";
-    static final String emiva_LICENSE_TEXT = "emiva_license_text";
-    static final String emiva_DEPENDENCY = "emiva_dependency";
-    static final String emiva_CONFIG_FILE = "emiva_config_file";
+    static final String b5chat_HOME = "b5chat_home";
+    static final String b5chat_LICENSE = "b5chat_license_file";
+    static final String b5chat_LICENSE_TEXT = "b5chat_license_text";
+    static final String b5chat_DEPENDENCY = "b5chat_dependency";
+    static final String b5chat_CONFIG_FILE = "b5chat_config_file";
 %>
 
 <%
@@ -79,8 +79,8 @@
 	</p>
 
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN b5chat-contentBox -->
+	<div class="b5chat-contentBox">
 
 	<h2><fmt:message key="setup.index.choose_lang" /></h2>
 
@@ -92,7 +92,7 @@
         if (usingPreset) { break; }
     }
 %>
-		<div id="emiva-setup-language">
+		<div id="b5chat-setup-language">
 			<p>
 			<label for="loc01">
 			<input type="radio" name="localeCode" value="cs_CZ" <%= ("cs_CZ".equals(locale.toString()) ? "checked" : "") %> id="loc01" />
@@ -153,12 +153,12 @@
 		</div>
 
 		<div align="right">
-			<input type="Submit" name="save" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="Submit" name="save" value="<fmt:message key="global.continue" />" id="b5chat-setup-save" border="0">
 		</div>
 	</form>
 
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END b5chat-contentBox -->
 
 
 </body>

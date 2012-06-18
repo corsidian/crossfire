@@ -1,6 +1,6 @@
-<%@ page import="net.emiva.util.ParamUtils"
+<%@ page import="org.b5chat.util.ParamUtils"
          errorPage="error.jsp"%>
-<%@ page import="net.emiva.crossfire.XmppServer" %>
+<%@ page import="org.b5chat.crossfire.XmppServer" %>
 <%--
   Created by IntelliJ IDEA.
   User: gato
@@ -12,7 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%-- Define Administration Bean --%>
-<jsp:useBean id="admin" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <%

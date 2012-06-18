@@ -3,7 +3,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.session.IClientSession,
-                 net.emiva.crossfire.user.User,
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.SessionManager,
+                 org.b5chat.crossfire.session.IClientSession,
+                 org.b5chat.crossfire.user.User,
                  org.xmpp.packet.JID,
                  java.net.URLEncoder,
                  java.util.Collection,
@@ -43,7 +43,7 @@
     String message = ParamUtils.getParameter(request,"message");
 %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(pageContext); %>
 
 <%
@@ -138,11 +138,11 @@
 
 <%  if (success) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="user.message.send" />
         </td></tr>
     </tbody>
@@ -180,10 +180,10 @@ function updateSelect(el) {
 <%  } %>
 
 	<!-- BEGIN send message block -->
-	<!--<div class="emiva-contentBoxHeader">
+	<!--<div class="b5chat-contentBoxHeader">
 		<fmt:message key="user.message.send_admin_msg" />
 	</div>-->
-	<div class="emiva-contentBox" style="-moz-border-radius: 3px;">
+	<div class="b5chat-contentBox" style="-moz-border-radius: 3px;">
 		<table cellpadding="3" cellspacing="1" border="0" width="600">
 
 		<tr><td colspan=3 class="text" style="padding-bottom: 10px;">
@@ -198,7 +198,7 @@ function updateSelect(el) {
 		<%  } %>
 		</td></tr>
 		<tr>
-			<td class="emiva-label">
+			<td class="b5chat-label">
 				<fmt:message key="user.message.to" />:
 			</td>
 			<td>
@@ -236,7 +236,7 @@ function updateSelect(el) {
 					<%  if (errors.get("jid") != null) { %>
 
 						<br>
-						<span class="emiva-error-text">
+						<span class="b5chat-error-text">
 						<fmt:message key="user.message.valid_address" />
 						</span>
 
@@ -246,13 +246,13 @@ function updateSelect(el) {
 			</td>
 		</tr>
 		<tr valign="top">
-			<td class="emiva-label">
+			<td class="b5chat-label">
 				<fmt:message key="user.message.message" />:
 			</td>
 			<td>
 				<%  if (errors.get("message") != null) { %>
 
-					<span class="emiva-error-text">
+					<span class="b5chat-error-text">
 					<fmt:message key="user.message.valid_message" />
 					</span>
 					<br>

@@ -3,7 +3,7 @@
   -	$Revision: $
   -	$Date: $
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.Globals" %>
+<%@ page import="org.b5chat.util.Globals" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
@@ -34,10 +34,10 @@
     </p>
 
     <form action="profile-settings.jsp" method="post">
-        <!--<div class="emiva-contentBoxHeader">
+        <!--<div class="b5chat-contentBoxHeader">
 
         </div>-->
-        <div class="emiva-contentBox" style="-moz-border-radius: 3px;">
+        <div class="b5chat-contentBox" style="-moz-border-radius: 3px;">
             <table cellpadding="3" cellspacing="3" border="0">
             <tbody>
                 <tr>

@@ -25,30 +25,30 @@ A:active {
     color : #9cf;
 }
 
-.emiva-setup-header TABLE {
+.b5chat-setup-header TABLE {
     border : 1px #333 solid;
 }
-.emiva-setup-header TD {
+.b5chat-setup-header TD {
     font-family : arial, helvetica, sans-serif;
     font-size : 1.3em;
     color : #ffffff;
     background-color : #369;
     background: url(../images/setup-header.png)
 }
-.emiva-setup-footer {
+.b5chat-setup-footer {
     text-align : center;
 }
-.emiva-setup-page-header {
+.b5chat-setup-page-header {
     font-size : 1.2em;
     font-weight : bold;
 }
-.emiva-setup-page-subheader {
+.b5chat-setup-page-subheader {
     font-weight : bold;
 }
-.emiva-setup-error-text {
+.b5chat-setup-error-text {
     color : #f00;
 }
-.emiva-setup-sidebar-top {
+.b5chat-setup-sidebar-top {
     color : #fff;
     text-align : center;
     padding : 6px;
@@ -57,7 +57,7 @@ A:active {
     background-position : top center;
     background-repeat : no-repeat;
 }
-.emiva-setup-sidebar-bottom {
+.b5chat-setup-sidebar-bottom {
     color : #000;
     padding : 6px;
     background-color : #D3E9FF;
@@ -65,46 +65,46 @@ A:active {
     background-position : bottom center;
     background-repeat : no-repeat;
 }
-.emiva-setup-sidebar-bottom A:visited {
+.b5chat-setup-sidebar-bottom A:visited {
     color : #000;
 }
-.emiva-setup-header .emiva-info {
+.b5chat-setup-header .b5chat-info {
     color : #333;
     font-size : 0.8em;
     font-family : arial, helvetica, sans-serif;
     font-weight : bold;
 }
-.emiva-setup-category-header {
+.b5chat-setup-category-header {
     font-weight : bold;
     background-color : #eee;
     border-bottom : 1px #ccc solid;
     border-right : 1px #ccc solid;
 }
-.emiva-setup-category .emiva-info {
+.b5chat-setup-category .b5chat-info {
     font-size : 0.8em;
 }
-.emiva-setup-category {
+.b5chat-setup-category {
     padding-left : 20px;
 }
-.emiva-setup-checklist-box {
+.b5chat-setup-checklist-box {
     border-width: 0px 1px 1px 0px;
     border-color: #ccc;
     border-style : solid;
     padding-left : 1em;
     padding-right : 1em;
 }
-.emiva-error-text {
+.b5chat-error-text {
 	color: #f00;
 	}
-.emiva-label {
+.b5chat-label {
 	padding-right: 10px;
 	padding-top: 6px;
 }
-.emiva-description {
+.b5chat-description {
 	font-family: verdana;
 	font-size: 0.8em;
 	}
-.emiva-custom-datasource .emiva-label {
+.b5chat-custom-datasource .b5chat-label {
 	font-size: 0.8em;
 	font-family: verdana;
 	}

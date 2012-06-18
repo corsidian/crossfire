@@ -3,9 +3,9 @@
   -	$Date: 2008-02-18 23:21:33 -0500 (Mon, 18 Feb 2008) $
 --%>
 
-<%@ page import="net.emiva.crossfire.session.ISession,
-                 net.emiva.util.LocaleUtils,
-                 net.emiva.util.StringUtils,
+<%@ page import="org.b5chat.crossfire.session.ISession,
+                 org.b5chat.util.LocaleUtils,
+                 org.b5chat.util.StringUtils,
                  org.xmpp.packet.JID,
                  org.xmpp.packet.Presence"%>
  <%@ page import="java.net.URLEncoder"%>
@@ -14,7 +14,7 @@
 
  <%--
    - This page is meant to be included in other pages. It assumes 2 variables:
-   -     * 'sess', a net.emiva.xmpp.Session object
+   -     * 'sess', a net.b5chat.xmpp.Session object
    -     * 'count', an int representing the row number we're on.
    -     * 'current', a boolean which indicates the current row the user is looking (pass in
    -       false if there is no current row.
@@ -23,11 +23,11 @@
 
 <%  if (current) { %>
 
-    <tr class="emiva-current">
+    <tr class="b5chat-current">
 
 <%  } else { %>
 
-    <tr class="emiva-<%= (((count % 2) == 0) ? "even" : "odd") %>">
+    <tr class="b5chat-<%= (((count % 2) == 0) ? "even" : "odd") %>">
 
 <%  } %>
 
@@ -50,7 +50,7 @@
 
             <fmt:message key="session.details.connect" />
 
-        <% } else if (_status == net.emiva.crossfire.session.ISession.STATUS_AUTHENTICATED) { %>
+        <% } else if (_status == org.b5chat.crossfire.session.ISession.STATUS_AUTHENTICATED) { %>
 
             <fmt:message key="session.details.authenticated" />
 

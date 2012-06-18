@@ -4,12 +4,12 @@
   -	$Date: 2005-07-18 10:16:48 -0700 (Mon, 18 Jul 2005) $
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                 net.emiva.util.Globals,
+<%@ page import="org.b5chat.util.ParamUtils,
+                 org.b5chat.util.Globals,
                  java.util.Map,
                  java.util.HashMap,
                  java.net.InetAddress,
-                 net.emiva.crossfire.XmppServer"
+                 org.b5chat.crossfire.XmppServer"
 %>
 <%@ page import="java.net.UnknownHostException" %>
 
@@ -114,8 +114,8 @@
 	<fmt:message key="setup.host.settings.info" />
 	</p>
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN b5chat-contentBox -->
+	<div class="b5chat-contentBox">
 
 		<form action="setup-host-settings.jsp" name="f" method="post">
 
@@ -127,9 +127,9 @@
     <td width="99%">
         <input type="text" size="30" maxlength="150" name="domain"
          value="<%= ((domain != null) ? domain : "") %>">
-	    <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.host.settings.hostname" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+	    <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.host.settings.hostname" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("domain") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <fmt:message key="setup.host.settings.invalid_domain" />
             </span>
         <%  } %>
@@ -143,9 +143,9 @@
     <td width="99%">
         <input type="text" size="6" maxlength="6" name="embeddedPort"
          value="<%= ((embeddedPort != Integer.MIN_VALUE) ? ""+embeddedPort : "9090") %>">
-        <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.host.settings.port_number" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+        <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.host.settings.port_number" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
         <%  if (errors.get("embeddedPort") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <fmt:message key="setup.host.settings.invalid_port" />
             </span>
         <%  } %>
@@ -158,9 +158,9 @@
     <td width="99%">
         <input type="text" size="6" maxlength="6" name="securePort"
          value="<%= ((securePort != Integer.MIN_VALUE) ? ""+securePort : "9091") %>">
-        <span class="emiva-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.host.settings.secure_port_number" />', 'styleClass', 'emivaTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
+        <span class="b5chat-setup-helpicon" onmouseover="domTT_activate(this, event, 'content', '<fmt:message key="setup.host.settings.secure_port_number" />', 'styleClass', 'b5chatTooltip', 'trail', true, 'delay', 300, 'lifetime', 8000);"></span>
          <%  if (errors.get("securePort") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <fmt:message key="setup.host.settings.invalid_port" />
             </span>
         <%  } %>
@@ -173,12 +173,12 @@
 
 
 		<div align="right">
-			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="b5chat-setup-save" border="0">
 		</div>
 	</form>
 
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END b5chat-contentBox -->
 
 
 <script language="JavaScript" type="text/javascript">

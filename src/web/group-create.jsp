@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.group.Group,
-                 net.emiva.crossfire.group.GroupAlreadyExistsException,
-                 net.emiva.crossfire.security.SecurityAuditManager,
-                 net.emiva.util.Log"
+<%@ page import="org.b5chat.crossfire.group.Group,
+                 org.b5chat.crossfire.group.GroupAlreadyExistsException,
+                 org.b5chat.crossfire.security.SecurityAuditManager,
+                 org.b5chat.util.Log"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.util.ParamUtils"%>
+<%@ page import="org.b5chat.util.ParamUtils"%>
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Map" %>
@@ -31,7 +31,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <%  webManager.init(request, response, session, application, out); %>
 
 <%  // Get parameters //
@@ -149,14 +149,14 @@
 <c:set var="submit" value="${param.create}"/>
 
 <%  if (errors.get("general") != null) { %>
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon">
+            <td class="b5chat-icon">
                 <img src="images/error-16x16.gif" width="16" height="16" border="0" alt="">
             </td>
-            <td class="emiva-icon-label">
+            <td class="b5chat-icon-label">
                 <fmt:message key="group.create.error" />
             </td>
         </tr>
@@ -192,7 +192,7 @@
    <% } %>
 
     <!-- BEGIN create group -->
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
         <%
             // If editing the group.
             if (groupName != null) {
@@ -205,7 +205,7 @@
         <fmt:message key="group.create.new_group_title" />
         <% } %>
     </div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
     <tr valign="top">
         <td width="1%" nowrap>
@@ -223,9 +223,9 @@
             <td width="1%" nowrap>&nbsp;</td>
             <td width="99%">
                 <%  if (errors.get("name") != null) { %>
-                    <span class="emiva-error-text"><fmt:message key="group.create.invalid_group_name" /></span>
+                    <span class="b5chat-error-text"><fmt:message key="group.create.invalid_group_name" /></span>
                 <%  } else if (errors.get("groupAlreadyExists") != null) { %>
-                    <span class="emiva-error-text"><fmt:message key="group.create.invalid_group_info" /></span>
+                    <span class="b5chat-error-text"><fmt:message key="group.create.invalid_group_info" /></span>
                 <%  } %>
             </td>
         </tr>
@@ -249,7 +249,7 @@
                 &nbsp;
             </td>
             <td width="99%">
-                <span class="emiva-error-text"><fmt:message key="group.create.invalid_description" /></span>
+                <span class="b5chat-error-text"><fmt:message key="group.create.invalid_description" /></span>
             </td>
         </tr>
 
@@ -274,7 +274,7 @@
 	</tr>
     </table>
 	</div>
-	<span class="emiva-description">* <fmt:message key="group.create.required_fields" /> </span>
+	<span class="b5chat-description">* <fmt:message key="group.create.required_fields" /> </span>
 	<!-- END create group -->
 
 </form>

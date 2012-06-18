@@ -4,24 +4,24 @@
   -	$Date: 2010-01-10 16:44:34 -0500 (Sun, 10 Jan 2010) $
 --%>
 
-<%@ page import="net.emiva.plugin.admin.AdminConsole,
-                 net.emiva.crossfire.admin.AdminManager"
+<%@ page import="org.b5chat.plugin.admin.AdminConsole,
+                 org.b5chat.crossfire.admin.AdminManager"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.crossfire.core.cluster.ClusterManager" %>
-<%@ page import="net.emiva.crossfire.core.container.AdminConsolePlugin" %>
+<%@ page import="org.b5chat.crossfire.core.cluster.ClusterManager" %>
+<%@ page import="org.b5chat.crossfire.core.container.AdminConsolePlugin" %>
 <%@ page import="org.xmpp.packet.JID" %>
-<%@ page import="net.emiva.crossfire.auth.*" %>
+<%@ page import="org.b5chat.crossfire.auth.*" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="net.emiva.util.*" %>
-<%@ page import="net.emiva.plugin.admin.LoginLimitManager" %>
+<%@ page import="org.b5chat.util.*" %>
+<%@ page import="org.b5chat.plugin.admin.LoginLimitManager" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="admin" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <%!
@@ -48,7 +48,7 @@
 
     String password = ParamUtils.getParameter(request, "password");
     String url = ParamUtils.getParameter(request, "url");
-    url = net.emiva.util.StringUtils.escapeHTMLTags(url);
+    url = org.b5chat.util.StringUtils.escapeHTMLTags(url);
 
     // SSO between cluster nodes
     String secret = ParamUtils.getParameter(request, "secret");
@@ -93,7 +93,7 @@
             }
             if (errors.isEmpty()) {
                 LoginLimitManager.getInstance().recordSuccessfulAttempt(loginUsername, request.getRemoteAddr());
-                session.setAttribute("emiva.admin.authToken", authToken);
+                session.setAttribute("b5chat.admin.authToken", authToken);
                 response.sendRedirect(go(url));
                 return;
             }
@@ -115,7 +115,7 @@
 
     // Escape HTML tags in username to prevent cross-site scripting attacks. This
     // is necessary because we display the username in the page below.
-    username = net.emiva.util.StringUtils.escapeHTMLTags(username);
+    username = org.b5chat.util.StringUtils.escapeHTMLTags(username);
 
 %>
 
@@ -161,11 +161,11 @@
 
 <div align="center">
     <!-- BEGIN login box -->
-    <div id="emiva-loginBox">
+    <div id="b5chat-loginBox">
         
-        <div align="center" id="emiva-loginTable">
+        <div align="center" id="b5chat-loginTable">
 
-            <span id="emiva-login-header" style="background: transparent url(images/login_logo.gif) no-repeat left; padding: 29px 0 10px 205px;">
+            <span id="b5chat-login-header" style="background: transparent url(images/login_logo.gif) no-repeat left; padding: 29px 0 10px 205px;">
             <fmt:message key="admin.console" />
             </span>
 
@@ -181,7 +181,7 @@
                                     <table cellpadding="0" cellspacing="0" border="0">
                                     <tr valign="top">
                                         <td><img src="images/error-16x16.gif" width="16" height="16" border="0" alt="" vspace="2"></td>
-                                        <td><div class="emiva-error-text" style="padding-left:5px; color:#cc0000;"><fmt:message key="login.error" /></div></td>
+                                        <td><div class="b5chat-error-text" style="padding-left:5px; color:#cc0000;"><fmt:message key="login.error" /></div></td>
                                     </tr>
                                     </table>
                                 </td>
@@ -194,7 +194,7 @@
                                         <% for (String error:errors.values()) { %>
                                     <tr valign="top">
                                         <td><img src="images/error-16x16.gif" width="16" height="16" border="0" alt="" vspace="2"></td>
-                                        <td><div class="emiva-error-text" style="padding-left:5px; color:#cc0000;"><%= error%></div></td>
+                                        <td><div class="b5chat-error-text" style="padding-left:5px; color:#cc0000;"><%= error%></div></td>
                                     </tr>
                                         <% } %>
                                     </table>
@@ -207,8 +207,8 @@
                             <td align="center"><input type="submit" value="&nbsp; <fmt:message key="login.login" /> &nbsp;"></td>
                         </tr>
                         <tr valign="top">
-                            <td class="emiva-login-label"><label for="u01"><fmt:message key="login.username" /></label></td>
-                            <td class="emiva-login-label"><label for="p01"><fmt:message key="login.password" /></label></td>
+                            <td class="b5chat-login-label"><label for="u01"><fmt:message key="login.username" /></label></td>
+                            <td class="b5chat-login-label"><label for="p01"><fmt:message key="login.password" /></label></td>
                             <td>&nbsp;</td>
                         </tr>
                         </table>
@@ -216,7 +216,7 @@
                 </tr>
                 <tr>
                     <td align="right">
-                        <div align="right" id="emiva-loginVersion">
+                        <div align="right" id="b5chat-loginVersion">
                         <%= AdminConsole.getAppName() %>, <fmt:message key="login.version" />: <%= AdminConsole.getVersionString() %>
                         </div>
                     </td>

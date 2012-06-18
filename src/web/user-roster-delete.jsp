@@ -2,7 +2,7 @@
   -	$Revision$
   -	$Date$
   -
-  - Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,17 +17,17 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.*,
+<%@ page import="org.b5chat.util.*,
                  org.xmpp.packet.JID,
                  java.net.URLEncoder"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.crossfire.roster.Roster" %>
+<%@ page import="org.b5chat.crossfire.roster.Roster" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <% // Get parameters

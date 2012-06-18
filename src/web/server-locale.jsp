@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.Globals,
-                 net.emiva.util.LocaleUtils,
-                 net.emiva.util.Log,
-                 net.emiva.util.ParamUtils"
+<%@ page import="org.b5chat.util.Globals,
+                 org.b5chat.util.LocaleUtils,
+                 org.b5chat.util.Log,
+                 org.b5chat.util.ParamUtils"
 %>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Locale"%>
@@ -30,7 +30,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters //
@@ -90,10 +90,10 @@
 
 <!-- BEGIN locale settings -->
 <form action="server-locale.jsp" method="post" name="sform">
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="locale.system.set" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<p>
         <b><fmt:message key="locale.current" />:</b> <%= locale.getDisplayName(locale) %> /
             <%= LocaleUtils.getTimeZoneName(Globals.getTimeZone().getID(), locale) %>

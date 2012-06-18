@@ -3,7 +3,7 @@
   -	$Revision$
   -	$Date$
   -
-  - Copyright (C) 2004-2010 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2010 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.util.Globals,
-				 net.emiva.crossfire.XmppServer,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.crossfire.IConnectionManager,
+<%@ page import="org.b5chat.util.Globals,
+				 org.b5chat.crossfire.XmppServer,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.IConnectionManager,
                  java.util.Collection"
     errorPage="error.jsp"
 %>
@@ -32,7 +32,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>
@@ -117,11 +117,11 @@
 
 <%  if ("true".equals(request.getParameter("success"))) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
             <fmt:message key="client.connections.settings.confirm.updated" />
         </td></tr>
     </tbody>
@@ -132,10 +132,10 @@
 <form action="client-connections-settings.jsp" method="post" name="editform">
 
 <!-- BEGIN 'Client ports' -->
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="client.connections.settings.ports.title" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0" width="100%">
 		<tbody>
 		<tr valign="top">
@@ -147,14 +147,14 @@
 	             size="5" maxlength="5">
             <%  if (errors.containsKey("port")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.valid_port" />
                 <a href="#" onclick="document.editform.port.value='<%=ConnectionManager.DEFAULT_PORT%>';"
                  ><fmt:message key="server.props.valid_port1" /></a>.
                 </span>
             <%  } else if (errors.containsKey("portsEqual")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 <fmt:message key="server.props.error_port" />
                 </span>
             <%  } %>
@@ -194,7 +194,7 @@
 	             size="5" maxlength="5">
 	            <%  if (errors.containsKey("sslPort")) { %>
 	                <br>
-	                <span class="emiva-error-text">
+	                <span class="b5chat-error-text">
 	                <fmt:message key="server.props.ssl_valid" />
 	                <a href="#" onclick="document.editform.sslPort.value='<%=ConnectionManager.DEFAULT_SSL_PORT%>';"
 	                 ><fmt:message key="server.props.ssl_valid1" /></a>.
@@ -211,11 +211,11 @@
 <br />
 
 <!-- BEGIN 'Idle Connection Policy' -->
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="client.connections.settings.idle.title" />
 	</div>
 
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<p><fmt:message key="client.connections.settings.idle.info" /></p>
 		<table cellpadding="3" cellspacing="0" border="0" width="100%">
 		<tbody>
@@ -238,7 +238,7 @@
 	             size="5" maxlength="5">&nbsp;<fmt:message key="global.seconds" />.
             <%  if (errors.containsKey("clientIdle")) { %>
                 <br>
-                <span class="emiva-error-text">
+                <span class="b5chat-error-text">
                 	<fmt:message key="client.connections.settings.idle.valid_timeout" />.
                 </span>
             <%  } %>

@@ -3,16 +3,16 @@
   -	$Revision: 7860 $
   -	$Date: 2007-04-02 19:26:20 -0400 (Mon, 02 Apr 2007) $
 --%>
-<%@ page import="net.emiva.plugin.admin.AdminConsole,
-                 net.emiva.util.LocaleUtils"%>
+<%@ page import="org.b5chat.plugin.admin.AdminConsole,
+                 org.b5chat.util.LocaleUtils"%>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="admin" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <%  String path = request.getContextPath();
@@ -32,7 +32,7 @@
 
 <body>
 
-<div id="emiva-header">
+<div id="b5chat-header">
 <table cellpadding="0" cellspacing="0" width="100%" border="0">
 <tbody>
     <tr>
@@ -54,18 +54,18 @@
 </table>
 </div>
 
-<div id="emiva-main">
+<div id="b5chat-main">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tbody>
     <tr valign="top">
         <td width="1%">
-            <div id="emiva-sidebar">
+            <div id="b5chat-sidebar">
                 <img src="<%= path %>/images/blank.gif" width="5" height="1" border="0" alt="">
             </div>
         </td>
-        <td width="99%" id="emiva-content">
+        <td width="99%" id="b5chat-content">
 
-        <div id="emiva-title">
+        <div id="b5chat-title">
             <%= title %>
         </div>
 

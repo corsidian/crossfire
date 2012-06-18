@@ -1,23 +1,23 @@
 /* completed step */
-#emiva-sidebar ul li.completelink {
+#b5chat-sidebar ul li.completelink {
     background:transparent url(/images/setup_sidebar_check.gif) no-repeat scroll left center;
     font-weight:bold;
 }
 
 /* progress bar */
-#emiva-sidebar-progress {
+#b5chat-sidebar-progress {
 }
-#emiva-sidebar-progress img {
+#b5chat-sidebar-progress img {
     display: block;
     border: 1px solid #9e9e9e;
     margin: 3px 0 3px 9px;
 }
-#emiva-sidebar-progress a {
+#b5chat-sidebar-progress a {
     padding-left: 15px;
 }
 
 /* styles specific to the 'stepbar' (seen on the LDAP screens) */
-#emiva-contentBox_stepbar {
+#b5chat-contentBox_stepbar {
 	display: block;
 	margin: 5px 0 0 0;
 	padding: 3px;
@@ -26,33 +26,33 @@
 	color: #000000;
 	font-size: 8pt;
 }
-#emiva-contentBox_stepbar span {
+#b5chat-contentBox_stepbar span {
 	margin-right: 32px;
 }
-#emiva-contentBox_stepbar span strong {
+#b5chat-contentBox_stepbar span strong {
 	color: #000000;
 }
-#emiva-contentBox_stepbar span em {
+#b5chat-contentBox_stepbar span em {
 	color: #666;
 	font-style: normal;
 }
 /* contentBox style, used with 'stepbar' above (seen on the LDAP screens) */
-.emiva-contentBox_for-stepbar {
+.b5chat-contentBox_for-stepbar {
 	margin: 0 0 20px 0;
 	border-top: 0;
 	-moz-border-radius: 0 0 4px 4px;
 }
-.emiva-contentBox_for-stepbar h2 {
+.b5chat-contentBox_for-stepbar h2 {
 	font-size: 14pt;
 	color: #555555;
 }
-.emiva-contentBox_for-stepbar h2 span {
+.b5chat-contentBox_for-stepbar h2 span {
 	font-size: 10pt;
 	color: #000;
 }
 
 /* blue div container (seen on the LDAP screens) */
-.emiva-contentBox_bluebox {
+.b5chat-contentBox_bluebox {
 	display: block;
 	position: relative;
 	border: 1px solid #bbbbbb;
@@ -61,7 +61,7 @@
 	margin: 0 0 12px 0;
 	padding: 12px;
 }
-.emiva-contentBox_bluebox strong {
+.b5chat-contentBox_bluebox strong {
 	display: block;
 	position: relative;
 	color: #000000;
@@ -69,7 +69,7 @@
 }
 
 /* grey div container (seen on the LDAP screens) */
-.emiva-contentBox_greybox {
+.b5chat-contentBox_greybox {
 	display: block;
 	position: relative;
 	border: 1px solid #bbbbbb;
@@ -78,7 +78,7 @@
 	margin: 0 0 12px 0;
 	padding: 12px;
 }
-.emiva-contentBox_greybox strong {
+.b5chat-contentBox_greybox strong {
 	display: block;
 	position: relative;
 	color: #555555;
@@ -86,60 +86,60 @@
 }
 
 /* form elements for LDAP */
-.emiva-contentBox td select {
+.b5chat-contentBox td select {
 	z-index: 10;
 	float: left;
 }
-.emiva-contentBox td input {
+.b5chat-contentBox td input {
 	float: left;
 }
-.emiva-contentBox td select#emivaLDAPserverType,
-.emiva-contentBox td input#emivaLDAPbasedn,
-.emiva-contentBox td input#emivaLDAPadmindn {
+.b5chat-contentBox td select#b5chatLDAPserverType,
+.b5chat-contentBox td input#b5chatLDAPbasedn,
+.b5chat-contentBox td input#b5chatLDAPadmindn {
 	width: 320px;
 }
-.emiva-contentBox td input#emivaLDAPhost,
-.emiva-contentBox td input#emivaLDAPadminpwd,
-.emiva-contentBox td input#emivaLDAPusername,
-.emiva-contentBox td input#emivaLDAPgroupname,
-.emiva-contentBox td input#emivaLDAPgroupmember,
-.emiva-contentBox td input#emivaLDAPgroupdesc,
-.emiva-contentBox td input#emivaLDAPgroupsearchfilter{
+.b5chat-contentBox td input#b5chatLDAPhost,
+.b5chat-contentBox td input#b5chatLDAPadminpwd,
+.b5chat-contentBox td input#b5chatLDAPusername,
+.b5chat-contentBox td input#b5chatLDAPgroupname,
+.b5chat-contentBox td input#b5chatLDAPgroupmember,
+.b5chat-contentBox td input#b5chatLDAPgroupdesc,
+.b5chat-contentBox td input#b5chatLDAPgroupsearchfilter{
 	width: 160px;
 }
-.emiva-contentBox td input#emivaLDAPsearchfields,
-.emiva-contentBox td input#emivaLDAPsearchfilter {
+.b5chat-contentBox td input#b5chatLDAPsearchfields,
+.b5chat-contentBox td input#b5chatLDAPsearchfilter {
 	width: 220px;
 }
-.emiva-contentBox td label {
+.b5chat-contentBox td label {
 	margin-right: 5px;
 }
 
 
 /* button to toggle the advanced settings panel */
-.emivaAdvancedButton {
+.b5chatAdvancedButton {
 	display: block;
 	position: relative;
 	width: auto;
 	clear: both;
 	margin-top: 0;
 }
-.emivaAdvancedButton a {
+.b5chatAdvancedButton a {
 	padding: 2px 0 2px 14px;
 	margin: 0 0 5px 0;
 	background: url('../images/twisty_closed_9x9.gif') no-repeat left;
 	background-position: 1px;
 	color: #555555;
 }
-a.emivaAdvancedButtonOn {
+a.b5chatAdvancedButtonOn {
 	background: transparent url('../images/twisty_opened_9x9.gif') no-repeat left;
 	background-position: 1px;
 }
-.emivaAdvancedButtonTopPad {
+.b5chatAdvancedButtonTopPad {
 	margin-top: 7px;
 }
 /* advanced settings panel (for Connection Settings) */
-.emivaadvancedPanelcs {
+.b5chatadvancedPanelcs {
 	display: block;
 	position: relative;
 	clear: both;
@@ -151,48 +151,48 @@ a.emivaAdvancedButtonOn {
 	overflow: hidden;
 	-moz-border-radius: 4px;
 }
-.emivaadvancedPanelcs div {
+.b5chatadvancedPanelcs div {
 	margin: 12px;
 }
-.emivaadvancedPanelcs div table {
+.b5chatadvancedPanelcs div table {
 	background-color: #fff;
 	border: 1px solid #ccc;
 }
-.emivaadvancedPanelcs div table th,
-.emivaadvancedPanelcs div table td {
+.b5chatadvancedPanelcs div table th,
+.b5chatadvancedPanelcs div table td {
 	font-size: 11px;
 	padding: 3px 5px 3px 5px;
 }
-.emivaadvancedPanelcs div table th,
-.emiva-vcardTable th {
+.b5chatadvancedPanelcs div table th,
+.b5chat-vcardTable th {
 	color: #000;
 	font-weight: bold;
 	background-color: #dddddd;
 }
-.emivaadvancedPanelcs div table td.emiva-advancedLabel {
+.b5chatadvancedPanelcs div table td.b5chat-advancedLabel {
 	color: #000000;
 	font-weight: bold;
 	background-color: #dddddd;
 	text-align: right;
 }
-.emivaadvancedPanelcs div table td.emiva-advancedDesc {
+.b5chatadvancedPanelcs div table td.b5chat-advancedDesc {
 	color: #333;
 }
-.emivaadvancedPanelcs div table td.emiva-advancedCenter {
+.b5chatadvancedPanelcs div table td.b5chat-advancedCenter {
 	text-align: center;
 }
-.emivaadvancedPanelcs div table td input {
+.b5chatadvancedPanelcs div table td input {
 	float: none;
 }
-.emivaadvancedPanelcs div table td.emiva-advancedBorderBottom,
-.emiva-vcardTable td.emiva-vardBorderBottom {
+.b5chatadvancedPanelcs div table td.b5chat-advancedBorderBottom,
+.b5chat-vcardTable td.b5chat-vardBorderBottom {
 	border-bottom: 1px solid #e8e8e8;
 }
-.emivaadvancedPanelcs div table td.emiva-advancedBorderRight,
-.emiva-vcardTable td.emiva-vardBorderRight {
+.b5chatadvancedPanelcs div table td.b5chat-advancedBorderRight,
+.b5chat-vcardTable td.b5chat-vardBorderRight {
 	border-right: 1px solid #e8e8e8;
 }
-.emivaadvancedPanelu {
+.b5chatadvancedPanelu {
 	margin-top: 8px;
 	width: 97%;
 	background-color: #fafafa;
@@ -200,51 +200,51 @@ a.emivaAdvancedButtonOn {
 	-moz-border-radius: 3px;
 	padding: 8px;
 }
-.emivaadvancedPanelu td {
+.b5chatadvancedPanelu td {
 	white-space: nowrap;
 }
 
 
 
-.emiva-vcardTable {
+.b5chat-vcardTable {
 	width: 90%;
 	background-color: #fff;
 	border: 1px solid #ccc;
 }
-html>body .emiva-vcardTable {
+html>body .b5chat-vcardTable {
 	width: 100%;
 }
-.emiva-vcardTable th,
-.emiva-vcardTable td {
+.b5chat-vcardTable th,
+.b5chat-vcardTable td {
 	font-size: 11px;
 	padding: 2px 5px 2px 5px;
 }
-.emiva-vcardTable th {
+.b5chat-vcardTable th {
 	text-align: left;
 }
-.emiva-vcardTable td.emiva-vcardTable-label,
-.emiva-vcardTable td.emiva-vcardTable-label strong {
+.b5chat-vcardTable td.b5chat-vcardTable-label,
+.b5chat-vcardTable td.b5chat-vcardTable-label strong {
 	color: #333;
 }
-.emiva-vcardTable td.emiva-vcardTable-value input {
+.b5chat-vcardTable td.b5chat-vcardTable-value input {
 	font-size: 10px;
 	width: 230px;
 }
 
 /* language selection specific styles */
-#emiva-setup-language {
+#b5chat-setup-language {
 	padding: 0 0 10px 18px;
 }
-#emiva-setup-language p {
+#b5chat-setup-language p {
 	line-height: 180%;
 }
 
 
 /* form buttons throughout setup process */
-.emiva-buttons {
+.b5chat-buttons {
 	padding-top: 15px;
 }
-.emiva-contentBox input#emiva-setup-save {
+.b5chat-contentBox input#b5chat-setup-save {
 	padding: 2px 5px 2px 5px;
 	margin: 0;
 	font-size: 11px;
@@ -254,8 +254,8 @@ html>body .emiva-vcardTable {
 	border: 1px solid #7c7c7c;
 	background: #d6892c url(../images/setup_btn_bg-orange.gif) repeat-x;
 }
-.emiva-contentBox input#emiva-setup-skip,
-.emiva-contentBox input#emiva-setup-back {
+.b5chat-contentBox input#b5chat-setup-skip,
+.b5chat-contentBox input#b5chat-setup-back {
 	padding: 2px 5px 2px 5px;
 	margin: 0 10px 0 0;
 	font-size: 11px;
@@ -265,7 +265,7 @@ html>body .emiva-vcardTable {
 	border: 1px solid #7c7c7c;
 	background: #8c8c8c url(../images/setup_btn_bg-grey.gif) repeat-x;
 }
-.emiva-contentBox input#emiva-setup-test {
+.b5chat-contentBox input#b5chat-setup-test {
 	padding: 2px 5px 2px 5px;
 	margin: 0 0 0 0;
 	font-size: 11px;
@@ -275,13 +275,13 @@ html>body .emiva-vcardTable {
 	border: 1px solid #7c7c7c;
 	background: #8c8c8c url(../images/setup_btn_bg-grey.gif) repeat-x;
 }
-.emiva-contentBox button#emiva-setup-test img {
+.b5chat-contentBox button#b5chat-setup-test img {
 	vertical-align: text-top;
 	margin: 0;
 	padding: 0;
 	border: 0;
 }
-.emiva-contentBox a#emiva-setup-test2 {
+.b5chat-contentBox a#b5chat-setup-test2 {
 	padding: 3px 5px 3px 5px;
 	margin: 0 10px 0 0;
 	font-size: 11px;
@@ -292,13 +292,13 @@ html>body .emiva-vcardTable {
 	text-decoration: none;
 	background: #8c8c8c url(../images/setup_btn_bg-grey.gif) repeat-x;
 }
-.emiva-contentBox a#emiva-setup-test2 img {
+.b5chat-contentBox a#b5chat-setup-test2 img {
 	vertical-align: text-top;
 	margin: 0;
 	padding: 0;
 	border: 0;
 }
-.emiva-description {
+.b5chat-description {
 	display: block;
 	clear: both;
 	font-size: 11px;
@@ -317,8 +317,8 @@ html>body .emiva-vcardTable {
     background-position : 5px 5px;
 	-moz-border-radius: 3px;
 }
-.emiva_setup_launchAdmin a,
-.emiva_setup_launchAdmin a:visited {
+.b5chat_setup_launchAdmin a,
+.b5chat_setup_launchAdmin a:visited {
 	position: relative;
 	padding: 6px 9px 6px 9px;
 	margin: 20px 0 0 0;
@@ -338,7 +338,7 @@ html>body .emiva-vcardTable {
 /* --------------------------------------------- */
 /*  Tooltip styles                               */
 /* --------------------------------------------- */
-.emiva-setup-helpicon {
+.b5chat-setup-helpicon {
 	display: block;
 	float: left;
 	width: 17px;
@@ -346,7 +346,7 @@ html>body .emiva-vcardTable {
     margin: 3px 0 0 5px;
 	background: transparent url(../images/setup_helpicon.gif) no-repeat;
 }
-div.emivaTooltip {
+div.b5chatTooltip {
 	position: absolute;
 	width: 330px;
 	padding: 6px;
@@ -359,7 +359,7 @@ div.emivaTooltip {
 	-moz-opacity: .92;
 	-khtml-opacity: .92;
 }
-div.emivaTooltip .contents {
+div.b5chatTooltip .contents {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333;
@@ -376,7 +376,7 @@ div.emivaTooltip .contents {
 /*  Test settings panel                          */
 /* --------------------------------------------- */
 
-.emiva-testPanel {
+.b5chat-testPanel {
 	display: block;
 	position: relative;
 	float: left;
@@ -388,15 +388,15 @@ div.emivaTooltip .contents {
 	z-index: 9997;
 	-moz-border-radius: 6px;
 }
-.emiva-testPanel-content {
+.b5chat-testPanel-content {
 	display: block;
 	float: left;
 	padding: 20px;
 	font-size: 8pt;
 	z-index: 9999;
 }
-.emiva-testPanel-close a,
-.emiva-testPanel-close a:visited {
+.b5chat-testPanel-close a,
+.b5chat-testPanel-close a:visited {
 	float: right;
 	color: #666;
 	padding: 2px 5px 2px 18px;
@@ -407,31 +407,31 @@ div.emivaTooltip .contents {
 	border: 1px solid #ccc;
 	z-index: 9999;
 }
-.emiva-testPanel-close a:hover {
+.b5chat-testPanel-close a:hover {
 	background-color: #e9e8d9;
 }
-.emiva-testPanel-content h2 {
+.b5chat-testPanel-content h2 {
 	font-size: 14pt;
 	color: #555555;
 	margin: 0 0 10px 0;
 	padding: 0;
 }
-.emiva-testPanel-content h2 span {
+.b5chat-testPanel-content h2 span {
 	font-size: 10pt;
 	color: #000;
 }
-.emiva-testPanel-content h4 {
+.b5chat-testPanel-content h4 {
 	font-size: 12pt;
 	margin: 0 0 10px 0;
 	padding: 0;
 }
-.emiva-testPanel-content h4.emiva-testSuccess {
+.b5chat-testPanel-content h4.b5chat-testSuccess {
 	color: #1e7100;
 }
-.emiva-testPanel-content h4.emiva-testError {
+.b5chat-testPanel-content h4.b5chat-testError {
 	color: #890000;
 }
-.emiva-testpanel-vcard {
+.b5chat-testpanel-vcard {
 	display: block;
 	float: left;
 	width: 682px;
@@ -439,38 +439,38 @@ div.emivaTooltip .contents {
 	padding: 4px;
 	background-color: #fff;
 }
-.emiva-testTable-vcard {
+.b5chat-testTable-vcard {
 	float: left;
 }
-.emiva-testpanel-vcard-header {
+.b5chat-testpanel-vcard-header {
 	border: 1px solid #dddddd;
 	background-color: #eaeaea;
 	font-weight: bold;
 	padding: 1px 2px 1px 4px;
 	font-size: 8pt;
 }
-.emiva-testpanel-vcard-label {
+.b5chat-testpanel-vcard-label {
 	text-align: right;
 	padding: 1px 2px 1px 6px;
 	color: #666;
 	font-size: 8pt;
 }
-.emiva-testpanel-vcard-value {
+.b5chat-testpanel-vcard-value {
 	text-align: left;
 	padding: 1px 8px 1px 2px;
 	font-size: 8pt;
 }
-.emiva-testpanel-vcard-value a {
+.b5chat-testpanel-vcard-value a {
 	color: #555555;
 }
-.emiva-testpanel-vcard-value strong {
+.b5chat-testpanel-vcard-value strong {
 	color: #890000;
 }
-.emiva-testpanel-vcard-next {
+.b5chat-testpanel-vcard-next {
 	text-align: right;
 	padding-top: 12px;
 }
-.emiva-testpanel-vcard-next a {
+.b5chat-testpanel-vcard-next a {
 	display: block;
 	float: right;
 	font-weight: bold;

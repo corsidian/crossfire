@@ -3,7 +3,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.SessionManager,
-                 net.emiva.crossfire.session.ComponentSession,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils"
+<%@ page import="org.b5chat.crossfire.SessionManager,
+                 org.b5chat.crossfire.session.ComponentSession,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils"
     errorPage="error.jsp"
 %>
 <%@ page import="java.text.NumberFormat" %>
@@ -29,7 +29,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters
@@ -63,7 +63,7 @@
 
 </p>
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>

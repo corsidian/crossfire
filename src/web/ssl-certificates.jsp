@@ -1,9 +1,9 @@
-<%@ page import="net.emiva.util.CertificateManager,
-                net.emiva.util.Globals,
-                net.emiva.util.ParamUtils,
-                net.emiva.util.StringUtils,
-                net.emiva.crossfire.XmppServer,
-                net.emiva.crossfire.core.net.SSLConfig,
+<%@ page import="org.b5chat.util.CertificateManager,
+                org.b5chat.util.Globals,
+                org.b5chat.util.ParamUtils,
+                org.b5chat.util.StringUtils,
+                org.b5chat.crossfire.XmppServer,
+                org.b5chat.crossfire.core.net.SSLConfig,
                 java.io.ByteArrayInputStream,
                 java.security.KeyStore,
                 java.security.PrivateKey,
@@ -14,13 +14,13 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="net.emiva.crossfire.core.container.PluginManager" %>
-<%@ page import="net.emiva.crossfire.core.container.AdminConsolePlugin" %>
+<%@ page import="org.b5chat.crossfire.core.container.PluginManager" %>
+<%@ page import="org.b5chat.crossfire.core.container.AdminConsolePlugin" %>
 <%@ page import="java.io.IOException" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%--
@@ -123,7 +123,7 @@
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
           <tr>
-          <td class="emiva-icon-label">
+          <td class="b5chat-icon-label">
               <fmt:message key="ssl.certificates.restart_server">
                   <fmt:param value="<%= "<a href='server-restart.jsp?page=ssl-certificates.jsp'>" %>" />
                   <fmt:param value="<%= "</a>" %>" />
@@ -135,11 +135,11 @@
   <%  } else if (errors.containsKey("ioerror")) {
           Exception e = (Exception)errors.get("ioerror");
   %>
-      <div class="emiva-error">
+      <div class="b5chat-error">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.io_error" /><br />
           <fmt:message key="ssl.certificates.no_installed">
               <fmt:param value="<%= "<a href='ssl-certificates.jsp?generate=true'>" %>" />
@@ -156,7 +156,7 @@
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
           <tr>
-          <td class="emiva-icon-label">
+          <td class="b5chat-icon-label">
               <fmt:message key="index.certificate-warning"/>
           </td></tr>
       </tbody>
@@ -167,7 +167,7 @@
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
           <tr>
-          <td class="emiva-icon-label">
+          <td class="b5chat-icon-label">
               <fmt:message key="ssl.certificates.no_installed">
                   <fmt:param value="<%= "<a href='ssl-certificates.jsp?generate=true'>" %>" />
                   <fmt:param value="<%= "</a>" %>" />
@@ -180,11 +180,11 @@
       </div><br>
   <%  } else if (ParamUtils.getBooleanParameter(request,"addupdatesuccess")) { %>
 
-      <div class="emiva-success">
+      <div class="b5chat-success">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.added_updated" />
           </td></tr>
       </tbody>
@@ -193,11 +193,11 @@
 
   <%  } else if (ParamUtils.getBooleanParameter(request,"generatesuccess")) { %>
 
-      <div class="emiva-success">
+      <div class="b5chat-success">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.generated" />
           </td></tr>
       </tbody>
@@ -206,11 +206,11 @@
 
   <%  } else if (ParamUtils.getBooleanParameter(request,"deletesuccess")) { %>
 
-      <div class="emiva-success">
+      <div class="b5chat-success">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.deleted" />
           </td></tr>
       </tbody>
@@ -221,11 +221,11 @@
           Exception e = (Exception)errors.get("delete");
   %>
 
-      <div class="emiva-error">
+      <div class="b5chat-error">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.error" />
           <%  if (e != null && e.getMessage() != null) { %>
               <fmt:message key="ssl.certificates.error_messenge" />: <%= e.getMessage() %>
@@ -237,11 +237,11 @@
 
   <%  } else if (ParamUtils.getBooleanParameter(request,"issuerUpdated")) { %>
 
-      <div class="emiva-success">
+      <div class="b5chat-success">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.issuer-updated" />
           </td></tr>
       </tbody>
@@ -250,11 +250,11 @@
 
   <%  } else if (ParamUtils.getBooleanParameter(request,"importsuccess")) { %>
 
-      <div class="emiva-success">
+      <div class="b5chat-success">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.imported" />
           </td></tr>
       </tbody>
@@ -263,11 +263,11 @@
 
   <%  } else if (errors.containsKey("importReply")) {  %>
 
-      <div class="emiva-error">
+      <div class="b5chat-error">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.error_importing-reply" />
           </td></tr>
       </tbody>
@@ -278,11 +278,11 @@
           Exception e = (Exception)errors.get("generate");
   %>
 
-      <div class="emiva-error">
+      <div class="b5chat-error">
       <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-          <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-          <td class="emiva-icon-label">
+          <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+          <td class="b5chat-icon-label">
           <fmt:message key="ssl.certificates.error" />
           <%  if (e != null && e.getMessage() != null) { %>
               <fmt:message key="ssl.certificates.error_messenge" />: <%= e.getMessage() %>
@@ -301,7 +301,7 @@
   </fmt:message>
   </p>
 
-  <table class="emiva-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+  <table class="b5chat-table" cellpadding="0" cellspacing="0" border="0" width="100%">
   <thead>
       <tr>
           <th width="1%">&nbsp;</th>
@@ -400,7 +400,7 @@
       <input name="alias" type="hidden" value="<%= a%>">
       <tr id="pk<%=i%>">
           <td colspan="6">
-              <span class="emiva-description">
+              <span class="b5chat-description">
               <fmt:message key="ssl.certificates.ca-reply" />
               </span>
               <textarea name="reply" cols="40" rows="3" style="width:100%;font-size:8pt;" wrap="virtual"></textarea>
@@ -420,10 +420,10 @@
   <!-- BEGIN 'Signing request' -->
   <% if (offerUpdateIssuer || !signingRequests.isEmpty()) { %>
   <br>
-  <div class="emiva-contentBoxHeader">
+  <div class="b5chat-contentBoxHeader">
       <fmt:message key="ssl.signing-request.title"/>
   </div>
-  <div class="emiva-contentBox">
+  <div class="b5chat-contentBox">
       <% if (offerUpdateIssuer) { %>
       <p>
           <fmt:message key="ssl.signing-request.offer-issuer-information">

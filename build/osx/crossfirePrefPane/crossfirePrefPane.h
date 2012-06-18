@@ -3,7 +3,7 @@
 //  Preference panel for crossfire
 //
 //  Created by Daniel Henninger on 7/7/06.
-//  Copyright (C) 2005-2008 EMIVA Community. All rights reserved.
+//  Copyright (C) 2005-2008 B5Chat Community. All rights reserved.
 //
 //  Concept taken from MySQL preference panel, as well as some borrowed code.
 //
@@ -17,7 +17,7 @@
 char *pscmd = "/bin/ps auxww | fgrep -v 'fgrep' | fgrep crossfire/lib/startup.jar";
 
 // The path to the plist file
-NSString *plistPath = @"/Library/LaunchDaemons/net.emiva.crossfire.plist";
+NSString *plistPath = @"/Library/LaunchDaemons/org.b5chat.crossfire.plist";
 
 
 @interface crossfirePrefPane : NSPreferencePane 

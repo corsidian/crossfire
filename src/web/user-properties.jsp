@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -17,25 +17,25 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.crossfire.PresenceManager,
-                 net.emiva.crossfire.admin.AdminManager,
-                 net.emiva.crossfire.group.Group,
-                 net.emiva.crossfire.user.User,
-                 net.emiva.crossfire.user.UserManager,
-                 net.emiva.crossfire.user.UserNotFoundException"
+<%@ page import="org.b5chat.crossfire.PresenceManager,
+                 org.b5chat.crossfire.admin.AdminManager,
+                 org.b5chat.crossfire.group.Group,
+                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.user.UserManager,
+                 org.b5chat.crossfire.user.UserNotFoundException"
     errorPage="error.jsp"
 %>
-<%@ page import="net.emiva.util.Globals"%>
-<%@ page import="net.emiva.util.LocaleUtils"%>
-<%@ page import="net.emiva.util.ParamUtils"%>
+<%@ page import="org.b5chat.util.Globals"%>
+<%@ page import="org.b5chat.util.LocaleUtils"%>
+<%@ page import="org.b5chat.util.ParamUtils"%>
 <%@ page import="org.xmpp.packet.JID"%><%@ page import="org.xmpp.packet.Presence"%>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.Collection" %>
-<%@ page import="net.emiva.util.StringUtils" %>
+<%@ page import="org.b5chat.util.StringUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 
 <%  // Get parameters //
     boolean cancel = request.getParameter("cancel") != null;
@@ -98,11 +98,11 @@
 
 <%  if (request.getParameter("success") != null) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="user.properties.created" />
         </td></tr>
     </tbody>
@@ -111,11 +111,11 @@
 
 <%  } else if (request.getParameter("locksuccess") != null) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="user.properties.locksuccess" />
         </td></tr>
     </tbody>
@@ -124,11 +124,11 @@
 
 <%  } else if (request.getParameter("unlocksuccess") != null) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="user.properties.unlocksuccess" />
         </td></tr>
     </tbody>
@@ -137,11 +137,11 @@
 
 <%  } else if (request.getParameter("editsuccess") != null) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="user.properties.update" />
         </td></tr>
     </tbody>
@@ -153,7 +153,7 @@
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-        <td class="emiva-icon-label">
+        <td class="b5chat-icon-label">
             <fmt:message key="error.specific_user_not_found">
                 <fmt:param value="<%= StringUtils.escapeHTMLTags(username)%>" />
             </fmt:message>
@@ -163,7 +163,7 @@
     </div><br>
 <%  } %>
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>

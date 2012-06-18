@@ -16,10 +16,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="net.emiva.util.ParamUtils,
-                   net.emiva.crossfire.XmppServer,
-                   net.emiva.crossfire.audit.IAuditManager,
-                 net.emiva.crossfire.user.UserNotFoundException,
+<%@ page import="org.b5chat.util.ParamUtils,
+                   org.b5chat.crossfire.XmppServer,
+                   org.b5chat.crossfire.audit.IAuditManager,
+                 org.b5chat.crossfire.user.UserNotFoundException,
                  org.xmpp.packet.JID,
                  java.io.File"
     errorPage="error.jsp"
@@ -28,7 +28,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>
@@ -140,11 +140,11 @@
         // All done, redirect
         %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="audit.policy.settings.saved_successfully" />
         </td></tr>
     </tbody>
@@ -186,10 +186,10 @@
 
 <!-- BEGIN 'Set Message Audit Policy' -->
 <form action="audit-policy.jsp" name="f">
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="audit.policy.policytitle" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
 			<tr valign="middle">
@@ -230,7 +230,7 @@
 
 						<%  if (errors.get("logDir") != null) { %>
 
-							<span class="emiva-error-text">
+							<span class="b5chat-error-text">
 							<fmt:message key="audit.policy.valid_log_directory" />
 							</span>
 
@@ -248,7 +248,7 @@
 
 						<%  if (errors.get("maxTotalSize") != null) { %>
 
-							<span class="emiva-error-text">
+							<span class="b5chat-error-text">
 							<fmt:message key="audit.policy.validnumber" />
 							</span>
 
@@ -266,7 +266,7 @@
 
 						<%  if (errors.get("maxFileSize") != null) { %>
 
-							<span class="emiva-error-text">
+							<span class="b5chat-error-text">
 							<fmt:message key="audit.policy.validnumber" />
 							</span>
 
@@ -284,7 +284,7 @@
 
 							<%  if (errors.get("maxDays") != null) { %>
 
-								<span class="emiva-error-text">
+								<span class="b5chat-error-text">
 								<fmt:message key="audit.policy.validnumber" />
 								</span>
 
@@ -302,7 +302,7 @@
 
 						<%  if (errors.get("logTimeout") != null) { %>
 
-							<span class="emiva-error-text">
+							<span class="b5chat-error-text">
 							<fmt:message key="audit.policy.validnumber" />
 							</span>
 
@@ -364,7 +364,7 @@
 							<textarea name="ignore" cols="40" rows="3" wrap="virtual"><%= ((ignore != null) ? ignore : "") %></textarea>
 							<%  if (errors.get("ignore") != null) { %>
 
-								<span class="emiva-error-text">
+								<span class="b5chat-error-text">
 								<fmt:message key="audit.policy.validignore" />
 								</span>
 

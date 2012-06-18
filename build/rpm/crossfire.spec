@@ -6,11 +6,11 @@ BuildRoot: %{_builddir}/%{name}-root
 Source0: %{crossfire_SOURCE}
 Source1: jre-dist.tar.gz
 Group: Applications/Communications
-Vendor: EMIVA Community
-Packager: EMIVA Community
+Vendor: B5Chat Community
+Packager: B5Chat Community
 License: Apache license v2.0
 AutoReqProv: no
-URL: http://www.emiva.net/
+URL: http://www.b5chat.org/
 
 %define prefix /opt
 %define homedir %{prefix}/crossfire
@@ -141,5 +141,5 @@ exit 0
 %{homedir}/jre
 
 %changelog
-* %{crossfire_BUILDDATE} EMIVA Community <webmaster@emiva.net> %{crossfire_VERSION}-1
+* %{crossfire_BUILDDATE} B5Chat Community <webmaster@b5chat.org> %{crossfire_VERSION}-1
 - Automatic RPM build.

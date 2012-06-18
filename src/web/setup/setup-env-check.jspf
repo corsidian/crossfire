@@ -6,15 +6,15 @@
 
 <%@ page import="java.lang.reflect.Method,
                  java.io.File,
-                 net.emiva.util.LocaleUtils" %>
-<%@ page import="net.emiva.util.ClassUtils"%>
+                 org.b5chat.util.LocaleUtils" %>
+<%@ page import="org.b5chat.util.ClassUtils"%>
 
 <%  // Check the user's environment for minimum requirements.
 
     boolean jdk13Installed = false;
     boolean servlet22Installed = false;
     boolean jsp11Installed = false;
-    boolean emivaJarsInstalled = false;
+    boolean b5chatJarsInstalled = false;
     boolean crossfireHomeExists = false;
     File crossfireHome = null;
 
@@ -39,14 +39,14 @@
     catch (ClassNotFoundException cnfe) {}
     // Check that the crossfire jar are installed:
     try {
-        ClassUtils.forName("net.emiva.crossfire.XmppServer");
-        emivaJarsInstalled = true;
+        ClassUtils.forName("org.b5chat.crossfire.XmppServer");
+        b5chatJarsInstalled = true;
     }
     catch (ClassNotFoundException cnfe) {}
 
-    // Try to determine what the emivaHome directory is:
+    // Try to determine what the b5chatHome directory is:
     try {
-        Class GlobalsClass = ClassUtils.forName("net.emiva.util.Globals");
+        Class GlobalsClass = ClassUtils.forName("org.b5chat.util.Globals");
         Method getcrossfireHomeMethod = GlobalsClass.getMethod("getHomeDirectory", (Class[])null);
         String crossfireHomeProp = (String)getcrossfireHomeMethod.invoke(GlobalsClass, (Object[])null);
         if (crossfireHomeProp != null) {
@@ -61,7 +61,7 @@
     }
 
     // If there were no errors, redirect to the main setup page
-    if (!jdk13Installed || !servlet22Installed || !jsp11Installed || !emivaJarsInstalled
+    if (!jdk13Installed || !servlet22Installed || !jsp11Installed || !b5chatJarsInstalled
             || !crossfireHomeExists)
     {
 %>
@@ -72,11 +72,11 @@
         </head>
         <body>
 
-        <p class="emiva-setup-page-header">
+        <p class="b5chat-setup-page-header">
         <fmt:message key="title" /> <fmt:message key="setup.title" />
         </p>
 
-        <p class="emiva-setup-error-text">
+        <p class="b5chat-setup-error-text">
         <fmt:message key="setup.env.check.error" /> <fmt:message key="title" /> <fmt:message key="setup.title" />.
         </p>
 
@@ -102,7 +102,7 @@
             <tr>
                 <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
                 <td>
-                    <span class="emiva-setup-error-text">
+                    <span class="b5chat-setup-error-text">
                     <fmt:message key="setup.env.check.jdk" />
                     </span>
                 </td>
@@ -123,7 +123,7 @@
             <tr>
                 <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
                 <td>
-                    <span class="emiva-setup-error-text">
+                    <span class="b5chat-setup-error-text">
                     <fmt:message key="setup.env.check.servlet" />
                     </span>
                 </td>
@@ -144,14 +144,14 @@
             <tr>
                 <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
                 <td>
-                    <span class="emiva-setup-error-text">
+                    <span class="b5chat-setup-error-text">
                     <fmt:message key="setup.env.check.jsp" />
                     </span>
                 </td>
             </tr>
 
         <%  }
-            if (emivaJarsInstalled) {
+            if (b5chatJarsInstalled) {
         %>
             <tr>
                 <td><img src="../images/check.gif" width="13" height="13" border="0"></td>
@@ -165,7 +165,7 @@
             <tr>
                 <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
                 <td>
-                    <span class="emiva-setup-error-text">
+                    <span class="b5chat-setup-error-text">
                     <fmt:message key="title" /> <fmt:message key="setup.env.check.class" />
                     </span>
                 </td>
@@ -177,8 +177,8 @@
             <tr>
                 <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
                 <td>
-                    <span class="emiva-setup-error-text">
-                    <fmt:message key="setup.env.check.emiva" /> (<%= crossfireHome.toString() %>)
+                    <span class="b5chat-setup-error-text">
+                    <fmt:message key="setup.env.check.b5chat" /> (<%= crossfireHome.toString() %>)
                     </span>
                 </td>
             </tr>
@@ -188,7 +188,7 @@
             <tr>
                 <td><img src="../images/x.gif" width="13" height="13" border="0"></td>
                 <td>
-                    <span class="emiva-setup-error-text">
+                    <span class="b5chat-setup-error-text">
                     <fmt:message key="setup.env.check.not_home" />
                     </span>
                 </td>

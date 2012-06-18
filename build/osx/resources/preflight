@@ -24,7 +24,7 @@ if [ -z $NIUTIL_PRESENT] ; then
 		dscl . -create /Users/crossfire UniqueID $crossfire_UID
 		dscl . -create /Users/crossfire UserShell /usr/bin/false
 		dscl . -create /Users/crossfire NFSHomeDirectory /usr/local/crossfire/
-		dscl . -create /Users/crossfire RealName "emiva crossfire"
+		dscl . -create /Users/crossfire RealName "b5chat crossfire"
 		dscl . -passwd /Users/crossfire '*'
 	fi
 else
@@ -47,7 +47,7 @@ else
 		niutil -createprop . /users/crossfire uid $crossfire_UID
 		niutil -createprop . /users/crossfire shell /usr/bin/false
 		niutil -createprop . /users/crossfire home /usr/local/crossfire/
-		niutil -createprop . /users/crossfire realname "emiva crossfire"
+		niutil -createprop . /users/crossfire realname "b5chat crossfire"
 		niutil -createprop . /users/crossfire passwd '*'
 	fi
 fi

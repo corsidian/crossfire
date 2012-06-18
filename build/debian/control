@@ -1,10 +1,10 @@
 Source: crossfire
 Section: net
 Priority: optional
-Maintainer: EMIVA Community <admin@emiva.net>
+Maintainer: B5Chat Community <admin@b5chat.org>
 Build-Depends: debhelper (>= 5), cdbs, patchutils, sun-java5-jdk, ant
 Standards-Version: 3.7.2
-Homepage: http://www.emiva.net
+Homepage: http://www.b5chat.org
 
 Package: crossfire
 Section: net
@@ -17,6 +17,6 @@ Description: A high performance XMPP (Jabber) server.
  administration console, and a full plugin system. The server
  is 100% Java.
  .
- crossfire is a professional Open Source project, led by the EMIVA Community.
-Homepage: http://www.emiva.net
+ crossfire is a professional Open Source project, led by the B5Chat Community.
+Homepage: http://www.b5chat.org
  

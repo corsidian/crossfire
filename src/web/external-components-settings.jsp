@@ -3,7 +3,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -21,11 +21,11 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="net.emiva.crossfire.XmppServer,
-                 net.emiva.crossfire.component.ExternalComponentConfiguration,
-                 net.emiva.crossfire.component.ExternalComponentManager,
-                 net.emiva.util.ModificationNotAllowedException,
-                 net.emiva.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.XmppServer,
+                 org.b5chat.crossfire.component.ExternalComponentConfiguration,
+                 org.b5chat.crossfire.component.ExternalComponentManager,
+                 org.b5chat.util.ModificationNotAllowedException,
+                 org.b5chat.util.ParamUtils,
                  java.util.Collection"
     errorPage="error.jsp"
 %>
@@ -33,7 +33,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>
@@ -212,12 +212,12 @@
 
 <%  if (!errors.isEmpty()) { %>
 
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
-            <td class="emiva-icon-label">
+            <td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
+            <td class="b5chat-icon-label">
 
             <% if (errors.get("port") != null) { %>
                 <fmt:message key="component.settings.valid.port" />
@@ -237,12 +237,12 @@
 
 <%  } else if (operationFailed) { %>
 
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
         <tr>
-            <td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
-            <td class="emiva-icon-label">
+            <td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""/></td>
+            <td class="b5chat-icon-label">
                 <fmt:message key="component.settings.modification.denied" /> <%= operationFailedDetail != null ? operationFailedDetail : ""%>
             </td>
         </tr>
@@ -253,11 +253,11 @@
 
 <%  } else if (updateSucess || allowSuccess || blockSuccess || deleteSuccess) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <% if (updateSucess) { %>
             <fmt:message key="component.settings.confirm.updated" />
         <% } else if (allowSuccess) { %>
@@ -279,10 +279,10 @@
 
 <!-- BEGIN 'Services Enabled' -->
 <form action="external-components-settings.jsp" method="post">
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="component.settings.enabled.legend" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
 			<tr>
@@ -346,10 +346,10 @@
 <br>
 
 <!-- BEGIN 'Allowed to Connect' -->
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="component.settings.allowed" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<form action="external-components-settings.jsp" method="post">
 		<table cellpadding="3" cellspacing="0" border="0">
 		<tbody>
@@ -382,7 +382,7 @@
 		<input type="submit" name="permissionUpdate" value="<fmt:message key="global.save_settings" />">
 		</form>
 		<br>
-		<table class="emiva-table" cellpadding="0" cellspacing="0" border="0">
+		<table class="b5chat-table" cellpadding="0" cellspacing="0" border="0">
 		<thead>
 			<tr>
 				<th width="1%">&nbsp;</th>
@@ -403,7 +403,7 @@
 			for (Iterator<ExternalComponentConfiguration> it=configs.iterator(); it.hasNext(); count++) {
 				ExternalComponentConfiguration configuration = it.next();
 		   %>
-			<tr class="emiva-<%= (((count%2)==0) ? "even" : "odd") %>">
+			<tr class="b5chat-<%= (((count%2)==0) ? "even" : "odd") %>">
 				<td>
 					<%= count %>
 				</td>
@@ -454,17 +454,17 @@
 <br>
 
 <!-- BEGIN 'Not Allowed to Connect' -->
-	<div class="emiva-contentBoxHeader">
+	<div class="b5chat-contentBoxHeader">
 		<fmt:message key="component.settings.disallowed" />
 	</div>
-	<div class="emiva-contentBox">
+	<div class="b5chat-contentBox">
 		<table cellpadding="3" cellspacing="0" border="0" >
 		<tbody>
 			<tr><td><p><fmt:message key="component.settings.disallowed.info" /></p></td></tr>
 		</tbody>
 		</table>
 		<br><br>
-		<table class="emiva-table" cellpadding="3" cellspacing="0" border="0" >
+		<table class="b5chat-table" cellpadding="3" cellspacing="0" border="0" >
 		<thead>
 			<tr>
 				<th width="1%">&nbsp;</th>
@@ -484,7 +484,7 @@
 			for (Iterator<ExternalComponentConfiguration> it=blockedComponents.iterator(); it.hasNext(); count++) {
 				ExternalComponentConfiguration configuration = it.next();
 		   %>
-			<tr class="emiva-<%= (((count%2)==0) ? "even" : "odd") %>">
+			<tr class="b5chat-<%= (((count%2)==0) ? "even" : "odd") %>">
 				<td>
 					<%= count %>
 				</td>

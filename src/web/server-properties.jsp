@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -18,15 +18,15 @@
 --%>
 
 <%@ page import="java.util.*,
-                 net.emiva.util.*,
-                 net.emiva.util.ParamUtils,
-                 net.emiva.util.Globals"
+                 org.b5chat.util.*,
+                 org.b5chat.util.ParamUtils,
+                 org.b5chat.util.Globals"
     errorPage="error.jsp"
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
 
-<jsp:useBean id="webManager" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%!
@@ -129,11 +129,11 @@
 
 <%  if (errors.size() > 0) { %>
 
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="server.properties.error" />
         </td></tr>
     </tbody>
@@ -142,11 +142,11 @@
 
 <%  } else if ("true".equals(request.getParameter("success"))) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="server.properties.saved" />
         </td></tr>
     </tbody>
@@ -155,11 +155,11 @@
 
 <%  } else if ("true".equals(request.getParameter("deletesuccess"))) { %>
 
-    <div class="emiva-success">
+    <div class="b5chat-success">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/success-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="server.properties.deleted" />
         </td></tr>
     </tbody>
@@ -170,11 +170,11 @@
 
 <%  if (edit) { %>
 
-    <div class="emiva-info">
+    <div class="b5chat-info">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/info-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/info-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="server.properties.edit_property" />
         </td></tr>
     </tbody>
@@ -185,11 +185,11 @@
 
 <%  if (request.getParameter("delerror") != null) { %>
 
-    <div class="emiva-error">
+    <div class="b5chat-error">
     <table cellpadding="0" cellspacing="0" border="0">
     <tbody>
-        <tr><td class="emiva-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
-        <td class="emiva-icon-label">
+        <tr><td class="b5chat-icon"><img src="images/error-16x16.gif" width="16" height="16" border="0" alt=""></td>
+        <td class="b5chat-icon-label">
         <fmt:message key="server.properties.error_deleting" />
         </td></tr>
     </tbody>
@@ -232,7 +232,7 @@ function dodelete(propName) {
 }
 </style>
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -303,7 +303,7 @@ function dodelete(propName) {
 <a name="edit"></a>
 <form action="server-properties.jsp" method="post" name="editform">
 
-<div class="emiva-table">
+<div class="b5chat-table">
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
     <tr>
@@ -333,7 +333,7 @@ function dodelete(propName) {
 
                 <%  if (errors.containsKey("propName")) { %>
 
-                    <br><span class="emiva-error-text"><fmt:message key="server.properties.enter_property_name" /></span>
+                    <br><span class="b5chat-error-text"><fmt:message key="server.properties.enter_property_name" /></span>
 
                 <%  } %>
 
@@ -349,11 +349,11 @@ function dodelete(propName) {
 
             <%  if (errors.containsKey("propValue")) { %>
 
-                <br><span class="emiva-error-text"><fmt:message key="server.properties.enter_property_value" /></span>
+                <br><span class="b5chat-error-text"><fmt:message key="server.properties.enter_property_value" /></span>
 
             <%  } else if (errors.containsKey("propValueLength")) { %>
 
-                <br><span class="emiva-error-text"><fmt:message key="server.properties.max_character" /></span>
+                <br><span class="b5chat-error-text"><fmt:message key="server.properties.max_character" /></span>
 
             <%  } %>
         </td>

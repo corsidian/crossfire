@@ -347,7 +347,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/ant-emiva-edition.jar!/" />
+          <root url="jar://$MODULE_DIR$/../lib/ant-b5chat-edition.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

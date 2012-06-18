@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>crossfire</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.emiva.crossfire</string>
+	<string>com.b5chat.crossfire</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>

@@ -2,7 +2,7 @@
   -	$Revision: 11592 $
   -	$Date: 2010-02-01 10:46:59 -0500 (Mon, 01 Feb 2010) $
   -
-  - Copyright (C) 2004-2008 EMIVA Community. All rights reserved.
+  - Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -19,18 +19,18 @@
 --%>
 
 <%@ page import="java.io.*,
-                 net.emiva.util.*,
+                 org.b5chat.util.*,
                  java.text.*,
-                 net.emiva.util.Globals,
-                 net.emiva.crossfire.user.*,
+                 org.b5chat.util.Globals,
+                 org.b5chat.crossfire.user.*,
                  java.util.*"
 %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="net.emiva.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
 
-<jsp:useBean id="admin" class="net.emiva.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <%!
@@ -77,7 +77,7 @@
                 buf.append("&");
             }
         }
-        Cookie newCookie = new Cookie("emivaforums.admin.logviewer",buf.toString());
+        Cookie newCookie = new Cookie("b5chatforums.admin.logviewer",buf.toString());
         newCookie.setPath("/");
         newCookie.setMaxAge(60*60*24*30); // one month
         response.addCookie(newCookie);
@@ -87,7 +87,7 @@
             File logDir)
     {
         // Get the cookie associated with the log files
-        HashMap cookie = parseCookie(CookieUtils.getCookie(request,"emivaforums.admin.logviewer"));
+        HashMap cookie = parseCookie(CookieUtils.getCookie(request,"b5chatforums.admin.logviewer"));
         String[] logs = {"error", "info", "warn", "debug"};
         HashMap<String,String> newCookie = new HashMap<String,String>();
         HashMap<String,String> updates = new HashMap<String,String>();
@@ -180,7 +180,7 @@
     }
     else if (saveLog && log != null) {
         saveLog = false;
-        response.sendRedirect(request.getContextPath() + "/servlet/emivaServlet/?log=" + log);
+        response.sendRedirect(request.getContextPath() + "/servlet/b5chatServlet/?log=" + log);
         return;
     }
     else if (emailLog && log != null) {
@@ -256,39 +256,39 @@ IFRAME {
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tbody>
     <tr>
-        <td class="emiva-spacer" width="1%">&nbsp;</td>
-        <td class="emiva-tab<%= (("error".equals(log))?"-active":"") %>" width="1%">
+        <td class="b5chat-spacer" width="1%">&nbsp;</td>
+        <td class="b5chat-tab<%= (("error".equals(log))?"-active":"") %>" width="1%">
             <a href="logviewer.jsp?log=error"
             ><fmt:message key="logviewer.error" /></a>
             <span class="new">
             <%= ((newlogs.containsKey("error"))?"*":"") %>
             </span>
         </td>
-        <td class="emiva-spacer" width="1%">&nbsp;</td>
-        <td class="emiva-tab<%= (("warn".equals(log))?"-active":"") %>" width="1%">
+        <td class="b5chat-spacer" width="1%">&nbsp;</td>
+        <td class="b5chat-tab<%= (("warn".equals(log))?"-active":"") %>" width="1%">
             <a href="logviewer.jsp?log=warn"
             ><fmt:message key="logviewer.warn" /></a>
             <span class="new">
             <%= ((newlogs.containsKey("warn"))?"*":"") %>
             </span>
         </td>
-        <td class="emiva-spacer" width="1%">&nbsp;</td>
-        <td class="emiva-tab<%= (("info".equals(log))?"-active":"") %>" width="1%">
+        <td class="b5chat-spacer" width="1%">&nbsp;</td>
+        <td class="b5chat-tab<%= (("info".equals(log))?"-active":"") %>" width="1%">
             <a href="logviewer.jsp?log=info"
             ><fmt:message key="logviewer.info" /></a>
             <span class="new">
             <%= ((newlogs.containsKey("info"))?"*":"") %>
             </span>
         </td>
-        <td class="emiva-spacer" width="1%">&nbsp;</td>
-        <td class="emiva-tab<%= (("debug".equals(log))?"-active":"") %>" width="1%">
+        <td class="b5chat-spacer" width="1%">&nbsp;</td>
+        <td class="b5chat-tab<%= (("debug".equals(log))?"-active":"") %>" width="1%">
             <a href="logviewer.jsp?log=debug"
             ><fmt:message key="logviewer.debug" /></a>
             <span class="new">
             <%= ((newlogs.containsKey("debug"))?"*":"") %>
             </span>
         </td>
-        <td class="emiva-stretch" width="92%" align="right" nowrap>
+        <td class="b5chat-stretch" width="92%" align="right" nowrap>
             &nbsp;
         </td>
     </tr>
@@ -440,7 +440,7 @@ IFRAME {
 
 <br>
 
-<span class="emiva-description" style="color:#666;">
+<span class="b5chat-description" style="color:#666;">
 <fmt:message key="logviewer.log_dir" />: <%= Globals.getHomeDirectory() %><%= File.separator %>logs
 </span>
 

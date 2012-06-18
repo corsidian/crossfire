@@ -4,13 +4,13 @@
   -	$Date: 2005-05-26 23:00:40 -0700 (Thu, 26 May 2005) $
 --%>
 
-<%@ page import="net.emiva.crossfire.XmppServer,
-                 net.emiva.crossfire.auth.AuthFactory,
-                 net.emiva.crossfire.user.User,
-                 net.emiva.crossfire.user.UserManager,
-                 net.emiva.util.Globals,
-                 net.emiva.util.ParamUtils" %>
-<%@ page import="net.emiva.util.StringUtils"%>
+<%@ page import="org.b5chat.crossfire.XmppServer,
+                 org.b5chat.crossfire.auth.AuthFactory,
+                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.user.UserManager,
+                 org.b5chat.util.Globals,
+                 org.b5chat.util.ParamUtils" %>
+<%@ page import="org.b5chat.util.StringUtils"%>
 <%@ page import="org.xmpp.packet.JID"%>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="java.net.URLEncoder" %>
@@ -197,8 +197,8 @@
 <%  } %>
 
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN b5chat-contentBox -->
+	<div class="b5chat-contentBox">
 
 
 <script language="JavaScript" type="text/javascript">
@@ -235,7 +235,7 @@ function checkClick() {
 %>
 
 <tr valign="top">
-    <td class="emiva-label">
+    <td class="b5chat-label">
         <fmt:message key="setup.admin.settings.current_password" />
     </td>
     <td>
@@ -243,11 +243,11 @@ function checkClick() {
          value="<%= ((password!=null) ? password : "") %>"><br>
 
         <%  if (errors.get("password") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <fmt:message key="setup.admin.settings.current_password_error" />
             </span>
         <%  } else { %>
-            <span class="emiva-description">
+            <span class="b5chat-description">
             <fmt:message key="setup.admin.settings.current_password_description" />
             </span>
         <% } %>
@@ -271,7 +271,7 @@ function checkClick() {
 %>
 
 <tr valign="top">
-    <td class="emiva-label" align="right">
+    <td class="b5chat-label" align="right">
         <fmt:message key="setup.admin.settings.email" />
     </td>
     <td>
@@ -279,18 +279,18 @@ function checkClick() {
          value="<%= ((email!=null) ? email : currentEmail) %>"><br>
 
         <%  if (errors.get("email") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <fmt:message key="setup.admin.settings.email_error" />
             </span>
         <%  } else { %>
-            <span class="emiva-description">
+            <span class="b5chat-description">
             <fmt:message key="setup.admin.settings.email_description" />
             </span>
         <% } %>
     </td>
 </tr>
 <tr valign="top">
-    <td class="emiva-label" align="right">
+    <td class="b5chat-label" align="right">
         <fmt:message key="setup.admin.settings.new_password" />
     </td>
     <td>
@@ -298,25 +298,25 @@ function checkClick() {
          value="<%= ((newPassword!=null) ? newPassword : "") %>"><br>
 
         <%  if (errors.get("newPassword") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <fmt:message key="setup.admin.settings.valid_new_password" />
             </span>
         <%  } else if (errors.get("match") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <fmt:message key="setup.admin.settings.not_new_password" />
             </span>
         <%  } %>
     </td>
 </tr>
 <tr valign="top">
-    <td class="emiva-label" align="right">
+    <td class="b5chat-label" align="right">
         <fmt:message key="setup.admin.settings.confirm_password" />
     </td>
     <td>
         <input type="password" name="newPasswordConfirm" size="20" maxlength="50"
          value="<%= ((newPasswordConfirm!=null) ? newPasswordConfirm : "") %>"><br>
         <%  if (errors.get("newPasswordConfirm") != null) { %>
-            <span class="emiva-error-text">
+            <span class="b5chat-error-text">
             <fmt:message key="setup.admin.settings.valid_confirm" />
             </span>
         <%  } %>
@@ -326,13 +326,13 @@ function checkClick() {
 
 <br>
 		<div align="right">
-			<input type="submit" name="doSkip" value="<fmt:message key="setup.admin.settings.skip_this_step" />" id="emiva-setup-skip" border="0">
-			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="submit" name="doSkip" value="<fmt:message key="setup.admin.settings.skip_this_step" />" id="b5chat-setup-skip" border="0">
+			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="b5chat-setup-save" border="0">
 		</div>
 
 	</form>
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END b5chat-contentBox -->
 
 
 <script language="JavaScript" type="text/javascript">

@@ -4,8 +4,8 @@
   -	$Date: 2005-05-26 23:00:40 -0700 (Thu, 26 May 2005) $
 --%>
 
-<%@ page import="net.emiva.crossfire.XmppServer"%>
-<%@ page import="net.emiva.util.Globals"%>
+<%@ page import="org.b5chat.crossfire.XmppServer"%>
+<%@ page import="org.b5chat.util.Globals"%>
 <%@ page import="java.util.Map" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
@@ -30,17 +30,17 @@
             @SuppressWarnings("unchecked")
             Map<String,String> xmppSettings = (Map<String,String>)session.getAttribute("xmppSettings");
             xmppSettings.put("provider.auth.className",
-                    net.emiva.crossfire.auth.DefaultAuthProvider.class.getName());
+                    org.b5chat.crossfire.auth.DefaultAuthProvider.class.getName());
             xmppSettings.put("provider.user.className",
-                    net.emiva.crossfire.user.DefaultUserProvider.class.getName());
+                    org.b5chat.crossfire.user.DefaultUserProvider.class.getName());
             xmppSettings.put("provider.group.className",
-                    net.emiva.crossfire.group.DefaultGroupProvider.class.getName());
+                    org.b5chat.crossfire.group.DefaultGroupProvider.class.getName());
             xmppSettings.put("provider.lockout.className",
-                    net.emiva.crossfire.lockout.DefaultLockOutProvider.class.getName());
+                    org.b5chat.crossfire.lockout.DefaultLockOutProvider.class.getName());
             xmppSettings.put("provider.securityAudit.className",
-                    net.emiva.crossfire.security.DefaultSecurityAuditProvider.class.getName());
+                    org.b5chat.crossfire.security.DefaultSecurityAuditProvider.class.getName());
             xmppSettings.put("provider.admin.className",
-                    net.emiva.crossfire.admin.DefaultAdminProvider.class.getName());
+                    org.b5chat.crossfire.admin.DefaultAdminProvider.class.getName());
             // Redirect
             response.sendRedirect("setup-admin-settings.jsp");
             return;
@@ -66,8 +66,8 @@
 	<fmt:message key="setup.profile.description" />
 	</p>
 
-	<!-- BEGIN emiva-contentBox -->
-	<div class="emiva-contentBox">
+	<!-- BEGIN b5chat-contentBox -->
+	<div class="b5chat-contentBox">
 	<form action="setup-profile-settings.jsp" name="profileform" method="post">
 
 <table cellpadding="3" cellspacing="2" border="0">
@@ -84,12 +84,12 @@
 
 <br>
 		<div align="right">
-			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="emiva-setup-save" border="0">
+			<input type="Submit" name="continue" value="<fmt:message key="global.continue" />" id="b5chat-setup-save" border="0">
 		</div>
 
 	</form>
 	</div>
-	<!-- END emiva-contentBox -->
+	<!-- END b5chat-contentBox -->
 
 </body>
 </html>
