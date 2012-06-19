@@ -22,8 +22,6 @@ package org.b5chat.crossfire.auth;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
-
 
 import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
 import org.b5chat.crossfire.core.property.PropertyEventListener;
@@ -81,8 +79,9 @@ public class AuthFactory {
         // Check if we need to reset the auth provider class 
         if (authProvider == null || !className.equals(authProvider.getClass().getName())) {
             try {
-                Class c = ClassUtils.forName(className);
-                authProvider = (IAuthProvider)c.newInstance();
+                @SuppressWarnings("unchecked")
+				Class<IAuthProvider> c = ClassUtils.forName(className);
+                authProvider = c.newInstance();
             }
             catch (Exception e) {
                 Log.error("Error loading auth provider: " + className, e);

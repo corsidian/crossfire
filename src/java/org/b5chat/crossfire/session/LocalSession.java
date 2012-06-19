@@ -23,10 +23,10 @@ import java.util.Map;
 
 
 import org.b5chat.crossfire.IConnection;
-import org.b5chat.crossfire.IStreamId;
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.interceptor.InterceptorManager;
 import org.b5chat.crossfire.interceptor.PacketRejectedException;
+import org.b5chat.crossfire.stream.IStreamId;
 import org.b5chat.util.LocaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

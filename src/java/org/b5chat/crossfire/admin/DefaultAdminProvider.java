@@ -21,12 +21,8 @@ package org.b5chat.crossfire.admin;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
-
-import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
-import org.b5chat.crossfire.core.property.PropertyEventListener;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.util.Globals;
 import org.b5chat.util.StringUtils;

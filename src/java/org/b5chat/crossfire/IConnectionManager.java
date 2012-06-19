@@ -21,11 +21,8 @@
 package org.b5chat.crossfire;
 
 
-import java.io.IOException;
-import java.net.Socket;
 import java.util.Collection;
 
-import org.b5chat.crossfire.core.net.SocketReader;
 import org.b5chat.crossfire.server.ServerPort;
 
 /**

@@ -23,7 +23,6 @@ package org.b5chat.crossfire.route;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 import org.b5chat.crossfire.Channel;
 import org.b5chat.crossfire.IChannelHandler;
 import org.b5chat.crossfire.PacketException;
@@ -42,11 +41,11 @@ import org.xmpp.packet.PacketError;
  *
  * @author Iain Shigeoka
  */
-public class TransportHandler extends BasicModule implements IChannelHandler {
+public class TransportHandler extends BasicModule implements IChannelHandler<Packet> {
 
 	private static final Logger Log = LoggerFactory.getLogger(TransportHandler.class);
 
-    private Map<String, Channel> transports = new ConcurrentHashMap<String, Channel>();
+    private Map<String, Channel<Packet>> transports = new ConcurrentHashMap<String, Channel<Packet>>();
 
     private IPacketDeliverer deliverer;
 
@@ -54,14 +53,14 @@ public class TransportHandler extends BasicModule implements IChannelHandler {
         super("Transport handler");
     }
 
-    public void addTransport(Channel transport) {
+    public void addTransport(Channel<Packet> transport) {
         transports.put(transport.getName(), transport);
     }
 
     public void process(Packet packet) throws UnauthorizedException, PacketException {
         boolean handled = false;
         String host = packet.getTo().getDomain();
-        for (Channel channel : transports.values()) {
+        for (Channel<Packet> channel : transports.values()) {
             if (channel.getName().equalsIgnoreCase(host)) {
                 channel.add(packet);
                 handled = true;

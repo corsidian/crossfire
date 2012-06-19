@@ -1,7 +1,7 @@
 /**
  * $RCSfile$
- * $Revision: 128 $
- * $Date: 2004-10-25 20:42:00 -0300 (Mon, 25 Oct 2004) $
+ * $Revision: 655 $
+ * $Date: 2004-12-09 21:54:27 -0300 (Thu, 09 Dec 2004) $
  *
  * Copyright (C) 2004-2008 B5Chat Community. All rights reserved.
  *
@@ -18,19 +18,20 @@
  * limitations under the License.
  */
 
-package org.b5chat.crossfire;
+package org.b5chat.crossfire.stream;
 
 /**
- * Generates stream ids in different ways depending on the server set up.
+ * A unique identifier for a stream.
  *
  * @author Iain Shigeoka
  */
-public interface IStreamIdFactory {
+public interface IStreamId {
 
     /**
-     * Generate a stream id.
+     * Obtain a unique identifier for easily identifying this stream in
+     * a database.
      *
-     * @return A new, unique stream id
+     * @return The unique ID for this stream
      */
-    public IStreamId createStreamID();
+    public String getID();
 }

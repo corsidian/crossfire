@@ -23,22 +23,22 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * An XmppContextListener starts an XmppServer when a ServletContext is initialized and stops
+ * An ServerContextListener starts an XmppServer when a ServletContext is initialized and stops
  * the xmpp server when the servlet context is destroyed.
  *
  * @author evrim ulu
  * @author Gaston Dombiak
  */
-public class XmppContextListener implements ServletContextListener {
+public class ServerContextListener implements ServletContextListener {
 
     protected String XMPP_KEY = "XMPP_SERVER";
 
     public void contextInitialized(ServletContextEvent event) {
-        if (XmppServer.getInstance() != null) {
-            // Running in standalone mode so do nothing
-            return;
-        }
-        XmppServer server = new XmppServer();
+    	XmppServer server = (XmppServer) event.getServletContext().getAttribute(XMPP_KEY);
+    	if (server != null) {
+    		return;
+    	}
+    	server = new XmppServer();
         event.getServletContext().setAttribute(XMPP_KEY, server);
     }
 

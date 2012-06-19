@@ -21,13 +21,12 @@
 package org.b5chat.crossfire;
 
 
+import java.net.UnknownHostException;
+
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.route.IPacketDeliverer;
 import org.b5chat.crossfire.session.LocalSession;
 import org.xmpp.packet.Packet;
-
-import java.net.UnknownHostException;
-import java.security.cert.Certificate;
 
 /**
  * Represents a connection on the server.

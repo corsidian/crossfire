@@ -28,7 +28,6 @@ import java.util.StringTokenizer;
 
 
 import org.b5chat.crossfire.IConnection;
-import org.b5chat.crossfire.IStreamId;
 import org.b5chat.crossfire.auth.AuthToken;
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.core.net.sasl.SASLAuthentication;
@@ -36,6 +35,7 @@ import org.b5chat.crossfire.presence.PresenceEventDispatcher;
 import org.b5chat.crossfire.privacy.PrivacyList;
 import org.b5chat.crossfire.privacy.PrivacyListManager;
 import org.b5chat.crossfire.server.XmppServer;
+import org.b5chat.crossfire.stream.IStreamId;
 import org.b5chat.crossfire.user.UserNotFoundException;
 import org.b5chat.util.Globals;
 import org.b5chat.util.LocaleUtils;

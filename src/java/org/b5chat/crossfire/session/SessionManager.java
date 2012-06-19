@@ -28,11 +28,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-import org.b5chat.crossfire.BasicStreamIDFactory;
 import org.b5chat.crossfire.IConnection;
 import org.b5chat.crossfire.IConnectionCloseListener;
-import org.b5chat.crossfire.IStreamId;
-import org.b5chat.crossfire.IStreamIdFactory;
 import org.b5chat.crossfire.PacketException;
 import org.b5chat.crossfire.auth.AuthToken;
 import org.b5chat.crossfire.core.container.BasicModule;
@@ -41,6 +38,9 @@ import org.b5chat.crossfire.offline.OfflineMessageStore;
 import org.b5chat.crossfire.route.IPacketRouter;
 import org.b5chat.crossfire.route.IRoutingTable;
 import org.b5chat.crossfire.server.XmppServer;
+import org.b5chat.crossfire.stream.BasicStreamIDFactory;
+import org.b5chat.crossfire.stream.IStreamId;
+import org.b5chat.crossfire.stream.IStreamIdFactory;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.util.Globals;
 import org.b5chat.util.LocaleUtils;

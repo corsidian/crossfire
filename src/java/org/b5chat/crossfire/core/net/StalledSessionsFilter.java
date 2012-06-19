@@ -1,5 +1,5 @@
 /**
- * $RCSfile: ConnectionManagerImpl.java,v $
+ * $RCSfile: ConnectionManager.java,v $
  * $Revision: $
  * $Date: $
  *

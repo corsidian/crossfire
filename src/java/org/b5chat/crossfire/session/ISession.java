@@ -21,8 +21,8 @@
 package org.b5chat.crossfire.session;
 
 
-import org.b5chat.crossfire.IStreamId;
 import org.b5chat.crossfire.route.IRoutableChannelHandler;
+import org.b5chat.crossfire.stream.IStreamId;
 import org.xmpp.packet.JID;
 import org.xmpp.packet.Packet;
 

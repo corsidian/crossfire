@@ -20,8 +20,6 @@ package org.b5chat.crossfire.admin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 
 import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
 import org.b5chat.crossfire.core.property.PropertyEventListener;
@@ -45,35 +43,9 @@ import org.xmpp.packet.JID;
  *
  * @author Daniel Henninger
  */
-public class AdminManager {
+public class AdminManager implements IAdminManager {
 
-	private static final Logger Log = LoggerFactory.getLogger(AdminManager.class);
-
-    // Wrap this guy up so we can mock out the AdminManager class.
-    private static class AdminManagerContainer {
-        private static AdminManager instance = new AdminManager();
-    }
-
-    /**
-     * Returns the currently-installed IAdminProvider. <b>Warning:</b> in virtually all
-     * cases the admin provider should not be used directly. Instead, the appropriate
-     * methods in AdminManager should be called. Direct access to the admin provider is
-     * only provided for special-case logic.
-     *
-     * @return the current IAdminProvider.
-     */
-    public static IAdminProvider getAdminProvider() {
-        return AdminManagerContainer.instance.provider;
-    }
-
-    /**
-     * Returns a singleton instance of AdminManager.
-     *
-     * @return a AdminManager instance.
-     */
-    public static AdminManager getInstance() {
-        return AdminManagerContainer.instance;
-    }
+	private static final Logger logger = LoggerFactory.getLogger(AdminManager.class);
 
     /* Cache of admin accounts */
     private List<JID> adminList;
@@ -82,7 +54,7 @@ public class AdminManager {
     /**
      * Constructs a AdminManager, propery listener, and setting up the provider.
      */
-    private AdminManager() {
+    public AdminManager() {
         // Load an admin provider.
         initProvider();
 
@@ -104,11 +76,12 @@ public class AdminManager {
         // Check if we need to reset the provider class
         if (provider == null || !className.equals(provider.getClass().getName())) {
             try {
-                Class c = ClassUtils.forName(className);
-                provider = (IAdminProvider) c.newInstance();
+                @SuppressWarnings("unchecked")
+				Class<IAdminProvider> c = ClassUtils.forName(className);
+                provider = c.newInstance();
             }
             catch (Exception e) {
-                Log.error("Error loading admin provider: " + className, e);
+                logger.error("Error loading admin provider: " + className, e);
                 provider = new DefaultAdminProvider();
             }
         }
@@ -121,32 +94,30 @@ public class AdminManager {
         adminList = provider.getAdmins();
     }
 
-    /**
-     * Refreshs the list of admin users from the provider.
-     */
-    public void refreshAdminAccounts() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#refreshAdminAccounts()
+	 */
+    @Override
+	public void refreshAdminAccounts() {
         loadAdminList();
     }
 
-    /**
-     * Returns the list of admin users from the provider.
-     *
-     * @return The list of users with admin status.
-     */
-    public List<JID> getAdminAccounts() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#getAdminAccounts()
+	 */
+    @Override
+	public List<JID> getAdminAccounts() {
         if (adminList == null) {
             loadAdminList();
         }
         return adminList;
     }
 
-    /**
-     * Adds a new account to the list of Admin accounts, based off a username, which will be converted
-     * into a JID.
-     *
-     * @param username Username of account to add to list of admins.
-     */
-    public void addAdminAccount(String username) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#addAdminAccount(java.lang.String)
+	 */
+    @Override
+	public void addAdminAccount(String username) {
         if (adminList == null) {
             loadAdminList();
         }
@@ -161,12 +132,11 @@ public class AdminManager {
         provider.setAdmins(adminList);
     }
 
-    /**
-     * Adds a new account to the list of Admin accounts, based off a JID.
-     *
-     * @param jid JID of account to add to list of admins.
-     */
-    public void addAdminAccount(JID jid) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#addAdminAccount(org.xmpp.packet.JID)
+	 */
+    @Override
+	public void addAdminAccount(JID jid) {
         if (adminList == null) {
             loadAdminList();
         }
@@ -181,13 +151,11 @@ public class AdminManager {
         provider.setAdmins(adminList);
     }
 
-    /**
-     * Removes an account from the list of Admin accounts, based off username, which will be converted
-     * to a JID.
-     *
-     * @param username Username of user to remove from admin list.
-     */
-    public void removeAdminAccount(String username) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#removeAdminAccount(java.lang.String)
+	 */
+    @Override
+	public void removeAdminAccount(String username) {
         if (adminList == null) {
             loadAdminList();
         }
@@ -201,12 +169,11 @@ public class AdminManager {
         provider.setAdmins(adminList);
     }
 
-    /**
-     * Removes an account from the list of Admin accounts, based off JID.
-     *
-     * @param jid JID of user to remove from admin list.
-     */
-    public void removeAdminAccount(JID jid) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#removeAdminAccount(org.xmpp.packet.JID)
+	 */
+    @Override
+	public void removeAdminAccount(JID jid) {
         if (adminList == null) {
             loadAdminList();
         }
@@ -221,14 +188,11 @@ public class AdminManager {
         provider.setAdmins(adminList);
     }
 
-    /**
-     * Returns true if the user is an admin.
-     *
-     * @param username Username of user to check whether they are an admin or not.
-     * @param allowAdminIfEmpty Allows the "admin" user to log in if the adminList is empty.
-     * @return True or false if user is an admin.
-     */
-    public boolean isUserAdmin(String username, boolean allowAdminIfEmpty) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#isUserAdmin(java.lang.String, boolean)
+	 */
+    @Override
+	public boolean isUserAdmin(String username, boolean allowAdminIfEmpty) {
         if (adminList == null) {
             loadAdminList();
         }
@@ -239,14 +203,11 @@ public class AdminManager {
         return adminList.contains(userJID);
     }
 
-    /**
-     * Returns true if the user is an admin.
-     *
-     * @param jid JID of user to check whether they are an admin or not.
-     * @param allowAdminIfEmpty Allows the "admin" user to log in if the adminList is empty.
-     * @return True or false if user is an admin.
-     */
-    public boolean isUserAdmin(JID jid, boolean allowAdminIfEmpty) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#isUserAdmin(org.xmpp.packet.JID, boolean)
+	 */
+    @Override
+	public boolean isUserAdmin(JID jid, boolean allowAdminIfEmpty) {
         if (adminList == null) {
             loadAdminList();
         }
@@ -257,10 +218,11 @@ public class AdminManager {
         return adminList.contains(bareJID);
     }
 
-    /**
-     * Clears the list of admin users.
-     */
-    public void clearAdminUsers() {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#clearAdminUsers()
+	 */
+    @Override
+	public void clearAdminUsers() {
         // Clear the admin list cache.
         if (adminList == null) {
             adminList = new ArrayList<JID>();
@@ -272,12 +234,11 @@ public class AdminManager {
         provider.setAdmins(adminList);
     }
 
-    /**
-     * Sets the list of admin users based off of a list of usernames.  Clears list first.
-     *
-     * @param usernames List of usernames to set as admins.
-     */
-    public void setAdminUsers(List<String> usernames) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#setAdminUsers(java.util.List)
+	 */
+    @Override
+	public void setAdminUsers(List<String> usernames) {
         if (adminList == null) {
             adminList = new ArrayList<JID>();
         }
@@ -292,12 +253,11 @@ public class AdminManager {
         provider.setAdmins(admins);
     }
 
-    /**
-     * Sets the list of admin users based off of a list of jids.  Clears list first.
-     *
-     * @param jids List of jids to set as admins.
-     */
-    public void setAdminJIDs(List<JID> jids) {
+    /* (non-Javadoc)
+	 * @see org.b5chat.crossfire.admin.IAdminManager#setAdminJIDs(java.util.List)
+	 */
+    @Override
+	public void setAdminJIDs(List<JID> jids) {
         if (adminList == null) {
             adminList = new ArrayList<JID>();
         }

@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package org.b5chat.crossfire;
+package org.b5chat.crossfire.stream;
 
 
 import java.util.Random;

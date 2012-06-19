@@ -1,5 +1,5 @@
 /**
- * $RCSfile: ConnectionManagerImpl.java,v $
+ * $RCSfile: ConnectionManager.java,v $
  * $Revision: $
  * $Date: $
  *
@@ -31,7 +31,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-
 import org.apache.mina.common.ByteBuffer;
 import org.apache.mina.common.ExecutorThreadModel;
 import org.apache.mina.common.SimpleByteBufferAllocator;
@@ -48,7 +47,6 @@ import org.b5chat.crossfire.core.plugin.IPluginManagerListener;
 import org.b5chat.crossfire.core.plugin.PluginManager;
 import org.b5chat.crossfire.route.IPacketDeliverer;
 import org.b5chat.crossfire.route.IPacketRouter;
-import org.b5chat.crossfire.route.IRoutingTable;
 import org.b5chat.crossfire.server.ServerPort;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.crossfire.session.SessionManager;
@@ -57,9 +55,9 @@ import org.b5chat.util.LocaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ConnectionManagerImpl extends BasicModule implements IConnectionManager {
+public class ConnectionManager extends BasicModule implements IConnectionManager {
 
-	private static final Logger Log = LoggerFactory.getLogger(ConnectionManagerImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
 
     private SocketAcceptor socketAcceptor;
     private ArrayList<ServerPort> ports;
@@ -67,15 +65,13 @@ public class ConnectionManagerImpl extends BasicModule implements IConnectionMan
     private SessionManager sessionManager;
     private IPacketDeliverer deliverer;
     private IPacketRouter router;
-    private IRoutingTable routingTable;
     private String serverName;
-    private XmppServer server;
     private String localIPAddress = null;
 
     // Used to know if the sockets have been started
     private boolean isSocketStarted = false;
 
-    public ConnectionManagerImpl() {
+    public ConnectionManager() {
         super("IConnection Manager");
         ports = new ArrayList<ServerPort>(4);
     }
@@ -114,7 +110,8 @@ public class ConnectionManagerImpl extends BasicModule implements IConnectionMan
             localIPAddress = InetAddress.getLocalHost().getHostAddress();
         }
         catch (UnknownHostException e) {
-            if (localIPAddress == null) {
+        	logger.warn("Setup port info", e);
+        	if (localIPAddress == null) {
                 localIPAddress = "Unknown";
             }
         }
@@ -164,12 +161,12 @@ public class ConnectionManagerImpl extends BasicModule implements IConnectionMan
 
                 List<String> params = new ArrayList<String>();
                 params.add(Integer.toString(port));
-                Log.info(LocaleUtils.getLocalizedString("startup.plain", params));
+                logger.info(LocaleUtils.getLocalizedString("startup.plain", params));
             }
             catch (Exception e) {
                 System.err.println("Error starting XMPP listener on port " + port + ": " +
                         e.getMessage());
-                Log.error(LocaleUtils.getLocalizedString("admin.error.socket-setup"), e);
+                logger.error(LocaleUtils.getLocalizedString("admin.error.socket-setup"), e);
             }
         }
     }
@@ -194,10 +191,8 @@ public class ConnectionManagerImpl extends BasicModule implements IConnectionMan
     @Override
 	public void initialize(XmppServer server) {
         super.initialize(server);
-        this.server = server;
         serverName = server.getServerInfo().getXMPPDomain();
         router = server.getPacketRouter();
-        routingTable = server.getRoutingTable();
         deliverer = server.getPacketDeliverer();
         sessionManager = server.getSessionManager();
         // Check if we need to configure MINA to use Direct or Heap Buffers

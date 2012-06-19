@@ -27,6 +27,7 @@ package org.b5chat.crossfire;
  *
  * @author Iain Shigeoka
  */
+@SuppressWarnings("serial")
 public class PacketException extends RuntimeException {
 
     public PacketException() {

@@ -24,8 +24,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xmpp.packet.Packet;
 
 /**
@@ -48,8 +46,6 @@ import org.xmpp.packet.Packet;
  * @author Matt Tucker
  */
 public class Channel<T extends Packet> {
-
-	private static final Logger logger = LoggerFactory.getLogger(Channel.class);
 
     private String name;
     private IChannelHandler<T> channelHandler;

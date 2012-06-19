@@ -25,6 +25,7 @@ package org.b5chat.crossfire;
  *
  * @author Matt Tucker
  */
+@SuppressWarnings("serial")
 public class ChannelNotFoundException extends RuntimeException {
 
     public ChannelNotFoundException() {

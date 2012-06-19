@@ -26,6 +26,7 @@ package org.b5chat.crossfire;
  *
  * @author Gaston Dombiak
  */
+@SuppressWarnings("serial")
 public class RemoteConnectionFailedException extends Exception {
 
     public RemoteConnectionFailedException() {
