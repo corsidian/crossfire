@@ -26,21 +26,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.locks.Lock;
-
 
 import org.b5chat.crossfire.PacketException;
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.core.container.BasicModule;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.presence.PresenceRouter;
 import org.b5chat.crossfire.presence.PresenceUpdateHandler;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.crossfire.session.IClientSession;
-import org.b5chat.crossfire.session.IRemoteSessionLocator;
 import org.b5chat.crossfire.session.LocalClientSession;
 import org.b5chat.util.ConcurrentHashSet;
-import org.b5chat.util.Globals;
 import org.b5chat.util.cache.Cache;
 import org.b5chat.util.cache.CacheFactory;
 import org.slf4j.Logger;
@@ -438,46 +435,12 @@ public class RoutingTableImpl extends BasicModule implements IRoutingTable {
     public IClientSession getClientRoute(JID jid) {
         // Check if this session is hosted by this cluster node
         IClientSession session = (IClientSession) localRoutingTable.getRoute(jid.toString());
-        if (session == null) {
-            // The session is not in this JVM so assume remote
-            IRemoteSessionLocator locator = server.getRemoteSessionLocator();
-            if (locator != null) {
-                // Check if the session is hosted by other cluster node
-                ClientRoute route = usersCache.get(jid.toString());
-                if (route == null) {
-                    route = anonymousUsersCache.get(jid.toString());
-                }
-                if (route != null) {
-                    session = locator.getClientSession(route.getNodeID().toByteArray(), jid);
-                }
-            }
-        }
         return session;
     }
 
     public Collection<IClientSession> getClientsRoutes(boolean onlyLocal) {
         // Add sessions hosted by this cluster node
         Collection<IClientSession> sessions = new ArrayList<IClientSession>(localRoutingTable.getClientRoutes());
-        if (!onlyLocal) {
-            // Add sessions not hosted by this JVM
-            IRemoteSessionLocator locator = server.getRemoteSessionLocator();
-            if (locator != null) {
-                // Add sessions of non-anonymous users hosted by other cluster nodes
-                for (Map.Entry<String, ClientRoute> entry : usersCache.entrySet()) {
-                    ClientRoute route = entry.getValue();
-                    if (!server.getNodeID().equals(route.getNodeID())) {
-                        sessions.add(locator.getClientSession(route.getNodeID().toByteArray(), new JID(entry.getKey())));
-                    }
-                }
-                // Add sessions of anonymous users hosted by other cluster nodes
-                for (Map.Entry<String, ClientRoute> entry : anonymousUsersCache.entrySet()) {
-                    ClientRoute route = entry.getValue();
-                    if (!server.getNodeID().equals(route.getNodeID())) {
-                        sessions.add(locator.getClientSession(route.getNodeID().toByteArray(), new JID(entry.getKey())));
-                    }
-                }
-            }
-        }
         return sessions;
     }
 

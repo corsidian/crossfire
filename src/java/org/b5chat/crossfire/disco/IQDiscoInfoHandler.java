@@ -32,6 +32,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.handler.IqHandler;
 import org.b5chat.crossfire.handler.IqHandlerInfo;
 import org.b5chat.crossfire.server.NodeID;
@@ -40,7 +41,6 @@ import org.b5chat.crossfire.session.SessionManager;
 import org.b5chat.crossfire.user.IUserIdentitiesProvider;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
-import org.b5chat.util.Globals;
 import org.b5chat.util.cache.Cache;
 import org.b5chat.util.cache.CacheFactory;
 import org.dom4j.DocumentHelper;

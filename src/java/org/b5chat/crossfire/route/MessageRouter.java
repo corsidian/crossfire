@@ -22,6 +22,7 @@ package org.b5chat.crossfire.route;
 
 
 import org.b5chat.crossfire.core.container.BasicModule;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.interceptor.InterceptorManager;
 import org.b5chat.crossfire.interceptor.PacketRejectedException;
 import org.b5chat.crossfire.offline.OfflineMessageStrategy;
@@ -30,7 +31,6 @@ import org.b5chat.crossfire.session.IClientSession;
 import org.b5chat.crossfire.session.ISession;
 import org.b5chat.crossfire.session.SessionManager;
 import org.b5chat.crossfire.user.UserManager;
-import org.b5chat.util.Globals;
 import org.xmpp.packet.JID;
 import org.xmpp.packet.Message;
 import org.xmpp.packet.Packet;

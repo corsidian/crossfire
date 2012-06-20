@@ -27,7 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.Lock;
 
-
 import org.b5chat.crossfire.IChannelHandler;
 import org.b5chat.crossfire.PacketException;
 import org.b5chat.crossfire.auth.UnauthorizedException;
@@ -53,7 +52,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;
 import org.xmpp.packet.Message;
-import org.xmpp.packet.Packet;
 import org.xmpp.packet.PacketError;
 import org.xmpp.packet.Presence;
 
@@ -95,7 +93,7 @@ import org.xmpp.packet.Presence;
  *
  * @author Iain Shigeoka
  */
-public class PresenceUpdateHandler extends BasicModule implements IChannelHandler {
+public class PresenceUpdateHandler extends BasicModule implements IChannelHandler<Presence> {
 
 	private static final Logger Log = LoggerFactory.getLogger(PresenceUpdateHandler.class);
 
@@ -127,10 +125,6 @@ public class PresenceUpdateHandler extends BasicModule implements IChannelHandle
     public PresenceUpdateHandler() {
         super("Presence update handler");
         localDirectedPresences = new ConcurrentHashMap<String, Collection<DirectedPresence>>();
-    }
-
-    public void process(Packet packet) throws UnauthorizedException, PacketException {
-        process((Presence) packet, sessionManager.getSession(packet.getFrom()));
     }
 
     private void process(Presence presence, IClientSession session) throws UnauthorizedException, PacketException {
@@ -194,7 +188,7 @@ public class PresenceUpdateHandler extends BasicModule implements IChannelHandle
      */
     public void process(Presence presence) throws PacketException {
         try {
-            process((Packet)presence);
+        	process(presence, sessionManager.getSession(presence.getFrom()));
         }
         catch (UnauthorizedException e) {
             try {

@@ -21,17 +21,12 @@
 package org.b5chat.crossfire.entitycaps;
 
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
 import org.b5chat.util.cache.CannotCalculateSizeException;
-import org.b5chat.util.cache.ExternalizableUtil;
 
 /**
  * Contains identities and supported features describing client capabilities
@@ -41,7 +36,8 @@ import org.b5chat.util.cache.ExternalizableUtil;
  *
  */
 // TODO: Instances of this class should not be cached in distributed caches. The overhead of distributing data is a lot higher than recalculating the hash on every cluster node. We should remove the Externalizable interface, and turn this class into an immutable class.
-public class EntityCapabilities implements Cacheable, Externalizable {
+@SuppressWarnings("serial")
+public class EntityCapabilities implements Cacheable {
 
     /**
      * Identities included in these entity capabilities.
@@ -126,18 +122,6 @@ public class EntityCapabilities implements Cacheable, Externalizable {
     	return this.hashAttribute;
     }
     
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        ExternalizableUtil.getInstance().readStrings(in, identities);
-        ExternalizableUtil.getInstance().readStrings(in, features);
-        verAttribute = ExternalizableUtil.getInstance().readSafeUTF(in);
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeStrings(out, identities);
-        ExternalizableUtil.getInstance().writeStrings(out, features);
-        ExternalizableUtil.getInstance().writeSafeUTF(out, verAttribute);
-    }
-
     public int getCachedSize() throws CannotCalculateSizeException {
         int size = CacheSizes.sizeOfCollection(identities);
         size += CacheSizes.sizeOfCollection(features);

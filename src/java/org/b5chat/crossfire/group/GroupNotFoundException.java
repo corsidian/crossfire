@@ -25,6 +25,7 @@ package org.b5chat.crossfire.group;
  *
  * @author Matt Tucker
  */
+@SuppressWarnings("serial")
 public class GroupNotFoundException extends Exception {
 
     /**

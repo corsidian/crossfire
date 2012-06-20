@@ -25,11 +25,11 @@ import java.util.Collection;
 import java.util.StringTokenizer;
 
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.user.UserAlreadyExistsException;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
 import org.b5chat.util.ClassUtils;
-import org.b5chat.util.Globals;
 import org.b5chat.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

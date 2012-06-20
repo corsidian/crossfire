@@ -27,10 +27,10 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.crossfire.user.UserNotFoundException;
 import org.b5chat.database.DbConnectionManager;
-import org.b5chat.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -38,7 +38,7 @@ public interface IGroupEventListener {
      * @param group the group.
      * @param params event parameters.
      */
-    public void groupCreated(Group group, Map params);
+    public void groupCreated(Group group, Map<String,Object> params);
 
     /**
      * A group is being deleted.
@@ -46,7 +46,7 @@ public interface IGroupEventListener {
      * @param group the group.
      * @param params event parameters.
      */
-    public void groupDeleting(Group group, Map params);
+    public void groupDeleting(Group group, Map<String,Object> params);
 
     /**
      * A group's name, description, or an extended property was changed.
@@ -54,7 +54,7 @@ public interface IGroupEventListener {
      * @param group the group.
      * @param params event parameters.
      */
-    public void groupModified(Group group, Map params);
+    public void groupModified(Group group, Map<String,Object> params);
 
     /**
      * A member was added to a group.
@@ -62,7 +62,7 @@ public interface IGroupEventListener {
      * @param group the group.
      * @param params event parameters.
      */
-    public void memberAdded(Group group, Map params);
+    public void memberAdded(Group group, Map<String,Object> params);
 
     /**
      * A member was removed from a group.
@@ -70,7 +70,7 @@ public interface IGroupEventListener {
      * @param group the group.
      * @param params event parameters.
      */
-    public void memberRemoved(Group group, Map params);
+    public void memberRemoved(Group group, Map<String,Object> params);
 
     /**
      * An administrator was added to a group.
@@ -78,7 +78,7 @@ public interface IGroupEventListener {
      * @param group the group.
      * @param params event parameters.
      */
-    public void adminAdded(Group group, Map params);
+    public void adminAdded(Group group, Map<String,Object> params);
 
     /**
      * An administrator was removed from a group.
@@ -86,5 +86,5 @@ public interface IGroupEventListener {
      * @param group the group.
      * @param params event parameters.
      */
-    public void adminRemoved(Group group, Map params);
+    public void adminRemoved(Group group, Map<String,Object> params);
 }

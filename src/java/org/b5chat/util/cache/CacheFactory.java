@@ -27,9 +27,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 
 
+import org.b5chat.crossfire.core.property.Globals;
+import org.b5chat.crossfire.server.InitializationException;
 import org.b5chat.util.GlobalConstants;
-import org.b5chat.util.Globals;
-import org.b5chat.util.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

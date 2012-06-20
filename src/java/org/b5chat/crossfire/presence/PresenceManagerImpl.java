@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.core.container.BasicModule;
 import org.b5chat.crossfire.privacy.PrivacyList;
@@ -41,7 +40,6 @@ import org.b5chat.crossfire.roster.Roster;
 import org.b5chat.crossfire.roster.RosterItem;
 import org.b5chat.crossfire.roster.RosterManager;
 import org.b5chat.crossfire.route.IPacketDeliverer;
-import org.b5chat.crossfire.route.IRoutingTable;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.crossfire.session.IClientSession;
 import org.b5chat.crossfire.session.SessionManager;
@@ -83,7 +81,6 @@ public class PresenceManagerImpl extends BasicModule implements IPresenceManager
     private static final String NULL_STRING = "NULL";
     private static final long NULL_LONG = -1L;
 
-    private IRoutingTable routingTable;
     private SessionManager sessionManager;
     private UserManager userManager;
     private RosterManager rosterManager;
@@ -485,7 +482,6 @@ public class PresenceManagerImpl extends BasicModule implements IPresenceManager
         userManager = server.getUserManager();
         presenceUpdateHandler = server.getPresenceUpdateHandler();
         rosterManager = server.getRosterManager();
-        routingTable = server.getRoutingTable();
     }
 
     @Override

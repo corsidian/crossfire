@@ -124,7 +124,7 @@ public class CommonsLogFactory extends LogFactory {
     }
 
     @Override
-	public org.apache.commons.logging.Log getInstance(Class aClass)
+	public org.apache.commons.logging.Log getInstance(@SuppressWarnings("rawtypes") Class aClass)
             throws LogConfigurationException {
         return log;
     }

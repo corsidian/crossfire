@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.b5chat.crossfire.PacketException;
 import org.b5chat.crossfire.auth.UnauthorizedException;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.disco.IServerFeaturesProvider;
 import org.b5chat.crossfire.group.GroupManager;
 import org.b5chat.crossfire.roster.RosterManager;
@@ -40,7 +41,6 @@ import org.b5chat.crossfire.user.User;
 import org.b5chat.crossfire.user.UserAlreadyExistsException;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
-import org.b5chat.util.Globals;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.QName;

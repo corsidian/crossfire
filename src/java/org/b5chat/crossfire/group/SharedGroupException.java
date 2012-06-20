@@ -26,6 +26,7 @@ package org.b5chat.crossfire.group;
  *
  * @author Gaston Dombiak
  */
+@SuppressWarnings("serial")
 public class SharedGroupException extends Exception {
 
     public SharedGroupException() {

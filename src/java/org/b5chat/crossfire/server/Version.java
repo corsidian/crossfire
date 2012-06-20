@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package org.b5chat.util;
+package org.b5chat.crossfire.server;
 
 /**
  * Holds version information for crossfire.

@@ -20,10 +20,6 @@
 
 package org.b5chat.crossfire.group;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,13 +35,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.database.DbConnectionManager;
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
 import org.b5chat.util.cache.CannotCalculateSizeException;
-import org.b5chat.util.cache.ExternalizableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;
@@ -61,7 +55,8 @@ import org.xmpp.packet.JID;
  *
  * @author Matt Tucker
  */
-public class Group implements Cacheable, Externalizable {
+@SuppressWarnings("serial")
+public class Group implements Cacheable {
 
 	private static final Logger Log = LoggerFactory.getLogger(Group.class);
 
@@ -389,7 +384,7 @@ public class Group implements Cacheable, Externalizable {
      * Collection implementation that notifies the IGroupProvider of any
      * changes to the collection.
      */
-    private class MemberCollection extends AbstractCollection {
+    private class MemberCollection extends AbstractCollection<JID> {
 
         private Collection<JID> users;
         private boolean adminCollection;
@@ -430,13 +425,13 @@ public class Group implements Cacheable, Externalizable {
                     provider.deleteMember(name, user);
                     // Fire event.
                     if (adminCollection) {
-                        Map<String, String> params = new HashMap<String, String>();
+                        Map<String, Object> params = new HashMap<String, Object>();
                         params.put("admin", user.toString());
                         GroupEventDispatcher.dispatchEvent(Group.this,
                                 GroupEventDispatcher.EventType.admin_removed, params);
                     }
                     else {
-                        Map<String, String> params = new HashMap<String, String>();
+                        Map<String, Object> params = new HashMap<String, Object>();
                         params.put("member", user.toString());
                         GroupEventDispatcher.dispatchEvent(Group.this,
                                 GroupEventDispatcher.EventType.member_removed, params);
@@ -451,7 +446,7 @@ public class Group implements Cacheable, Externalizable {
         }
 
         @Override
-		public boolean add(Object member) {
+		public boolean add(JID member) {
             // Do nothing if the provider is read-only.
             if (provider.isReadOnly()) {
                 return false;
@@ -477,7 +472,7 @@ public class Group implements Cacheable, Externalizable {
 
                 // Fire event.
                 if (adminCollection) {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, Object> params = new HashMap<String, Object>();
                     params.put("admin", user.toString());
                     if (alreadyGroupUser) {
                         GroupEventDispatcher.dispatchEvent(Group.this,
@@ -487,7 +482,7 @@ public class Group implements Cacheable, Externalizable {
                                 GroupEventDispatcher.EventType.admin_added, params);
                 }
                 else {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, Object> params = new HashMap<String, Object>();
                     params.put("member", user.toString());
                     if (alreadyGroupUser) {
                         GroupEventDispatcher.dispatchEvent(Group.this,
@@ -519,15 +514,15 @@ public class Group implements Cacheable, Externalizable {
     /**
      * Map implementation that updates the database when properties are modified.
      */
-    private class PropertiesMap extends AbstractMap {
+    private class PropertiesMap extends AbstractMap<String,String> {
 
         @Override
-		public Object put(Object key, Object value) {
+		public String put(String key, String value) {
             if (key == null || value == null) {
                 throw new NullPointerException();
             }
             Map<String, Object> eventParams = new HashMap<String, Object>();
-            Object answer;
+            String answer;
             String keyString = (String) key;
             synchronized (keyString.intern()) {
                 if (properties.containsKey(keyString)) {
@@ -559,7 +554,7 @@ public class Group implements Cacheable, Externalizable {
         }
 
         @Override
-		public Set<Entry> entrySet() {
+		public Set<java.util.Map.Entry<String, String>> entrySet() {
             return new PropertiesEntrySet();
         }
     }
@@ -567,26 +562,26 @@ public class Group implements Cacheable, Externalizable {
     /**
      * Set implementation that updates the database when properties are deleted.
      */
-    private class PropertiesEntrySet extends AbstractSet {
+    private class PropertiesEntrySet extends AbstractSet<Map.Entry<String,String>> {
 
         @Override
 		public int size() {
             return properties.entrySet().size();
         }
 
-        @Override
-		public Iterator iterator() {
-            return new Iterator() {
+		@Override
+		public Iterator<Map.Entry<String,String>> iterator() {
+            return new Iterator<Map.Entry<String,String>>() {
 
-                Iterator iter = properties.entrySet().iterator();
-                Map.Entry current = null;
+                Iterator<Map.Entry<String,String>> iter = properties.entrySet().iterator();
+                Map.Entry<String,String> current = null;
 
                 public boolean hasNext() {
                     return iter.hasNext();
                 }
 
-                public Object next() {
-                    current = (Map.Entry)iter.next();
+                public Map.Entry<String,String> next() {
+                    current = (Map.Entry<String,String>)iter.next();
                     return current;
                 }
 
@@ -694,29 +689,5 @@ public class Group implements Cacheable, Externalizable {
         finally {
             DbConnectionManager.closeConnection(pstmt, con);
         }
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeSafeUTF(out, name);
-        ExternalizableUtil.getInstance().writeBoolean(out, description != null);
-        if (description != null) {
-            ExternalizableUtil.getInstance().writeSafeUTF(out, description);
-        }
-        ExternalizableUtil.getInstance().writeSerializableCollection(out, members);
-        ExternalizableUtil.getInstance().writeSerializableCollection(out, administrators);
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        groupManager = GroupManager.getInstance();
-        provider = groupManager.getProvider();
-
-        name = ExternalizableUtil.getInstance().readSafeUTF(in);
-        if (ExternalizableUtil.getInstance().readBoolean(in)) {
-            description = ExternalizableUtil.getInstance().readSafeUTF(in);
-        }
-        members= new HashSet<JID>();
-        administrators = new HashSet<JID>();
-        ExternalizableUtil.getInstance().readSerializableCollection(in, members, getClass().getClassLoader());
-        ExternalizableUtil.getInstance().readSerializableCollection(in, administrators, getClass().getClassLoader());
     }
 }

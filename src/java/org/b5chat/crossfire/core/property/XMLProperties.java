@@ -218,12 +218,13 @@ public class XMLProperties {
             }
         }
         // We found matching property, return names of children.
-        Iterator iter = element.elementIterator(propName[propName.length - 1]);
+        @SuppressWarnings("unchecked")
+		Iterator<Element> iter = element.elementIterator(propName[propName.length - 1]);
         List<String> props = new ArrayList<String>();
         String value;
         while (iter.hasNext()) {
             // Empty strings are skipped.
-            value = ((Element)iter.next()).getTextTrim();
+            value = (iter.next()).getTextTrim();
             if (!"".equals(value)) {
                 props.add(value);
             }
@@ -253,7 +254,7 @@ public class XMLProperties {
      * @param name the name of the property to retrieve
      * @return all child property values for the given node name.
      */
-    public Iterator getChildProperties(String name) {
+	public Iterator<String> getChildProperties(String name) {
         String[] propName = parsePropertyName(name);
         // Search for this property by traversing down the XML heirarchy,
         // stopping one short.
@@ -263,14 +264,17 @@ public class XMLProperties {
             if (element == null) {
                 // This node doesn't match this part of the property name which
                 // indicates this property doesn't exist so return empty array.
-                return Collections.EMPTY_LIST.iterator();
+                @SuppressWarnings("unchecked")
+            	Iterator<String> iter = Collections.EMPTY_LIST.iterator();
+                return iter;
             }
         }
         // We found matching property, return values of the children.
-        Iterator iter = element.elementIterator(propName[propName.length - 1]);
+        @SuppressWarnings("unchecked")
+		Iterator<Element> iter = element.elementIterator(propName[propName.length - 1]);
         ArrayList<String> props = new ArrayList<String>();
         while (iter.hasNext()) {
-            props.add(((Element)iter.next()).getText());
+            props.add((iter.next()).getText());
         }
         return props.iterator();
     }
@@ -340,20 +344,22 @@ public class XMLProperties {
         String childName = propName[propName.length - 1];
         // We found matching property, clear all children.
         List<Element> toRemove = new ArrayList<Element>();
-        Iterator iter = element.elementIterator(childName);
+        @SuppressWarnings("unchecked")
+		Iterator<Element> iter = element.elementIterator(childName);
         while (iter.hasNext()) {
-            toRemove.add((Element) iter.next());
+            toRemove.add(iter.next());
         }
         for (iter = toRemove.iterator(); iter.hasNext();) {
-            element.remove((Element)iter.next());
+            element.remove(iter.next());
         }
         // Add the new children.
         for (String value : values) {
             Element childElement = element.addElement(childName);
             if (value.startsWith("<![CDATA[")) {
-                Iterator it = childElement.nodeIterator();
+                @SuppressWarnings("unchecked")
+				Iterator<Node> it = childElement.nodeIterator();
                 while (it.hasNext()) {
-                    Node node = (Node) it.next();
+                    Node node = it.next();
                     if (node instanceof CDATA) {
                         childElement.remove(node);
                         break;
@@ -397,11 +403,12 @@ public class XMLProperties {
             }
         }
         // We found matching property, return names of children.
-        List children = element.elements();
+        @SuppressWarnings("unchecked")
+		List<Element> children = element.elements();
         int childCount = children.size();
         String[] childrenNames = new String[childCount];
         for (int i = 0; i < childCount; i++) {
-            childrenNames[i] = ((Element)children.get(i)).getName();
+            childrenNames[i] = children.get(i).getName();
         }
         return childrenNames;
     }
@@ -440,9 +447,10 @@ public class XMLProperties {
         }
         // Set the value of the property in this node.
         if (value.startsWith("<![CDATA[")) {
-            Iterator it = element.nodeIterator();
+            @SuppressWarnings("unchecked")
+			Iterator<Node> it = element.nodeIterator();
             while (it.hasNext()) {
-                Node node = (Node) it.next();
+                Node node = it.next();
                 if (node instanceof CDATA) {
                     element.remove(node);
                     break;

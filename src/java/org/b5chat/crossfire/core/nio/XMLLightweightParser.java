@@ -31,9 +31,9 @@ import java.util.regex.Pattern;
 
 
 import org.apache.mina.common.ByteBuffer;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
 import org.b5chat.crossfire.core.property.PropertyEventListener;
-import org.b5chat.util.Globals;
 
 /**
  * This is a Light-Weight XML Parser.

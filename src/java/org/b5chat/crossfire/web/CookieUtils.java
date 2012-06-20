@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package org.b5chat.util;
+package org.b5chat.crossfire.web;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

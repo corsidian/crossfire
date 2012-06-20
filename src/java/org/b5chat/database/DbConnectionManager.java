@@ -31,8 +31,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.util.ClassUtils;
-import org.b5chat.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

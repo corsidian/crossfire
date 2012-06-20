@@ -20,30 +20,14 @@
 
 package org.b5chat.crossfire.server;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.b5chat.crossfire.ConnectionManager;
-import org.b5chat.crossfire.IConnectionManager;
-import org.b5chat.crossfire.admin.AdminModule;
-import org.b5chat.crossfire.admin.IAdminManager;
 import org.b5chat.crossfire.auth.IqAuthHandler;
 import org.b5chat.crossfire.core.container.IModule;
-import org.b5chat.crossfire.core.container.ModuleManager;
-import org.b5chat.crossfire.core.plugin.PluginManager;
 import org.b5chat.crossfire.disco.IQDiscoInfoHandler;
 import org.b5chat.crossfire.disco.IQDiscoItemsHandler;
 import org.b5chat.crossfire.disco.IServerFeaturesProvider;
@@ -75,14 +59,6 @@ import org.b5chat.crossfire.user.IUserIdentitiesProvider;
 import org.b5chat.crossfire.user.IUserItemsProvider;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.database.DbConnectionManager;
-import org.b5chat.util.Globals;
-import org.b5chat.util.InitializationException;
-import org.b5chat.util.LocaleUtils;
-import org.b5chat.util.TaskEngine;
-import org.b5chat.util.Version;
-import org.b5chat.util.cache.CacheFactory;
-import org.dom4j.Document;
-import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;
@@ -119,12 +95,29 @@ import org.xmpp.packet.JID;
 public class XmppServer extends Server {
 
 	private static final Logger logger = LoggerFactory.getLogger(XmppServer.class);
-         
+
+	private static XmppServer instance;
+	
+    /**
+     * Returns a singleton instance of XMPPServer.
+     *
+     * @return an instance.
+     */
+    public static XmppServer getInstance() {
+        return instance;
+    }
+
     /**
      * Creates a server and starts it.
      */
     public XmppServer() {
         super();
+
+    	// We may only have one instance of the server running on the JVM
+        if (instance != null) {
+            throw new IllegalStateException("A server is already running");
+        }
+        instance = this;
     }
 
     /**

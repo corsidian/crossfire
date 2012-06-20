@@ -26,12 +26,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 import org.b5chat.crossfire.session.LocalClientSession;
 import org.b5chat.crossfire.session.LocalSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;
+import org.xmpp.packet.Packet;
 
 /**
  * Internal component used by the IRoutingTable to keep references to routes hosted by this JVM. When
@@ -45,7 +45,7 @@ class LocalRoutingTable {
 	
 	private static final Logger Log = LoggerFactory.getLogger(LocalRoutingTable.class);
 
-    Map<String, IRoutableChannelHandler> routes = new ConcurrentHashMap<String, IRoutableChannelHandler>();
+    Map<String, IRoutableChannelHandler<Packet>> routes = new ConcurrentHashMap<String, IRoutableChannelHandler<Packet>>();
 
     /**
      * Adds a route of a local {@link IRoutableChannelHandler}

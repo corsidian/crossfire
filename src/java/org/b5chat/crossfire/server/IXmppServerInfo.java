@@ -24,7 +24,6 @@ package org.b5chat.crossfire.server;
 import java.util.Collection;
 import java.util.Date;
 
-import org.b5chat.util.Version;
 
 /**
  * Information 'snapshot' of a server's state. Useful for statistics

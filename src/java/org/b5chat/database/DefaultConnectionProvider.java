@@ -26,7 +26,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 
-import org.b5chat.util.Globals;
+import org.b5chat.crossfire.core.property.Globals;
 import org.logicalcobwebs.proxool.ConnectionPoolDefinitionIF;
 import org.logicalcobwebs.proxool.ProxoolException;
 import org.logicalcobwebs.proxool.ProxoolFacade;

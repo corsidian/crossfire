@@ -20,25 +20,17 @@
 
 package org.b5chat.crossfire.disco;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
-
 
 import org.b5chat.crossfire.handler.IqHandler;
 import org.b5chat.crossfire.handler.IqHandlerInfo;
 import org.b5chat.crossfire.roster.RosterItem;
-import org.b5chat.crossfire.server.NodeID;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.crossfire.session.ISession;
 import org.b5chat.crossfire.session.SessionManager;
@@ -48,11 +40,9 @@ import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
 import org.b5chat.util.cache.Cache;
 import org.b5chat.util.cache.CacheFactory;
-import org.b5chat.util.cache.ExternalizableUtil;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.QName;
-import org.dom4j.tree.DefaultElement;
 import org.xmpp.packet.IQ;
 import org.xmpp.packet.JID;
 import org.xmpp.packet.PacketError;
@@ -87,7 +77,7 @@ public class IQDiscoItemsHandler extends IqHandler implements IServerFeaturesPro
     public static final String NAMESPACE_DISCO_ITEMS = "http://jabber.org/protocol/disco#items";
     private Map<String,IDiscoItemsProvider> entities = new HashMap<String,IDiscoItemsProvider>();
     private Map<String, Element> localServerItems = new HashMap<String, Element>();
-    private Cache<String, ClusteredServerItem> serverItems;
+    private Cache<String, Element> serverItems;
     private Map<String, IDiscoItemsProvider> serverNodeProviders = new ConcurrentHashMap<String, IDiscoItemsProvider>();
     private IqHandlerInfo info;
     private IQDiscoInfoHandler infoHandler;
@@ -343,23 +333,18 @@ public class IQDiscoItemsHandler extends IqHandler implements IServerFeaturesPro
         Lock lock = CacheFactory.getLock(jid, serverItems);
         try {
             lock.lock();
-            ClusteredServerItem item = serverItems.get(jid);
+            Element item = serverItems.get(jid);
             if (item == null) {
                 // First time a node registers a server item for this component
-                item = new ClusteredServerItem();
-
-                Element element = DocumentHelper.createElement("item");
-                element.addAttribute("jid", jid);
-                element.addAttribute("node", node);
-                element.addAttribute("name", name);
-                item.element = element;
+                item = DocumentHelper.createElement("item");
+                item.addAttribute("jid", jid);
+                item.addAttribute("node", node);
+                item.addAttribute("name", name);
             }
-            if (item.nodes.add(XmppServer.getInstance().getNodeID())) {
-                // Update the cache with latest info
-                serverItems.put(jid, item);
-            }
+            // Update the cache with latest info
+            serverItems.put(jid, item);
             // Keep track of the new server item added by this JVM
-            localServerItems.put(jid, item.element);
+            localServerItems.put(jid, item);
         }
         finally {
             lock.unlock();
@@ -379,15 +364,10 @@ public class IQDiscoItemsHandler extends IqHandler implements IServerFeaturesPro
         Lock lock = CacheFactory.getLock(jid, serverItems);
         try {
             lock.lock();
-            ClusteredServerItem item = serverItems.get(jid);
-            if (item != null && item.nodes.remove(XmppServer.getInstance().getNodeID())) {
+            Element item = serverItems.get(jid);
+            if (item != null) {
                 // Update the cache with latest info
-                if (item.nodes.isEmpty()) {
-                    serverItems.remove(jid);
-                }
-                else {
-                    serverItems.put(jid, item);
-                }
+                serverItems.remove(jid);                
             }
         }
         finally {
@@ -436,8 +416,8 @@ public class IQDiscoItemsHandler extends IqHandler implements IServerFeaturesPro
                 }
                 if (name == null) {
                     List<DiscoItem> answer = new ArrayList<DiscoItem>();
-                    for (ClusteredServerItem item : serverItems.values()) {
-                        answer.add(new DiscoItem(item.element));
+                    for (Element item : serverItems.values()) {
+                        answer.add(new DiscoItem(item));
                     }
                     return answer.iterator();
                 }
@@ -470,24 +450,6 @@ public class IQDiscoItemsHandler extends IqHandler implements IServerFeaturesPro
                 }
             }
         };
-    }
-
-    private static class ClusteredServerItem implements Externalizable {
-        private Element element;
-        private Set<NodeID> nodes = new HashSet<NodeID>();
-
-        public ClusteredServerItem() {
-        }
-
-        public void writeExternal(ObjectOutput out) throws IOException {
-            ExternalizableUtil.getInstance().writeSerializable(out, (DefaultElement) element);
-            ExternalizableUtil.getInstance().writeExternalizableCollection(out, nodes);
-        }
-
-        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-            element = (Element) ExternalizableUtil.getInstance().readSerializable(in);
-            ExternalizableUtil.getInstance().readExternalizableCollection(in, nodes, getClass().getClassLoader());
-        }
     }
 
     public Iterator<Element> getUserItems(String name, JID senderJID) {

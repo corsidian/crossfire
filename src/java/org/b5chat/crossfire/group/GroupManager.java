@@ -21,10 +21,10 @@
 package org.b5chat.crossfire.group;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
-
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
 import org.b5chat.crossfire.core.property.PropertyEventListener;
 import org.b5chat.crossfire.server.XmppServer;
@@ -34,7 +34,6 @@ import org.b5chat.crossfire.user.UserEventDispatcher;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
 import org.b5chat.util.ClassUtils;
-import org.b5chat.util.Globals;
 import org.b5chat.util.TaskEngine;
 import org.b5chat.util.cache.Cache;
 import org.b5chat.util.cache.CacheFactory;
@@ -84,7 +83,7 @@ public class GroupManager {
         initProvider();
 
         GroupEventDispatcher.addListener(new IGroupEventListener() {
-            public void groupCreated(Group group, Map params) {
+            public void groupCreated(Group group, Map<String,Object> params) {
 
                 // Adds default properties if they don't exists, since the creator of
                 // the group could set them.
@@ -100,14 +99,14 @@ public class GroupManager {
                 groupMetaCache.clear();
             }
 
-            public void groupDeleting(Group group, Map params) {
+            public void groupDeleting(Group group, Map<String,Object> params) {
                 // Since the group could be deleted by the provider, remove it possible again
                 groupCache.remove(group.getName());
                 
                 groupMetaCache.clear();
             }
 
-            public void groupModified(Group group, Map params) {
+            public void groupModified(Group group, Map<String,Object> params) {
                 String type = (String)params.get("type");
                 // If shared group settings changed, expire the cache.
                 if (type != null && (type.equals("propertyModified") ||
@@ -124,28 +123,28 @@ public class GroupManager {
                 groupCache.put(group.getName(), group);
             }
 
-            public void memberAdded(Group group, Map params) {
+            public void memberAdded(Group group, Map<String,Object> params) {
                 groupMetaCache.clear();
                 // Set object again in cache. This is done so that other cluster nodes
                 // get refreshed with latest version of the object
                 groupCache.put(group.getName(), group);
             }
 
-            public void memberRemoved(Group group, Map params) {
+            public void memberRemoved(Group group, Map<String,Object> params) {
                 groupMetaCache.clear();
                 // Set object again in cache. This is done so that other cluster nodes
                 // get refreshed with latest version of the object
                 groupCache.put(group.getName(), group);
             }
 
-            public void adminAdded(Group group, Map params) {
+            public void adminAdded(Group group, Map<String,Object> params) {
                 groupMetaCache.clear();
                 // Set object again in cache. This is done so that other cluster nodes
                 // get refreshed with latest version of the object
                 groupCache.put(group.getName(), group);
             }
 
-            public void adminRemoved(Group group, Map params) {
+            public void adminRemoved(Group group, Map<String, Object> params) {
                 groupMetaCache.clear();
                 // Set object again in cache. This is done so that other cluster nodes
                 // get refreshed with latest version of the object
@@ -170,21 +169,21 @@ public class GroupManager {
 
         // Detect when a new auth provider class is set
         PropertyEventListener propListener = new PropertyEventListener() {
-            public void propertySet(String property, Map params) {
+            public void propertySet(String property, Map<String,Object> params) {
                 if ("provider.group.className".equals(property)) {
                     initProvider();
                 }
             }
 
-            public void propertyDeleted(String property, Map params) {
+            public void propertyDeleted(String property, Map<String,Object> params) {
                 //Ignore
             }
 
-            public void xmlPropertySet(String property, Map params) {
+            public void xmlPropertySet(String property, Map<String,Object> params) {
                 //Ignore
             }
 
-            public void xmlPropertyDeleted(String property, Map params) {
+            public void xmlPropertyDeleted(String property, Map<String,Object> params) {
                 //Ignore
             }
         };
@@ -222,8 +221,9 @@ public class GroupManager {
         String className = Globals.getProperty("provider.group.className",
                 "org.b5chat.crossfire.group.DefaultGroupProvider");
         try {
-            Class c = ClassUtils.forName(className);
-            provider = (IGroupProvider) c.newInstance();
+            @SuppressWarnings("unchecked")
+			Class<IGroupProvider> c = ClassUtils.forName(className);
+            provider = c.newInstance();
         }
         catch (Exception e) {
             Log.error("Error loading group provider: " + className, e);
@@ -251,10 +251,10 @@ public class GroupManager {
                 newGroup = provider.createGroup(name);
                 // Update caches.
                 groupCache.put(name, newGroup);
-
+                Map<String,Object> emptyMap = new HashMap<String,Object>();
                 // Fire event.
                 GroupEventDispatcher.dispatchEvent(newGroup,
-                        GroupEventDispatcher.EventType.group_created, Collections.emptyMap());
+                        GroupEventDispatcher.EventType.group_created, emptyMap);
             }
             return newGroup;
         }
@@ -303,9 +303,11 @@ public class GroupManager {
      * @param group the group to delete.
      */
     public void deleteGroup(Group group) {
+    	Map<String,Object> emptyMap = new HashMap<String,Object>();
+    	
         // Fire event.
         GroupEventDispatcher.dispatchEvent(group, GroupEventDispatcher.EventType.group_deleting,
-                Collections.emptyMap());
+                emptyMap);
 
         // Delete the group.
         provider.deleteGroup(group.getName());
@@ -362,7 +364,8 @@ public class GroupManager {
      *
      * @return an unmodifiable Collection of all groups.
      */
-    public Collection<Group> getGroups() {
+    @SuppressWarnings("unchecked")
+	public Collection<Group> getGroups() {
         Collection<String> groupNames = (Collection<String>)groupMetaCache.get(GROUP_NAMES_KEY);
         if (groupNames == null) {
             synchronized(GROUP_NAMES_KEY.intern()) {
@@ -381,7 +384,8 @@ public class GroupManager {
      *
      * @return an unmodifiable Collection of all shared groups.
      */
-    public Collection<Group> getSharedGroups() {
+    @SuppressWarnings("unchecked")
+	public Collection<Group> getSharedGroups() {
         Collection<String> groupNames = (Collection<String>)groupMetaCache.get(SHARED_GROUPS_KEY);
         if (groupNames == null) {
             synchronized(SHARED_GROUPS_KEY.intern()) {
@@ -406,7 +410,8 @@ public class GroupManager {
      * @param numResults number of results to return.
      * @return an Iterator for all groups in the specified range.
      */
-    public Collection<Group> getGroups(int startIndex, int numResults) {
+    @SuppressWarnings("unchecked")
+	public Collection<Group> getGroups(int startIndex, int numResults) {
         String key = GROUP_NAMES_KEY + startIndex + "," + numResults;
 
         Collection<String> groupNames = (Collection<String>)groupMetaCache.get(key);
@@ -438,10 +443,11 @@ public class GroupManager {
      * @param user the JID of the entity to get a list of groups for.
      * @return all groups that an entity belongs to.
      */
-    public Collection<Group> getGroups(JID user) {
+    @SuppressWarnings("unchecked")
+	public Collection<Group> getGroups(JID user) {
         String key = user.toBareJID();
 
-        Collection<String> groupNames = (Collection<String>)groupMetaCache.get(key);
+		Collection<String> groupNames = (Collection<String>)groupMetaCache.get(key);
         if (groupNames == null) {
             synchronized(key.intern()) {
                 groupNames = (Collection<String>)groupMetaCache.get(key);

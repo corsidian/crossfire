@@ -21,6 +21,14 @@
 package org.b5chat.crossfire.roster;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import org.b5chat.crossfire.group.Group;
 import org.b5chat.crossfire.group.GroupManager;
 import org.b5chat.crossfire.group.GroupNotFoundException;
@@ -31,14 +39,7 @@ import org.b5chat.util.IntEnum;
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
 import org.b5chat.util.cache.CannotCalculateSizeException;
-import org.b5chat.util.cache.ExternalizableUtil;
 import org.xmpp.packet.JID;
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.*;
 
 /**
  * <p>Represents a single roster item for a User's Roster.</p>
@@ -55,7 +56,8 @@ import java.util.*;
  *
  * @author Gaston Dombiak
  */
-public class RosterItem implements Cacheable, Externalizable {
+@SuppressWarnings("serial")
+public class RosterItem implements Cacheable {
 
     public static class SubType extends IntEnum {
         protected SubType(String name, int value) {
@@ -553,35 +555,5 @@ public class RosterItem implements Cacheable, Externalizable {
         size += CacheSizes.sizeOfInt(); // recvStatus
         size += CacheSizes.sizeOfLong(); // id
         return size;
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeSafeUTF(out, jid.toString());
-        ExternalizableUtil.getInstance().writeBoolean(out, nickname != null);
-        if (nickname != null) {
-            ExternalizableUtil.getInstance().writeSafeUTF(out, nickname);
-        }
-        ExternalizableUtil.getInstance().writeStrings(out, groups);
-        ExternalizableUtil.getInstance().writeStrings(out, sharedGroups);
-        ExternalizableUtil.getInstance().writeStrings(out, invisibleSharedGroups);
-        ExternalizableUtil.getInstance().writeInt(out, recvStatus.getValue());
-        ExternalizableUtil.getInstance().writeInt(out, subStatus.getValue());
-        ExternalizableUtil.getInstance().writeInt(out, askStatus.getValue());
-        ExternalizableUtil.getInstance().writeLong(out, rosterID);
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        jid = new JID(ExternalizableUtil.getInstance().readSafeUTF(in));
-        if (ExternalizableUtil.getInstance().readBoolean(in)) {
-            nickname = ExternalizableUtil.getInstance().readSafeUTF(in);
-        }
-        this.groups = new LinkedList<String>();
-        ExternalizableUtil.getInstance().readStrings(in, groups);
-        ExternalizableUtil.getInstance().readStrings(in, sharedGroups);
-        ExternalizableUtil.getInstance().readStrings(in, invisibleSharedGroups);
-        recvStatus = RecvType.getTypeFromInt(ExternalizableUtil.getInstance().readInt(in));
-        subStatus = SubType.getTypeFromInt(ExternalizableUtil.getInstance().readInt(in));
-        askStatus = AskType.getTypeFromInt(ExternalizableUtil.getInstance().readInt(in));
-        rosterID = ExternalizableUtil.getInstance().readLong(in);
     }
 }

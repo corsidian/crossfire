@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.jasper.JasperException;
 import org.apache.jasper.JspC;
-import org.b5chat.util.Globals;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.util.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;

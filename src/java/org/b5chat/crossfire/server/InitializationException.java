@@ -17,7 +17,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.b5chat.util;
+package org.b5chat.crossfire.server;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;

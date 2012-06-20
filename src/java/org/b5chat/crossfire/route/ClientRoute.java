@@ -21,17 +21,9 @@
 package org.b5chat.crossfire.route;
 
 
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-
 import org.b5chat.crossfire.server.NodeID;
-import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
-import org.b5chat.util.cache.ExternalizableUtil;
 
 /**
  * Internal object used by RoutingTableImpl to keep track of the node that own a IClientSession
@@ -39,7 +31,8 @@ import org.b5chat.util.cache.ExternalizableUtil;
  *
  * @author Gaston Dombiak
  */
-public class ClientRoute implements Cacheable, Externalizable {
+@SuppressWarnings("serial")
+public class ClientRoute implements Cacheable {
 
     private NodeID nodeID;
     private boolean available;
@@ -72,20 +65,4 @@ public class ClientRoute implements Cacheable, Externalizable {
         return size;
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeByteArray(out, nodeID.toByteArray());
-        ExternalizableUtil.getInstance().writeBoolean(out, available);
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        byte[] bytes = ExternalizableUtil.getInstance().readByteArray(in);
-        // Retrieve the NodeID but try to use the singleton instance
-        if (XmppServer.getInstance().getNodeID().equals(bytes)) {
-            nodeID = XmppServer.getInstance().getNodeID();
-        }
-        else {
-            nodeID = NodeID.getInstance(bytes);
-        }
-        available = ExternalizableUtil.getInstance().readBoolean(in);
-    }
 }

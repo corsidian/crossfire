@@ -21,16 +21,11 @@
 package org.b5chat.crossfire.presence;
 
 
-import org.b5chat.crossfire.server.XmppServer;
-import org.b5chat.util.cache.ExternalizableUtil;
-import org.xmpp.packet.JID;
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.b5chat.crossfire.server.XmppServer;
+import org.xmpp.packet.JID;
 
 /**
  * Represents a directed presence sent from a session hosted in a cluster node
@@ -46,7 +41,7 @@ import java.util.Set;
  *
  * @author Gaston Dombiak
  */
-public class DirectedPresence implements Externalizable {
+public class DirectedPresence {
     /**
      * ID of the node that received the request to send a directed presence. This is the
      * node ID that hosts the sender.
@@ -93,17 +88,5 @@ public class DirectedPresence implements Externalizable {
 
     public boolean isEmpty() {
         return receivers.isEmpty();
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeByteArray(out, nodeID);
-        ExternalizableUtil.getInstance().writeSafeUTF(out, handler.toString());
-        ExternalizableUtil.getInstance().writeStrings(out, receivers);
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        nodeID = ExternalizableUtil.getInstance().readByteArray(in);
-        handler = new JID(ExternalizableUtil.getInstance().readSafeUTF(in));
-        ExternalizableUtil.getInstance().readStrings(in, receivers);
     }
 }

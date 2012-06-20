@@ -20,14 +20,9 @@ package org.b5chat.crossfire.lockout;
 
 
 import java.util.Date;
-import java.io.Externalizable;
-import java.io.ObjectOutput;
-import java.io.IOException;
-import java.io.ObjectInput;
 
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
-import org.b5chat.util.cache.ExternalizableUtil;
 
 /**
  * A LockOutFlag represents the current disabled status set on a particular user account.
@@ -35,7 +30,8 @@ import org.b5chat.util.cache.ExternalizableUtil;
  *
  * @author Daniel Henninger
  */
-public class LockOutFlag implements Cacheable, Externalizable {
+@SuppressWarnings("serial")
+public class LockOutFlag implements Cacheable {
 
     private String username;
     private Date startTime = null;
@@ -119,19 +115,5 @@ public class LockOutFlag implements Cacheable, Externalizable {
         size += CacheSizes.sizeOfDate();
 
         return size;
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeSafeUTF(out, username);
-        ExternalizableUtil.getInstance().writeLong(out, startTime != null ? startTime.getTime() : -1);
-        ExternalizableUtil.getInstance().writeLong(out, endTime != null ? endTime.getTime() : -1);
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        username = ExternalizableUtil.getInstance().readSafeUTF(in);
-        long st = ExternalizableUtil.getInstance().readLong(in);
-        startTime = st != -1 ? new Date(st) : null;
-        long et = ExternalizableUtil.getInstance().readLong(in);
-        endTime = et != -1 ? new Date(et) : null;
     }
 }

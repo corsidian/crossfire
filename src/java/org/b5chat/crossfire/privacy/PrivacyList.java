@@ -20,15 +20,9 @@
 
 package org.b5chat.crossfire.privacy;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 
 import org.b5chat.crossfire.core.net.MXParser;
 import org.b5chat.crossfire.roster.Roster;
@@ -37,10 +31,8 @@ import org.b5chat.crossfire.user.UserNotFoundException;
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
 import org.b5chat.util.cache.CannotCalculateSizeException;
-import org.b5chat.util.cache.ExternalizableUtil;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
-import org.dom4j.io.XMPPPacketReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParserException;
@@ -60,7 +52,8 @@ import org.xmpp.packet.Packet;
  *
  * @author Gaston Dombiak
  */
-public class PrivacyList implements Cacheable, Externalizable {
+@SuppressWarnings("serial")
+public class PrivacyList implements Cacheable {
 
 	private static final Logger Log = LoggerFactory.getLogger(PrivacyList.class);
 
@@ -68,7 +61,6 @@ public class PrivacyList implements Cacheable, Externalizable {
      * Reuse the same factory for all the connections.
      */
     private static XmlPullParserFactory factory = null;
-    private static ThreadLocal<XMPPPacketReader> localParser = null;
 
     static {
         try {
@@ -78,16 +70,6 @@ public class PrivacyList implements Cacheable, Externalizable {
         catch (XmlPullParserException e) {
             Log.error("Error creating a parser factory", e);
         }
-        // Create xmpp parser to keep in each thread
-        localParser = new ThreadLocal<XMPPPacketReader>() {
-            @Override
-			protected XMPPPacketReader initialValue() {
-                XMPPPacketReader parser = new XMPPPacketReader();
-                factory.setNamespaceAware(true);
-                parser.setXPPFactory(factory);
-                return parser;
-            }
-        };
     }
 
     private JID userJID;
@@ -214,7 +196,8 @@ public class PrivacyList implements Cacheable, Externalizable {
      * @param listElement the element containing a list of items.
      * @param notify true if a provicy list modified event will be triggered.
      */
-    private void updateList(Element listElement, boolean notify) {
+    @SuppressWarnings("unchecked")
+	private void updateList(Element listElement, boolean notify) {
         // Reset the list of items of this list
         items = new ArrayList<PrivacyItem>();
 
@@ -276,24 +259,6 @@ public class PrivacyList implements Cacheable, Externalizable {
         }
         else {
             return false;
-        }
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeSafeUTF(out, userJID.toString());
-        ExternalizableUtil.getInstance().writeBoolean(out, isDefault);
-        ExternalizableUtil.getInstance().writeSafeUTF(out, asElement().asXML());
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        userJID = new JID(ExternalizableUtil.getInstance().readSafeUTF(in));
-        isDefault = ExternalizableUtil.getInstance().readBoolean(in);
-        String xml = ExternalizableUtil.getInstance().readSafeUTF(in);
-        try {
-            Element element = localParser.get().read(new StringReader(xml)).getRootElement();
-            updateList(element, false);
-        } catch (Exception e) {
-            Log.error("Error while parsing Privacy Property", e);
         }
     }
 }

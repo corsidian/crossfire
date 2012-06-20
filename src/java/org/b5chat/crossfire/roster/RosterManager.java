@@ -22,6 +22,7 @@ package org.b5chat.crossfire.roster;
 
 
 import org.b5chat.crossfire.core.container.BasicModule;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.group.Group;
 import org.b5chat.crossfire.group.GroupEventDispatcher;
 import org.b5chat.crossfire.group.GroupManager;
@@ -35,7 +36,6 @@ import org.b5chat.crossfire.user.User;
 import org.b5chat.crossfire.user.UserEventDispatcher;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
-import org.b5chat.util.Globals;
 import org.b5chat.util.cache.Cache;
 import org.b5chat.util.cache.CacheFactory;
 import org.xmpp.packet.JID;

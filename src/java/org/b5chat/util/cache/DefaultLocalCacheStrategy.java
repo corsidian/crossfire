@@ -46,22 +46,22 @@ public class DefaultLocalCacheStrategy implements CacheFactoryStrategy {
     public DefaultLocalCacheStrategy() {
     }
 
-    public Cache createCache(String name) {
+    public Cache<String,Object> createCache(String name) {
         // Get cache configuration from system properties or default (hardcoded) values
         long maxSize = CacheFactory.getMaxCacheSize(name);
         long lifetime = CacheFactory.getMaxCacheLifetime(name);
         // Create cache with located properties
-        return new DefaultCache(name, maxSize, lifetime);
+        return new DefaultCache<String, Object>(name, maxSize, lifetime);
     }
 
-    public void destroyCache(Cache cache) {
+    public void destroyCache(Cache<String,Object> cache) {
         cache.clear();
     }
 
-    public void updateCacheStats(Map<String, Cache> caches) {
+    public void updateCacheStats(Map<String, Cache<String,Object>> caches) {
     }
 
-    public Lock getLock(Object key, Cache cache) {
+    public Lock getLock(Object key, Cache<String,Object> cache) {
         Object lockKey = key;
         if (key instanceof String) {
             lockKey = ((String) key).intern();

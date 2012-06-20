@@ -334,7 +334,8 @@ public class EntityCapabilitiesManager implements IQResultListener, IUserEventLi
     private static List<String> getIdentitiesFrom(IQ packet) {
         List<String> discoIdentities = new ArrayList<String>();
         Element query = packet.getChildElement();
-        Iterator<Element> identitiesIterator = query.elementIterator("identity");
+        @SuppressWarnings("unchecked")
+		Iterator<Element> identitiesIterator = query.elementIterator("identity");
         if (identitiesIterator != null) {
             while (identitiesIterator.hasNext()) {
                 Element identityElement = identitiesIterator.next();
@@ -380,7 +381,8 @@ public class EntityCapabilitiesManager implements IQResultListener, IUserEventLi
     private static List<String> getFeaturesFrom(IQ packet) {
         List<String> discoFeatures = new ArrayList<String>();
         Element query = packet.getChildElement();
-        Iterator<Element> featuresIterator = query.elementIterator("feature");
+        @SuppressWarnings("unchecked")
+		Iterator<Element> featuresIterator = query.elementIterator("feature");
         if (featuresIterator != null) {
             while (featuresIterator.hasNext()) {
                 Element featureElement = featuresIterator.next();
@@ -403,6 +405,7 @@ public class EntityCapabilitiesManager implements IQResultListener, IUserEventLi
 	private static List<String> getExtendedDataForms(IQ packet) {
 		List<String> results = new ArrayList<String>();
 		Element query = packet.getChildElement();
+		@SuppressWarnings("unchecked")
 		Iterator<Element> extensionIterator = query.elementIterator(QName.get(
 				"x", "jabber:x:data"));
 		if (extensionIterator != null) {
@@ -410,6 +413,7 @@ public class EntityCapabilitiesManager implements IQResultListener, IUserEventLi
 				Element extensionElement = extensionIterator.next();
 				final StringBuilder formType = new StringBuilder();
 
+				@SuppressWarnings("unchecked")
 				Iterator<Element> fieldIterator = extensionElement
 						.elementIterator("field");
 				List<String> vars = new ArrayList<String>();
@@ -423,6 +427,7 @@ public class EntityCapabilitiesManager implements IQResultListener, IUserEventLi
 						final StringBuilder var = new StringBuilder();
 						var.append(fieldElement.attributeValue("var"));
 						var.append('<');
+						@SuppressWarnings("unchecked")
 						Iterator<Element> valIter = fieldElement
 								.elementIterator("value");
 						List<String> values = new ArrayList<String>();

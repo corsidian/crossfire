@@ -40,14 +40,14 @@ public interface CacheFactoryStrategy {
      * @param name name of the cache to create.
      * @return newly created and configured cache.
      */
-    Cache createCache(String name);
+    Cache<String,Object> createCache(String name);
 
     /**
      * Destroys the supplied cache.
      *
      * @param cache the cache to destroy.
      */
-    void destroyCache(Cache cache);
+    void destroyCache(Cache<String,Object> cache);
 
     /**
      * Updates the statistics of the specified caches and publishes them into
@@ -67,7 +67,7 @@ public interface CacheFactoryStrategy {
      *
      * @param caches caches to get their stats and publish them in a statistics cache.
      */
-    void updateCacheStats(Map<String, Cache> caches);
+    void updateCacheStats(Map<String, Cache<String,Object>> caches);
 
     /**
      * Returns an existing lock on the specified key or creates a new one if none was found. This
@@ -79,5 +79,5 @@ public interface CacheFactoryStrategy {
      * @param cache the cache used for holding the lock.
      * @return an existing lock on the specified key or creates a new one if none was found.
      */
-    Lock getLock(Object key, Cache cache);
+    Lock getLock(Object key, Cache<String,Object> cache);
 }

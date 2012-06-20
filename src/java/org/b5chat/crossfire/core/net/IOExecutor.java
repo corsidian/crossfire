@@ -25,7 +25,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.b5chat.util.Globals;
+import org.b5chat.crossfire.core.property.Globals;
 
 /**
  * Thread pool to be used for processing incoming packets when using non-blocking

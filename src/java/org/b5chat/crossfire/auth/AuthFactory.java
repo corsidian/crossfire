@@ -23,13 +23,13 @@ package org.b5chat.crossfire.auth;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
 import org.b5chat.crossfire.core.property.PropertyEventListener;
 import org.b5chat.crossfire.lockout.LockOutManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
 import org.b5chat.util.Blowfish;
 import org.b5chat.util.ClassUtils;
-import org.b5chat.util.Globals;
 import org.b5chat.util.LocaleUtils;
 import org.b5chat.util.StringUtils;
 import org.slf4j.Logger;

@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package org.b5chat.util;
+package org.b5chat.crossfire.web;
 
 
 import org.apache.commons.httpclient.HttpClient;

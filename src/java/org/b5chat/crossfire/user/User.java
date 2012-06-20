@@ -20,10 +20,6 @@
 
 package org.b5chat.crossfire.user;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 import org.b5chat.crossfire.auth.AuthFactory;
 import org.b5chat.crossfire.roster.Roster;
 import org.b5chat.crossfire.server.XmppServer;
@@ -46,7 +41,6 @@ import org.b5chat.util.StringUtils;
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
 import org.b5chat.util.cache.CannotCalculateSizeException;
-import org.b5chat.util.cache.ExternalizableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.resultsetmanagement.Result;
@@ -61,7 +55,7 @@ import org.xmpp.resultsetmanagement.Result;
  *
  * @author Matt Tucker
  */
-public class User implements Cacheable, Externalizable, Result {
+public class User implements Cacheable, Result {
 
 	private static final Logger Log = LoggerFactory.getLogger(User.class);
 
@@ -585,27 +579,6 @@ public class User implements Cacheable, Externalizable, Result {
         finally {
             DbConnectionManager.closeConnection(pstmt, con);
         }
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeSafeUTF(out, username);
-        ExternalizableUtil.getInstance().writeSafeUTF(out, getName());
-        ExternalizableUtil.getInstance().writeBoolean(out, email != null);
-        if (email != null) {
-            ExternalizableUtil.getInstance().writeSafeUTF(out, email);
-        }
-        ExternalizableUtil.getInstance().writeLong(out, creationDate.getTime());
-        ExternalizableUtil.getInstance().writeLong(out, modificationDate.getTime());
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        username = ExternalizableUtil.getInstance().readSafeUTF(in);
-        name = ExternalizableUtil.getInstance().readSafeUTF(in);
-        if (ExternalizableUtil.getInstance().readBoolean(in)) {
-            email = ExternalizableUtil.getInstance().readSafeUTF(in);
-        }
-        creationDate = new Date(ExternalizableUtil.getInstance().readLong(in));
-        modificationDate = new Date(ExternalizableUtil.getInstance().readLong(in));
     }
     
     /*

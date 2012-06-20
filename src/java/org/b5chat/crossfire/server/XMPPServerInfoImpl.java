@@ -27,8 +27,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import org.b5chat.crossfire.IConnectionManager;
-import org.b5chat.util.Globals;
-import org.b5chat.util.Version;
+import org.b5chat.crossfire.core.property.Globals;
 
 /**
  * Implements the server info for a basic server. Optimization opportunities

@@ -21,7 +21,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-import org.b5chat.util.Globals;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.util.TaskEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

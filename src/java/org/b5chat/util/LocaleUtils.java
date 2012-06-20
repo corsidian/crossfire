@@ -39,6 +39,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.b5chat.crossfire.core.plugin.IPlugin;
 import org.b5chat.crossfire.core.plugin.PluginManager;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.server.XmppServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

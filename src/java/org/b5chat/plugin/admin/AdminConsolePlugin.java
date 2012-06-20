@@ -24,8 +24,8 @@ import java.io.File;
 
 import org.b5chat.crossfire.core.plugin.IPlugin;
 import org.b5chat.crossfire.core.plugin.PluginManager;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.server.XmppServer;
-import org.b5chat.util.Globals;
 import org.b5chat.util.LocaleUtils;
 import org.b5chat.util.StringUtils;
 import org.eclipse.jetty.server.Connector;

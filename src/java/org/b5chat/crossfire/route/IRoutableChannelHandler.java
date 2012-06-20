@@ -23,13 +23,14 @@ package org.b5chat.crossfire.route;
 
 import org.b5chat.crossfire.IChannelHandler;
 import org.xmpp.packet.JID;
+import org.xmpp.packet.Packet;
 
 /**
  *
  *
  * @author Matt Tucker
  */
-public interface IRoutableChannelHandler extends IChannelHandler {
+public interface IRoutableChannelHandler<T extends Packet> extends IChannelHandler<T> {
 
     /**
       * Returns the XMPP address. The address is used by services like the core

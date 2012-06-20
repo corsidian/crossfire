@@ -25,12 +25,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 import org.b5chat.crossfire.core.container.BasicModule;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.privacy.PrivacyList;
 import org.b5chat.crossfire.privacy.PrivacyListManager;
 import org.b5chat.crossfire.route.IPacketRouter;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.crossfire.user.UserManager;
-import org.b5chat.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;

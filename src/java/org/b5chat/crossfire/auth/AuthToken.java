@@ -20,8 +20,8 @@
 
 package org.b5chat.crossfire.auth;
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.user.UserManager;
-import org.b5chat.util.Globals;
 
 
 

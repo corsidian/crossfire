@@ -114,7 +114,7 @@ public class GroupEventDispatcher {
      * @param eventType the event type.
      * @param params event parameters.
      */
-    public static void dispatchEvent(Group group, EventType eventType, Map params) {
+    public static void dispatchEvent(Group group, EventType eventType, Map<String,Object> params) {
         for (IGroupEventListener listener : listeners) {
             try {
                 switch (eventType) {

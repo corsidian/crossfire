@@ -35,8 +35,8 @@ import java.util.Arrays;
 
 import org.b5chat.crossfire.core.plugin.IPlugin;
 import org.b5chat.crossfire.core.plugin.PluginManager;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.server.XmppServer;
-import org.b5chat.util.Globals;
 import org.b5chat.util.LocaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

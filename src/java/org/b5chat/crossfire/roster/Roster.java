@@ -20,10 +20,6 @@
 
 package org.b5chat.crossfire.roster;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 import org.b5chat.crossfire.group.Group;
 import org.b5chat.crossfire.group.GroupManager;
@@ -53,7 +48,6 @@ import org.b5chat.util.GlobalConstants;
 import org.b5chat.util.cache.CacheSizes;
 import org.b5chat.util.cache.Cacheable;
 import org.b5chat.util.cache.CannotCalculateSizeException;
-import org.b5chat.util.cache.ExternalizableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.IQ;
@@ -71,8 +65,9 @@ import org.xmpp.packet.Presence;
  *
  * @author Gaston Dombiak
  */
+@SuppressWarnings("serial")
 @GlobalID(GlobalConstants.ROSTER)
-public class Roster implements Cacheable, Externalizable {
+public class Roster implements Cacheable {
 
 	private static final Logger Log = LoggerFactory.getLogger(Roster.class);
 
@@ -1141,23 +1136,5 @@ public class Roster implements Cacheable, Externalizable {
 
     private JID getUserJID() {
         return XmppServer.getInstance().createJID(getUsername(), null, true);
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeSafeUTF(out, username);
-        ExternalizableUtil.getInstance().writeExternalizableMap(out, rosterItems);
-        ExternalizableUtil.getInstance().writeStringsMap(out, implicitFrom);
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        presenceManager = XmppServer.getInstance().getPresenceManager();
-        rosterManager = XmppServer.getInstance().getRosterManager();
-        sessionManager = SessionManager.getInstance();
-        rosterItemProvider =  RosterItemProvider.getInstance();
-        routingTable = XmppServer.getInstance().getRoutingTable();
-
-        username = ExternalizableUtil.getInstance().readSafeUTF(in);
-        ExternalizableUtil.getInstance().readExternalizableMap(in, rosterItems, getClass().getClassLoader());
-        ExternalizableUtil.getInstance().readStringsMap(in, implicitFrom);
     }
 }

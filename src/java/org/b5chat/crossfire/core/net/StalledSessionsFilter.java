@@ -26,7 +26,7 @@ import java.util.Date;
 
 import org.apache.mina.common.IoFilterAdapter;
 import org.apache.mina.common.IoSession;
-import org.b5chat.util.Globals;
+import org.b5chat.crossfire.core.property.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

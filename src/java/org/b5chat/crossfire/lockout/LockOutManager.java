@@ -22,10 +22,10 @@ import java.util.Date;
 import java.util.Map;
 
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
 import org.b5chat.crossfire.core.property.PropertyEventListener;
 import org.b5chat.util.ClassUtils;
-import org.b5chat.util.Globals;
 import org.b5chat.util.cache.Cache;
 import org.b5chat.util.cache.CacheFactory;
 import org.slf4j.Logger;
@@ -90,21 +90,21 @@ public class LockOutManager {
 
         // Detect when a new lockout provider class is set 
         PropertyEventListener propListener = new PropertyEventListener() {
-            public void propertySet(String property, Map params) {
+            public void propertySet(String property, Map<String,Object> params) {
                 if ("provider.lockout.className".equals(property)) {
                     initProvider();
                 }
             }
 
-            public void propertyDeleted(String property, Map params) {
+            public void propertyDeleted(String property, Map<String,Object> params) {
                 //Ignore
             }
 
-            public void xmlPropertySet(String property, Map params) {
+            public void xmlPropertySet(String property, Map<String,Object> params) {
                 //Ignore
             }
 
-            public void xmlPropertyDeleted(String property, Map params) {
+            public void xmlPropertyDeleted(String property, Map<String,Object> params) {
                 //Ignore
             }
         };
@@ -124,8 +124,9 @@ public class LockOutManager {
         // Check if we need to reset the provider class
         if (provider == null || !className.equals(provider.getClass().getName())) {
             try {
-                Class c = ClassUtils.forName(className);
-                provider = (ILockOutProvider) c.newInstance();
+                @SuppressWarnings("unchecked")
+				Class<ILockOutProvider> c = ClassUtils.forName(className);
+                provider = c.newInstance();
             }
             catch (Exception e) {
                 Log.error("Error loading lockout provider: " + className, e);

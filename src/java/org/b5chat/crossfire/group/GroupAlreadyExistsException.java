@@ -25,6 +25,7 @@ package org.b5chat.crossfire.group;
  *
  * @author Iain Shigeoka
  */
+@SuppressWarnings("serial")
 public class GroupAlreadyExistsException extends Exception {
 
 

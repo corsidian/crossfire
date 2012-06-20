@@ -24,7 +24,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 
-import org.b5chat.util.Globals;
+import org.b5chat.crossfire.core.property.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

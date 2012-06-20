@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.server.XmppServer;
-import org.b5chat.util.Globals;
 import org.b5chat.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

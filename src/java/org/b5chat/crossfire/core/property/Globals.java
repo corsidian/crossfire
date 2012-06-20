@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package org.b5chat.util;
+package org.b5chat.crossfire.core.property;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,8 +36,6 @@ import java.util.Map;
 import java.util.TimeZone;
 
 
-import org.b5chat.crossfire.core.property.GlobalProperties;
-import org.b5chat.crossfire.core.property.XMLProperties;
 import org.b5chat.database.DbConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -487,14 +485,16 @@ public class Globals {
      * @param parent the name of the parent property to return the children for.
      * @return all child property values for the given parent.
      */
-    public static List getXMLProperties(String parent) {
+    public static List<String> getXMLProperties(String parent) {
         if (xmlProperties == null) {
             loadSetupProperties();
         }
 
         // b5chatHome not loaded?
         if (xmlProperties == null) {
-            return Collections.EMPTY_LIST;
+            @SuppressWarnings("unchecked")
+			List<String> values = Collections.EMPTY_LIST;
+            return values;
         }
 
         String[] propNames = xmlProperties.getChildrenProperties(parent);

@@ -37,6 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

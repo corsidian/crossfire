@@ -30,11 +30,11 @@ import java.util.Map;
 import java.util.Set;
 
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
 import org.b5chat.crossfire.core.property.PropertyEventListener;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.util.ClassUtils;
-import org.b5chat.util.Globals;
 import org.b5chat.util.StringUtils;
 import org.b5chat.util.cache.Cache;
 import org.b5chat.util.cache.CacheFactory;

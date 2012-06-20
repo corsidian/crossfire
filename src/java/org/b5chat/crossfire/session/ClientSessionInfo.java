@@ -21,15 +21,7 @@
 package org.b5chat.crossfire.session;
 
 
-import org.b5chat.util.cache.ExternalizableUtil;
-import org.dom4j.Element;
-import org.dom4j.tree.DefaultElement;
 import org.xmpp.packet.Presence;
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 
 /**
  * Client session information to be used when running in a cluster. The session
@@ -42,7 +34,7 @@ import java.io.ObjectOutput;
  *
  * @author Gaston Dombiak
  */
-public class ClientSessionInfo implements Externalizable {
+public class ClientSessionInfo {
     private Presence presence;
     private String defaultList;
     private String activeList;
@@ -72,30 +64,5 @@ public class ClientSessionInfo implements Externalizable {
 
     public boolean isOfflineFloodStopped() {
         return offlineFloodStopped;
-    }
-
-    public void writeExternal(ObjectOutput out) throws IOException {
-        ExternalizableUtil.getInstance().writeSerializable(out, (DefaultElement) presence.getElement());
-        ExternalizableUtil.getInstance().writeBoolean(out, defaultList != null);
-        if (defaultList != null) {
-            ExternalizableUtil.getInstance().writeSafeUTF(out, defaultList);
-        }
-        ExternalizableUtil.getInstance().writeBoolean(out, activeList != null);
-        if (activeList != null) {
-            ExternalizableUtil.getInstance().writeSafeUTF(out, activeList);
-        }
-        ExternalizableUtil.getInstance().writeBoolean(out, offlineFloodStopped);
-    }
-
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        Element packetElement = (Element) ExternalizableUtil.getInstance().readSerializable(in);
-        presence = new Presence(packetElement, true);
-        if (ExternalizableUtil.getInstance().readBoolean(in)) {
-            defaultList = ExternalizableUtil.getInstance().readSafeUTF(in);
-        }
-        if (ExternalizableUtil.getInstance().readBoolean(in)) {
-            activeList = ExternalizableUtil.getInstance().readSafeUTF(in);
-        }
-        offlineFloodStopped = ExternalizableUtil.getInstance().readBoolean(in);
     }
 }

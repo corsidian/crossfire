@@ -29,6 +29,7 @@ import java.util.List;
 
 
 import org.b5chat.crossfire.PacketException;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.handler.IqHandler;
 import org.b5chat.crossfire.handler.IqHandlerInfo;
 import org.b5chat.crossfire.handler.IqRegisterHandler;
@@ -41,7 +42,6 @@ import org.b5chat.crossfire.session.SessionEventDispatcher;
 import org.b5chat.crossfire.session.SessionManager;
 import org.b5chat.crossfire.user.UserManager;
 import org.b5chat.crossfire.user.UserNotFoundException;
-import org.b5chat.util.Globals;
 import org.b5chat.util.LocaleUtils;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

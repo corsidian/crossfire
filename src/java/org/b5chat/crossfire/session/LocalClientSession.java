@@ -31,13 +31,13 @@ import org.b5chat.crossfire.IConnection;
 import org.b5chat.crossfire.auth.AuthToken;
 import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.core.net.sasl.SASLAuthentication;
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.presence.PresenceEventDispatcher;
 import org.b5chat.crossfire.privacy.PrivacyList;
 import org.b5chat.crossfire.privacy.PrivacyListManager;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.crossfire.stream.IStreamId;
 import org.b5chat.crossfire.user.UserNotFoundException;
-import org.b5chat.util.Globals;
 import org.b5chat.util.LocaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,6 @@ public class LocalClientSession extends LocalSession implements IClientSession {
 	private static final Logger Log = LoggerFactory.getLogger(LocalClientSession.class);
 
     private static final String ETHERX_NAMESPACE = "http://etherx.jabber.org/streams";
-    private static final String FLASH_NAMESPACE = "http://www.jabber.com/streams/flash";
 
     /**
      * Keep the list of IP address that are allowed to connect to the server. If the list is

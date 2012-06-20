@@ -21,11 +21,11 @@ package org.b5chat.crossfire.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.b5chat.crossfire.core.property.Globals;
 import org.b5chat.crossfire.core.property.PropertyEventDispatcher;
 import org.b5chat.crossfire.core.property.PropertyEventListener;
 import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.util.ClassUtils;
-import org.b5chat.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;
