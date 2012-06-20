@@ -116,7 +116,7 @@ public class ServerStarter {
             ClassLoader loader = new b5chatClassLoader(parent, libDir);
 
             Thread.currentThread().setContextClassLoader(loader);
-            Class containerClass = loader.loadClass(
+            Class<?> containerClass = loader.loadClass(
                     "org.b5chat.crossfire.XmppServer");
             containerClass.newInstance();
         }

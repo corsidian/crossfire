@@ -23,15 +23,15 @@ import java.io.IOException;
 import java.io.StringReader;
 
 
-import org.b5chat.crossfire.IConnection;
-import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.core.net.sasl.SASLAuthentication;
 import org.b5chat.crossfire.core.property.Globals;
-import org.b5chat.crossfire.route.IPacketRouter;
-import org.b5chat.crossfire.session.ISession;
-import org.b5chat.crossfire.session.LocalSession;
-import org.b5chat.util.LocaleUtils;
-import org.b5chat.util.StringUtils;
+import org.b5chat.crossfire.core.util.LocaleUtils;
+import org.b5chat.crossfire.core.util.StringUtils;
+import org.b5chat.crossfire.xmpp.IConnection;
+import org.b5chat.crossfire.xmpp.auth.UnauthorizedException;
+import org.b5chat.crossfire.xmpp.route.IPacketRouter;
+import org.b5chat.crossfire.xmpp.session.ISession;
+import org.b5chat.crossfire.xmpp.session.LocalSession;
 import org.dom4j.Element;
 import org.dom4j.io.XMPPPacketReader;
 import org.slf4j.Logger;
@@ -272,7 +272,7 @@ public abstract class StanzaHandler {
 
     /**
      * Process the received IQ packet. Registered
-     * {@link org.b5chat.crossfire.interceptor.IPacketInterceptor} will be invoked before
+     * {@link org.b5chat.crossfire.xmpp.interceptor.IPacketInterceptor} will be invoked before
      * and after the packet was routed.<p>
      * <p/>
      * Subclasses may redefine this method for different reasons such as modifying the sender
@@ -280,7 +280,7 @@ public abstract class StanzaHandler {
      * another thread.
      *
      * @param packet the received packet.
-     * @throws org.b5chat.crossfire.auth.UnauthorizedException
+     * @throws org.b5chat.crossfire.xmpp.auth.UnauthorizedException
      *          if service is not available to sender.
      */
     protected void processIQ(IQ packet) throws UnauthorizedException {
@@ -290,7 +290,7 @@ public abstract class StanzaHandler {
 
     /**
      * Process the received Presence packet. Registered
-     * {@link org.b5chat.crossfire.interceptor.IPacketInterceptor} will be invoked before
+     * {@link org.b5chat.crossfire.xmpp.interceptor.IPacketInterceptor} will be invoked before
      * and after the packet was routed.<p>
      * <p/>
      * Subclasses may redefine this method for different reasons such as modifying the sender
@@ -298,7 +298,7 @@ public abstract class StanzaHandler {
      * another thread.
      *
      * @param packet the received packet.
-     * @throws org.b5chat.crossfire.auth.UnauthorizedException
+     * @throws org.b5chat.crossfire.xmpp.auth.UnauthorizedException
      *          if service is not available to sender.
      */
     protected void processPresence(Presence packet) throws UnauthorizedException {
@@ -308,7 +308,7 @@ public abstract class StanzaHandler {
 
     /**
      * Process the received Message packet. Registered
-     * {@link org.b5chat.crossfire.interceptor.IPacketInterceptor} will be invoked before
+     * {@link org.b5chat.crossfire.xmpp.interceptor.IPacketInterceptor} will be invoked before
      * and after the packet was routed.<p>
      * <p/>
      * Subclasses may redefine this method for different reasons such as modifying the sender
@@ -316,7 +316,7 @@ public abstract class StanzaHandler {
      * another thread.
      *
      * @param packet the received packet.
-     * @throws org.b5chat.crossfire.auth.UnauthorizedException
+     * @throws org.b5chat.crossfire.xmpp.auth.UnauthorizedException
      *          if service is not available to sender.
      */
     protected void processMessage(Message packet) throws UnauthorizedException {

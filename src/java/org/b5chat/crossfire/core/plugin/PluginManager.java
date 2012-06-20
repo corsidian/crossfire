@@ -51,14 +51,14 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Pack200;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-
-import org.b5chat.crossfire.server.Version;
-import org.b5chat.crossfire.server.XmppServer;
-import org.b5chat.database.DbConnectionManager;
-import org.b5chat.plugin.admin.AdminConsole;
-import org.b5chat.util.LocaleUtils;
+import org.b5chat.crossfire.core.server.Version;
+import org.b5chat.crossfire.core.util.LocaleUtils;
+import org.b5chat.crossfire.database.DbConnectionManager;
+import org.b5chat.crossfire.plugin.admin.AdminConsole;
+import org.b5chat.crossfire.xmpp.server.XmppServer;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -76,7 +76,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matt Tucker
  * @see IPlugin
- * @see org.b5chat.crossfire.server.XmppServer#getPluginManager()
+ * @see org.b5chat.crossfire.xmpp.server.XmppServer#getPluginManager()
  */
 public class PluginManager {
 
@@ -412,7 +412,7 @@ public class PluginManager {
 
                         if (classes.exists()) {
                             dev.setClassesDir(classes);
-                            pluginLoader.addURLFile(classes.getAbsoluteFile().toURL());
+                            pluginLoader.addURLFile(classes.getAbsoluteFile().toURI().toURL());
                         }
                     }
                 }
@@ -509,7 +509,8 @@ public class PluginManager {
                     }
                     // Modify all the URL's in the XML so that they are passed through
                     // the plugin servlet correctly.
-                    List urls = adminElement.selectNodes("//@url");
+                    @SuppressWarnings("unchecked")
+					List<Object> urls = adminElement.selectNodes("//@url");
                     for (Object url : urls) {
                         Attribute attr = (Attribute)url;
                         attr.setValue("plugins/" + pluginName + "/" + attr.getValue());
@@ -519,7 +520,8 @@ public class PluginManager {
                     // the the renderer knows where to load the i18n Strings from.
                     String[] elementNames = new String [] { "tab", "sidebar", "item" };
                     for (String elementName : elementNames) {
-                        List values = adminElement.selectNodes("//" + elementName);
+                        @SuppressWarnings("unchecked")
+						List<Object> values = adminElement.selectNodes("//" + elementName);
                         for (Object value : values) {
                             Element element = (Element) value;
                             // Make sure there's a name or description. Otherwise, no need to
@@ -707,7 +709,7 @@ public class PluginManager {
      * @throws IllegalAccessException if not allowed to access the class.
      * @throws InstantiationException if the class could not be created.
      */
-    public Class loadClass(IPlugin plugin, String className) throws ClassNotFoundException,
+    public Class<?> loadClass(IPlugin plugin, String className) throws ClassNotFoundException,
         IllegalAccessException, InstantiationException {
         PluginClassLoader loader = classloaders.get(plugin);
         return loader.loadClass(className);
@@ -891,7 +893,6 @@ public class PluginManager {
     /**
      * An enumberation for plugin license agreement types.
      */
-    @SuppressWarnings({"UnnecessarySemicolon"})  // Support for QDox Parser
     public enum License {
 
         /**
@@ -1107,7 +1108,7 @@ public class PluginManager {
                 // Set the date of the JAR file to the newly created folder
                 dir.setLastModified(file.lastModified());
                 Log.debug("PluginManager: Extracting plugin: " + pluginName);
-                for (Enumeration e = zipFile.entries(); e.hasMoreElements();) {
+                for (Enumeration<? extends ZipEntry> e = zipFile.entries(); e.hasMoreElements();) {
                     JarEntry entry = (JarEntry)e.nextElement();
                     File entryFile = new File(dir, entry.getName());
                     // Ignore any manifest.mf entries.

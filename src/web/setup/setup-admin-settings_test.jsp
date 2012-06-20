@@ -1,5 +1,5 @@
-<%@ page import="org.b5chat.util.LocaleUtils" %>
-<%@ page import="org.b5chat.util.ParamUtils, org.b5chat.crossfire.user.UserNotFoundException, org.xmpp.packet.JID" %>
+<%@ page import="org.b5chat.crossfire.core.util.LocaleUtils" %>
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils, org.b5chat.crossfire.xmpp.user.UserNotFoundException, org.xmpp.packet.JID" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.Map" %>
 

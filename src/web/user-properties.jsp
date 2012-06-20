@@ -18,24 +18,24 @@
 --%>
 
 <%@ page import="org.b5chat.crossfire.PresenceManager,
-                 org.b5chat.crossfire.admin.AdminManager,
-                 org.b5chat.crossfire.group.Group,
-                 org.b5chat.crossfire.user.User,
-                 org.b5chat.crossfire.user.UserManager,
-                 org.b5chat.crossfire.user.UserNotFoundException"
+                 org.b5chat.crossfire.core.admin.AdminManager,
+                 org.b5chat.crossfire.xmpp.group.Group,
+                 org.b5chat.crossfire.xmpp.user.User,
+                 org.b5chat.crossfire.xmpp.user.UserManager,
+                 org.b5chat.crossfire.xmpp.user.UserNotFoundException"
     errorPage="error.jsp"
 %>
-<%@ page import="org.b5chat.util.Globals"%>
-<%@ page import="org.b5chat.util.LocaleUtils"%>
-<%@ page import="org.b5chat.util.ParamUtils"%>
+<%@ page import="org.b5chat.crossfire.core.util.Globals"%>
+<%@ page import="org.b5chat.crossfire.core.util.LocaleUtils"%>
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils"%>
 <%@ page import="org.xmpp.packet.JID"%><%@ page import="org.xmpp.packet.Presence"%>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.Collection" %>
-<%@ page import="org.b5chat.util.StringUtils" %>
+<%@ page import="org.b5chat.crossfire.core.util.StringUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager" />
 
 <%  // Get parameters //
     boolean cancel = request.getParameter("cancel") != null;

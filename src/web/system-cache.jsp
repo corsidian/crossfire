@@ -1,5 +1,5 @@
-<%@ page import="org.b5chat.util.cache.Cache"%>
-<%@ page import="org.b5chat.util.ParamUtils"%>
+<%@ page import="org.b5chat.crossfire.core.util.cache.Cache"%>
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils"%>
 <%@ page import="java.text.DecimalFormat"%>
 <%--
   -	$RCSfile$
@@ -24,7 +24,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

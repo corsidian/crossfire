@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.b5chat.crossfire.server.XmppServer;
 import org.b5chat.crossfire.web.ParamUtils;
+import org.b5chat.crossfire.xmpp.server.XmppServer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,6 +41,7 @@ import java.io.OutputStream;
  *
  * @author Derek DeMoro
  */
+@SuppressWarnings("serial")
 public class PluginIconServlet extends HttpServlet {
 
     @Override

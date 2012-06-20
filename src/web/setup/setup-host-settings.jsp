@@ -4,8 +4,8 @@
   -	$Date: 2005-07-18 10:16:48 -0700 (Mon, 18 Jul 2005) $
 --%>
 
-<%@ page import="org.b5chat.util.ParamUtils,
-                 org.b5chat.util.Globals,
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils,
+                 org.b5chat.crossfire.core.util.Globals,
                  java.util.Map,
                  java.util.HashMap,
                  java.net.InetAddress,

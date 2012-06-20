@@ -11,7 +11,7 @@
 	<info>Tab Library for crossfire Admin Console</info>
 	<tag>
 		<name>tabs</name>
-		<tagclass>org.b5chat.plugin.admin.TabsTag</tagclass>
+		<tagclass>org.b5chat.crossfire.plugin.admin.TabsTag</tagclass>
         <bodycontent>JSP</bodycontent>
 		<info />
         <attribute>
@@ -42,7 +42,7 @@
     </tag>
     <tag>
         <name>subnavbar</name>
-        <tagclass>org.b5chat.plugin.admin.SubnavTag</tagclass>
+        <tagclass>org.b5chat.crossfire.plugin.admin.SubnavTag</tagclass>
         <bodycontent>JSP</bodycontent>
         <info />
         <attribute>
@@ -68,7 +68,7 @@
     </tag>
     <tag>
 		<name>sidebar</name>
-		<tagclass>org.b5chat.plugin.admin.SidebarTag</tagclass>
+		<tagclass>org.b5chat.crossfire.plugin.admin.SidebarTag</tagclass>
         <bodycontent>JSP</bodycontent>
 		<info />
         <attribute>
@@ -99,7 +99,7 @@
 	</tag>
 	<tag>
 		<name>subsidebar</name>
-		<tagclass>org.b5chat.plugin.admin.SubSidebarTag</tagclass>
+		<tagclass>org.b5chat.crossfire.plugin.admin.SubSidebarTag</tagclass>
         <bodycontent>JSP</bodycontent>
 		<info />
         <attribute>

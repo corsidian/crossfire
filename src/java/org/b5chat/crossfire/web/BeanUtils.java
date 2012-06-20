@@ -36,7 +36,7 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 
 
-import org.b5chat.util.ClassUtils;
+import org.b5chat.crossfire.core.util.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

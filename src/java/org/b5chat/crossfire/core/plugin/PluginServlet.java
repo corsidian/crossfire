@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.jasper.JasperException;
 import org.apache.jasper.JspC;
 import org.b5chat.crossfire.core.property.Globals;
-import org.b5chat.util.StringUtils;
+import org.b5chat.crossfire.core.util.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -71,6 +71,7 @@ import org.xml.sax.SAXException;
  *
  * @author Matt Tucker
  */
+@SuppressWarnings("serial")
 public class PluginServlet extends HttpServlet {
 
 	private static final Logger Log = LoggerFactory.getLogger(PluginServlet.class);
@@ -152,22 +153,24 @@ public class PluginServlet extends HttpServlet {
             }
             Document doc = saxReader.read(webXML);
             // Find all <servlet> entries to discover name to class mapping.
-            List classes = doc.selectNodes("//servlet");
-            Map<String, Class> classMap = new HashMap<String, Class>();
+            @SuppressWarnings("unchecked")
+			List<Element> classes = doc.selectNodes("//servlet");
+            Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
             for (int i = 0; i < classes.size(); i++) {
-                Element servletElement = (Element)classes.get(i);
+                Element servletElement = classes.get(i);
                 String name = servletElement.element("servlet-name").getTextTrim();
                 String className = servletElement.element("servlet-class").getTextTrim();
                 classMap.put(name, manager.loadClass(plugin, className));
             }
             // Find all <servelt-mapping> entries to discover name to URL mapping.
-            List names = doc.selectNodes("//servlet-mapping");
+            @SuppressWarnings("unchecked")
+			List<Element> names = doc.selectNodes("//servlet-mapping");
             for (int i = 0; i < names.size(); i++) {
-                Element nameElement = (Element)names.get(i);
+                Element nameElement = names.get(i);
                 String name = nameElement.element("servlet-name").getTextTrim();
                 String url = nameElement.element("url-pattern").getTextTrim();
                 // Register the servlet for the URL.
-                Class servletClass = classMap.get(name);
+                Class<?> servletClass = classMap.get(name);
                 if(servletClass == null) {
                     Log.error("Unable to load servlet, " + name + ", servlet-class not found.");
                     continue;
@@ -209,9 +212,10 @@ public class PluginServlet extends HttpServlet {
                 false);
             Document doc = saxReader.read(webXML);
             // Find all <servelt-mapping> entries to discover name to URL mapping.
-            List names = doc.selectNodes("//servlet-mapping");
+            @SuppressWarnings("unchecked")
+			List<Element> names = doc.selectNodes("//servlet-mapping");
             for (int i = 0; i < names.size(); i++) {
-                Element nameElement = (Element)names.get(i);
+                Element nameElement = names.get(i);
                 String url = nameElement.element("url-pattern").getTextTrim();
                 // Destroy the servlet than remove from servlets map.
                 GenericServlet servlet = servlets.get(pluginName + url);

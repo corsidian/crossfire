@@ -28,9 +28,9 @@ import org.apache.mina.common.IdleStatus;
 import org.apache.mina.common.IoHandlerAdapter;
 import org.apache.mina.common.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderException;
-import org.b5chat.crossfire.IConnection;
 import org.b5chat.crossfire.core.net.MXParser;
 import org.b5chat.crossfire.core.net.StanzaHandler;
+import org.b5chat.crossfire.xmpp.IConnection;
 import org.dom4j.io.XMPPPacketReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -214,14 +214,6 @@ public abstract class ConnectionHandler extends IoHandlerAdapter {
      */
     private void updateReadBytesCounter(IoSession session) {
         long currentBytes = session.getReadBytes();
-        Long prevBytes = (Long) session.getAttribute("_read_bytes");
-        long delta;
-        if (prevBytes == null) {
-            delta = currentBytes;
-        }
-        else {
-            delta = currentBytes - prevBytes;
-        }
         session.setAttribute("_read_bytes", currentBytes);
     }
 
@@ -233,14 +225,6 @@ public abstract class ConnectionHandler extends IoHandlerAdapter {
      */
     private void updateWrittenBytesCounter(IoSession session) {
         long currentBytes = session.getWrittenBytes();
-        Long prevBytes = (Long) session.getAttribute("_written_bytes");
-        long delta;
-        if (prevBytes == null) {
-            delta = currentBytes;
-        }
-        else {
-            delta = currentBytes - prevBytes;
-        }
         session.setAttribute("_written_bytes", currentBytes);
     }
 }

@@ -25,8 +25,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
-import org.b5chat.util.cache.Cache;
-import org.b5chat.util.cache.CacheFactory;
+import org.b5chat.crossfire.core.util.cache.Cache;
+import org.b5chat.crossfire.core.util.cache.CacheFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

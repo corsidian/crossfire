@@ -18,15 +18,15 @@
 --%>
 
 <%@ page import="java.util.*,
-                 org.b5chat.util.*,
-                 org.b5chat.util.ParamUtils,
-                 org.b5chat.util.Globals"
+                 org.b5chat.crossfire.core.util.*,
+                 org.b5chat.crossfire.core.util.ParamUtils,
+                 org.b5chat.crossfire.core.util.Globals"
     errorPage="error.jsp"
 %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.crossfire.plugin.admin.AdminPageBean" />
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%!

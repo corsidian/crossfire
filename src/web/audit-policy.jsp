@@ -16,10 +16,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils,
                    org.b5chat.crossfire.XmppServer,
                    org.b5chat.crossfire.audit.IAuditManager,
-                 org.b5chat.crossfire.user.UserNotFoundException,
+                 org.b5chat.crossfire.xmpp.user.UserNotFoundException,
                  org.xmpp.packet.JID,
                  java.io.File"
     errorPage="error.jsp"
@@ -28,7 +28,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

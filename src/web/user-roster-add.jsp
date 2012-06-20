@@ -17,22 +17,22 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.*,
+<%@ page import="org.b5chat.crossfire.core.util.*,
                  java.net.URLEncoder"
     errorPage="error.jsp"
 %>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.HashMap"%><%@ page import="org.xmpp.packet.JID"%>
-<%@ page import="org.b5chat.crossfire.roster.Roster" %>
+<%@ page import="org.b5chat.crossfire.xmpp.roster.Roster" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="org.b5chat.crossfire.user.UserAlreadyExistsException" %>
+<%@ page import="org.b5chat.crossfire.xmpp.user.UserAlreadyExistsException" %>
 <%@ page import="org.b5chat.crossfire.SharedGroupException" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <% // Get parameters //

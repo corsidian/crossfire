@@ -20,16 +20,16 @@
 <%@ page import="org.b5chat.crossfire.IConnection,
                  org.b5chat.crossfire.IConnectionManager,
                  org.b5chat.crossfire.XmppServer,
-                 org.b5chat.crossfire.server.ServerDialback,
-                 org.b5chat.crossfire.session.LocalClientSession,
-                 org.b5chat.util.Globals"
+                 org.b5chat.crossfire.core.server.ServerDialback,
+                 org.b5chat.crossfire.xmpp.session.LocalClientSession,
+                 org.b5chat.crossfire.core.util.Globals"
     errorPage="error.jsp"
 %>
-<%@ page import="org.b5chat.util.ParamUtils" %>
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 <%  try { %>
 

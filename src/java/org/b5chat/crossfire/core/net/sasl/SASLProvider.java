@@ -28,6 +28,7 @@ import java.security.Provider;
  * @see SASLServerFactoryImpl
  */
 
+@SuppressWarnings("serial")
 public class SASLProvider extends Provider {
 
     /**

@@ -18,10 +18,10 @@
 --%>
 
 <%@ page import="org.b5chat.crossfire.XmppServer,
-                 org.b5chat.crossfire.handler.IQAuthHandler,
-                 org.b5chat.crossfire.handler.IqRegisterHandler,
-                 org.b5chat.crossfire.session.LocalClientSession,
-                 org.b5chat.util.ParamUtils"
+                 org.b5chat.crossfire.xmpp.handler.IQAuthHandler,
+                 org.b5chat.crossfire.xmpp.handler.IQRegisterHandler,
+                 org.b5chat.crossfire.xmpp.session.LocalClientSession,
+                 org.b5chat.crossfire.core.util.ParamUtils"
     errorPage="error.jsp"
 %>
 <%@ page import="java.util.HashMap"%>
@@ -33,7 +33,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>
@@ -95,7 +95,7 @@
     anonLogin = authHandler.isAnonymousAllowed();
     // Encode the allowed IP addresses
     StringBuilder buf = new StringBuilder();
-    Iterator<String> iter = org.b5chat.crossfire.session.LocalClientSession.getAllowedIPs().keySet().iterator();
+    Iterator<String> iter = org.b5chat.crossfire.xmpp.session.LocalClientSession.getAllowedIPs().keySet().iterator();
     if (iter.hasNext()) {
         buf.append(iter.next());
     }
@@ -105,7 +105,7 @@
     allowedIPs = buf.toString();
 
     StringBuilder buf1 = new StringBuilder();
-    Iterator<String> iter1 = org.b5chat.crossfire.session.LocalClientSession.getAllowedAnonymIPs().keySet().iterator();
+    Iterator<String> iter1 = org.b5chat.crossfire.xmpp.session.LocalClientSession.getAllowedAnonymIPs().keySet().iterator();
     if (iter1.hasNext()) {
         buf1.append(iter1.next());
     }

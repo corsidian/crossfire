@@ -14,7 +14,7 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils,
                  org.b5chat.crossfire.XmppServer,
                  org.b5chat.crossfire.core.container.Plugin,
                  org.b5chat.crossfire.core.container.PluginManager"
@@ -25,8 +25,8 @@
 <%@ page import="java.util.Comparator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.*" %>
-<%@ page import="org.b5chat.util.Globals" %>
-<%@ page import="org.b5chat.util.Log" %>
+<%@ page import="org.b5chat.crossfire.core.util.Globals" %>
+<%@ page import="org.b5chat.crossfire.core.util.Log" %>
 <%@ page import="org.apache.commons.fileupload.FileItemFactory" %>
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
 <%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
@@ -36,7 +36,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%

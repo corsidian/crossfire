@@ -37,10 +37,9 @@ import com.sun.security.sasl.util.PolicyUtils;
 
 public class SASLServerFactoryImpl implements SaslServerFactory {
 
-    private static final String myMechs[] = { "PLAIN", "CLEARSPACE" };
+    private static final String myMechs[] = { "PLAIN" };
     private static final int mechPolicies[] = { PolicyUtils.NOANONYMOUS, PolicyUtils.NOANONYMOUS };
     private static final int PLAIN = 0;
-    private static final int CLEARSPACE = 1;
 
     public SASLServerFactoryImpl() {
     }

@@ -25,12 +25,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-import org.b5chat.crossfire.IConnection;
-import org.b5chat.crossfire.IConnectionCloseListener;
-import org.b5chat.crossfire.route.IPacketDeliverer;
-import org.b5chat.crossfire.session.ISession;
-import org.b5chat.crossfire.session.LocalSession;
-import org.b5chat.util.LocaleUtils;
+import org.b5chat.crossfire.core.util.LocaleUtils;
+import org.b5chat.crossfire.xmpp.IConnection;
+import org.b5chat.crossfire.xmpp.IConnectionCloseListener;
+import org.b5chat.crossfire.xmpp.route.IPacketDeliverer;
+import org.b5chat.crossfire.xmpp.session.ISession;
+import org.b5chat.crossfire.xmpp.session.LocalSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

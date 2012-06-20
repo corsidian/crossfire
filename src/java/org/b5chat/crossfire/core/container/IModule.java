@@ -20,7 +20,7 @@
 
 package org.b5chat.crossfire.core.container;
 
-import org.b5chat.crossfire.server.XmppServer;
+import org.b5chat.crossfire.xmpp.server.XmppServer;
 
 /**
  * Logical, server-managed entities must implement this interface. A module

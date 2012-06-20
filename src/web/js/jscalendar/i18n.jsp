@@ -1,5 +1,5 @@
-<%@ page import="java.util.Calendar,java.text.DateFormat,java.text.SimpleDateFormat,org.b5chat.util.Globals"%>
-<%@ page import="org.b5chat.util.LocaleUtils"%>
+<%@ page import="java.util.Calendar,java.text.DateFormat,java.text.SimpleDateFormat,org.b5chat.crossfire.core.util.Globals"%>
+<%@ page import="org.b5chat.crossfire.core.util.LocaleUtils"%>
 <%
     response.setContentType("text/javascript; charset=" + "UTF-8");
     DateFormat fullDay = new SimpleDateFormat("EEEE", Globals.getLocale());

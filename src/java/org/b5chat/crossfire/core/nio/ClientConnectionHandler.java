@@ -22,12 +22,12 @@ package org.b5chat.crossfire.core.nio;
 
 import org.apache.mina.common.IdleStatus;
 import org.apache.mina.common.IoSession;
-import org.b5chat.crossfire.IConnection;
 import org.b5chat.crossfire.core.net.ClientStanzaHandler;
 import org.b5chat.crossfire.core.net.StanzaHandler;
 import org.b5chat.crossfire.core.property.Globals;
-import org.b5chat.crossfire.handler.IqPingHandler;
-import org.b5chat.crossfire.server.XmppServer;
+import org.b5chat.crossfire.xmpp.IConnection;
+import org.b5chat.crossfire.xmpp.handler.IQPingHandler;
+import org.b5chat.crossfire.xmpp.server.XmppServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.IQ;
@@ -96,7 +96,7 @@ public class ClientConnectionHandler extends ConnectionHandler {
 		    	// Ping the connection to see if it is alive.
 				final IQ pingRequest = new IQ(Type.get);
 				pingRequest.setChildElement("ping",
-						IqPingHandler.NAMESPACE);
+						IQPingHandler.NAMESPACE);
 				pingRequest.setFrom(serverName);
 				pingRequest.setTo(entity); 
 				

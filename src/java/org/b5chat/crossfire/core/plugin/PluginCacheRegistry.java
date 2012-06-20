@@ -21,15 +21,13 @@
 package org.b5chat.crossfire.core.plugin;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.b5chat.crossfire.core.container.CacheInfo;
-import org.b5chat.util.GlobalConstants;
-import org.b5chat.util.cache.CacheFactory;
+import org.b5chat.crossfire.core.util.GlobalConstants;
+import org.b5chat.crossfire.core.util.cache.CacheFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

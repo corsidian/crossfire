@@ -17,13 +17,13 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.crossfire.group.Group,
-                 org.b5chat.crossfire.group.GroupAlreadyExistsException,
+<%@ page import="org.b5chat.crossfire.xmpp.group.Group,
+                 org.b5chat.crossfire.xmpp.group.GroupAlreadyExistsException,
                  org.b5chat.crossfire.security.SecurityAuditManager,
-                 org.b5chat.util.Log"
+                 org.b5chat.crossfire.core.util.Log"
     errorPage="error.jsp"
 %>
-<%@ page import="org.b5chat.util.ParamUtils"%>
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils"%>
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Map" %>
@@ -31,7 +31,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager" />
 <%  webManager.init(request, response, session, application, out); %>
 
 <%  // Get parameters //

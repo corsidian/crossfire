@@ -35,17 +35,17 @@ import javax.security.sasl.SaslException;
 import javax.security.sasl.SaslServer;
 
 
-import org.b5chat.crossfire.auth.AuthFactory;
-import org.b5chat.crossfire.auth.AuthToken;
+import org.b5chat.crossfire.core.lockout.LockOutManager;
 import org.b5chat.crossfire.core.net.XMPPCallbackHandler;
 import org.b5chat.crossfire.core.property.Globals;
-import org.b5chat.crossfire.lockout.LockOutManager;
-import org.b5chat.crossfire.server.XmppServer;
-import org.b5chat.crossfire.session.IClientSession;
-import org.b5chat.crossfire.session.ISession;
-import org.b5chat.crossfire.session.LocalClientSession;
-import org.b5chat.crossfire.session.LocalSession;
-import org.b5chat.util.StringUtils;
+import org.b5chat.crossfire.core.util.StringUtils;
+import org.b5chat.crossfire.xmpp.auth.AuthFactory;
+import org.b5chat.crossfire.xmpp.auth.AuthToken;
+import org.b5chat.crossfire.xmpp.server.XmppServer;
+import org.b5chat.crossfire.xmpp.session.IClientSession;
+import org.b5chat.crossfire.xmpp.session.ISession;
+import org.b5chat.crossfire.xmpp.session.LocalClientSession;
+import org.b5chat.crossfire.xmpp.session.LocalSession;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  *
  * The list of available SASL mechanisms is determined by:
  * <ol>
- *      <li>The type of {@link org.b5chat.crossfire.user.IUserProvider} being used since
+ *      <li>The type of {@link org.b5chat.crossfire.xmpp.user.IUserProvider} being used since
  *      some SASL mechanisms require the server to be able to retrieve user passwords</li>
  *      <li>Whether anonymous logins are enabled or not.</li>
  *      <li>Whether shared secret authentication is enabled or not.</li>

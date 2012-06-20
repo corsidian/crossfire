@@ -17,10 +17,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.Globals,
-                 org.b5chat.util.LocaleUtils,
-                 org.b5chat.util.Log,
-                 org.b5chat.util.ParamUtils"
+<%@ page import="org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.core.util.LocaleUtils,
+                 org.b5chat.crossfire.core.util.Log,
+                 org.b5chat.crossfire.core.util.ParamUtils"
 %>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Locale"%>
@@ -30,7 +30,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters //

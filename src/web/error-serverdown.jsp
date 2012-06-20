@@ -3,16 +3,16 @@
   -	$Revision: 7860 $
   -	$Date: 2007-04-02 19:26:20 -0400 (Mon, 02 Apr 2007) $
 --%>
-<%@ page import="org.b5chat.plugin.admin.AdminConsole,
-                 org.b5chat.util.LocaleUtils"%>
+<%@ page import="org.b5chat.crossfire.plugin.admin.AdminConsole,
+                 org.b5chat.crossfire.core.util.LocaleUtils"%>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.crossfire.plugin.admin.AdminPageBean" />
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <%  String path = request.getContextPath();

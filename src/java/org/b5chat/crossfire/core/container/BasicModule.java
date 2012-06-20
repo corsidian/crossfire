@@ -20,7 +20,7 @@
 
 package org.b5chat.crossfire.core.container;
 
-import org.b5chat.crossfire.server.XmppServer;
+import org.b5chat.crossfire.xmpp.server.XmppServer;
 
 /**
  * A default IModule implementation that basically avoids subclasses having to implement the whole

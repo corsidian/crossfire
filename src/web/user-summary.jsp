@@ -19,13 +19,13 @@
 --%>
 
 <%@ page import="org.b5chat.crossfire.PresenceManager,
-                 org.b5chat.crossfire.admin.AdminManager,
-                 org.b5chat.crossfire.user.User,
-                 org.b5chat.crossfire.user.UserManager,
-                 org.b5chat.util.Globals,
-                 org.b5chat.util.LocaleUtils,
-                 org.b5chat.util.ParamUtils"
-%><%@ page import="org.b5chat.util.StringUtils"%>
+                 org.b5chat.crossfire.core.admin.AdminManager,
+                 org.b5chat.crossfire.xmpp.user.User,
+                 org.b5chat.crossfire.xmpp.user.UserManager,
+                 org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.core.util.LocaleUtils,
+                 org.b5chat.crossfire.core.util.ParamUtils"
+%><%@ page import="org.b5chat.crossfire.core.util.StringUtils"%>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="org.xmpp.packet.Presence" %>
 <%@ page import="java.net.URLEncoder" %>
@@ -39,7 +39,7 @@
     final int[] RANGE_PRESETS = {25, 50, 75, 100, 500, 1000, -1};
 %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

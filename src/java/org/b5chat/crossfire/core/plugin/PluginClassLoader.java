@@ -27,7 +27,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 
-import org.b5chat.crossfire.server.XmppServer;
+import org.b5chat.crossfire.xmpp.server.XmppServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,25 +63,25 @@ public class PluginClassLoader extends URLClassLoader {
             // Add classes directory to classpath.
             File classesDir = new File(directory, "classes");
             if (classesDir.exists()) {
-                addURL(classesDir.toURL());
+                addURL(classesDir.toURI().toURL());
             }
 
             // Add i18n directory to classpath.
             File databaseDir = new File(directory, "database");
             if(databaseDir.exists()){
-                addURL(databaseDir.toURL());
+                addURL(databaseDir.toURI().toURL());
             }
 
             // Add i18n directory to classpath.
             File i18nDir = new File(directory, "i18n");
             if(i18nDir.exists()){
-                addURL(i18nDir.toURL());
+                addURL(i18nDir.toURI().toURL());
             }
 
             // Add web directory to classpath.
             File webDir = new File(directory, "web");
             if(webDir.exists()){
-                addURL(webDir.toURL());
+                addURL(webDir.toURI().toURL());
             }
 
             // Add lib directory to classpath.
@@ -97,11 +97,11 @@ public class PluginClassLoader extends URLClassLoader {
                         if (developmentMode) {
                             // Do not add plugin-pluginName.jar to classpath.
                             if (!jars[i].getName().equals("plugin-" + directory.getName() + ".jar")) {
-                                addURL(jars[i].toURL());
+                                addURL(jars[i].toURI().toURL());
                             }
                         }
                         else {
-                            addURL(jars[i].toURL());
+                            addURL(jars[i].toURI().toURL());
                         }
                     }
                 }

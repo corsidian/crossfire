@@ -6,12 +6,12 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="org.b5chat.util.Globals,
+<%@ page import="org.b5chat.crossfire.core.util.Globals,
                  java.util.Map,
                  org.b5chat.crossfire.XmppServer"
 %>
-<%@ page import="org.b5chat.util.LocaleUtils"%>
-<%@ page import="org.b5chat.crossfire.admin.AdminManager" %>
+<%@ page import="org.b5chat.crossfire.core.util.LocaleUtils"%>
+<%@ page import="org.b5chat.crossfire.core.admin.AdminManager" %>
 <%@ page import="org.xmpp.packet.JID" %>
 <%@ page import="java.util.List" %>
 

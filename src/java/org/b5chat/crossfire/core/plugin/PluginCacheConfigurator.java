@@ -25,9 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.b5chat.crossfire.core.container.CacheInfo;
-import org.b5chat.crossfire.core.container.CacheInfo.Type;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
@@ -78,7 +76,8 @@ public class PluginCacheConfigurator {
             SAXReader saxReader = new SAXReader();
             saxReader.setEncoding("UTF-8");
             Document cacheXml = saxReader.read(configDataStream);
-            List<Node> mappings = cacheXml.selectNodes("/cache-config/cache-mapping");
+            @SuppressWarnings("unchecked")
+			List<Node> mappings = cacheXml.selectNodes("/cache-config/cache-mapping");
             for (Node mapping: mappings) {
                 registerCache(pluginName, mapping);
             }
@@ -103,7 +102,8 @@ public class PluginCacheConfigurator {
 
     private Map<String, String> readInitParams(Node configData) {
         Map<String, String> paramMap = new HashMap<String, String>();
-        List<Node> params = configData.selectNodes("init-params/init-param");
+        @SuppressWarnings("unchecked")
+		List<Node> params = configData.selectNodes("init-params/init-param");
         for (Node param : params) {
             String paramName = param.selectSingleNode("param-name").getStringValue();
             String paramValue = param.selectSingleNode("param-value").getStringValue();

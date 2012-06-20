@@ -19,9 +19,9 @@
 
 <%@ page import="org.b5chat.crossfire.SessionManager,
                  org.b5chat.crossfire.SessionResultFilter,
-                 org.b5chat.crossfire.session.IClientSession,
-                 org.b5chat.util.Globals,
-                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.xmpp.session.IClientSession,
+                 org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.core.util.ParamUtils,
                  java.util.Collection"
     errorPage="error.jsp"
 %>
@@ -38,7 +38,7 @@
     static final int[] REFRESHES = {0, 10, 30, 60, 90};
     static final String[] REFRESHES_LABELS = {NONE,"10","30","60","90"};
 %>
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%  // Get parameters

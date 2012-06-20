@@ -19,10 +19,10 @@
 --%>
 
 <%@ page import="org.b5chat.crossfire.SessionManager,
-                 org.b5chat.crossfire.session.ComponentSession,
-                 org.b5chat.crossfire.session.ISession,
-                 org.b5chat.util.Globals,
-                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.xmpp.session.ComponentSession,
+                 org.b5chat.crossfire.xmpp.session.ISession,
+                 org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.core.util.ParamUtils,
                  java.net.URLEncoder"
     errorPage="error.jsp"
 %>
@@ -38,7 +38,7 @@
     final int[] RANGE_PRESETS = {15, 25, 50, 75, 100};
 %>
 
-<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <% // Get parameters

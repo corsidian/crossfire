@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 
-import org.b5chat.database.DbConnectionManager;
+import org.b5chat.crossfire.database.DbConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

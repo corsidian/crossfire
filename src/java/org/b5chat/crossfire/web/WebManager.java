@@ -31,19 +31,19 @@ import java.util.Comparator;
 import java.util.StringTokenizer;
 
 
-import org.b5chat.crossfire.auth.AuthToken;
-import org.b5chat.crossfire.group.GroupManager;
-import org.b5chat.crossfire.lockout.LockOutManager;
-import org.b5chat.crossfire.presence.IPresenceManager;
-import org.b5chat.crossfire.roster.RosterManager;
-import org.b5chat.crossfire.server.IXmppServerInfo;
-import org.b5chat.crossfire.server.XmppServer;
-import org.b5chat.crossfire.session.SessionManager;
-import org.b5chat.crossfire.user.User;
-import org.b5chat.crossfire.user.UserManager;
-import org.b5chat.util.ClassUtils;
-import org.b5chat.util.cache.Cache;
-import org.b5chat.util.cache.CacheFactory;
+import org.b5chat.crossfire.core.lockout.LockOutManager;
+import org.b5chat.crossfire.core.util.ClassUtils;
+import org.b5chat.crossfire.core.util.cache.Cache;
+import org.b5chat.crossfire.core.util.cache.CacheFactory;
+import org.b5chat.crossfire.xmpp.auth.AuthToken;
+import org.b5chat.crossfire.xmpp.group.GroupManager;
+import org.b5chat.crossfire.xmpp.presence.IPresenceManager;
+import org.b5chat.crossfire.xmpp.roster.RosterManager;
+import org.b5chat.crossfire.xmpp.server.IXmppServerInfo;
+import org.b5chat.crossfire.xmpp.server.XmppServer;
+import org.b5chat.crossfire.xmpp.session.SessionManager;
+import org.b5chat.crossfire.xmpp.user.User;
+import org.b5chat.crossfire.xmpp.user.UserManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

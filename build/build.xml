@@ -535,7 +535,7 @@
             </classpath>
             <arg line="-uriroot '${jspc.jsp.src.dir}'"/>
             <arg line="-d '${jspc.java.dest.dir}'"/>
-            <arg line="-p org.b5chat.crossfire.admin"/>
+            <arg line="-p org.b5chat.crossfire.core.admin"/>
             <arg line="-webinc '${jspc.dest.dir}/web.partial.xml'"/>
         </java>
 

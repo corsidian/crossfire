@@ -7,8 +7,8 @@
   -	$Date: 2005-09-23 10:54:57 -0700 (Fri, 23 Sep 2005) $
 --%>
 
-<%@ page import="org.b5chat.util.Globals,
-                 org.b5chat.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.core.util.ParamUtils,
                  org.b5chat.crossfire.XmppServer" %>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Locale"%>

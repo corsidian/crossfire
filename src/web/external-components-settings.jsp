@@ -24,8 +24,8 @@
 <%@ page import="org.b5chat.crossfire.XmppServer,
                  org.b5chat.crossfire.component.ExternalComponentConfiguration,
                  org.b5chat.crossfire.component.ExternalComponentManager,
-                 org.b5chat.util.ModificationNotAllowedException,
-                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.core.util.ModificationNotAllowedException,
+                 org.b5chat.crossfire.core.util.ParamUtils,
                  java.util.Collection"
     errorPage="error.jsp"
 %>
@@ -33,7 +33,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

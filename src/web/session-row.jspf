@@ -3,9 +3,9 @@
   -	$Date: 2008-02-18 23:21:33 -0500 (Mon, 18 Feb 2008) $
 --%>
 
-<%@ page import="org.b5chat.crossfire.session.ISession,
-                 org.b5chat.util.LocaleUtils,
-                 org.b5chat.util.StringUtils,
+<%@ page import="org.b5chat.crossfire.xmpp.session.ISession,
+                 org.b5chat.crossfire.core.util.LocaleUtils,
+                 org.b5chat.crossfire.core.util.StringUtils,
                  org.xmpp.packet.JID,
                  org.xmpp.packet.Presence"%>
  <%@ page import="java.net.URLEncoder"%>
@@ -50,7 +50,7 @@
 
             <fmt:message key="session.details.connect" />
 
-        <% } else if (_status == org.b5chat.crossfire.session.ISession.STATUS_AUTHENTICATED) { %>
+        <% } else if (_status == org.b5chat.crossfire.xmpp.session.ISession.STATUS_AUTHENTICATED) { %>
 
             <fmt:message key="session.details.authenticated" />
 

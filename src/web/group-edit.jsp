@@ -18,17 +18,17 @@
 --%>
 
 <%@ page import="org.b5chat.crossfire.PresenceManager,
-                 org.b5chat.crossfire.group.Group,
-                 org.b5chat.crossfire.group.GroupManager,
+                 org.b5chat.crossfire.xmpp.group.Group,
+                 org.b5chat.crossfire.xmpp.group.GroupManager,
                  org.b5chat.crossfire.security.SecurityAuditManager,
-                 org.b5chat.crossfire.user.User,
-                 org.b5chat.crossfire.user.UserManager,
-                 org.b5chat.crossfire.user.UserNotFoundException"
+                 org.b5chat.crossfire.xmpp.user.User,
+                 org.b5chat.crossfire.xmpp.user.UserManager,
+                 org.b5chat.crossfire.xmpp.user.UserNotFoundException"
 %>
 <%@ page import="gnu.inet.encoding.Stringprep"%>
-<%@ page import="org.b5chat.util.LocaleUtils"%>
-<%@ page import="org.b5chat.util.Log"%>
-<%@ page import="org.b5chat.util.ParamUtils"%>
+<%@ page import="org.b5chat.crossfire.core.util.LocaleUtils"%>
+<%@ page import="org.b5chat.crossfire.core.util.Log"%>
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils"%>
 <%@ page import="org.xmpp.packet.JID"%>
 <%@ page import="org.xmpp.packet.Presence"%>
 <%@ page import="java.io.UnsupportedEncodingException"%>
@@ -39,7 +39,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <!-- Define Administration Bean -->
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"/>
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"/>
 <%  webManager.init(pageContext); %>
 
 <%  // Get parameters

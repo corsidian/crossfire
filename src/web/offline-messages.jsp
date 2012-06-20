@@ -17,7 +17,7 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.*,
+<%@ page import="org.b5chat.crossfire.core.util.*,
                  org.b5chat.crossfire.*,
                  java.util.HashMap,
                  java.util.Map,
@@ -28,7 +28,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" scope="page" />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager" scope="page" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

@@ -44,7 +44,7 @@ import java.util.StringTokenizer;
 
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.b5chat.util.XMLWriter;
+import org.b5chat.crossfire.core.util.XMLWriter;
 import org.dom4j.CDATA;
 import org.dom4j.Document;
 import org.dom4j.Element;

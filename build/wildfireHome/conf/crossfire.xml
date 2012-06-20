@@ -71,7 +71,7 @@
     -->  
   <!-- End example LDAP settings -->  
   <connectionProvider> 
-    <className>org.b5chat.database.EmbeddedConnectionProvider</className> 
+    <className>org.b5chat.crossfire.database.EmbeddedConnectionProvider</className> 
   </connectionProvider>  
   <setup>true</setup> 
 </b5chat>

@@ -6,18 +6,18 @@
   -	$Date: 2005-05-26 23:00:40 -0700 (Thu, 26 May 2005) $
 --%>
 
-<%@ page import="org.b5chat.util.ParamUtils,
-                 org.b5chat.util.Globals,
-                 org.b5chat.database.EmbeddedConnectionProvider,
-                 org.b5chat.database.DbConnectionManager,
-                 org.b5chat.database.IConnectionProvider,
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils,
+                 org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.database.EmbeddedConnectionProvider,
+                 org.b5chat.crossfire.database.DbConnectionManager,
+                 org.b5chat.crossfire.database.IConnectionProvider,
                  java.util.*" %>
 <%@ page import="java.io.File"%>
 <%@ page import="java.sql.Connection"%>
 <%@ page import="java.sql.Statement"%>
 <%@ page import="java.sql.SQLException"%>
-<%@ page import="org.b5chat.util.LocaleUtils"%>
-<%@ page import="org.b5chat.util.ClassUtils"%>
+<%@ page import="org.b5chat.crossfire.core.util.LocaleUtils"%>
+<%@ page import="org.b5chat.crossfire.core.util.ClassUtils"%>
 <%@ page import="org.b5chat.crossfire.XmppServer"%>
 
 <%
@@ -100,7 +100,7 @@
         else if (EMBEDDED.equals(mode)) {
             // Set the classname of the provider in the config file:
             Globals.setXMLProperty("connectionProvider.className",
-                    "org.b5chat.database.EmbeddedConnectionProvider");
+                    "org.b5chat.crossfire.database.EmbeddedConnectionProvider");
             ConnectionProvider conProvider = new EmbeddedConnectionProvider();
             DbConnectionManager.setConnectionProvider(conProvider);
             if (testConnection(errors)) {

@@ -30,12 +30,12 @@ import javax.security.sasl.AuthorizeCallback;
 import javax.security.sasl.RealmCallback;
 
 
-import org.b5chat.crossfire.auth.AuthFactory;
-import org.b5chat.crossfire.auth.AuthToken;
-import org.b5chat.crossfire.auth.AuthorizationManager;
 import org.b5chat.crossfire.core.net.sasl.SASLAuthentication;
 import org.b5chat.crossfire.core.net.sasl.VerifyPasswordCallback;
-import org.b5chat.crossfire.user.UserNotFoundException;
+import org.b5chat.crossfire.xmpp.auth.AuthFactory;
+import org.b5chat.crossfire.xmpp.auth.AuthToken;
+import org.b5chat.crossfire.xmpp.auth.AuthorizationManager;
+import org.b5chat.crossfire.xmpp.user.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

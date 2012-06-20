@@ -21,9 +21,9 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="org.b5chat.util.Globals,
+<%@ page import="org.b5chat.crossfire.core.util.Globals,
 				 org.b5chat.crossfire.XmppServer,
-                 org.b5chat.util.ParamUtils,
+                 org.b5chat.crossfire.core.util.ParamUtils,
                  org.b5chat.crossfire.IConnectionManager,
                  java.util.Collection"
     errorPage="error.jsp"
@@ -32,7 +32,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

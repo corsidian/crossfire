@@ -5,7 +5,7 @@
 --%>
 
 <%@ page import="org.b5chat.crossfire.XmppServer"%>
-<%@ page import="org.b5chat.util.Globals"%>
+<%@ page import="org.b5chat.crossfire.core.util.Globals"%>
 <%@ page import="java.util.Map" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
@@ -30,17 +30,17 @@
             @SuppressWarnings("unchecked")
             Map<String,String> xmppSettings = (Map<String,String>)session.getAttribute("xmppSettings");
             xmppSettings.put("provider.auth.className",
-                    org.b5chat.crossfire.auth.DefaultAuthProvider.class.getName());
+                    org.b5chat.crossfire.xmpp.auth.DefaultAuthProvider.class.getName());
             xmppSettings.put("provider.user.className",
-                    org.b5chat.crossfire.user.DefaultUserProvider.class.getName());
+                    org.b5chat.crossfire.xmpp.user.DefaultUserProvider.class.getName());
             xmppSettings.put("provider.group.className",
-                    org.b5chat.crossfire.group.DefaultGroupProvider.class.getName());
+                    org.b5chat.crossfire.xmpp.group.DefaultGroupProvider.class.getName());
             xmppSettings.put("provider.lockout.className",
-                    org.b5chat.crossfire.lockout.DefaultLockOutProvider.class.getName());
+                    org.b5chat.crossfire.core.lockout.DefaultLockOutProvider.class.getName());
             xmppSettings.put("provider.securityAudit.className",
                     org.b5chat.crossfire.security.DefaultSecurityAuditProvider.class.getName());
             xmppSettings.put("provider.admin.className",
-                    org.b5chat.crossfire.admin.DefaultAdminProvider.class.getName());
+                    org.b5chat.crossfire.core.admin.DefaultAdminProvider.class.getName());
             // Redirect
             response.sendRedirect("setup-admin-settings.jsp");
             return;

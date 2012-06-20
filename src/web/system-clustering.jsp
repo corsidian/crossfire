@@ -21,25 +21,25 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
-<%@ page import="org.b5chat.database.DbConnectionManager"
+<%@ page import="org.b5chat.crossfire.database.DbConnectionManager"
     errorPage="error.jsp"
 %>
 <%@ page import="org.b5chat.crossfire.XmppServer" %>
 <%@ page import="org.b5chat.crossfire.core.cluster.ClusterManager" %>
 <%@ page import="org.b5chat.crossfire.core.cluster.IClusterNodeInfo" %>
 <%@ page import="org.b5chat.crossfire.core.cluster.GetBasicStatistics" %>
-<%@ page import="org.b5chat.util.Globals" %>
-<%@ page import="org.b5chat.util.Log" %>
-<%@ page import="org.b5chat.util.ParamUtils" %>
-<%@ page import="org.b5chat.util.cache.CacheFactory" %>
+<%@ page import="org.b5chat.crossfire.core.util.Globals" %>
+<%@ page import="org.b5chat.crossfire.core.util.Log" %>
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils" %>
+<%@ page import="org.b5chat.crossfire.core.util.cache.CacheFactory" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="org.b5chat.util.Base64" %>
+<%@ page import="org.b5chat.crossfire.core.util.Base64" %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

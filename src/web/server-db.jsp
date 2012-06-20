@@ -17,8 +17,8 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.*,
-                 org.b5chat.database.DbConnectionManager,
+<%@ page import="org.b5chat.crossfire.core.util.*,
+                 org.b5chat.crossfire.database.DbConnectionManager,
                  java.sql.*"
     errorPage="error.jsp"
 %>
@@ -30,7 +30,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.crossfire.plugin.admin.AdminPageBean" />
 
 <html>
     <head>

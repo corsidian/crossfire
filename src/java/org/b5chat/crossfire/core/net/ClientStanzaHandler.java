@@ -20,11 +20,11 @@
 package org.b5chat.crossfire.core.net;
 
 
-import org.b5chat.crossfire.IConnection;
-import org.b5chat.crossfire.auth.UnauthorizedException;
 import org.b5chat.crossfire.core.property.Globals;
-import org.b5chat.crossfire.route.IPacketRouter;
-import org.b5chat.crossfire.session.LocalClientSession;
+import org.b5chat.crossfire.xmpp.IConnection;
+import org.b5chat.crossfire.xmpp.auth.UnauthorizedException;
+import org.b5chat.crossfire.xmpp.route.IPacketRouter;
+import org.b5chat.crossfire.xmpp.session.LocalClientSession;
 import org.dom4j.Element;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

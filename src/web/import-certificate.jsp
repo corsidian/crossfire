@@ -1,5 +1,5 @@
-<%@ page import="org.b5chat.util.CertificateManager,
-                org.b5chat.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.core.util.CertificateManager,
+                org.b5chat.crossfire.core.util.ParamUtils,
                 org.b5chat.crossfire.XmppServer,
                 org.b5chat.crossfire.core.net.SSLConfig,
                 java.io.ByteArrayInputStream,
@@ -10,7 +10,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager" />
 <% webManager.init(request, response, session, application, out ); %>
 
 <%--

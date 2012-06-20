@@ -5,12 +5,12 @@
   -	$Date: 2005-08-11 12:56:15 -0700 (Thu, 11 Aug 2005) $
 --%>
 
-<%@ page import="org.b5chat.database.DbConnectionManager,
-                 org.b5chat.database.DefaultConnectionProvider,
-                 org.b5chat.util.ClassUtils,
-                 org.b5chat.util.Globals,
-                 org.b5chat.util.Log,
-                 org.b5chat.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.database.DbConnectionManager,
+                 org.b5chat.crossfire.database.DefaultConnectionProvider,
+                 org.b5chat.crossfire.core.util.ClassUtils,
+                 org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.core.util.Log,
+                 org.b5chat.crossfire.core.util.ParamUtils,
                  org.b5chat.crossfire.XmppServer,
                  java.io.File,
                  java.lang.Double,
@@ -130,7 +130,7 @@
 
             // Force the standard b5chat connection provider to be used by deleting the current setting:
             Globals.setXMLProperty("connectionProvider.className",
-                    "org.b5chat.database.DefaultConnectionProvider");
+                    "org.b5chat.crossfire.database.DefaultConnectionProvider");
             DefaultConnectionProvider conProvider = new DefaultConnectionProvider();
             try {
                 conProvider.setDriver(driver);

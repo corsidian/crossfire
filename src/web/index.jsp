@@ -18,13 +18,13 @@
 --%>
 
 <%@ page import="org.apache.mina.transport.socket.nio.SocketAcceptor"%>
-<%@ page import="org.b5chat.plugin.admin.AdminConsole"%>
+<%@ page import="org.b5chat.crossfire.plugin.admin.AdminConsole"%>
 <%@ page import="org.b5chat.crossfire.*" %>
 <%@ page import="org.b5chat.crossfire.core.container.AdminConsolePlugin" %>
 <%@ page import="org.b5chat.crossfire.core.net.SSLConfig" %>
-<%@ page import="org.b5chat.crossfire.session.LocalClientSession" %>
+<%@ page import="org.b5chat.crossfire.xmpp.session.LocalClientSession" %>
 <%@ page import="org.b5chat.crossfire.spi.ConnectionManagerImpl" %>
-<%@ page import="org.b5chat.util.*" %>
+<%@ page import="org.b5chat.crossfire.core.util.*" %>
 <%@ page import="java.net.InetSocketAddress" %>
 <%@ page import="java.net.SocketAddress" %>
 <%@ page import="java.net.URL" %>
@@ -35,7 +35,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <%-- Define page bean for header and sidebar --%>
-<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.crossfire.plugin.admin.AdminPageBean" />
 
 <%  // Simple logout code
     if ("true".equals(request.getParameter("logout"))) {
@@ -46,7 +46,7 @@
 %>
 
 <%-- Define Administration Bean --%>
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out); %>
 
 <% // Get parameters //

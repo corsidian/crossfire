@@ -18,10 +18,10 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils,
                  org.b5chat.crossfire.SessionManager,
-                 org.b5chat.crossfire.session.IClientSession,
-                 org.b5chat.crossfire.user.User,
+                 org.b5chat.crossfire.xmpp.session.IClientSession,
+                 org.b5chat.crossfire.xmpp.user.User,
                  org.xmpp.packet.JID,
                  java.net.URLEncoder,
                  java.util.Collection,
@@ -43,7 +43,7 @@
     String message = ParamUtils.getParameter(request,"message");
 %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(pageContext); %>
 
 <%

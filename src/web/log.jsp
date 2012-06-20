@@ -23,14 +23,14 @@
                  java.text.SimpleDateFormat,
                  java.util.Date,
                  java.text.ParseException,
-                 org.b5chat.util.ParamUtils,
-                 org.b5chat.util.Log,
-                 org.b5chat.util.StringUtils"
+                 org.b5chat.crossfire.core.util.ParamUtils,
+                 org.b5chat.crossfire.core.util.Log,
+                 org.b5chat.crossfire.core.util.StringUtils"
     errorPage="error.jsp"
 %>
 
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.plugin.admin.AdminPageBean" />
+<jsp:useBean id="pageinfo" scope="request" class="org.b5chat.crossfire.plugin.admin.AdminPageBean" />
 
 <%!
     static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd kk:mm:ss");

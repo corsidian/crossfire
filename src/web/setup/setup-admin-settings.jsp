@@ -5,12 +5,12 @@
 --%>
 
 <%@ page import="org.b5chat.crossfire.XmppServer,
-                 org.b5chat.crossfire.auth.AuthFactory,
-                 org.b5chat.crossfire.user.User,
-                 org.b5chat.crossfire.user.UserManager,
-                 org.b5chat.util.Globals,
-                 org.b5chat.util.ParamUtils" %>
-<%@ page import="org.b5chat.util.StringUtils"%>
+                 org.b5chat.crossfire.xmpp.auth.AuthFactory,
+                 org.b5chat.crossfire.xmpp.user.User,
+                 org.b5chat.crossfire.xmpp.user.UserManager,
+                 org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.core.util.ParamUtils" %>
+<%@ page import="org.b5chat.crossfire.core.util.StringUtils"%>
 <%@ page import="org.xmpp.packet.JID"%>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="java.net.URLEncoder" %>

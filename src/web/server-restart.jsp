@@ -1,4 +1,4 @@
-<%@ page import="org.b5chat.util.ParamUtils"
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils"
          errorPage="error.jsp"%>
 <%@ page import="org.b5chat.crossfire.XmppServer" %>
 <%--
@@ -12,7 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%-- Define Administration Bean --%>
-<jsp:useBean id="admin" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="admin" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% admin.init(request, response, session, application, out ); %>
 
 <%

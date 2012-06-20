@@ -18,8 +18,8 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.Globals,
-                 org.b5chat.util.ParamUtils"
+<%@ page import="org.b5chat.crossfire.core.util.Globals,
+                 org.b5chat.crossfire.core.util.ParamUtils"
 %>
 <%@ page import="org.xmpp.packet.JID"%>
 <%@ page import="java.net.URLEncoder" %>
@@ -30,7 +30,7 @@
 <%@ page import="org.b5chat.crossfire.security.AuditWriteOnlyException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.text.ParseException" %>
-<%@ page import="org.b5chat.util.LocaleUtils" %>
+<%@ page import="org.b5chat.crossfire.core.util.LocaleUtils" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
@@ -42,7 +42,7 @@
     SimpleDateFormat shortDateFormat = new SimpleDateFormat("MM/dd/yy");
 %>
 
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager"  />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager"  />
 <% webManager.init(request, response, session, application, out ); %>
 
 <html>

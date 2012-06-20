@@ -17,20 +17,20 @@
   - limitations under the License.
 --%>
 
-<%@ page import="org.b5chat.util.ParamUtils,
+<%@ page import="org.b5chat.crossfire.core.util.ParamUtils,
                  java.net.URLEncoder"
     errorPage="error.jsp"
 %><%@ page import="org.xmpp.packet.JID"%>
-<%@ page import="org.b5chat.crossfire.roster.Roster" %>
-<%@ page import="org.b5chat.crossfire.roster.RosterItem" %>
+<%@ page import="org.b5chat.crossfire.xmpp.roster.Roster" %>
+<%@ page import="org.b5chat.crossfire.xmpp.roster.RosterItem" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="org.b5chat.crossfire.group.Group" %>
+<%@ page import="org.b5chat.crossfire.xmpp.group.Group" %>
 <%@ page import="java.util.Collection" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<jsp:useBean id="webManager" class="org.b5chat.util.WebManager" />
+<jsp:useBean id="webManager" class="org.b5chat.crossfire.core.util.WebManager" />
 
 <% // Get parameters
     boolean cancel = request.getParameter("cancel") != null;

@@ -6,8 +6,8 @@
 
 <%@ page import="java.lang.reflect.Method,
                  java.io.File,
-                 org.b5chat.util.LocaleUtils" %>
-<%@ page import="org.b5chat.util.ClassUtils"%>
+                 org.b5chat.crossfire.core.util.LocaleUtils" %>
+<%@ page import="org.b5chat.crossfire.core.util.ClassUtils"%>
 
 <%  // Check the user's environment for minimum requirements.
 
@@ -46,7 +46,7 @@
 
     // Try to determine what the b5chatHome directory is:
     try {
-        Class GlobalsClass = ClassUtils.forName("org.b5chat.util.Globals");
+        Class GlobalsClass = ClassUtils.forName("org.b5chat.crossfire.core.util.Globals");
         Method getcrossfireHomeMethod = GlobalsClass.getMethod("getHomeDirectory", (Class[])null);
         String crossfireHomeProp = (String)getcrossfireHomeMethod.invoke(GlobalsClass, (Object[])null);
         if (crossfireHomeProp != null) {

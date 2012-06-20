@@ -21,13 +21,12 @@
 package org.b5chat.crossfire.core.net;
 
 
-import org.b5chat.crossfire.IChannelHandler;
-import org.b5chat.crossfire.PacketException;
-import org.b5chat.crossfire.auth.UnauthorizedException;
-import org.b5chat.crossfire.route.IPacketRouter;
-import org.b5chat.crossfire.route.IRoutingTable;
-import org.b5chat.crossfire.server.XmppServer;
-import org.b5chat.util.LocaleUtils;
+import org.b5chat.crossfire.core.util.LocaleUtils;
+import org.b5chat.crossfire.xmpp.IChannelHandler;
+import org.b5chat.crossfire.xmpp.PacketException;
+import org.b5chat.crossfire.xmpp.auth.UnauthorizedException;
+import org.b5chat.crossfire.xmpp.route.IPacketRouter;
+import org.b5chat.crossfire.xmpp.route.IRoutingTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmpp.packet.JID;
@@ -44,12 +43,10 @@ public class SocketPacketWriteHandler implements IChannelHandler {
 
 	private static final Logger Log = LoggerFactory.getLogger(SocketPacketWriteHandler.class);
 
-    private XmppServer server;
     private IRoutingTable routingTable;
 
     public SocketPacketWriteHandler(IRoutingTable routingTable) {
         this.routingTable = routingTable;
-        this.server = XmppServer.getInstance();
     }
 
      public void process(Packet packet) throws UnauthorizedException, PacketException {

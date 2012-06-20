@@ -57,7 +57,7 @@ public class SASLServerPlainImpl implements SaslServer {
     private int counter;
 
 
-    public SASLServerPlainImpl(String protocol, String serverFqdn, Map props, CallbackHandler cbh) throws SaslException {
+    public SASLServerPlainImpl(String protocol, String serverFqdn, Map<String, ?> props, CallbackHandler cbh) throws SaslException {
         this.cbh = cbh;
         this.completed = false;
         this.counter = 0;
